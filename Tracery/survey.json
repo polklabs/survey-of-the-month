@@ -42,7 +42,7 @@
 		"What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
 		"F**k, marry, kill. #character#, #character#, #character#",
 		"You're transported #1:100.range# #timeRange.s# into the past. What do you do?",
-		"What's something you'd find in #person.capitalize#'s search history#,
+		"What's something you'd find in #person.capitalize#'s search history#",
 		"If you could train any animal in the world to be your pet/protector, what would it be?"
 	],
 	"yesNo": ["yes", "no"],
