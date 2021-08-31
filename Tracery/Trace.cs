@@ -92,6 +92,19 @@ namespace Tracery
 
         string ParseString(string value)
         {
+            // Key Interpolation
+            // #character_{#universe_{#universe#}#}# -> #character_{#universe_pixar#}# -> #character_incredibles#
+            bool hasInterpolation = true;
+            while (hasInterpolation) {
+                hasInterpolation = false;
+                Regex inerpRe = new Regex(@"{(?<innerKey>#[a-zA-Z0-9_:]+#)}");
+                value = inerpRe.Replace(value, m =>
+                {
+                    hasInterpolation = true;
+                    return ParseString(m.Groups["innerKey"].ToString());;
+                });
+            }
+            
             Regex varsRe = new Regex(@"^(?<vars>(\[[a-zA-Z0-9_:#]+?\])*)");
             value = varsRe.Replace(value, m =>
             {
