@@ -21,11 +21,12 @@
 		"[answerKey:career_serious]Choose a career for #person.capitalize#.",
 		"[answerKey:career_serious]Choose a career.",
 		"[answerKey:expensiveThings]If #person.capitalize# wins the big lottery, they should buy you...",
-		"[answerKey:#world#]Choose a #answerKey# world to live in...",
+		"[answerKey:#world_pixar#]Choose a #answerKey# world to live in...",
 		"[answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
 		"[answerKey:yesNo]If #person.capitalize# had a crush on you, would you want them to tell you?",
 		"A strange dream you can remember?",
-		"[answerKey:character]Who would win in a {fight/dance battle}?",
+		"[answerKey:character]Who would win in a #event#?",
+		"[answerKey:character]Choose your protector, the rest will try and kill you.",
 		"[answerKey:relation]If #person.capitalize# was family, what relation would you prefer them to be?",
 		"[answerKey:character]If you had to be stranded #location# with one of these people, who would you choose?",
 		"Predict the date that #person.capitalize# will get a SO.",
@@ -40,21 +41,30 @@
 		"What do you think #person.capitalize# will be doing #1:12.range# #timeRange.s# from now?",
 		"What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
 		"F**k, marry, kill. #character#, #character#, #character#",
-		"You're transported #1:100.range# #timeRange.s# into the past. What do you do?"
+		"You're transported #1:100.range# #timeRange.s# into the past. What do you do?",
+		"What's something you'd find in #person.capitalize#'s search history#,
+		"If you could train any animal in the world to be your pet/protector, what would it be?"
 	],
 	"yesNo": ["yes", "no"],
 	"generalAnswers": ["yes", "no", "kind of", "not really", "maybe", "eh", "of course"],
 	"month": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 	"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday", "Sunday"],
 	"timeRange": ["day", "week", "month", "year"],
+	"color": ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "white", "black", "pink"],
 	
 	"favoriteCategory": ["song", "movie", "tv show", "food", "drink", "animal", "smell", "pizza topping"],
 	"houseFeature": ["library", "green house", "theater", "swimming pool", "land", "bowling alley", "bar", "gym", "wine cellar"], 
 	"place": ["country", "state", "city", "state park"],
 	"expensiveThings": ["car", "house", "stocks", "trip", "education"],
-	"world": ["Disney/Pixar"],
-	"Disney/Pixar": ["incredibles", "onward", "coco", "ratatouille", "cars", "toy story", "bugs life"],
-	"character": ["Dwight K. Schrute", "Bilbo Baggins ft. Merry & Pippin", "All five Bennet sisters", "Lilo & Stitch", "Dolly Parton with you by her side", "Yzma and her shapeshifting potions", "Steven Esqueleto", "Bella Swan from New Moon", "season 5 Erin Hannon", "pre-makeover Amelia Mignonette Thermopolis Renaldi (Princess of Genovia)", "silent Hector Zeroni", "Oliver Wood but no magic", "Sigourney Weaver as her voice in Finding Dory"],
+	
+	"universe": ["Disney/Pixar"],
+	"world_pixar": ["Incredibles", "Onward", "Coco", "Ratatouille", "Cars", "Toy Story", "Bugs Life"],
+	"world": ["#world_pixar#"],
+	
+	"character": ["#character_theOffice#", "#character_lotr#", "All five Bennet sisters", "Lilo & Stitch", "Dolly Parton with you by her side", "Yzma and her shapeshifting potions", "Steven Esqueleto", "Bella Swan from New Moon", "season 5 Erin Hannon", "pre-makeover Amelia Mignonette Thermopolis Renaldi (Princess of Genovia)", "silent Hector Zeroni", "Oliver Wood but no magic", "Sigourney Weaver as her voice in Finding Dory"],
+	"character_theOffice": ["Dwight K. Schrute", "Jim Halpert"],
+	"character_lotr": ["Bilbo Baggins", "Merry & Pippin", "Frodo Baggins", "Samwise Gamgee", "Gandalf the Grey"],
+	
 	"relation": ["older sibling", "younger sibling", "twin", "aunt", "cousin", "mother", "grandmother", "father", "grandfather", "uncle", "son", "daughter"],
 	"location": ["on an island"],
 	"badItem": ["detention", "a ticket"],
@@ -62,6 +72,7 @@
 	"numberPlace": ["1st", "2nd", "3rd"],
 	"lifeAspect": ["sex life", "love life", "career", "family", "BF/GF", "husbamd/wife"],
 	"fighter": ["[fighter_weapon:slingshot]Goliath", "[fighter_weapon:sword]Knight", "[fighter_weapon:lightsaber]Jedi", "[fighter_weapon:blaster]Alien"],
+	"event": ["fight", "dance battle"]
 	
 	"movieGenre": ["#genre_movie#", "#genre_movie#/#genre_movie#"],
 	"genre_movie": ["musical", "action", "comedy", "horror", "buddy"],
