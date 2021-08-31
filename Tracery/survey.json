@@ -30,10 +30,13 @@
 		"Choose a movie to be made into a #movieGenre#.",
 		"What do you think #person.capitalize# will be doing #1:12.range# #timeRange.s# from now?",
 		"What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
-		"F**k, marry, kill. #character#, #character#, #character#"
+		"F**k, marry, kill. #character#, #character#, #character#",
+		"You're transported #1:100.range# #timeRange.s# into the past. What do you do?"
 		],
 	"yesNo": ["yes", "no"],
 	"generalAnswers": ["yes", "no", "kind of", "not really", "maybe", "eh", "of course"],
+	"month": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+	"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday", "Sunday"],
 	"favoriteCategory": ["song", "movie", "tv show", "food", "drink", "animal", "smell", "pizza topping"],
 	"houseFeature": ["library", "green house", "theater", "swimming pool", "land", "bowling alley", "bar", "gym", "wine cellar"], 
 	"place": ["country", "state", "city", "state park"],
