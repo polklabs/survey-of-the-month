@@ -28,11 +28,11 @@ namespace Tracery
             return seed.GetValueOrDefault();
         }
 
-        public void Start()
+        public void Start(string origin = "origin")
         {
             vars = new Dictionary<string, string>();
             seen = new Dictionary<string, HashSet<string>>();
-            Console.WriteLine(ParseKey("origin"));
+            Console.WriteLine(ParseKey(origin));
         }
 
         string GetRandom(string key)
@@ -94,16 +94,16 @@ namespace Tracery
         {
             // Key Interpolation
             // #character_{#universe_{#universe#}#}# -> #character_{#universe_pixar#}# -> #character_incredibles#
-            bool hasInterpolation = true;
-            while (hasInterpolation) {
-                hasInterpolation = false;
-                Regex inerpRe = new Regex(@"{(?<innerKey>#[a-zA-Z0-9_:]+#)}");
-                value = inerpRe.Replace(value, m =>
-                {
-                    hasInterpolation = true;
-                    return ParseString(m.Groups["innerKey"].ToString());;
-                });
-            }
+            //bool hasInterpolation = true;
+            //while (hasInterpolation) {
+            //    hasInterpolation = false;
+            //    Regex inerpRe = new Regex(@"{(?<innerKey>#[a-zA-Z0-9_:]+#)}");
+            //    value = inerpRe.Replace(value, m =>
+            //    {
+            //        hasInterpolation = true;
+            //        return ParseString(m.Groups["innerKey"].ToString());;
+            //    });
+            //}
             
             Regex varsRe = new Regex(@"^(?<vars>(\[[a-zA-Z0-9_:#]+?\])*)");
             value = varsRe.Replace(value, m =>
@@ -143,10 +143,9 @@ namespace Tracery
                 return vars[key];
             }
 
-            string value = GetRandom(key);
-            
             if (Dict.ContainsKey(key))
             {
+                string value = ParseString(GetRandom(key));
                 // Make sure that we haven't already chosen this option
                 if (!seen.ContainsKey(key))
                 {
@@ -156,7 +155,7 @@ namespace Tracery
                 {
                     while (seen[key].Contains(value))
                     {
-                        value = GetRandom(key);
+                        value = ParseString(GetRandom(key));
                     }
                     seen[key].Add(value);
                 }
@@ -164,9 +163,37 @@ namespace Tracery
                 {
                     seen[key] = new HashSet<string>();
                 }
+                return value;
             }
-            
-            return ParseString(value);
+            return ParseString(GetRandom(key));
+
+            //if (Dict.ContainsKey(key))
+            //{
+            //    // Make sure that we haven't already chosen this option
+            //    if (!seen.ContainsKey(key))
+            //    {
+            //        seen.Add(key, new HashSet<string>());
+            //    }
+            //    if (seen[key].Count < Dict[key].Length)
+            //    {
+            //        while (seen[key].Contains(value))
+            //        {
+            //            // 40% chance of duplicate??
+            //            if (Rand.Next(0,100) < 40)
+            //            {
+            //                break;
+            //            }
+            //            value = GetRandom(key);
+            //        }
+            //        seen[key].Add(value);
+            //    }
+            //    else
+            //    {
+            //        seen[key] = new HashSet<string>();
+            //    }
+            //}
+
+            //return ParseString(value);
         }
     }
 }

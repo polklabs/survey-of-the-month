@@ -13,17 +13,17 @@ namespace Tracery
             while (true)
             {
                 int seed = trace.SetSeed();
-                trace.Start();
+                trace.Start("question");
                 if (trace.vars.ContainsKey("answerKey"))
                 {
                     string answerKey = trace.vars["answerKey"];
-                    int max = Math.Min(5, trace.Dict[answerKey].Length-1);
-                    for (int i = 0; i <= trace.Rand.Next(1, max); i++)
+                    int max = trace.Rand.Next(2, 5);
+                    if (answerKey == "yesNo") max = 1;
+                    for (int i = 0; i <= max; i++)
                     {
                         Console.WriteLine($" ({i}) {trace.ParseKey(answerKey)}");
                     }
                 }
-                Console.WriteLine($"Seed: {seed}");
 
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.Enter) break;
