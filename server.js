@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 port = 3080;
 
-const users = [];
+const Tracery = require('./src/tracery.js');
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -10,9 +10,11 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(process.cwd()+"/app/dist/app/"));
 
-app.get('/api/hello', (req, res) => {
-    res.json({data: 'this is not a drill!!!!'});
-    // res.json(users);
+app.get('/api/question', (req, res) => {
+    let tracery = new Tracery();
+    tracery.init();
+    tracery.start();
+    res.json({question: tracery.question, answer: tracery.answer});
 });
 
 app.post('/api/user', (req, res) => {
