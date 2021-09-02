@@ -1,7 +1,4 @@
 {
-	"person": [ "kate", "madison", "andrew", "shireen", "emma", "avah", "paulina", "jasmine" ],
-	"monthNow": [ "September" ],
-
 	"origin": [ "#intro_question#", "#question#", "#close_question#" ],
 
 	"intro_question": [
@@ -46,7 +43,7 @@
 		"[answerType:text]Choose a movie to be made into #movieGenre.a# genre.",
 		"[answerType:text]What do you think #person.capitalize# will be doing #1:12.range# #timeRange.s# from now?",
 		"[answerType:text]What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
-		"[answerType:text]F**k, marry, kill. #character#, #character#, #character#",
+		"[answerType:ma][answerKey:character][answerKeyCount:3]F**k, marry, kill",
 		"[answerType:text]You're transported #1:100.range# #timeRange.s# into the #pastFuture#. What do you do?",
 		"[answerType:text]What's something you'd find in #person.capitalize#'s search history",
 		"[answerType:text]If you could train any animal in the world to be your pet/protector, what would it be?",

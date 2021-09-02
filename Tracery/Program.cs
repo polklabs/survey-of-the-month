@@ -9,16 +9,27 @@ namespace Tracery
     {
         static void Main(string[] args)
         {
-            Trace trace = new Trace(LoadJson());
+            Dictionary<string, string[]> custom = new Dictionary<string, string[]>();
+            custom.Add("person", new string[] { "kate", "madison", "andrew", "shireen", "emma", "avah", "paulina", "jasmine" });
+            custom.Add("monthNow", new string[] { "September" });
+
+            Trace trace = new Trace(LoadJson(), custom);
             while (true)
             {
-                int seed = trace.SetSeed();
+                trace.SetSeed();
                 trace.Start("question");
                 if (trace.vars.ContainsKey("answerKey"))
                 {
                     string answerKey = trace.vars["answerKey"];
                     int max = trace.Rand.Next(2, 5);
                     if (answerKey == "yesNo") max = 1;
+
+                    // Fixed length multiple choice
+                    if (trace.vars.ContainsKey("answerKeyCount"))
+                    {
+                        max = int.Parse(trace.vars["answerKeyCount"])-1;
+                    }
+
                     for (int i = 0; i <= max; i++)
                     {
                         Console.WriteLine($" ({i}) {trace.ParseKey(answerKey)}");

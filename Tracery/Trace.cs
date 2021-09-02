@@ -7,14 +7,16 @@ namespace Tracery
 {
     class Trace
     {
-        public readonly Dictionary<string, string[]> Dict;
+        public readonly Dictionary<string, string[]> grammarDict;
+        public readonly Dictionary<string, string[]> customDict;
         public Dictionary<string, string> vars = new Dictionary<string, string>();
         public Dictionary<string, HashSet<string>> seen = new Dictionary<string, HashSet<string>>();
         public Random Rand;
 
-        public Trace(Dictionary<string, string[]> dict)
+        public Trace(Dictionary<string, string[]> grammarDict, Dictionary<string, string[]> customDict)
         {
-            Dict = dict;
+            this.grammarDict = grammarDict;
+            this.customDict = customDict;
             Rand = new Random();
         }
 
@@ -37,12 +39,10 @@ namespace Tracery
 
         string GetRandom(string key)
         {
-            if (!Dict.ContainsKey(key))
-            {
-                return key;
-            }
-            int random = Rand.Next(0, Dict[key].Length);
-            return Dict[key][random];
+            var dict = grammarDict;
+            if (!dict.ContainsKey(key)) dict = customDict;
+            if (!dict.ContainsKey(key)) return key;
+            return dict[key][Rand.Next(0, dict[key].Length)];
         }
 
         string ModString(string value, string mod)
@@ -91,20 +91,7 @@ namespace Tracery
         }
 
         string ParseString(string value)
-        {
-            // Key Interpolation
-            // #character_{#universe_{#universe#}#}# -> #character_{#universe_pixar#}# -> #character_incredibles#
-            //bool hasInterpolation = true;
-            //while (hasInterpolation) {
-            //    hasInterpolation = false;
-            //    Regex inerpRe = new Regex(@"{(?<innerKey>#[a-zA-Z0-9_:]+#)}");
-            //    value = inerpRe.Replace(value, m =>
-            //    {
-            //        hasInterpolation = true;
-            //        return ParseString(m.Groups["innerKey"].ToString());;
-            //    });
-            //}
-            
+        {            
             Regex varsRe = new Regex(@"^(?<vars>(\[[a-zA-Z0-9_:#]+?\])*)");
             value = varsRe.Replace(value, m =>
             {
@@ -143,57 +130,32 @@ namespace Tracery
                 return vars[key];
             }
 
-            if (Dict.ContainsKey(key))
+            var dict = grammarDict;
+            if (!dict.ContainsKey(key)) dict = customDict;
+            if (!dict.ContainsKey(key)) return ParseString(GetRandom(key));
+
+            // Make sure that we haven't already chosen this option
+            string value = ParseString(GetRandom(key));
+            // Make sure there is a valid string set
+            if (!seen.ContainsKey(key))
             {
-                string value = ParseString(GetRandom(key));
-                // Make sure that we haven't already chosen this option
-                if (!seen.ContainsKey(key))
-                {
-                    seen.Add(key, new HashSet<string>());
-                }
-                if (seen[key].Count < Dict[key].Length)
-                {
-                    while (seen[key].Contains(value))
-                    {
-                        value = ParseString(GetRandom(key));
-                    }
-                    seen[key].Add(value);
-                }
-                else
-                {
-                    seen[key] = new HashSet<string>();
-                }
-                return value;
+                seen.Add(key, new HashSet<string>());
             }
-            return ParseString(GetRandom(key));
 
-            //if (Dict.ContainsKey(key))
-            //{
-            //    // Make sure that we haven't already chosen this option
-            //    if (!seen.ContainsKey(key))
-            //    {
-            //        seen.Add(key, new HashSet<string>());
-            //    }
-            //    if (seen[key].Count < Dict[key].Length)
-            //    {
-            //        while (seen[key].Contains(value))
-            //        {
-            //            // 40% chance of duplicate??
-            //            if (Rand.Next(0,100) < 40)
-            //            {
-            //                break;
-            //            }
-            //            value = GetRandom(key);
-            //        }
-            //        seen[key].Add(value);
-            //    }
-            //    else
-            //    {
-            //        seen[key] = new HashSet<string>();
-            //    }
-            //}
-
-            //return ParseString(value);
+            // Only try again if we havent seen all the keys in the list
+            if (seen[key].Count < dict[key].Length)
+            {
+                while (seen[key].Contains(value))
+                {
+                    value = ParseString(GetRandom(key));
+                }
+                seen[key].Add(value);
+            }
+            else
+            {
+                seen[key] = new HashSet<string>();
+            }
+            return value;
         }
     }
 }
