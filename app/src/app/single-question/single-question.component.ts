@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../core/services/data.service';
 
 @Component({
   selector: 'app-single-question',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleQuestionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+      this.dataService.getUsers().subscribe(result => {
+          console.log(result);
+      })
   }
 
 }

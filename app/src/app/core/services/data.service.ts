@@ -9,14 +9,24 @@ import { environment } from 'src/environments/environment';
 export class DataService {
 
   constructor(
-    private httpClient: HttpClient
+    private http: HttpClient
   ) { }
+
+  rootURL = '/api';
+
+  getUsers() {
+    return this.http.get(this.rootURL + '/hello');
+  }
+
+  addUser(user: any) {
+    return this.http.post(this.rootURL + '/user', {user});
+  }
 
   getData(route: string): Observable<any>[] {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
 
-    this.httpClient.get(`http://${window.location.hostname}:${environment.apiPort}/${route}`,
+    this.http.get(`http://${window.location.hostname}:${environment.apiPort}/${route}`,
       {
         observe: 'events',
         reportProgress: true,
@@ -34,7 +44,7 @@ export class DataService {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
 
-    this.httpClient.post(`http://${window.location.hostname}:${environment.apiPort}/${route}`, data,
+    this.http.post(`http://${window.location.hostname}:${environment.apiPort}/${route}`, data,
       {
         observe: 'events',
         reportProgress: true,
