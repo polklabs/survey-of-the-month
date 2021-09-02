@@ -14,8 +14,8 @@ export class DataService {
 
   rootURL = '/api';
 
-  getUsers() {
-    return this.http.get(this.rootURL + '/hello');
+  getQuestion() {
+    return this.http.get(this.rootURL + '/question');
   }
 
   addUser(user: any) {

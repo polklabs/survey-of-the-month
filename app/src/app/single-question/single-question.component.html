@@ -1,3 +1,13 @@
 <div fxLayoutAlign="center center" class="root">    
-    <mat-card>Testing</mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{question}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p *ngFor="let a of answer.answers; let i = index;">({{i}}). {{a}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button (click)="getQuestion()">Refresh</button>
+        </mat-card-actions>
+    </mat-card>
 </div>
