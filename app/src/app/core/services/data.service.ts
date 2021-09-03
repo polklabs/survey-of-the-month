@@ -14,19 +14,11 @@ export class DataService {
 
   rootURL = '/api';
 
-  getQuestion() {
-    return this.http.get(this.rootURL + '/question');
-  }
-
-  addUser(user: any) {
-    return this.http.post(this.rootURL + '/user', {user});
-  }
-
   getData(route: string): Observable<any>[] {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
 
-    this.http.get(`http://${window.location.hostname}:${environment.apiPort}/${route}`,
+    this.http.get(`${this.rootURL}/${route}`,
       {
         observe: 'events',
         reportProgress: true,
@@ -44,7 +36,7 @@ export class DataService {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
 
-    this.http.post(`http://${window.location.hostname}:${environment.apiPort}/${route}`, data,
+    this.http.post(`${this.rootURL}/${route}`, data,
       {
         observe: 'events',
         reportProgress: true,

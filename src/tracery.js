@@ -12,32 +12,37 @@ var grammar = loadGrammar();
 class Tracery {
 
     customDict = {};
-    vars = {};
     seen = {};
 
     question = '';
-    answer = {
-        answers: [],
+    choices = [];
+    info = {
         answerKey: '',
         answerType: 'text',
-        answerCount: 0
+        answerCount: 0,
+        allowOther: true,
+        vars: {}
     };
     
 
     init() {
-        this.customDict['person'] = [ "kate", "madison", "andrew", "shireen", "emma", "avah", "paulina", "jasmine" ];
         this.customDict['monthNow'] = months[(new Date()).getMonth()];        
         this.seen = {};
     }
+    
+    addPeople(people) {
+        this.customDict['person'] = people;
+    }
 
     start(origin = 'question') {
-        this.vars = {};
         this.question = '';
-        this.answer = {
-            answers: [],
+        this.choices = [];
+        this.info = {
             answerKey: '',
             answerType: 'text',
-            answerCount: 0
+            answerCount: 0,
+            allowOther: true,
+            vars: {}
         };
 
         this.generateQuestion(origin);
@@ -46,30 +51,33 @@ class Tracery {
 
     generateQuestion(origin) {
         this.question = this.ParseKey(origin);
-        if (this.vars['answerType'] !== undefined) {
-            this.answer.answerType = this.vars['answerType'];
+        if (this.info.vars['answerType'] !== undefined) {
+            this.info.answerType = this.info.vars['answerType'];
         }
-        if (this.vars['answerKey'] !== undefined) {
-            this.answer.answerKey = this.vars['answerKey'];
+        if (this.info.vars['answerAllowOther'] !== undefined) {
+            this.info.allowOther = this.info.vars['answerAllowOther'];
+        }
+        if (this.info.vars['answerKey'] !== undefined) {
+            this.info.answerKey = this.info.vars['answerKey'];
 
-            if (this.vars['answerCount'] !== undefined) {
-                this.answer.answerCount = +this.vars['answerCount'];
+            if (this.info.vars['answerCount'] !== undefined) {
+                this.info.answerCount = +this.info.vars['answerCount'];
             }
-            if (this.answer.answerCount === 0) {
-                this.answer.answerCount = randomNext(3,5);
-                if (this.answer.answerKey === 'yesNo') this.answer.answerCount = 2;
+            if (this.info.answerCount === 0) {
+                this.info.answerCount = randomNext(3,5);
+                if (this.info.answerKey === 'yesNo') this.info.answerCount = 2;
             }
         }
     }
 
     generateAnswer(index = -1) {
         if (index === -1) {
-            for (let i = 0; i < this.answer.answerCount; i++) {                
-                this.answer.answers.push(this.ParseString(`#${this.answer.answerKey}.capitalize#`));
-                // console.log(`(${i+1}) ${answer}`);
+            this.choices = [];
+            for (let i = 0; i < this.info.answerCount; i++) {                
+                this.choices.push(this.ParseString(`#${this.info.answerKey}.capitalize#`));
             }
         } else {
-            this.answer.answers[index] = this.ParseString(`#${this.answer.answerKey}.capitalize#`);
+            this.choices[index] = this.ParseString(`#${this.info.answerKey}.capitalize#`);
         }
     }
 
@@ -115,7 +123,7 @@ class Tracery {
             let value = m.groups['value'];
             value = this.ParseString(value);
 
-            this.vars[key] = value;
+            this.info.vars[key] = value;
         }
     }
 
@@ -158,8 +166,8 @@ class Tracery {
     }
 
     ParseKey(key) {
-        if (this.vars[key] !== undefined) {
-            return this.vars[key];
+        if (this.info.vars[key] !== undefined) {
+            return this.info.vars[key];
         }
 
         var dict = grammar;

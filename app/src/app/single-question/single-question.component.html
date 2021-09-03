@@ -1,13 +1,102 @@
-<div fxLayoutAlign="center center" class="root">    
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>{{question}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <p *ngFor="let a of answer.answers; let i = index;">({{i}}). {{a}}</p>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button (click)="getQuestion()">Refresh</button>
-        </mat-card-actions>
-    </mat-card>
+<div fxLayoutAlign="center center" class="root">
+    <div style="max-width: 90%; margin: auto; width: 800px; height: 600px;">
+        <mat-card style="max-width: 800px; width: 100%; height: 100%;" fxLayout="column">
+            <mat-card-header>
+                <mat-card-title>
+                    {{question.text}}
+                </mat-card-title>
+                <mat-card-subtitle>
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-divider [inset]="true" style="padding-top: 8px; padding-bottom: 8px;"></mat-divider>
+
+            <mat-card-content style="overflow: scroll;" fxFlex fxLayout="column" fxLayoutAlign="space-between">
+                <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
+
+                <div>
+                    <p>Who are these questions for?</p>
+                    <mat-form-field class="user-chip-list" appearance="fill">
+                        <mat-label>People</mat-label>
+                        <mat-chip-list #chipList aria-label="People selection">
+                            <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
+                                (removed)="removeUser(user)">
+                                {{user}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="New Person..." [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="usersAddOnBlur" (matChipInputTokenEnd)="addUser($event)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="row" fxLayoutGap="8px">
+                <button mat-raised-button color="primary" (click)="getQuestion()">
+                    New Question
+                </button>
+                <button mat-raised-button (click)="updateChoices()" *ngIf="getCanRefreshAnswers()">
+                    <mat-icon>casino</mat-icon> New Answers
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </div>
+
+<ng-template #answerMC>
+    <mat-radio-group class="radio-group">
+        <mat-radio-button class="radio-button" *ngFor="let choice of question.choices; let i = index;" [value]="i">
+            {{choice}}
+            <button mat-icon-button (click)="updateChoice(i)">
+                <mat-icon>casino</mat-icon>
+            </button>
+        </mat-radio-button>
+        <mat-radio-button class="radio-button" [value]="-1">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Other</mat-label>
+                <input matInput placeholder="Ex. something something">
+            </mat-form-field>
+        </mat-radio-button>
+    </mat-radio-group>
+</ng-template>
+
+<ng-template #answerText>
+    <mat-form-field class="answer-text-full-width" appearance="fill">
+        <mat-label>Answer</mat-label>
+        <textarea matInput [matTextareaAutosize]="true" placeholder="Ex. It makes me feel..."></textarea>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #answerRank>
+    <div cdkDropList class="rank-list" (cdkDropListDropped)="drop($event)">
+        <div class="rank-box" *ngFor="let choice of question.choices; let i = index;" cdkDrag>({{i+1}}). {{choice}}
+            <button mat-icon-button (click)="updateChoice(i)">
+                <mat-icon>casino</mat-icon>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #answerMA>
+    <div style="margin-top: 16px;">
+        <div *ngFor="let choice of question.choices; let i = index;">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>{{choice}}</mat-label>
+                <input matInput placeholder="Ex. something something">
+            </mat-form-field>
+            <button mat-icon-button (click)="updateChoice(i)">
+                <mat-icon>casino</mat-icon>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #answerDate>
+    <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</ng-template>

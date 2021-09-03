@@ -10,17 +10,23 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(process.cwd()+"/app/dist/app/"));
 
-app.get('/api/question', (req, res) => {
+app.post('/api/question', (req, res) => {
     let tracery = new Tracery();
     tracery.init();
+    tracery.addPeople(req.body.users);
     tracery.start();
-    res.json({question: tracery.question, answer: tracery.answer});
+    res.json({text: tracery.question, choices: tracery.choices, info: tracery.info});
 });
 
-app.post('/api/user', (req, res) => {
-    const user = req.body.user;
-    users.push(user);
-    res.json("user addedd");
+app.post('/api/choice', (req, res) => {
+    let tracery = new Tracery();
+    tracery.init();
+    tracery.addPeople(req.body.users);
+    tracery.question = req.body.question.text;
+    tracery.choices = req.body.question.choices;
+    tracery.info = req.body.question.info;
+    tracery.generateAnswer(req.body.choiceIndex);
+    res.json({text: tracery.question, choices: tracery.choices, info: tracery.info});
 });
 
 app.get('/', (req, res) => {

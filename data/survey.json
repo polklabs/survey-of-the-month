@@ -13,6 +13,14 @@
 		"[answerType:text]If you have a question you want on the next survey, you may write it below",
 		"[answerType:text]Tell me something you really like about one other person taking this survey"
 	],
+    "otherQuestions": [
+        "[answerType:text]A strange dream you can remember?",
+        "[answerType:text]If you could train any animal in the world to be your pet/protector, what would it be?",
+        "[answerType:mc][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
+        "[answerType:mc][answerKey:yesNo]Have you ever told someone you had a crush on them?",
+		"[answerType:text]Last show/movie you watched?",
+		"[answerType:text]If you could speak another language fluently, what language would you choose?"
+    ],
 	"question": [
 		"[answerType:text]What is your favorite #favoriteCategory#?",
 		"[answerType:text]Would you rather have #houseFeature.a# or #houseFeature.a#?",
@@ -24,9 +32,7 @@
 		"[answerType:mc][answerKey:career]You were just fired, choose a new career.",
 		"[answerType:mc][answerKey:expensiveThings]If #person.capitalize# wins the big lottery, they should buy you...",
 		"[answerType:mc][answerKey:world]Choose a world to live in...",
-		"[answerType:mc][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
-		"[answerType:mc][answerKey:yesNo]If #person.capitalize# had a crush on you, would you want them to tell you?",
-		"[answerType:text]A strange dream you can remember?",
+		"[answerType:mc][answerKey:yesNo]If #person.capitalize# had a crush on you, how would you want them to tell you?",
 		"[answerType:mc][answerKey:character]Who would win in a #event#?",
 		"[answerType:mc][answerKey:character]Choose your protector, the rest will try and kill you.",
 		"[answerType:mc][answerKey:animal]Choose your protector, the rest will try and kill you.",
@@ -45,17 +51,13 @@
 		"[answerType:text]What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
 		"[answerType:ma][answerKey:character][answerCount:3]F**k, marry, kill",
 		"[answerType:text]You're transported #1:100.range# #timeRange.s# into the #pastFuture#. What do you do?",
-		"[answerType:text]What's something you'd find in #person.capitalize#'s search history",
-		"[answerType:text]If you could train any animal in the world to be your pet/protector, what would it be?",
+		"[answerType:text]What's something you'd find in #person.capitalize#'s search history?",
 		"[answerType:mc][answerKey:creature]Oh whoah you were bitten by a creature and can now turn into its kind at will. What bit you?",
 		"[answerType:mc][answerKey:enchantedItem]You're on a #quest# to #quest_objective# a #quest_entity# and #quest_objective# a #quest_entity#. Which item do you choose?",
 		"[answerType:mc][answerKey:traits]You have two new character traits, what are they?",
 		"[answerType:text]What's a #favoriteCategory# you're weirdly obsessed with?",
-		"[answerType:mc][answerKey:yesNo]Have you ever told someone you had a crush on them?",
-		"[answerType:text]Last show/movie you watched?",
-		"[answerType:text]If you could speak another language fluently, what language would you choose?",
 		"[answerType:mc][answerKey:generalAnswers]Do you believe in ghosts and/or the paranormal/supernatural?",
-		"[answerType:rank][answerKey:generalThings]Rank the following.",
+		"[answerType:rank][answerKey:generalThings]Rank your #rankType# to the following.",
 		"[answerType:text]What's a song you think #person.capitalize# would like?",
 		"[answerType:text]What is your ideal #dayAspect# for a day in #month#?",
 		"[answerType:mc][answerKey:generalThings]Save one and the rest will go:",
@@ -178,6 +180,6 @@
 
 	"generalThings": [ "#season#", "#fastFood#", "#dessert#", "#drink#", "#universe#", "#world#", "#animal#", "#instrument#" ],
 
-	"podcast": [ "Why #character_simple.s# are so #adjective#", "#store# is the best place to #verb#", "Everyone is so #traits# these days", "Not another #generalThings# podcast", "The #adjective# Zone", "My #relation#, My #relation# and #person.capitalize#", "My life is going #adverb#!", "To #adverb# go where no #character_simple# has gone before." ]
-
+	"podcast": [ "Why #character_simple.s# are so #adjective#", "#store# is the best place to #verb#", "Everyone is so #traits# these days", "Not another #generalThings# podcast", "The #adjective# Zone", "My #relation#, My #relation# and #person.capitalize#", "My life is going #adverb#!", "To #adverb# go where no #character_simple# has gone before." ],
+    "rankType": ["liking", "hating", "attraction"]
 }
