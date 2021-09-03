@@ -24,7 +24,7 @@ export class SingleQuestionComponent implements OnInit {
     @ViewChild('answerDate', { static: true }) answerDate!: TemplateRef<any>;
 
     question: Question = new Question();
-    users: string[] = ['Bob', 'Alice', 'Ted', 'Carol'];
+    users: string[] = ['Bob', 'Alice'];
 
     debounceButton = false;
 
