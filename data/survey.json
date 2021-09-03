@@ -1,6 +1,6 @@
 {
 	"origin": [ "#intro_question#", "#question#", "#close_question#" ],
-
+    
 	"intro_question": [
 		"[answerType:text]How are you doing this fine day of #monthNow#?",
 		"[answerType:mc][answerKey:generalAnswers]Are you excited to take this survey?"
@@ -42,7 +42,7 @@
 		"[answerType:date]Predict the date that #person.capitalize# will get a BF/GF.",
 		"[answerType:text]Have you ever gotten #receivedThing#? What for?",
 		"[answerType:text]Your last #messageType# is going to be the only marking on your tombstone. So what does it say?",
-		"[answerType:text]The #numberPlace# sentence on page #1:250.range# of the book closest to you, describes your #lifeAspect#",
+		"[answerType:text]The #numberPlace# sentence on page #1:150.range# of the book closest to you, describes your #lifeAspect#",
 		"[answerType:text]What was your first impression of #person.capitalize#",
 		"[answerType:text]For some reason you're making your cashier at #store# very uncomfortable. What are you buying?",
 		"[answerType:mc][answerKey:enchantedObject]You're off to fight #fighter# but can't find your #fighter_weapon#! Choose an alternative weapon you can find",

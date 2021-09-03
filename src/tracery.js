@@ -31,7 +31,9 @@ class Tracery {
     }
     
     addPeople(people) {
-        this.customDict['person'] = people;
+        if (people.length > 0) {
+            this.customDict['person'] = people;
+        }
     }
 
     start(origin = 'question') {
@@ -85,6 +87,7 @@ class Tracery {
         var dict = grammar;
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
+        if (dict[key].length === 0) return key;
         return dict[key][randomNext(0, dict[key].length)];
     }
 
@@ -172,7 +175,7 @@ class Tracery {
 
         var dict = grammar;
         if (dict[key] === undefined) dict = this.customDict;
-        if (dict[key] === undefined) return this.ParseString(this.GetRandom(key));
+        if (dict[key] === undefined) return key;
 
         // Make sure that we haven't already chosen this option
         var value = this.ParseString(this.GetRandom(key));
