@@ -74,7 +74,7 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     getAnswerTemplate(): TemplateRef<any> {
-        switch (this.question.info.answerType) {
+        switch (this.question.answerType) {
             case 'mc':
                 return this.answerMC;
             case 'text':
@@ -86,12 +86,12 @@ export class SingleQuestionComponent implements OnInit {
             case 'date':
                 return this.answerDate;
             default:
-                throw new Error(`Unknown Answer Type: ${this.question.info.answerType}`);
+                throw new Error(`Unknown Answer Type: ${this.question.answerType}`);
         }
     }
 
     getCanRefreshAnswers(): boolean {
-        const at = this.question.info.answerType;
+        const at = this.question.answerType;
         return (at === 'mc' || at === 'rank' || at === 'ma');
     }
 

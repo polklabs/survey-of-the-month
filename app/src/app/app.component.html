@@ -1,1 +1,20 @@
-<app-single-question></app-single-question>
+<mat-toolbar color="primary">
+    <mat-icon>menu</mat-icon>
+    <span class="header-title" (click)="homeButton.click()">Survey Of The Month</span>
+    <button #homeButton type="button" routerLink="home" hidden>Survey Of The Month</button>
+    
+    <!-- <span style="font-size: smaller; padding-left: 32px;">TEMP</span> -->
+    
+    <span class="header-spacer"></span>
+    
+    <!-- <button mat-icon-button aria-label="Edit site settings" (click)="newLedgerPath()">
+        <mat-icon>settings</mat-icon>
+    </button> -->
+    <a mat-icon-button aria-label="Visit the github" href="https://github.com/polklabs/survey-of-the-month" target="_blank">
+        <mat-icon>share</mat-icon>
+    </a>
+</mat-toolbar>
+
+<div style="height: calc(100% - 64px); overflow: auto;" class="base-survey-container">
+    <router-outlet></router-outlet>
+</div>

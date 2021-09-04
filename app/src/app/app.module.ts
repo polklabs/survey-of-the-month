@@ -1,23 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/module/core.module';
 import { SingleQuestionComponent } from './single-question/single-question.component';
-import { HttpClientModule } from '@angular/common/http';
+import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SingleQuestionComponent
+    SingleQuestionComponent,
+    SurveyMakerComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
 
-    CoreModule
+    CoreModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

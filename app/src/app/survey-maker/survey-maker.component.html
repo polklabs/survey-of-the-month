@@ -1,0 +1,19 @@
+<p>survey-maker works!</p>
+<button mat-raised-button (click)="createSurveyTest()">Create 10 Question Survey</button>
+<button mat-raised-button (click)="getSurvey()">Fetch Survey</button>
+
+<mat-card>
+    <mat-card-content>
+        <p *ngFor="let q of survey.questions">{{q.text}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="submitSurveyTest()">Submit</button>
+    </mat-card-actions>
+</mat-card>
+
+<button mat-raised-button>Basic</button>
+<button mat-raised-button color="primary">Primary</button>
+<button mat-raised-button color="accent">Accent</button>
+<button mat-raised-button color="warn">Warn</button>
+<button mat-raised-button disabled>Disabled</button>
+<a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
