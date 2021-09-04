@@ -50,6 +50,24 @@ export class DataService {
     return [result, progress];
   }
 
+  putData(route: string, data: any): Observable<any>[] {
+    const result = new AsyncSubject<any>();
+    const progress = new BehaviorSubject<number>(0);
+
+    this.http.put(`${this.rootURL}/${route}`, data,
+      {
+        observe: 'events',
+        reportProgress: true,
+        responseType: 'json'
+      }).subscribe(
+        (response: HttpEvent<any>) => {
+          this.httpEvent(response, result, progress);
+        }
+    );
+
+    return [result, progress];
+  }
+
   private httpEvent(response: HttpEvent<any>, result: AsyncSubject<any>, progress: BehaviorSubject<number>): void {
     switch (response.type) {
       case 0:

@@ -1,7 +1,9 @@
-import { QuestionInfo } from "./question-info.model";
-
 export class Question {
+    questionId: string = '';
     text: string = '';
     choices: string[] = [];
-    info: QuestionInfo = new QuestionInfo();
+    answerKey: string = '';
+    answerType: string = 'text';
+    answerCount: number = 0;
+    allowOther: boolean = true;
 }
