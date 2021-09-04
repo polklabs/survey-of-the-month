@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/polklabs/survey-of-the-month",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "node-couchdb": "^1.3.0",
     "webpack": "^5.51.2"
   },
   "devDependencies": {
