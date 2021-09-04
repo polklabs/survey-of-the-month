@@ -1,0 +1,57 @@
+{
+    "universe": [
+        "Disney/Pixar",
+        "Marvel",
+        "DC",
+        "Star Wars",
+        "Star Trek",
+        "Harry Potter",
+        "The Lord of the Rings",
+        "Terminator",
+        "Pirates of the Caribbean",
+        "Chronicles of Narnia",
+        "Ghostbusters",
+        "Hunger Games",
+        "Indiana Jones",
+        "Studio Ghibli",
+        "Transformers",
+        "X-Men"
+    ],
+    "world_pixar": [
+        "Toy Story",
+        "A Bug's Life",
+        "Monsters, Inc",
+        "Finding Nemo",
+        "The Incredibles",
+        "Cars",
+        "Ratatouille",
+        "WALL-E",
+        "Up",
+        "Brave",
+        "Inside Out",
+        "The Good Dinosaur",
+        "Finding Dory",
+        "Coco",
+        "Onward",
+        "Soul",
+        "Luca"
+    ],
+    "world_sitcom": [
+        "The Office",
+        "Friends",
+        "Parks and Recreation",
+        "New Girl",
+        "It's Always Sunny In Philadelphia",
+        "Community",
+        "30 Rock",
+        "Scrubs",
+        "Brooklyn Nine-Nine",
+        "Schitt's Creek",
+        "How I Met Your Mother",
+        "Superstore"
+    ],
+    "world": [
+        "#world_pixar#",
+        "#world_sitcom#"
+    ]
+}

@@ -1,0 +1,87 @@
+{
+    "yesNo": [
+        "yes",
+        "no"
+    ],
+    "generalAnswers": [
+        "yes",
+        "no",
+        "kind of",
+        "not really",
+        "maybe",
+        "eh",
+        "of course"
+    ],
+    "month": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ],
+    "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thrusday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    ],
+    "timeRange": [
+        "day",
+        "week",
+        "month",
+        "year"
+    ],
+    "color": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet",
+        "white",
+        "black",
+        "pink"
+    ],
+    "season": [
+        "spring",
+        "summer",
+        "fall",
+        "winter"
+    ],
+    "pastFuture": [
+        "past",
+        "future"
+    ],
+    "relation": [
+        "older sibling",
+        "younger sibling",
+        "twin",
+        "aunt",
+        "cousin",
+        "mother",
+        "grandmother",
+        "father",
+        "grandfather",
+        "uncle",
+        "son",
+        "daughter",
+        "brother",
+        "sister"
+    ],
+    "numberPlace": [
+        "1st",
+        "2nd",
+        "3rd"
+    ]
+}
