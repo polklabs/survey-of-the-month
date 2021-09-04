@@ -6,8 +6,9 @@ const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm;
 const regexVars = /^(?<vars>(\[[a-zA-Z0-9_:#]+?\])+)/m;
 const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z]*?)#)/m;
 
-var grammar = loadGrammar();
-
+const grammar = {};
+const loadedfiles = [];
+loadGrammar('survey.json');
 
 class Tracery {
 
@@ -16,21 +17,16 @@ class Tracery {
 
     question = '';
     choices = [];
-    info = {
-        answerKey: '',
-        answerType: 'text',
-        answerCount: 0,
-        allowOther: true,
-        vars: {}
-    };
+    answerKey = '';
+    answerType = 'text';
+    answerCount = 0;
+    allowOther = true;
+    vars = {};
     
 
-    init() {
+    init(people = []) {
         this.customDict['monthNow'] = months[(new Date()).getMonth()];        
         this.seen = {};
-    }
-    
-    addPeople(people) {
         if (people.length > 0) {
             this.customDict['person'] = people;
         }
@@ -39,35 +35,55 @@ class Tracery {
     start(origin = 'question') {
         this.question = '';
         this.choices = [];
-        this.info = {
-            answerKey: '',
-            answerType: 'text',
-            answerCount: 0,
-            allowOther: true,
-            vars: {}
-        };
+        this.answerKey = '';
+        this.answerType = 'text';
+        this.answerCount = 0;
+        this.allowOther = true;
+        this.vars = {};
 
         this.generateQuestion(origin);
         this.generateAnswer();
     }
 
+    getJSON() {
+        return {
+            text: this.question, 
+            choices: this.choices,
+            answerKey: this.answerKey,
+            answerType: this.answerType,
+            answerCount: this.answerCount,
+            allowOther: this.allowOther,
+            vars: this.vars
+        };
+    }
+
+    setJSON(json) {
+        this.question = json.text;
+        this.choices = json.choices;
+        this.answerKey = json.answerKey;
+        this.answerType = json.answerType;
+        this.answerCount = json.answerCount;
+        this.allowOther = json.allowOther;
+        this.vars = json.vars;
+    }
+
     generateQuestion(origin) {
         this.question = this.ParseKey(origin);
-        if (this.info.vars['answerType'] !== undefined) {
-            this.info.answerType = this.info.vars['answerType'];
+        if (this.vars['answerType'] !== undefined) {
+            this.answerType = this.vars['answerType'];
         }
-        if (this.info.vars['answerAllowOther'] !== undefined) {
-            this.info.allowOther = this.info.vars['answerAllowOther'];
+        if (this.vars['answerAllowOther'] !== undefined) {
+            this.allowOther = this.vars['answerAllowOther'];
         }
-        if (this.info.vars['answerKey'] !== undefined) {
-            this.info.answerKey = this.info.vars['answerKey'];
+        if (this.vars['answerKey'] !== undefined) {
+            this.answerKey = this.vars['answerKey'];
 
-            if (this.info.vars['answerCount'] !== undefined) {
-                this.info.answerCount = +this.info.vars['answerCount'];
+            if (this.vars['answerCount'] !== undefined) {
+                this.answerCount = +this.vars['answerCount'];
             }
-            if (this.info.answerCount === 0) {
-                this.info.answerCount = randomNext(3,5);
-                if (this.info.answerKey === 'yesNo') this.info.answerCount = 2;
+            if (this.answerCount === 0) {
+                this.answerCount = randomNext(3,5);
+                if (this.answerKey === 'yesNo') this.answerCount = 2;
             }
         }
     }
@@ -75,11 +91,11 @@ class Tracery {
     generateAnswer(index = -1) {
         if (index === -1) {
             this.choices = [];
-            for (let i = 0; i < this.info.answerCount; i++) {                
-                this.choices.push(this.ParseString(`#${this.info.answerKey}.capitalize#`));
+            for (let i = 0; i < this.answerCount; i++) {                
+                this.choices.push(this.ParseString(`#${this.answerKey}.capitalize#`));
             }
         } else {
-            this.choices[index] = this.ParseString(`#${this.info.answerKey}.capitalize#`);
+            this.choices[index] = this.ParseString(`#${this.answerKey}.capitalize#`);
         }
     }
 
@@ -126,7 +142,7 @@ class Tracery {
             let value = m.groups['value'];
             value = this.ParseString(value);
 
-            this.info.vars[key] = value;
+            this.vars[key] = value;
         }
     }
 
@@ -169,8 +185,8 @@ class Tracery {
     }
 
     ParseKey(key) {
-        if (this.info.vars[key] !== undefined) {
-            return this.info.vars[key];
+        if (this.vars[key] !== undefined) {
+            return this.vars[key];
         }
 
         var dict = grammar;
@@ -203,9 +219,28 @@ function randomNext(minValue, maxValue) {
     return Math.floor((Math.random()*(maxValue-minValue))+minValue);
 }
 
-function loadGrammar() {
-    return JSON.parse(fs.readFileSync('./data/survey.json',
+// Load multiple grammar files and merge them
+function loadGrammar(filename) {
+    loadedfiles.push(filename);
+
+    grammarTemp = JSON.parse(fs.readFileSync(`./data/${filename}`,
             {encoding:'utf8', flag:'r'}));
+
+    Object.keys(grammarTemp).forEach(key => {
+        if (grammar[key] === undefined) {
+            grammar[key] = grammarTemp[key];
+        } else {
+            grammar[key].concat(grammarTemp[key]);
+        }
+    });
+
+    if (grammarTemp['require!'] !== undefined) {
+        grammarTemp['require!'].forEach(file => {
+            if (loadedfiles.findIndex(x => x === file) === -1) {
+                loadGrammar(file);
+            }
+        })
+    }
 }
 
 module.exports = Tracery;
