@@ -123,6 +123,9 @@ class Tracery {
                 const values = value.split(":");
                 const start = +values[0];
                 const end = +values[1];
+                if (values.length === 3) {
+                    return roundUp(randomNext(start, end), +values[2]).toString();
+                }
                 return randomNext(start, end).toString();
             default:
                 console.log(`Unknown Mod: ${mod}`);
@@ -217,6 +220,19 @@ class Tracery {
 
 function randomNext(minValue, maxValue) {
     return Math.floor((Math.random()*(maxValue-minValue))+minValue);
+}
+
+function roundUp(numToRound, multiple=0) {
+    if (multiple === 0) return numToRound;
+
+    const remainder = Math.abs(numToRound) % multiple;
+    if (remainder === 0) numToRound;
+
+    if (numToRound < 0) {
+        return -(Math.abs(numToRound) - remainder);
+    } else {
+        return numToRound + multiple - remainder;
+    }
 }
 
 // Load multiple grammar files and merge them
