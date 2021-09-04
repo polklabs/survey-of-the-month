@@ -1,34 +1,67 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 port = 3080;
 
+const NodeCouchDb = require('node-couchdb');
+const couch = new NodeCouchDb({
+    auth: {
+        user: 'admin',
+        pass: 'lagrange'
+    }
+});
+
 const Tracery = require('./src/tracery.js');
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.static(process.cwd()+"/app/dist/app/"));
 
+// Generate a completely new question
 app.post('/api/question', (req, res) => {
     let tracery = new Tracery();
-    tracery.init();
-    tracery.addPeople(req.body.users);
+    tracery.init(req.body.users);
     tracery.start();
-    res.json({text: tracery.question, choices: tracery.choices, info: tracery.info});
+    res.json(tracery.getJSON());
 });
 
+// Regenerate answers for a specific choice or all
+// choiceIndex = -1 for all
 app.post('/api/choice', (req, res) => {
     let tracery = new Tracery();
-    tracery.init();
-    tracery.addPeople(req.body.users);
-    tracery.question = req.body.question.text;
-    tracery.choices = req.body.question.choices;
-    tracery.info = req.body.question.info;
+    tracery.init(req.body.users);
+    tracery.setJSON(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
-    res.json({text: tracery.question, choices: tracery.choices, info: tracery.info});
+    res.json(tracery.getJSON());
 });
 
+// Save survey
+app.put('/api/survey', (req, res) => {
+    couch.insert('surveys', req.body).then(({data, headers, status}) => {
+        res.json({ok: true, data, headers, status});
+    }, err => {
+        res.json({ok: false, error: err});
+    });
+});
+
+// Get Survey
+app.get('/api/survey', (req, res) => {
+    couch.get('surveys', req.query.id).then(({data, headers, status}) => {
+        res.json({ok: true, data, headers, status});
+    }, err => {
+        res.json({ok: false, error: err});
+    });
+});
+
+// Submit answers
+app.put('/api/answer', (req, res) => {
+
+});
+
+// Get the angular app files
 app.get('/', (req, res) => {
     res.sendFile(process.cwd()+"/app/dist/app/index.html");
 });
