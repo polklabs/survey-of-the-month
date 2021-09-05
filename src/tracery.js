@@ -1,13 +1,13 @@
 const fs = require('fs');
+const tMath = require('./tracery.math');
+const tMod = require('./tracery.mod');
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const vowels = 'aeiouAEIOU';
-const consonants = 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ';
 
 const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm;
 const regexVars = /^(?<vars>(\[[a-zA-Z0-9_:.#]+?\])+)/m;
-const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z.]*?)#)/m;
-const regexInlineChoice = /\$(?<choice>.+?:.+?)\$/m;
+const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m;
+const regexInlineChoice = /\^\$(?<choice>.+?:.+?)\$/m;
 
 const grammar = {};
 const loadedfiles = [];
@@ -27,8 +27,7 @@ class Tracery {
     answerOrigin = -1;
     vars = {};
 
-
-    init(people = []) {
+    constructor(people = []) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.seen = {};
         this.answerOrigin = -1;
@@ -98,7 +97,7 @@ class Tracery {
                 this.answerCount = +this.vars['answerCount'];
             }
             if (this.answerCount === 0) {
-                this.answerCount = randomNext(3, 5);
+                this.answerCount = tMath.randomNext(3, 5);
                 if (this.answerKey === 'yesNo') this.answerCount = 2;
             }
         }
@@ -120,7 +119,7 @@ class Tracery {
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
         if (dict[key].length === 0) return key;
-        const value = randomNext(0, dict[key].length);
+        const value = tMath.randomNext(0, dict[key].length);
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.answerOrigin !== -1) {
@@ -131,58 +130,6 @@ class Tracery {
         }
 
         return dict[key][value];
-    }
-
-    ModString(value, mod) {
-        const mods = mod.split('.');
-        let toReturn = value;
-        mods.forEach(m => {
-            switch (m) {
-                case 'capitalize':
-                    toReturn = value.substring(0, 1).toUpperCase() + value.substring(1);
-                    break;
-                case 'a':
-                    toReturn = vowels.indexOf(value[0]) >= 0 ? `an ${value}` : `a ${value}`;
-                    break;
-                case 'ed':
-                    if (value.endsWith("e"))
-                        toReturn = `${value}d`;
-                    else
-                        toReturn = `${value}ed`;
-                    break;
-                case 's':
-                    if (value.endsWith("es"))
-                        toReturn = value;
-                    else if (value.endsWith("s"))
-                        toReturn = `${value}es`;
-                    else if (value.endsWith('y') && consonants.indexOf(value[value.length-2]) >= 0)
-                        toReturn = `${value.substring(0, value.length-1)}ies`;
-                    else
-                        toReturn = `${value}s`;
-                    break;
-                case 'possessive':
-                    if (value.endsWith("s"))
-                        toReturn = `${value}'`;
-                    else
-                        toReturn = `${value}'s`;
-                    break;
-                case 'range':
-                    const values = value.split(":");
-                    const start = +values[0];
-                    const end = +values[1];
-                    if (values.length === 3) {
-                        toReturn = roundUp(randomNext(start, end), +values[2]).toString();
-                        break;
-                    } else
-                        toReturn = randomNext(start, end).toString();
-                    break;
-                default:
-                    console.log(`Unknown Mod: ${m}`);
-                    toReturn = value;
-                    break;
-            }
-        });
-        return toReturn;
     }
 
     ParseVariables(variables) {
@@ -212,7 +159,7 @@ class Tracery {
             const choices = m.groups['choice'].split(':');
             if (choices.length === 0) value = value.replace(m[0], '');
 
-            value = value.replace(m[0], choices[randomNext(0, choices.length)]);
+            value = value.replace(m[0], choices[tMath.randomNext(0, choices.length)]);
         }
         return value;
     }
@@ -248,7 +195,7 @@ class Tracery {
 
             let toReturn = this.ParseKey(key);
             if (mod !== '') {
-                toReturn = this.ModString(toReturn, mod);
+                toReturn = tMod.ModString(toReturn, mod);
             }
 
             value = value.replace(m[0], toReturn);
@@ -286,23 +233,6 @@ class Tracery {
         return value;
     }
 
-}
-
-function randomNext(minValue, maxValue) {
-    return Math.floor((Math.random() * (maxValue - minValue)) + minValue);
-}
-
-function roundUp(numToRound, multiple = 0) {
-    if (multiple === 0) return numToRound;
-
-    const remainder = Math.abs(numToRound) % multiple;
-    if (remainder === 0) numToRound;
-
-    if (numToRound < 0) {
-        return -(Math.abs(numToRound) - remainder);
-    } else {
-        return numToRound + multiple - remainder;
-    }
 }
 
 // Load multiple grammar files and merge them
