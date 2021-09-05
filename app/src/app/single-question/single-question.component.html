@@ -21,7 +21,7 @@
             <mat-card-subtitle>Question</mat-card-subtitle>
             <!-- <mat-card-title>Shiba Inu</mat-card-title> -->
             <mat-card-content>
-              <p>{{question.text}}</p>
+              <p [innerHTML]="question.text"></p>
               <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
             </mat-card-content>
             <mat-divider inset></mat-divider>
