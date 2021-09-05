@@ -25,7 +25,7 @@ class Tracery {
     
 
     init(people = []) {
-        this.customDict['monthNow'] = months[(new Date()).getMonth()];        
+        this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.seen = {};
         if (people.length > 0) {
             this.customDict['person'] = people;
@@ -43,6 +43,11 @@ class Tracery {
 
         this.generateQuestion(origin);
         this.generateAnswer();
+    }
+
+    simpleStart(origin) {
+        this.vars = {};
+        return this.ParseKey(origin);
     }
 
     getJSON() {
@@ -117,6 +122,7 @@ class Tracery {
                 if (value.endsWith("e")) return `${value}d`;
                 return `${value}ed`;
             case 's':
+                if (value.endsWith("es")) return value;
                 if (value.endsWith("s")) return `${value}es`;
                 return `${value}s`;
             case 'range':

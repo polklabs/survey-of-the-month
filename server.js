@@ -20,6 +20,22 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(process.cwd()+"/app/dist/app/"));
 
+app.get('/api/home', (req, res) => {
+    let tracery = new Tracery();
+    tracery.init();
+    const title = tracery.simpleStart('home_page_title');
+    const subtitle = tracery.simpleStart('home_page_subtitle');
+    const text = tracery.simpleStart('home_page_text');
+    res.json({title, subtitle, text});
+});
+
+app.get('/api/single', (req, res) => {
+    let tracery = new Tracery();
+    tracery.init();
+    const text = tracery.simpleStart(req.query.id);
+    res.json({text});
+});
+
 // Generate a completely new question
 app.post('/api/question', (req, res) => {
     let tracery = new Tracery();
