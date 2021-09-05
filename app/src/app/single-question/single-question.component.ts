@@ -48,6 +48,10 @@ export class SingleQuestionComponent implements OnInit {
         this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1 });
     }
 
+    updateQuestion(): void {
+        this.callApi('question', { users: this.users, answerOrigin: this.question.answerOrigin });
+    }
+
     callApi(endpoint: string, data: any): void {
         if (this.debounceButton) return;
         this.debounceButton = true;

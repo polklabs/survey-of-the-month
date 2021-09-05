@@ -5,5 +5,6 @@ export class Question {
     answerKey: string = '';
     answerType: string = 'text';
     answerCount: number = 0;
+    answerOrigin: number = -1;
     allowOther: boolean = true;
 }

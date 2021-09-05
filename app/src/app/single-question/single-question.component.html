@@ -25,9 +25,11 @@
               <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
             </mat-card-content>
             <mat-divider inset></mat-divider>
-            <mat-card-actions fxLayoutGap="16px">
+            <mat-card-actions fxLayoutGap="8px" fxLayout="row">
               <button mat-flat-button color="primary" [disabled]="loading" (click)="getQuestion()">New Question</button>
-              <button mat-flat-button color="accent" [disabled]="loading" *ngIf="getCanRefreshAnswers()" (click)="updateChoices()">New Answers</button>
+              <div fxFlex></div>
+              <button mat-flat-button color="accent" [disabled]="loading" *ngIf="getCanRefreshAnswers()" (click)="updateChoices()"><mat-icon>casino</mat-icon> Answers</button>
+              <!-- <button mat-flat-button color="accent" [disabled]="loading" (click)="updateQuestion()"><mat-icon>casino</mat-icon> Question</button> -->
             </mat-card-actions>
             <mat-card-footer>
               <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
