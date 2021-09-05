@@ -1,24 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { SingleQuestionComponent } from './single-question/single-question.component';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 
 const routes: Routes = [
-    // {
-    //     path: 'home',
-    //     component: HomeComponent,
-    //     data: {
-    //         title: 'Ledger | Home',
-    //     }
-    // },
     {
-        path: 'question',
-        component: SingleQuestionComponent,
+        path: 'home',
+        component: HomeComponent,
         data: {
-            title: 'Survey OTM |',
+            title: 'Survey OTM | Home',
         }
     },
-    
     {
         path: 'make-survey',
         component: SurveyMakerComponent,

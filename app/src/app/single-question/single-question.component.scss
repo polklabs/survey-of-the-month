@@ -3,8 +3,9 @@
 }
 
 mat-card {
-    width: 1200px;
+    width: calc(100% - 32px);
     height: auto;
+    max-width: 800px;
 }
 
 .radio-group {
@@ -28,7 +29,7 @@ mat-card {
     border: solid 1px #ccc;
     min-height: 60px;
     display: block;
-    background: white;
+    background: #303030;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -36,14 +37,14 @@ mat-card {
 .rank-box {
     padding: 20px 10px;
     border-bottom: solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
+    color: white;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
     cursor: move;
-    background: white;
+    background: #303030;
     font-size: 14px;
 }
 

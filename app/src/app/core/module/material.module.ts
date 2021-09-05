@@ -12,6 +12,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const material = [
     MatButtonModule,
@@ -27,6 +29,8 @@ const material = [
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatTooltipModule,
+    MatProgressBarModule,
 ];
 
 @NgModule({

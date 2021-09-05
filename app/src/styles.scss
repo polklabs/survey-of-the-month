@@ -42,3 +42,10 @@ p {
 .mat-radio-label-content {
     white-space: normal;
 }
+
+mat-tooltip-component > .mat-tooltip {
+    font-size: medium !important;
+    // word-break: break-all !important;
+    white-space: pre-line !important;
+    max-width: 800px !important;
+}

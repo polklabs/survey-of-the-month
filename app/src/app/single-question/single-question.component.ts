@@ -27,6 +27,7 @@ export class SingleQuestionComponent implements OnInit {
     users: string[] = ['Bob', 'Alice'];
 
     debounceButton = false;
+    loading = false;
 
     constructor(private dataService: DataService) { }
 
@@ -36,37 +37,30 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     getQuestion(): void {
-        if(this.debounceButton) return;
-        this.debounceButton = true;
-        setTimeout(()=>this.debounceButton = false, 250);
-
-        const [result, progress] = this.dataService.postData('question', { users: this.users });
-        result.subscribe((data: Question) => {
-            this.question = data;
-            console.log(this.question);
-        });
+        this.callApi('question', { users: this.users });
     }
 
     updateChoice(index: number): void {
-        if(this.debounceButton) return;
-        this.debounceButton = true;
-        setTimeout(()=>this.debounceButton = false, 250);
-
-        const [result, progress] = this.dataService.postData('choice', { question: this.question, users: this.users, choiceIndex: index });
-        result.subscribe((data: Question) => {
-            this.question = data;
-        });
+        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: index });
     }
 
     updateChoices(): void {
-        if(this.debounceButton) return;
-        this.debounceButton = true;
-        setTimeout(()=>this.debounceButton = false, 250);
+        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1 });
+    }
 
-        const [result, progress] = this.dataService.postData('choice', { question: this.question, users: this.users, choiceIndex: -1 });
-        result.subscribe((data: Question) => {
-            this.question = data;
-        });
+    callApi(endpoint: string, data: any): void {
+        if (this.debounceButton) return;
+        this.debounceButton = true;
+        setTimeout(() => this.debounceButton = false, 750);
+
+        this.loading = true;
+        const [result, progress] = this.dataService.postData(endpoint, data);
+        setTimeout(() => {
+            result.subscribe((data: Question) => {
+                this.question = data;
+                this.loading = false;
+            });
+        }, 500);
     }
 
     drop(event: CdkDragDrop<string[]>) {

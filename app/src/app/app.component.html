@@ -1,20 +1,25 @@
 <mat-toolbar color="primary">
-    <mat-icon>menu</mat-icon>
-    <span class="header-title" (click)="homeButton.click()">Survey Of The Month</span>
-    <button #homeButton type="button" routerLink="home" hidden>Survey Of The Month</button>
-    
+    <div class="header-title">
+        <mat-icon>poll</mat-icon>
+        <span (click)="homeButton.click()">Survey Of The Month</span>
+        <button #homeButton type="button" routerLink="home" hidden>Survey Of The Month</button>
+    </div>
+
     <!-- <span style="font-size: smaller; padding-left: 32px;">TEMP</span> -->
-    
+
     <span class="header-spacer"></span>
-    
-    <!-- <button mat-icon-button aria-label="Edit site settings" (click)="newLedgerPath()">
-        <mat-icon>settings</mat-icon>
-    </button> -->
-    <a mat-icon-button aria-label="Visit the github" href="https://github.com/polklabs/survey-of-the-month" target="_blank">
-        <mat-icon>share</mat-icon>
+
+    <a mat-icon-button href="https://github.com/polklabs/survey-of-the-month" aria-label="GitHub Repository"
+        aria-disabled="false" matTooltip="GitHub Repository">
+        <mat-icon svgIcon="github"></mat-icon>
     </a>
+
 </mat-toolbar>
 
-<div style="height: calc(100% - 64px); overflow: auto;" class="base-survey-container">
+<div style="height: calc(100% - 48px - 24px); overflow: auto;" class="base-survey-container">
     <router-outlet></router-outlet>
+</div>
+
+<div class="footer">
+    <a href="https://www.polklabs.com" target="_blank" rel="noopener" class="copyright-color">© 2021 Andrew Polk</a>
 </div>

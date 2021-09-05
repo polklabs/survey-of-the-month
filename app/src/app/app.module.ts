@@ -6,12 +6,14 @@ import { CoreModule } from './core/module/core.module';
 import { SingleQuestionComponent } from './single-question/single-question.component';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SingleQuestionComponent,
     SurveyMakerComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

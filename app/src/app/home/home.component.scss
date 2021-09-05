@@ -1,0 +1,20 @@
+h1,
+h2 {
+    text-align: center;
+}
+
+h1.large {
+    font-size: xxx-large;
+}
+
+h1 {
+    width: max-content;
+    margin: auto;
+    margin-top: 32px;
+    margin-bottom: 4px;
+}
+
+mat-progress-bar {
+    width: 275px; 
+    margin: auto;
+}

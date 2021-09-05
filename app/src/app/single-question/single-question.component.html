@@ -1,49 +1,42 @@
 <div fxLayoutAlign="center center" class="root">
-    <div style="max-width: 90%; margin: auto; width: 800px; height: 600px;">
-        <mat-card style="max-width: 800px; width: 100%; height: 100%;" fxLayout="column">
-            <mat-card-header>
-                <mat-card-title>
-                    {{question.text}}
-                </mat-card-title>
-                <mat-card-subtitle>
-                </mat-card-subtitle>
-            </mat-card-header>
+    <div style="margin: auto; width: 800px;">
+        <div>
+            <p>Who are these questions for?<mat-icon matTooltip="Names entered here will be insterted into generated question and answers" matTooltipTouchGestures="on">info</mat-icon></p>
+            <mat-form-field class="user-chip-list" appearance="fill">
+                <mat-label>People</mat-label>
+                <mat-chip-list #chipList aria-label="People selection">
+                    <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
+                        (removed)="removeUser(user)">
+                        {{user}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="New Person..." [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="usersAddOnBlur" (matChipInputTokenEnd)="addUser($event)">
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
 
-            <mat-divider [inset]="true" style="padding-top: 8px; padding-bottom: 8px;"></mat-divider>
-
-            <mat-card-content style="overflow-y: auto;" fxFlex fxLayout="column" fxLayoutAlign="space-between">
-                <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
-
-                <div>
-                    <p>Who are these questions for?</p>
-                    <mat-form-field class="user-chip-list" appearance="fill">
-                        <mat-label>People</mat-label>
-                        <mat-chip-list #chipList aria-label="People selection">
-                            <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
-                                (removed)="removeUser(user)">
-                                {{user}}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                            <input placeholder="New Person..." [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="usersAddOnBlur" (matChipInputTokenEnd)="addUser($event)">
-                        </mat-chip-list>
-                    </mat-form-field>
-                </div>
+        <mat-card>
+            <mat-card-subtitle>Question</mat-card-subtitle>
+            <!-- <mat-card-title>Shiba Inu</mat-card-title> -->
+            <mat-card-content>
+              <p>{{question.text}}</p>
+              <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
             </mat-card-content>
-
-            <mat-card-actions fxLayout="row" fxLayoutGap="8px">
-                <button mat-raised-button color="primary" (click)="getQuestion()">
-                    New Question
-                </button>
-                <button mat-raised-button (click)="updateChoices()" *ngIf="getCanRefreshAnswers()">
-                    <mat-icon>casino</mat-icon> New Answers
-                </button>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions fxLayoutGap="16px">
+              <button mat-flat-button color="primary" [disabled]="loading" (click)="getQuestion()">New Question</button>
+              <button mat-flat-button color="accent" [disabled]="loading" *ngIf="getCanRefreshAnswers()" (click)="updateChoices()">New Answers</button>
             </mat-card-actions>
-        </mat-card>
+            <mat-card-footer>
+              <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+            </mat-card-footer>
+          </mat-card>
     </div>
 </div>
 
+<!-- Answer Types -->
 <ng-template #answerMC>
     <mat-radio-group class="radio-group">
         <mat-radio-button class="radio-button" *ngFor="let choice of question.choices; let i = index;" [value]="i">
@@ -55,7 +48,7 @@
         <mat-radio-button class="radio-button" [value]="-1">
             <mat-form-field class="full-width" appearance="fill">
                 <mat-label>Other</mat-label>
-                <input matInput placeholder="Ex. something something">
+                <input matInput  placeholder="Ex. something something">
             </mat-form-field>
         </mat-radio-button>
     </mat-radio-group>
