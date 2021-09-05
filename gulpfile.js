@@ -36,7 +36,7 @@ function createProdBuildFolder() {
 
 function buildAngularCodeTask(cb) {
     log('building Angular code into the directory')
-    return exec('cd app && npm run build', function (err, stdout, stderr) {
+    return exec('cd app && npm run build-prod', function (err, stdout, stderr) {
         log(stdout);
         log(stderr);
         cb(err);
