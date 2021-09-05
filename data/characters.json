@@ -5,8 +5,12 @@
         "#character_lotr#",
         "#character_pixar#",
         "#character_harryPotter#",
+        "#character_marvel#",
+        "#character_marvel# pre powers",
+        "#character_friends#",
+        "#character_singer#",
+        "#character_dc#",
         "All five Bennet sisters",
-        "Dolly Parton with you by her side",
         "Yzma and her shapeshifting potions",
         "Steven Esqueleto",
         "Bella Swan from New Moon",
@@ -20,10 +24,26 @@
         "The Grinch",
         "Manny the mammoth",
         "Bubbles of the Powerpuffs",
-        "Ignacio aka Nacho",
         "Velma",
         "Ed Edd n Eddy",
-        "Audrey Ramirez (Atlantis)"
+        "Audrey Ramirez (Atlantis)",
+        "Ghostbusters",
+        "Indiana Jones",
+        "John Wick",
+        "Katniss Everdeen",
+        "Doc Brown",
+        "Marty McFly",
+        "Neo",
+        "Larry Daley (Night at the Museum)",
+        "Captain Jack Sparrow",
+        "Captain Kirk",
+        "Spock",
+        "Luke Skywalker",
+        "Darth Vader",
+        "Terminator",
+        "Optimus Prime",
+        "Wolverine",
+        "Professor X"
     ],
     "character_theOffice": [
         "Michael Scott",
@@ -142,7 +162,22 @@
         "Hermione Granger",
         "Harry Potter"
     ],
+    "character_marvel": [
+        "Hulk", "Winter Soldier", "Hawkeye", "Captain Marvel", "Drax", "Nick Fury", "Gamora", "Groot", "Ant-Man", "Loki", "Scarlet Witch", "Spider-Man", "Star-Lord", "War Machine", "Rocket Raccoon", "Captain America", "Black Widow", "Iron Man", "Doctor Stephen Strange", "Black Panther", "Thanos", "Thor", "Vision"
+    ],
+    "character_dc": [
+        "Superman", "Batman", "Wonderwoman", "Aquaman", "The Jocker", "Green Lantern", "Harley Quinn", "The Flash"
+    ],
+    "character_friends": [
+        "Rachel Green", "Monica Geller", "Phoebe Buffay", "Joey Tribbiani", "Chandler Bing", "Ross Geller"
+    ],
+    "character_singer": [
+        "Taylor Swift", "Justin Bieber", "Justice Beaver", "Dolly Parton", "Eminem", "Justin Timberlake", "Rihanna", "Adele", "Katy Perry", "Madonna", "Michael Jackson", "Shakira", "Snoop Dogg", "Mariah Carey", "Sir Elton John", "Prince", "Janis Joplin", "David Bowie", "Bob Marley", "Freddie Mercury", "The Beatles", "Elvis"
+    ],
     "characterGroup": [
         "#character#, #character#, and #character#"
+    ],
+    "characterClothes": [
+        "#character# wearing #clothing.a#", "#character# wearing #color.a# #clothing#", "#character# wearing #color.a# #clothing# and #color.a# #clothing#", "#character# wearing only #clothing.a#", "#character# wearing only #clothing.a# and #clothing.a#"
     ]
 }
