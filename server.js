@@ -40,6 +40,9 @@ app.get('/api/single', (req, res) => {
 app.post('/api/question', (req, res) => {
     let tracery = new Tracery();
     tracery.init(req.body.users);
+    if (req.body.answerOrigin !== undefined) {
+        tracery.answerOrigin = req.body.answerOrigin;
+    }
     tracery.start();
     res.json(tracery.getJSON());
 });
