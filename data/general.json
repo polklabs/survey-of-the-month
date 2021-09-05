@@ -13,6 +13,12 @@
         "of course",
         "what kind of question is that"
     ],
+    "generalReaction": [
+        "Nice",
+        "Cool",
+        "Woah",
+        "K"
+    ],
     "month": [
         "January",
         "February",
