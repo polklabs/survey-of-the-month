@@ -1,5 +1,5 @@
 {
-    "require!": ["characters.json", "general.json", "worlds.json", "things.json", "homePage.json"],
+    "require!": ["characters.json", "general.json", "worlds.json", "things.json", "homePage.json", "taskmaster.json"],
 
 	"origin": [ "#intro_question#", "#question#", "#close_question#" ],
 
@@ -16,15 +16,15 @@
 		"[answerType:text]Tell me something you really like about one other person taking this survey"
 	],
     "otherQuestions": [
-        "[answerType:text]A $most recent:strangest$ dream you can remember?",
+        "[answerType:text]A ^$most recent:strangest$ dream you can remember?",
         "[answerType:text]If you could train any animal in the world to be your pet/protector, what would it be?",
         "[answerType:mc][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
         "[answerType:mc][answerKey:yesNo]Have you ever told someone you had a crush on them?",
-		"[answerType:text]Last $show:movie$ you watched?",
+		"[answerType:text]Last ^$show:movie$ you watched?",
 		"[answerType:text]If you could speak another language fluently, what language would you choose?"
     ],
 	"question": [
-		"[answerType:text]What is your favorite #favoriteCategory#?",
+		"[answerType:text]What is your favorite <a href=\"https://www.youtube.com/\">#favoriteCategory#</a>?",
 		"[answerType:text]Would you rather have #houseFeature.a# or #houseFeature.a#?",
 		"[answerType:text]If you could travel to any #place# (all expense paid), where would you go?",
 		"[answerType:text]What do you think #person.capitalize#'s favorite #favoriteCategory# is?",
@@ -37,7 +37,7 @@
 		"[answerType:text]If #person.capitalize# had a crush on you, how would you want them to tell you?",
         "[answerType:mc][answerKey:bodyPart]#person.capitalize# has a crush on you, it's because of your?",
 		"[answerType:mc][answerKey:character]Who would win in a #event#?",
-		"[answerType:mc][answerKey:$character:animal:character_full$]Choose your protector, the rest will try and kill you.",
+		"[answerType:mc][answerKey:^$character:animal:character_full$]Choose your protector, the rest will try and kill you.",
 		"[answerType:mc][answerKey:relation]If #person.capitalize# was family, what relation would you prefer them to be?",
 		"[answerType:mc][answerKey:character]If you had to be stranded #location# with one of these people, who would you choose?",
 		"[answerType:date]Predict the date that #person.capitalize# will get a BF/GF.",
@@ -60,8 +60,8 @@
 		"[answerType:text]What's a #favoriteCategory# you're weirdly obsessed with?",
 		"[answerType:mc][answerKey:generalAnswers]Do you believe in ghosts and/or the paranormal/supernatural?",
 		"[answerType:rank][answerKey:generalThings]Rank your #rankType# to the following.",
-        "[answerType:rank][answerKey:$bodyPart:characterClothes:character$]Rank your attaction to the following.",
-		"[answerType:text]What's a $song:movie:TV show:book:podcast$ you think #person.capitalize# would like?",
+        "[answerType:rank][answerKey:^$bodyPart:characterClothes:character$]Rank your attaction to the following.",
+		"[answerType:text]What's a ^$song:movie:TV show:book:podcast$ you think #person.capitalize# would like?",
 		"[answerType:text]What is your ideal #dayAspect# for a day in #month#?",
 		"[answerType:mc][answerKey:generalThings]Save one and the rest will go:",
 		"[answerType:text][personA:#person#][jobA:#career#]You're writing a job reference for #personA.capitalize# to be accepted as a #jobA#. It asks: What is #personA#'s greatest area that needs improvement re #jobA#? What do you put?",
@@ -76,7 +76,7 @@
         "[answerType:text]You find yourself in the country of #country# with only #object.a# and $#1:50.range#. How do you get home?",
         "[answerType:mc][answerKey:object_descriptive]#state# is the nation's leader of?",
         "[answerType:mc][answerKey:generalAnswers]Do #animal.s# #verb_transitive# #object.s#?",
-        "[answerType:text]You wake up to the #networth_group# knocking at your door #networth_action# $how:why$ you're net worth is $#1:1000:20.range# #numberMagnatude#. What do you tell them?",
+        "[answerType:text]You wake up to the #networth_group# knocking at your door #networth_action# ^$how:why$ you're net worth is $#1:1000:20.range# #numberMagnatude#. What do you tell them?",
         "[answerType:text]What is the fastest way to get fired from your job as a #career#?",
         "[answerType:text]You have 5 minutes to hide a #object# in your home. A detective has #1:24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the paperclip?",
         "[answerType:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
@@ -85,19 +85,20 @@
         "[answerType:text]What fan theory do you 100% accept as true?",
         "[answerType:mc][answerKey:1Percent]You are now the 1% of?",
         "[answerType:text]You've been transformed into #animal.a#, how do you convince #person.capitalize# you're you?",
-        "[answerType:text][personA:#person.capitalize.possessive#]#personA# SO tells you they're only with them for #personA# $#bodyPart#:money:fame:pet$. How do you react?",
+        "[answerType:text][personA:#person.capitalize.possessive#]#personA# SO tells you they're only with them for #personA# ^$#bodyPart#:money:fame:pet$. How do you react?",
         "[answerType:text]You have to spend $#1:100.range# #numberMagnatude# as fast as possible, what do you buy?",
 		"[answerType:text]You're given #animal.a# as a pet. What do you name them?",
 		"[answerType:mc][answerKey:olympicSport]You must participate in an Olympic Sport.",
-		"[answerType:text]It's #1:12.range#:#0:59.range# $AM:PM$ on a #dayOfWeek# in #month#, we've got a full tank of gas, we're wearing #clothing# and it #10:1000.range# miles to ___.",
+		"[answerType:text]It's #1:12.range#:#0:59.range# ^$AM:PM$ on a #dayOfWeek# in #month#, we've got a full tank of gas, we're wearing #clothing# and it #10:1000.range# miles to ___.",
 		"[answerType:mc][answerKey:house]Choose your future home.",
 		"[answerType:text]What is your one rule?",
-		"[answerType:mc][answerKey:$character:animal$]Choose one to take on in a fight.",
+		"[answerType:mc][answerKey:^$character:animal$]Choose one to take on in a fight.",
 		"[answerType:text]A company formed by #person.capitalize.possessive# skill as #career.a# and #person.capitalize.possessive# as #career.a#, what would they sell?",
-		"[answerType:text]You have just been cheated out of $1000 for a #adjective# #object#. How do you take revenge?",
+		"[answerType:text]You have just been cheated out of $1,000 for a #adjective# #object#. How do you take revenge?",
 		"[answerType:mc][answerKey:photoDatingApp]A new dating app is launched. Instead of a photo of the person, it shows you a photo of their ____. What photo would tell you the most about someone, and would you be most interested to see to choose a potential date?",
 		"[answerType:text]You can telepathically say one thing to #person.capitalize#. When and what do you tell them?",
-		"[answerType:text][objectA:#object#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for 7 days. Where do you hide the #objectA.a#?"
+		"[answerType:text][objectA:#object#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for #2:7.range# days. Where do you hide the #objectA.a#?",
+        "[answerType:text]What is #_tm_prizeTask#^$?: that you own?$"
 	],
 
 	"adjective": [ "adorable", "adventurous", "aggressive", "agreeable", "alert", "alive", "amused", "angry", "annoyed", "annoying", "anxious", "arrogant", "ashamed", "attractive", "average", "awful", "bad", "beautiful", "better", "bewildered", "black", "bloody", "blue", "blue", "eyed", "blushing", "bored", "brainy", "brave", "breakable", "bright", "busy", "calm", "careful", "cautious", "charming", "cheerful", "clean", "clear", "clever", "cloudy", "clumsy", "colorful", "combative", "comfortable", "concerned", "condemned", "confused", "cooperative", "courageous", "crazy", "creepy", "crowded", "cruel", "curious", "cute", "dangerous", "dark", "dead", "defeated", "defiant", "delightful", "depressed", "determined", "different", "difficult", "disgusted", "distinct", "disturbed", "dizzy", "doubtful", "drab", "dull", "eager", "easy", "elated", "elegant", "embarrassed", "enchanting", "encouraging", "energetic", "enthusiastic", "envious", "evil", "excited", "expensive", "exuberant", "fair", "faithful", "famous", "fancy", "fantastic", "fierce", "filthy", "fine", "foolish", "fragile", "frail", "frantic", "friendly", "frightened", "funny", "gentle", "gifted", "glamorous", "gleaming", "glorious", "good", "gorgeous", "graceful", "grieving", "grotesque", "grumpy", "handsome", "happy", "healthy", "helpful", "helpless", "hilarious", "homeless", "homely", "horrible", "hungry", "hurt", "ill", "important", "impossible", "inexpensive", "innocent", "inquisitive", "itchy", "jealous", "jittery", "jolly", "joyous", "kind", "lazy", "light", "lively", "lonely", "long", "lovely", "lucky", "magnificent", "misty", "modern", "motionless", "muddy", "mushy", "mysterious", "nasty", "naughty", "nervous", "nice", "nutty", "obedient", "obnoxious", "odd", "old", "fashioned", "open", "outrageous", "outstanding", "panicky", "perfect", "plain", "pleasant", "poised", "poor", "powerful", "precious", "prickly", "proud", "putrid", "puzzled", "quaint", "real", "relieved", "repulsive", "rich", "scary", "selfish", "shiny", "shy", "silly", "sleepy", "smiling", "smoggy", "sore", "sparkling", "splendid", "spotless", "stormy", "strange", "stupid", "successful", "super", "talented", "tame", "tasty", "tender", "tense", "terrible", "thankful", "thoughtful", "thoughtless", "tired", "tough", "troubled", "ugliest", "ugly", "uninterested", "unsightly", "unusual", "upset", "uptight", "vast", "victorious", "vivacious", "wandering", "weary", "wicked", "wide", "eyed", "wild", "witty", "worried", "worrisome", "wrong", "zany", "zealous" ],
@@ -116,7 +117,7 @@
 	"houseType": ["house", "cottage", "mansion", "home", "hut", "tent", "yurt", "treehouse", "apartment", "log cabin"],
 	"houseLocation": ["sea", "mountains", "city", "forest", "desert", "lake", "delta", "prarie"],
 	"houseFeature": [ "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub" ],
-	"house": [ "#houseType.a.capitalize# $by:in$ the #houseLocation# with #houseFeature.a#" ],
+	"house": [ "#houseType.a.capitalize# ^$by:in$ the #houseLocation# with #houseFeature.a#" ],
 	
 	"location": [ "on an island", "in an elevator", "at a beach house" ],
 	"receivedThing": [ "detention", "a ticket", "an award" ],
@@ -165,7 +166,7 @@
     "networth_group": ["press", "police", "popaparazzi", "curch", "IRS", "country of #country#", "state of #state#"],
     "networth_action": ["asking", "investigating", "demanding to know", "wondering", "questioning", "inquiring", "reviewing"],
 
-    "1Percent": ["Owning $#animal.s#:#object.s#:#instrument#$", "Eating too much $#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "Playing #instrument#", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#"],
+    "1Percent": ["Owning ^$#animal.s#:#object.s#:#instrument#$", "Eating too much ^$#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "Playing #instrument#", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#"],
 
 	"olympicSport": [ "archery", "artistic swimming", "athletics", "badminton", "baseball", "basketball", "beach volleyball", "boxing", "breaking", "canoe slalom", "canoe sprint", "cycling BMX", "cycling mountain bike", "cycling road", "cycling track", "diving", "equestrian / dressage", "equestrian eventing", "equestrian jumping", "fencing", "field hockey", "golf", "gymnastics artistic", "gymnastics rhythmic", "handball", "judo", "karate", "marathon swimming", "modern pentathlon", "rowing", "rugby", "sailing", "shooting", "skateboarding", "soccer", "softball", "sport climbing", "surfing", "swimming", "table tennis", "taekwondo", "tennis", "trampoline", "triathlon", "volleyball", "water polo", "weightlifting", "wrestling freestyle", "wrestling greco-roman" ],
 
