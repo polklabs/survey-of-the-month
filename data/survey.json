@@ -16,11 +16,11 @@
 		"[answerType:text]Tell me something you really like about one other person taking this survey"
 	],
     "otherQuestions": [
-        "[answerType:text]A strange dream you can remember?",
+        "[answerType:text]A $most recent:strangest$ dream you can remember?",
         "[answerType:text]If you could train any animal in the world to be your pet/protector, what would it be?",
         "[answerType:mc][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
         "[answerType:mc][answerKey:yesNo]Have you ever told someone you had a crush on them?",
-		"[answerType:text]Last show/movie you watched?",
+		"[answerType:text]Last $show:movie$ you watched?",
 		"[answerType:text]If you could speak another language fluently, what language would you choose?"
     ],
 	"question": [
@@ -52,7 +52,8 @@
 		"[answerType:text]What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
 		"[answerType:ma][answerKey:character][answerCount:3]F**k, marry, kill",
 		"[answerType:text]You're transported #1:100.range# #timeRange.s# into the #pastFuture#. What do you do?",
-		"[answerType:text]What's something you'd find in #person.capitalize#'s search history?",
+		"[answerType:text]What's something you'd find in #person.capitalize.possessive# search history?",
+		"[answerType:text]What's something you'd find in #character.possessive# search history?",
 		"[answerType:mc][answerKey:creature]Oh whoah you were bitten by a creature and can now turn into its kind at will. What bit you?",
 		"[answerType:mc][answerKey:enchantedItem]You're on a #quest# to #quest_objective# a #quest_entity# and #quest_objective# a #quest_entity#. Which item do you choose?",
 		"[answerType:mc][answerKey:traits]You have two new character traits, what are they?",
@@ -77,7 +78,7 @@
         "[answerType:mc][answerKey:generalAnswers]Do #animal.s# #verb_transitive# #object.s#?",
         "[answerType:text]You wake up to the #networth_group# knocking at your door #networth_action# $how:why$ you're net worth is $#1:1000:20.range# #numberMagnatude#. What do you tell them?",
         "[answerType:text]What is the fastest way to get fired from your job as a #career#?",
-        "[answerType:text]You have 5 minutes to hide a #object# in your home. A detective has 24 hours to find it, If they don't, you get $10,000. Where are you going to hide the paperclip?",
+        "[answerType:text]You have 5 minutes to hide a #object# in your home. A detective has #1:24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the paperclip?",
         "[answerType:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
         "[answerType:mc][answerKey:yesNo]Reporters show up at your door telling you you've won an award for your #adjective# #bodyPart#. Do you accept it?",
         "[answerType:text]You’ve been kidnapped. 30 mins later your kidnapper dumps you on the street because you won’t stop talking about what?",
@@ -85,7 +86,18 @@
         "[answerType:mc][answerKey:1Percent]You are now the 1% of?",
         "[answerType:text]You've been transformed into #animal.a#, how do you convince #person.capitalize# you're you?",
         "[answerType:text][personA:#person.capitalize.possessive#]#personA# SO tells you they're only with them for #personA# $#bodyPart#:money:fame:pet$. How do you react?",
-        "[answerType:text]You have to spend $#1:100.range# #numberMagnatude# as fast as possible, what do you buy?"
+        "[answerType:text]You have to spend $#1:100.range# #numberMagnatude# as fast as possible, what do you buy?",
+		"[answerType:text]You're given #animal.a# as a pet. What do you name them?",
+		"[answerType:mc][answerKey:olympicSport]You must participate in an Olympic Sport.",
+		"[answerType:text]It's #1:12.range#:#0:59.range# $AM:PM$ on a #dayOfWeek# in #month#, we've got a full tank of gas, we're wearing #clothing# and it #10:1000.range# miles to ___.",
+		"[answerType:mc][answerKey:house]Choose your future home.",
+		"[answerType:text]What is your one rule?",
+		"[answerType:mc][answerKey:$character:animal$]Choose one to take on in a fight.",
+		"[answerType:text]A company formed by #person.capitalize.possessive# skill as #career.a# and #person.capitalize.possessive# as #career.a#, what would they sell?",
+		"[answerType:text]You have just been cheated out of $1000 for a #adjective# #object#. How do you take revenge?",
+		"[answerType:mc][answerKey:photoDatingApp]A new dating app is launched. Instead of a photo of the person, it shows you a photo of their ____. What photo would tell you the most about someone, and would you be most interested to see to choose a potential date?",
+		"[answerType:text]You can telepathically say one thing to #person.capitalize#. When and what do you tell them?",
+		"[answerType:text][objectA:#object#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for 7 days. Where do you hide the #objectA.a#?"
 	],
 
 	"adjective": [ "adorable", "adventurous", "aggressive", "agreeable", "alert", "alive", "amused", "angry", "annoyed", "annoying", "anxious", "arrogant", "ashamed", "attractive", "average", "awful", "bad", "beautiful", "better", "bewildered", "black", "bloody", "blue", "blue", "eyed", "blushing", "bored", "brainy", "brave", "breakable", "bright", "busy", "calm", "careful", "cautious", "charming", "cheerful", "clean", "clear", "clever", "cloudy", "clumsy", "colorful", "combative", "comfortable", "concerned", "condemned", "confused", "cooperative", "courageous", "crazy", "creepy", "crowded", "cruel", "curious", "cute", "dangerous", "dark", "dead", "defeated", "defiant", "delightful", "depressed", "determined", "different", "difficult", "disgusted", "distinct", "disturbed", "dizzy", "doubtful", "drab", "dull", "eager", "easy", "elated", "elegant", "embarrassed", "enchanting", "encouraging", "energetic", "enthusiastic", "envious", "evil", "excited", "expensive", "exuberant", "fair", "faithful", "famous", "fancy", "fantastic", "fierce", "filthy", "fine", "foolish", "fragile", "frail", "frantic", "friendly", "frightened", "funny", "gentle", "gifted", "glamorous", "gleaming", "glorious", "good", "gorgeous", "graceful", "grieving", "grotesque", "grumpy", "handsome", "happy", "healthy", "helpful", "helpless", "hilarious", "homeless", "homely", "horrible", "hungry", "hurt", "ill", "important", "impossible", "inexpensive", "innocent", "inquisitive", "itchy", "jealous", "jittery", "jolly", "joyous", "kind", "lazy", "light", "lively", "lonely", "long", "lovely", "lucky", "magnificent", "misty", "modern", "motionless", "muddy", "mushy", "mysterious", "nasty", "naughty", "nervous", "nice", "nutty", "obedient", "obnoxious", "odd", "old", "fashioned", "open", "outrageous", "outstanding", "panicky", "perfect", "plain", "pleasant", "poised", "poor", "powerful", "precious", "prickly", "proud", "putrid", "puzzled", "quaint", "real", "relieved", "repulsive", "rich", "scary", "selfish", "shiny", "shy", "silly", "sleepy", "smiling", "smoggy", "sore", "sparkling", "splendid", "spotless", "stormy", "strange", "stupid", "successful", "super", "talented", "tame", "tasty", "tender", "tense", "terrible", "thankful", "thoughtful", "thoughtless", "tired", "tough", "troubled", "ugliest", "ugly", "uninterested", "unsightly", "unusual", "upset", "uptight", "vast", "victorious", "vivacious", "wandering", "weary", "wicked", "wide", "eyed", "wild", "witty", "worried", "worrisome", "wrong", "zany", "zealous" ],
@@ -98,9 +110,13 @@
 	"traits": [ "#trait_good# and #trait_bad#", "#trait_good# but #trait_bad#" ],
 
 	"favoriteCategory": [ "song", "movie", "tv show", "food", "drink", "animal", "smell", "pizza topping", "fast food restaurant", "ice cream flavor", "chocolate candy", "fruity candy", "flavor Starburst", "dish at Olive Garden", "kind of sushi", "Asian dish", "Italian dish", "food of all time", "way to cook a steak", "pasta dish", "cookie", "fast food French fries", "cereal", "breakfast food", "pizza toppings", "fruit", "vegetable", "dessert", "comfort food", "way to eat bacon", "thing at a buffet", "pumpkin-flavored treat", "dish at Thanksgiving", "cake", "ice cream sundae toppings", "thing to cook", "soda", "alcoholic drink", "drink at Starbucks", "flavor coffee", "'80s movie", "Harry Potter movie", "Hobbit from the Lord of the Rings", "Simpsons character", "cartoon cat", "TV sitcom", "cartoon", "scary movie", "funny movie", "celebrity", "South Park character", "chick flick", "Pixar movie", "Family Guy character", "Leonardo DiCaprio movie", "actress over 50", "Marvel movie", "TV show", "cancelled TV series", "show on the Discovery Channel", "classic movie", "Beatles song", "string instrument", "instrument", "band or music artist", "music genre", "style of dance", "boy band", "disco song", "'80s song", "cover song", "one-hit wonder", "song you're embarrassed to like", "foreign band/artist", "state you've visited", "country you want to visit", "thing about America", "kind of vacation", "car", "road to drive on", "way to travel", "beach", "place to go with family", "vacation you�ve taken", "fictional place you�d want to visit", "ride at a carnival", "thing to do at the beach", "rollercoaster", "theme park", "thing about traveling", "dinosaur", "breed of dog", "season", "flower", "animal at the zoo", "type of bear", "natural disaster", "reptile", "animal", "bird", "thing in the sky", "thing about a rainy day", "sea creature", "color rose", "small mammal", "big cat", "thing about spring", "wild animal you�d like as a pet", "sport", "extreme sport you're too scared to do", "Olympic sport", "football team", "basketball team", "hockey team", "baseball team", "sport to play", "winter sport", "sport you wish you were a pro at", "professional athlete", "sport to watch in person", "nursery rhyme", "childhood memory", "board game", "children�s show", "toy as a child", "teacher", "thing about school", "age", "Christmas present", "Dr. Seuss book", "Halloween costume you've worn", "lunchbox snack", "Winnie the Pooh character", "thing to do during recess", "superhero", "video game", "color Power Ranger", "fairy tale", "game to play outside", "department store", "place to shop", "store in the mall", "perfume/cologne", "hair color", "makeup you can't live without", "shoes", "occasion to dress up for", "hairstyle", "outfit you have", "soap scent", "article of clothing", "place for a piercing", "piece of jewelry", "thing to wear to bed", "luxury brand", "brand of toilet paper", "candle scent", "extracurricular activity", "day of the week", "holiday", "website", "way to communicate", "Youtube video", "kind of house", "car color", "baby boy name", "baby girl name", "thing to do when you're sick", "person you've never met", "question you've answered so far", "thing you've done in the last 24 hours", "place to meet up with friends", "hobby", "way to cheer you up", "thing to look forward to", "kind of gift to receive", "crafty thing to make", "way to relax" ],
-	"houseFeature": [ "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar" ],
 	"place": [ "country", "state", "city", "state park" ],
 	"expensiveThings": [ "car", "house", "stocks", "trip", "education", "trip to space", "sports team", "plane", "casino", "debts", "private island", "snow machine", "indoor water slide", "make it rain", "exotic animal", "pet #animal#" ],
+	
+	"houseType": ["house", "cottage", "mansion", "home", "hut", "tent", "yurt", "treehouse", "apartment", "log cabin"],
+	"houseLocation": ["sea", "mountains", "city", "forest", "desert", "lake", "delta", "prarie"],
+	"houseFeature": [ "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub" ],
+	"house": [ "#houseType.a.capitalize# $by:in$ the #houseLocation# with #houseFeature.a#" ],
 	
 	"location": [ "on an island", "in an elevator", "at a beach house" ],
 	"receivedThing": [ "detention", "a ticket", "an award" ],
@@ -149,5 +165,9 @@
     "networth_group": ["press", "police", "popaparazzi", "curch", "IRS", "country of #country#", "state of #state#"],
     "networth_action": ["asking", "investigating", "demanding to know", "wondering", "questioning", "inquiring", "reviewing"],
 
-    "1Percent": ["Owning $#animal.s#:#object.s#:#instrument#$", "Eating too much $#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "Playing #instrument#", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#"]
+    "1Percent": ["Owning $#animal.s#:#object.s#:#instrument#$", "Eating too much $#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "Playing #instrument#", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#"],
+
+	"olympicSport": [ "archery", "artistic swimming", "athletics", "badminton", "baseball", "basketball", "beach volleyball", "boxing", "breaking", "canoe slalom", "canoe sprint", "cycling BMX", "cycling mountain bike", "cycling road", "cycling track", "diving", "equestrian / dressage", "equestrian eventing", "equestrian jumping", "fencing", "field hockey", "golf", "gymnastics artistic", "gymnastics rhythmic", "handball", "judo", "karate", "marathon swimming", "modern pentathlon", "rowing", "rugby", "sailing", "shooting", "skateboarding", "soccer", "softball", "sport climbing", "surfing", "swimming", "table tennis", "taekwondo", "tennis", "trampoline", "triathlon", "volleyball", "water polo", "weightlifting", "wrestling freestyle", "wrestling greco-roman" ],
+
+	"photoDatingApp": ["bedroom", "car", "kitchen", "shoes", "how they have their tea/coffee"]
 }
