@@ -27,13 +27,17 @@ class Tracery {
     answerOrigin = -1;
     vars = {};
 
-    constructor(people = []) {
+    rng;
+    seed;
+
+    constructor(people = [], customSeed=undefined) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.seen = {};
         this.answerOrigin = -1;
         if (people.length > 0) {
             this.customDict['person'] = people;
         }
+        [this.rng, this.seed] = tMath.setSeed(customSeed);
     }
 
     start(origin = 'question') {
@@ -67,6 +71,7 @@ class Tracery {
             answerCount: this.answerCount,
             allowOther: this.allowOther,
             answerOrigin: this.answerOrigin,
+            seed: this.seed,
             vars: this.vars
         };
     }
@@ -97,7 +102,7 @@ class Tracery {
                 this.answerCount = +this.vars['answerCount'];
             }
             if (this.answerCount === 0) {
-                this.answerCount = tMath.randomNext(3, 5);
+                this.answerCount = tMath.randomNext(3, 5, this.rng);
                 if (this.answerKey === 'yesNo') this.answerCount = 2;
             }
         }
@@ -119,7 +124,7 @@ class Tracery {
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
         if (dict[key].length === 0) return key;
-        const value = tMath.randomNext(0, dict[key].length);
+        const value = tMath.randomNext(0, dict[key].length, this.rng);
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.answerOrigin !== -1) {
@@ -159,7 +164,7 @@ class Tracery {
             const choices = m.groups['choice'].split(':');
             if (choices.length === 0) value = value.replace(m[0], '');
 
-            value = value.replace(m[0], choices[tMath.randomNext(0, choices.length)]);
+            value = value.replace(m[0], choices[tMath.randomNext(0, choices.length, this.rng)]);
         }
         return value;
     }
@@ -195,7 +200,7 @@ class Tracery {
 
             let toReturn = this.ParseKey(key);
             if (mod !== '') {
-                toReturn = tMod.ModString(toReturn, mod);
+                toReturn = tMod.ModString(toReturn, mod, this.rng);
             }
 
             value = value.replace(m[0], toReturn);

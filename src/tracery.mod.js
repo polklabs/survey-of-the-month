@@ -3,7 +3,7 @@ const tMath = require('./tracery.math');
 const vowels = 'aeiouAEIOU';
 const consonants = 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ';
 
-function ModString(value, mod) {
+function ModString(value, mod, rng) {
     const mods = mod.split('.');
     let toReturn = value;
     mods.forEach(m => {
@@ -41,10 +41,10 @@ function ModString(value, mod) {
                 const start = +values[0];
                 const end = +values[1];
                 if (values.length === 3) {
-                    toReturn = roundUp(tMath.randomNext(start, end), +values[2]).toString();
+                    toReturn = tMath.roundUp(tMath.randomNext(start, end, rng), +values[2]).toString();
                     break;
                 } else
-                    toReturn = tMath.randomNext(start, end).toString();
+                    toReturn = tMath.randomNext(start, end, rng).toString();
                 break;
 
             // HTML Mods
