@@ -81,7 +81,7 @@ app.put('/api/answer', (req, res) => {
 });
 
 // Get the angular app files
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(process.cwd()+"/app/dist/app/index.html");
 });
 
