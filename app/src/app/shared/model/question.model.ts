@@ -7,4 +7,5 @@ export class Question {
     answerCount: number = 0;
     answerOrigin: number = -1;
     allowOther: boolean = true;
+    seed: string = '';
 }

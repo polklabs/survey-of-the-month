@@ -18,7 +18,7 @@
         </div>
 
         <mat-card>
-            <mat-card-subtitle>Question</mat-card-subtitle>
+            <mat-card-subtitle>Question "{{question.seed}}"</mat-card-subtitle>
             <!-- <mat-card-title>Shiba Inu</mat-card-title> -->
             <mat-card-content>
               <p [innerHTML]="question.text"></p>
@@ -27,6 +27,7 @@
             <mat-divider inset></mat-divider>
             <mat-card-actions fxLayoutGap="8px" fxLayout="row">
               <button mat-flat-button color="primary" [disabled]="loading" (click)="getQuestion()">New Question</button>
+              <button mat-icon-button color="primary" [disabled]="loading" (click)="seedQuestion()"><mat-icon>more_vert</mat-icon></button>
               <div fxFlex></div>
               <button mat-flat-button color="accent" [disabled]="loading" *ngIf="getCanRefreshAnswers()" (click)="updateChoices()"><mat-icon>casino</mat-icon> Answers</button>
               <!-- <button mat-flat-button color="accent" [disabled]="loading" (click)="updateQuestion()"><mat-icon>casino</mat-icon> Question</button> -->

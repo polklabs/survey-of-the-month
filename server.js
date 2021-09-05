@@ -36,7 +36,7 @@ app.get('/api/single', (req, res) => {
 
 // Generate a completely new question
 app.post('/api/question', (req, res) => {
-    let tracery = new Tracery(req.body.users);
+    let tracery = new Tracery(req.body.users, req.body.seed);
     if (req.body.answerOrigin !== undefined) {
         tracery.answerOrigin = req.body.answerOrigin;
     }

@@ -7,6 +7,7 @@ import { SingleQuestionComponent } from './single-question/single-question.compo
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
+import { TextBoxComponent } from './shared/modal/text-box/text-box.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { HomeComponent } from './home/home.component';
     SingleQuestionComponent,
     SurveyMakerComponent,
     HomeComponent,
+    TextBoxComponent,
   ],
   imports: [
     BrowserModule,

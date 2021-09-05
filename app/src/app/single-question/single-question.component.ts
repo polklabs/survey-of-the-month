@@ -4,6 +4,8 @@ import { DataService } from '../core/services/data.service';
 import { Question } from '../shared/model/question.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-single-question',
@@ -29,7 +31,10 @@ export class SingleQuestionComponent implements OnInit {
     debounceButton = false;
     loading = false;
 
-    constructor(private dataService: DataService) { }
+    constructor(
+        private dataService: DataService,
+        private dialog: MatDialog
+    ) { }
 
     ngOnInit(): void {
         this.getCachedUsers();
@@ -50,6 +55,19 @@ export class SingleQuestionComponent implements OnInit {
 
     updateQuestion(): void {
         this.callApi('question', { users: this.users, answerOrigin: this.question.answerOrigin });
+    }
+
+    seedQuestion(): void {
+        const dialogRef = this.dialog.open(TextBoxComponent, {
+            width: '250px',
+            data: { title: 'Enter the question # or a random value', inputLabel: 'Seed', value: '' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                this.callApi('question', { users: this.users, seed: result });
+            }
+        });
     }
 
     callApi(endpoint: string, data: any): void {

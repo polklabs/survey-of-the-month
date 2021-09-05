@@ -3,7 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -11,14 +11,16 @@ import { ReactiveFormsModule } from '@angular/forms';
         FlexLayoutModule,
         DragDropModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
     exports: [
         MaterialModule,
         FlexLayoutModule,
         DragDropModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ]
 })
 export class CoreModule { }

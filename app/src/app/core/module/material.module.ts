@@ -8,29 +8,31 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatDialogModule} from '@angular/material/dialog'; 
 
 const material = [
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,
+    MatProgressBarModule,
     MatRadioModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatProgressBarModule,
 ];
 
 @NgModule({
