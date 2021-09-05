@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/services/data.service';
 
 @Component({
@@ -25,14 +25,14 @@ export class HomeComponent implements OnInit {
             this.subtitle = data.subtitle;
             this.text = data.text;
         });
-        this.timerStop = (Math.random()*10000)+5000;
+        this.timerStop = (Math.random() * 10000) + 5000;
         this.startTimer();
     }
 
     updateSubtitle() {
         const [result, progress] = this.dataService.getData('single?id=home_page_subtitle');
         result.subscribe((data: { title: string, subtitle: string, text: string }) => {
-            this.subtitle = data.text;            
+            this.subtitle = data.text;
         });
     }
 
@@ -41,13 +41,13 @@ export class HomeComponent implements OnInit {
 
         if (this.timer >= this.timerStop) {
             this.updateSubtitle();
-            this.timerStop = (Math.random()*10000)+5000;
+            this.timerStop = (Math.random() * 10000) + 5000;
             this.timer = 0;
         }
 
-        this.progress = (this.timer / this.timerStop)*100;
+        this.progress = (this.timer / this.timerStop) * 100;
 
-        setTimeout(()=>this.startTimer(), 150);
+        setTimeout(() => this.startTimer(), 150);
     }
 
 }
