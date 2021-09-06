@@ -1,11 +1,14 @@
 export class Question {
     questionId: string = '';
+    questionOrigin: number = -1;
     text: string = '';
-    choices: string[] = [];
-    answerKey: string = '';
-    answerType: string = 'text';
-    answerCount: number = 0;
-    answerOrigin: number = -1;
-    allowOther: boolean = true;
     seed: string = '';
+
+    // Choice/Answer
+    answerType: 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale' | 'slider' = 'text';
+    choices: string[] = [];
+    scaleValues: string[] = [];
+    answerKey: string = '';    
+    answerCount: number = 0;    
+    allowOther: boolean = true;    
 }

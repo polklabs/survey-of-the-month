@@ -29,7 +29,7 @@
               <button mat-flat-button color="primary" [disabled]="loading" (click)="getQuestion()">New Question</button>
               <button mat-icon-button color="primary" [disabled]="loading" (click)="seedQuestion()"><mat-icon>more_vert</mat-icon></button>
               <div fxFlex></div>
-              <button mat-flat-button color="accent" [disabled]="loading" *ngIf="getCanRefreshAnswers()" (click)="updateChoices()"><mat-icon>casino</mat-icon> Answers</button>
+              <button mat-flat-button color="accent" [disabled]="loading" *ngIf="question.choices.length > 0" (click)="updateChoices()"><mat-icon>casino</mat-icon> Answers</button>
               <!-- <button mat-flat-button color="accent" [disabled]="loading" (click)="updateQuestion()"><mat-icon>casino</mat-icon> Question</button> -->
             </mat-card-actions>
             <mat-card-footer>
@@ -43,13 +43,15 @@
 <ng-template #answerMC>
     <mat-radio-group class="radio-group">
         <mat-radio-button class="radio-button" *ngFor="let choice of question.choices; let i = index;" [value]="i">
-            {{choice}}
-            <button mat-icon-button (click)="updateChoice(i)">
-                <mat-icon>casino</mat-icon>
-            </button>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div [innerHTML]="choice"></div>
+                <button mat-icon-button (click)="updateChoice(i)">
+                    <mat-icon>casino</mat-icon>
+                </button>
+            </div>
         </mat-radio-button>
         <mat-radio-button class="radio-button" [value]="-1">
-            <mat-form-field class="full-width" appearance="fill">
+            <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Other</mat-label>
                 <input matInput  placeholder="Ex. something something">
             </mat-form-field>
@@ -57,16 +59,10 @@
     </mat-radio-group>
 </ng-template>
 
-<ng-template #answerText>
-    <mat-form-field class="answer-text-full-width" appearance="fill">
-        <mat-label>Answer</mat-label>
-        <textarea matInput [matTextareaAutosize]="true" placeholder="Ex. It makes me feel..."></textarea>
-    </mat-form-field>
-</ng-template>
-
 <ng-template #answerRank>
     <div cdkDropList class="rank-list" (cdkDropListDropped)="drop($event)">
-        <div class="rank-box" *ngFor="let choice of question.choices; let i = index;" cdkDrag>({{i+1}}). {{choice}}
+        <div class="rank-box" *ngFor="let choice of question.choices; let i = index;" cdkDrag>({{i+1}}).
+            <div fxFlex [innerHTML]="choice"></div>
             <button mat-icon-button (click)="updateChoice(i)">
                 <mat-icon>casino</mat-icon>
             </button>
@@ -74,12 +70,12 @@
     </div>
 </ng-template>
 
-<ng-template #answerMA>
+<ng-template #answerText>
     <div style="margin-top: 16px;">
-        <div *ngFor="let choice of question.choices; let i = index;">
-            <mat-form-field class="full-width" appearance="fill">
-                <mat-label>{{choice}}</mat-label>
-                <input matInput placeholder="Ex. something something">
+        <div *ngFor="let choice of question.choices; let i = index;" fxLayout="row">
+            <mat-form-field fxFlex class="full-width" appearance="outline">
+                <mat-label><div [innerHTML]="choice"></div></mat-label>
+                <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
             </mat-form-field>
             <button mat-icon-button (click)="updateChoice(i)">
                 <mat-icon>casino</mat-icon>
@@ -89,7 +85,7 @@
 </ng-template>
 
 <ng-template #answerDate>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
         <mat-label>Choose a date</mat-label>
         <input matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
