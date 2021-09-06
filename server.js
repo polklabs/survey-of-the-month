@@ -22,10 +22,9 @@ app.use(express.static(process.cwd()+"/app/dist/app/"));
 
 app.get('/api/home', (req, res) => {
     let tracery = new Tracery();
-    const title = tracery.simpleStart('home_page_title');
     const subtitle = tracery.simpleStart('home_page_subtitle');
     const text = tracery.simpleStart('home_page_text');
-    res.json({title, subtitle, text});
+    res.json({subtitle, text});
 });
 
 app.get('/api/single', (req, res) => {
@@ -37,8 +36,8 @@ app.get('/api/single', (req, res) => {
 // Generate a completely new question
 app.post('/api/question', (req, res) => {
     let tracery = new Tracery(req.body.users, req.body.seed);
-    if (req.body.answerOrigin !== undefined) {
-        tracery.answerOrigin = req.body.answerOrigin;
+    if (req.body.questionOrigin !== undefined) {
+        tracery.questionOrigin = req.body.questionOrigin;
     }
     tracery.start();
     res.json(tracery.getJSON());
@@ -47,7 +46,7 @@ app.post('/api/question', (req, res) => {
 // Regenerate answers for a specific choice or all
 // choiceIndex = -1 for all
 app.post('/api/choice', (req, res) => {
-    let tracery = new Tracery(req.body.users);
+    let tracery = new Tracery(req.body.users, req.body.seed);
     tracery.setJSON(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
     res.json(tracery.getJSON());
