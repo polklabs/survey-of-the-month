@@ -12,42 +12,44 @@ export class HomeComponent implements OnInit {
     subtitle = 'hello';
     text = 'This is a survey maker/taker/generator app';
 
-    timer = 0;
-    timerStop = 1000;
+    timeout = 10000;
     progress = 0;
 
     constructor(private dataService: DataService) { }
 
     ngOnInit(): void {
         const [result, progress] = this.dataService.getData('home');
-        result.subscribe((data: { title: string, subtitle: string, text: string }) => {
-            this.title = data.title;
+        result.subscribe((data: { subtitle: string, text: string }) => {
             this.subtitle = data.subtitle;
             this.text = data.text;
         });
-        this.timerStop = (Math.random() * 10000) + 5000;
-        this.startTimer();
+
+        let timer = setInterval(() => this.runTimer(), 150);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(timer);
+            } else {
+                timer = setInterval(() => this.runTimer(), 150);
+            }
+        })
     }
 
     updateSubtitle() {
         const [result, progress] = this.dataService.getData('single?id=home_page_subtitle');
-        result.subscribe((data: { title: string, subtitle: string, text: string }) => {
+        result.subscribe((data: { text: string }) => {
             this.subtitle = data.text;
         });
     }
 
-    startTimer(): void {
-        this.timer += 150;
+    runTimer(): void {
+        this.timeout -= 150;
 
-        if (this.timer >= this.timerStop) {
+        if (this.timeout <= 0) {
             this.updateSubtitle();
-            this.timerStop = (Math.random() * 10000) + 5000;
-            this.timer = 0;
+            this.timeout = 10000;
         }
 
-        this.progress = (this.timer / this.timerStop) * 100;
-
-        setTimeout(() => this.startTimer(), 150);
+        this.progress = (this.timeout / 10000) * 100;
     }
 
 }

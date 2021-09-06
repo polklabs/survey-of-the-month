@@ -54,7 +54,7 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     updateQuestion(): void {
-        this.callApi('question', { users: this.users, answerOrigin: this.question.answerOrigin });
+        this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin });
     }
 
     seedQuestion(): void {
@@ -81,6 +81,7 @@ export class SingleQuestionComponent implements OnInit {
             result.subscribe((data: Question) => {
                 this.question = data;
                 this.loading = false;
+                console.log(this.question);
             });
         }, 500);
     }
@@ -91,24 +92,17 @@ export class SingleQuestionComponent implements OnInit {
 
     getAnswerTemplate(): TemplateRef<any> {
         switch (this.question.answerType) {
-            case 'mc':
+            case 'multi':
                 return this.answerMC;
             case 'text':
                 return this.answerText;
             case 'rank':
                 return this.answerRank;
-            case 'ma':
-                return this.answerMA;
             case 'date':
                 return this.answerDate;
             default:
                 throw new Error(`Unknown Answer Type: ${this.question.answerType}`);
         }
-    }
-
-    getCanRefreshAnswers(): boolean {
-        const at = this.question.answerType;
-        return (at === 'mc' || at === 'rank' || at === 'ma');
     }
 
     addUser(event: MatChipInputEvent): void {
