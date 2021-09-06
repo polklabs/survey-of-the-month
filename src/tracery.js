@@ -5,8 +5,8 @@ const tMod = require('./tracery.mod');
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm; // [key:value] -> key, value
-const regexVars = /^(?<vars>(\[[a-zA-Z0-9_:.#]+?\])+)/m; // [key:value]Test -> [key:value]
-const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
+const regexVars = /^(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])+)/m; // [key:value]Test -> [key:value]
+const regexString = /(#(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
 const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
 
 const grammar = {};
@@ -19,12 +19,12 @@ class Tracery {
     seen = {};
 
     question = '';
-    choices = [];
+    choices = ['Answer'];
     answerKey = '';
     answerType = 'text';
     answerCount = 0;
     allowOther = true;
-    answerOrigin = -1;
+    questionOrigin = -1;
     vars = {};
 
     rng;
@@ -35,7 +35,7 @@ class Tracery {
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
         this.seen = {};
-        this.answerOrigin = -1;
+        this.questionOrigin = -1;
         if (people.length > 0) {
             this.customDict['person'] = people;
         }
@@ -48,7 +48,7 @@ class Tracery {
         }
 
         this.question = '';
-        this.choices = [];
+        this.choices = ['Answer'];
         this.answerKey = '';
         this.answerType = 'text';
         this.answerCount = 0;
@@ -72,7 +72,7 @@ class Tracery {
             answerType: this.answerType,
             answerCount: this.answerCount,
             allowOther: this.allowOther,
-            answerOrigin: this.answerOrigin,
+            questionOrigin: this.questionOrigin,
             seed: this.seed,
             vars: this.vars
         };
@@ -85,8 +85,9 @@ class Tracery {
         this.answerType = json.answerType;
         this.answerCount = json.answerCount;
         this.allowOther = json.allowOther;
-        this.answerOrigin = json.answerOrigin;
+        this.questionOrigin = json.questionOrigin;
         this.vars = json.vars;
+        this.seed = json.seed;
     }
 
     generateQuestion(origin) {
@@ -111,10 +112,20 @@ class Tracery {
     }
 
     generateAnswer(index = -1) {
+        if (this.answerCount === 0) return;
+
         if (index === -1) {
             this.choices = [];
-            for (let i = 0; i < this.answerCount; i++) {
-                this.choices.push(this.ParseString(`#${this.answerKey}.capitalize#`));
+            if (this.answerCount === -1) {
+                let choice = this.ParseString(`#${this.answerKey}.capitalize#`);
+                while (this.choices.indexOf(choice) === -1) {
+                    this.choices.push(choice);
+                    choice = this.ParseString(`#${this.answerKey}.capitalize#`);
+                }
+            } else {
+                for (let i = 0; i < this.answerCount; i++) {
+                    this.choices.push(this.ParseString(`#${this.answerKey}.capitalize#`));
+                }
             }
         } else {
             this.choices[index] = this.ParseString(`#${this.answerKey}.capitalize#`);
@@ -129,11 +140,11 @@ class Tracery {
         const value = tMath.randomNext(0, dict[key].length, this.rng);
 
         // Overwrite or use origin to regenerate the same question
-        if (isOrigin && this.answerOrigin !== -1) {
-            return dict[key][this.answerOrigin];
+        if (isOrigin && this.questionOrigin !== -1) {
+            return dict[key][this.questionOrigin];
         }
         if (isOrigin) {
-            this.answerOrigin = value;
+            this.questionOrigin = value;
         }
 
         return dict[key][value];

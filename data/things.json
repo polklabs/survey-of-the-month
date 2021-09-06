@@ -445,5 +445,5 @@
         "sweater", "dress", "hoodie", "t-shirt", "flip-flops", "shorts", "skirt", "jeans", "shoes", "coat", "high heels", "suit", "cap", "socks", "shirt", "bra", "scarf", "swimsuit", "hat", "gloves", "jacket", "long coat", "boots", "sunglasses", "tie", "polo shirt", "leather jackets"
     ],
 
-    "object_descriptive": ["#adjective# #object.s#"]
+    "object_descriptive": ["^$#adjective#:#color#$ #object.s#"]
 }
