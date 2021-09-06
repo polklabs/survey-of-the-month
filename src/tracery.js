@@ -253,8 +253,18 @@ function loadGrammar(filename) {
         if (grammar[key] === undefined) {
             grammar[key] = grammarTemp[key];
         } else {
+            // Duplicate key warning
+            console.warn(`Key already exists in grammar: ${key}`);
             grammar[key].concat(grammarTemp[key]);
         }
+
+        // Check for duplicate values
+        grammar[key].forEach((value, index) => {
+            const dupIndex = grammar[key].findIndex(x => x === value);
+            if (dupIndex < index && dupIndex >= 0) {
+                console.warn(`Duplicate value: ${filename} -> ${key}: [${value}] ${index}`);
+            }
+        });
     });
 
     if (grammarTemp['require!'] !== undefined) {
