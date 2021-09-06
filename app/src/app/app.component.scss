@@ -3,6 +3,7 @@
     height: 100%;
     align-items: flex-start;
     place-content: space-between center;
+    background-image: url('/assets/imgs/chalkboard.jpg');
 }
 
 ::ng-deep router-outlet ~ * {

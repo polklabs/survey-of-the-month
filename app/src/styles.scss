@@ -20,6 +20,12 @@ $dark-theme:   mat-dark-theme((
 
 @include angular-material-color($dark-theme);
 
+// Fonts
+@font-face {
+    font-family: chalk;
+    src: url(assets/fonts/Chalk-Regular.ttf);
+}
+
 body,
 html {
     height: 100%;

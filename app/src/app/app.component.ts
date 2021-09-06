@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AppComponent {
     title = 'app';
+    year = (new Date()).getFullYear();
 
     constructor(
         iconRegistry: MatIconRegistry,
