@@ -4,10 +4,10 @@ const tMod = require('./tracery.mod');
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm;
-const regexVars = /^(?<vars>(\[[a-zA-Z0-9_:.#]+?\])+)/m;
-const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m;
-const regexInlineChoice = /\^\$(?<choice>.+?:.+?)\$/m;
+const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm; // [key:value] -> key, value
+const regexVars = /^(?<vars>(\[[a-zA-Z0-9_:.#]+?\])+)/m; // [key:value]Test -> [key:value]
+const regexString = /(#(?<vars>(\[[a-zA-Z0-9_:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
+const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
 
 const grammar = {};
 const loadedfiles = [];
@@ -32,6 +32,8 @@ class Tracery {
 
     constructor(people = [], customSeed=undefined) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
+        this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
+
         this.seen = {};
         this.answerOrigin = -1;
         if (people.length > 0) {
