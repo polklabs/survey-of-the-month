@@ -1,5 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/services/data.service';
 import { Question } from '../shared/model/question.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -18,12 +17,6 @@ export class SingleQuestionComponent implements OnInit {
     usersRemovable = true;
     usersAddOnBlur = true;
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
-    @ViewChild('answerMC', { static: true }) answerMC!: TemplateRef<any>;
-    @ViewChild('answerText', { static: true }) answerText!: TemplateRef<any>;
-    @ViewChild('answerRank', { static: true }) answerRank!: TemplateRef<any>;
-    @ViewChild('answerMA', { static: true }) answerMA!: TemplateRef<any>;
-    @ViewChild('answerDate', { static: true }) answerDate!: TemplateRef<any>;
 
     question: Question = new Question();
     users: string[] = ['Bob', 'Alice'];
@@ -59,7 +52,8 @@ export class SingleQuestionComponent implements OnInit {
 
     seedQuestion(): void {
         const dialogRef = this.dialog.open(TextBoxComponent, {
-            width: '250px',
+            maxWidth: '95vw',
+            width: '400px',
             data: { title: 'Enter the question # or a random value', inputLabel: 'Seed', value: '' }
         });
 
@@ -81,28 +75,8 @@ export class SingleQuestionComponent implements OnInit {
             result.subscribe((data: Question) => {
                 this.question = data;
                 this.loading = false;
-                console.log(this.question);
             });
         }, 500);
-    }
-
-    drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.question.choices, event.previousIndex, event.currentIndex);
-    }
-
-    getAnswerTemplate(): TemplateRef<any> {
-        switch (this.question.answerType) {
-            case 'multi':
-                return this.answerMC;
-            case 'text':
-                return this.answerText;
-            case 'rank':
-                return this.answerRank;
-            case 'date':
-                return this.answerDate;
-            default:
-                throw new Error(`Unknown Answer Type: ${this.question.answerType}`);
-        }
     }
 
     addUser(event: MatChipInputEvent): void {

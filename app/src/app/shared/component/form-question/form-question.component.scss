@@ -1,0 +1,11 @@
+mat-card {
+    width: calc(100% - 32px);
+    height: auto;
+    max-width: 800px;
+    background-color: rgba(66, 66, 66, 0.5);
+}
+
+::ng-deep img {
+    width: 100%;
+    height: auto;
+}

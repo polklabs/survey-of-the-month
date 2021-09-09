@@ -3,6 +3,7 @@ import { DataService } from '../core/services/data.service';
 import { Question } from '../shared/model/question.model';
 import { Survey } from '../shared/model/survey.model';
 import { v4 as guid } from 'uuid';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-survey-maker',
@@ -13,6 +14,8 @@ export class SurveyMakerComponent implements OnInit {
 
     users: string[] = ['Kate', 'Madison', 'Shireen', 'Avah', 'Emma', 'Paulina', 'Jasmin'];
     survey: Survey = new Survey();
+
+    // surveyForm: FormGroup;
 
     constructor(
         private dataService: DataService

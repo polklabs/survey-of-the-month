@@ -1,0 +1,16 @@
+<mat-radio-group class="radio-group">
+    <mat-radio-button class="radio-button" *ngFor="let choice of choices; let i = index;" [value]="i">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div [innerHTML]="choice"></div>
+            <!-- <button mat-icon-button (click)="updateChoice(i)">
+                <mat-icon>casino</mat-icon>
+            </button> -->
+        </div>
+    </mat-radio-button>
+    <mat-radio-button *ngIf="allowOther" class="radio-button" [value]="-1">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Other</mat-label>
+            <input matInput placeholder="Ex. something something">
+        </mat-form-field>
+    </mat-radio-button>
+</mat-radio-group>
