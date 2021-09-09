@@ -1,14 +1,54 @@
+<div fxLayoutAlign="center center" class="root">
+    <div style="margin: auto; width: 800px;">
+        <div fxLayoutAlign="center">
+            <mat-form-field class="title-input" appearance="outline">
+                <mat-label>Survey Name</mat-label>
+                <input matInput [(ngModel)]="survey.name" placeholder="Type Something...">
+            </mat-form-field>
+        </div>
 
+        <!-- People Chooser -->
+        <div>
+            <p>Who are these questions for?<mat-icon
+                    matTooltip="Names entered here will be insterted into generated question and answers"
+                    matTooltipTouchGestures="on">info</mat-icon>
+            </p>
+            <mat-form-field class="user-chip-list" appearance="fill">
+                <mat-label>People</mat-label>
+                <mat-chip-list #chipList aria-label="People selection">
+                    <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
+                        (removed)="removeUser(user)">
+                        {{user}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="New Person..." [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="usersAddOnBlur"
+                        (matChipInputTokenEnd)="addUser($event)">
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
 
+        <!-- Questions -->
+        <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
+            <app-form-question [question]="question" [loading]="loading" [editable]="true" [questionNumber]="(i+1).toString()"
+                (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)">
+            </app-form-question>
+        </div>
 
-<!-- <button mat-raised-button (click)="createSurveyTest()">Create 10 Question Survey</button>
-<button mat-raised-button (click)="getSurvey()">Fetch Survey</button>
+        <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center">
+            <button mat-raised-button color="primary" (click)="getQuestion()"><mat-icon>add</mat-icon> Add Question</button>
+            <button mat-raised-button color="accent" [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon> From Template</button>
+            <mat-menu #questionType="matMenu">
+                <button mat-menu-item (click)="addQuestion('text')"><mat-icon>create</mat-icon>Text</button>
+                <button mat-menu-item (click)="addQuestion('multi')"><mat-icon>radio_button_checked</mat-icon>Choice</button>
+                <button mat-menu-item (click)="addQuestion('check')"><mat-icon>check_box</mat-icon>Check</button>
+                <button mat-menu-item (click)="addQuestion('rank')"><mat-icon>stacked_bar_chart</mat-icon>Rank</button>
+                <button mat-menu-item (click)="addQuestion('scale')"><mat-icon>star_half</mat-icon>Rate</button>
+                <button mat-menu-item (click)="addQuestion('slider')"><mat-icon>linear_scale</mat-icon>Slider</button>
+                <button mat-menu-item (click)="addQuestion('date')"><mat-icon>today</mat-icon>Date</button>
+                <button mat-menu-item (click)="addQuestion('time')"><mat-icon>schedule</mat-icon>Time</button>
+            </mat-menu>
+        </div>
 
-<mat-card>
-    <mat-card-content>
-        <p *ngFor="let q of survey.questions">{{q.text}}</p>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button (click)="submitSurveyTest()">Submit</button>
-    </mat-card-actions>
-</mat-card> -->
+    </div>
+</div>
