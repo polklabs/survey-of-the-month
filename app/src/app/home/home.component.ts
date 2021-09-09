@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
 
 @Component({
@@ -24,14 +25,16 @@ export class HomeComponent implements OnInit {
             this.text = data.text;
         });
 
-        let timer = setInterval(() => this.runTimer(), 150);
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                clearInterval(timer);
-            } else {
-                timer = setInterval(() => this.runTimer(), 150);
-            }
-        })
+        if (environment.production) {
+            let timer = setInterval(() => this.runTimer(), 150);
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    clearInterval(timer);
+                } else {
+                    timer = setInterval(() => this.runTimer(), 150);
+                }
+            });
+        }
     }
 
     updateSubtitle() {

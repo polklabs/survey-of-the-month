@@ -3,6 +3,9 @@
         <mat-icon>poll</mat-icon>
         <span (click)="homeButton.click()">Survey Of The Month</span>
         <button #homeButton type="button" routerLink="home" hidden>Survey Of The Month</button>
+
+        <button mat-button routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
+        <button mat-button routerLink="/make-survey" [routerLinkActive]="'linkActive'">+ Create</button>
     </div>
 
     <!-- <span style="font-size: smaller; padding-left: 32px;">TEMP</span> -->
