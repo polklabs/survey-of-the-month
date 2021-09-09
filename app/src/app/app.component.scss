@@ -30,10 +30,13 @@ mat-toolbar {
 }
 
 .copyright-color {
-    color: black;
+    color: black !important;
     font-size: smaller;
     margin-left: 8px;
     text-decoration: none;
+    &:visited {
+        color: black !important;
+    }
 }
 
 .linkActive {
