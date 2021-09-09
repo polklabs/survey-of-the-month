@@ -18,7 +18,7 @@
         </div>
 
         <app-form-question [question]="question" [loading]="loading"
-            [editable]="true"
+            [basicEdit]="true"
             (qRandomize)="getQuestion()" (qSeed)="seedQuestion()"
             (qRandomizeAnswers)="updateChoices()">
         </app-form-question>

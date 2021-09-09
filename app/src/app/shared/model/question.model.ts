@@ -1,3 +1,5 @@
+export type AnswerType = 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale' | 'slider';
+
 export class Question {
     questionId: string = '';
     questionOrigin: number = -1;
@@ -5,7 +7,7 @@ export class Question {
     seed: string = '';
 
     // Choice/Answer
-    answerType: 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale' | 'slider' = 'text';
+    answerType: AnswerType = 'text';
     choices: string[] = [];
     scaleValues: string[] = [];
     answerKey: string = '';    

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { Question } from '../../model/question.model';
+import { AnswerType, Question } from '../../model/question.model';
 
 @Component({
     selector: 'app-form-question',
@@ -21,21 +21,22 @@ export class FormQuestionComponent implements OnInit {
 
     @Input() question: Question = new Question();
     @Input() loading = false;
-    @Input() editable = false;
+    @Input() editable = false; // For the survey creator
+    @Input() basicEdit = false; // For the homepage
     @Input() questionNumber?: string;
 
     @Output() qReset = new EventEmitter<void>();
     @Output() qDelete = new EventEmitter<void>();
     @Output() qEditText = new EventEmitter<void>();
-    @Output() qEditType = new EventEmitter<void>();
+    @Output() qEditType = new EventEmitter<AnswerType>();
     @Output() qRandomize = new EventEmitter<void>();
     @Output() qRandomizeAnswers = new EventEmitter<void>();
     @Output() qSeed = new EventEmitter<void>();
 
     @Output() aAdd = new EventEmitter<void>();
-    @Output() aDelete = new EventEmitter<void>();
-    @Output() aRandomize = new EventEmitter<void>();
-    @Output() addEventListener = new EventEmitter<void>();
+    @Output() aDelete = new EventEmitter<number>();
+    @Output() aRandomize = new EventEmitter<number>();
+    @Output() aEditText = new EventEmitter<number>();
 
     constructor() { }
 

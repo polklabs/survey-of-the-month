@@ -1,69 +1,88 @@
-<form>
-    <mat-card>
-        
-        <mat-card-subtitle *ngIf="questionNumber === undefined">Question {{question.seed}}</mat-card-subtitle>
-        <mat-card-subtitle *ngIf="questionNumber !== undefined">Question {{questionNumber}}</mat-card-subtitle>
-        
-        <mat-card-content>
-            <p [innerHTML]="question.text"></p>
-            <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
-        </mat-card-content>
-        
-        <ng-container *ngIf="editable">
-            <mat-divider inset></mat-divider>
-        
-            <mat-card-actions fxLayoutGap="8px" fxLayout="row" >
-                <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">New Question</button>
-                <button mat-icon-button color="primary" [disabled]="loading" (click)="qSeed.emit()">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <div fxFlex></div>
-                <button mat-flat-button color="accent" [disabled]="loading" *ngIf="question.choices.length > 0"
-                    (click)="qRandomizeAnswers.emit()">
-                    <mat-icon>casino</mat-icon> Answers
-                </button>
-            </mat-card-actions>
-        </ng-container>
+<mat-card>
 
-        <mat-card-footer>
-            <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-        </mat-card-footer>
-    </mat-card>
+    <mat-card-subtitle *ngIf="questionNumber === undefined">Question {{question.seed}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="questionNumber !== undefined">Question {{questionNumber}}</mat-card-subtitle>
 
-    <ng-template #formDefault>
-        <p>Unknown Template: {{question.answerType}}</p>
-    </ng-template>
 
-    <ng-template #formText>
-        <app-form-text [choices]="question.choices"></app-form-text>
-    </ng-template>
+    <mat-card-content>
+        <p [innerHTML]="question.text"></p>
+        <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
+    </mat-card-content>
 
-    <ng-template #formMulti>
-        <app-form-multi [choices]="question.choices" [allowOther]="question.allowOther"></app-form-multi>
-    </ng-template>
+    <ng-container *ngIf="editable || basicEdit">
+        <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
 
-    <ng-template #formCheck>
-        <app-form-check></app-form-check>
-    </ng-template>
+        <mat-card-actions fxLayoutGap="8px" fxLayout="row">
+            <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
+                <mat-icon>casino</mat-icon> Question
+            </button>
+            <button mat-flat-button color="accent" [disabled]="loading" (click)="qRandomizeAnswers.emit()">
+                <mat-icon>casino</mat-icon> Answers
+            </button>
 
-    <ng-template #formRank>
-        <app-form-rank [choices]="question.choices"></app-form-rank>
-    </ng-template>
+            <div fxFlex></div>
+            <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
+            <mat-menu #edit="matMenu">
+                <button mat-menu-item (click)="qEditText.emit()"><mat-icon>edit</mat-icon>Edit Text</button>
+                <button mat-menu-item [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon>Answer Type</button>
+                <button mat-menu-item (click)="qSeed.emit()"><mat-icon>query_stats</mat-icon>Seed</button>
+                <button mat-menu-item (click)="qReset.emit()"><mat-icon color="accent">restart_alt</mat-icon>Reset Question</button>
+                <button mat-menu-item (click)="qDelete.emit()"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
+            </mat-menu>
 
-    <ng-template #formDate>
-        <app-form-date></app-form-date>
-    </ng-template>
+            <mat-menu #questionType="matMenu">
+                <button mat-menu-item (click)="qEditType.emit('text')" [disabled]="question.answerType==='text'"><mat-icon>create</mat-icon>Text</button>
+                <button mat-menu-item (click)="qEditType.emit('multi')" [disabled]="question.answerType==='multi'"><mat-icon>radio_button_checked</mat-icon>Choice</button>
+                <button mat-menu-item (click)="qEditType.emit('check')" [disabled]="question.answerType==='check'"><mat-icon>check_box</mat-icon>Check</button>
+                <button mat-menu-item (click)="qEditType.emit('rank')" [disabled]="question.answerType==='rank'"><mat-icon>stacked_bar_chart</mat-icon>Rank</button>
+                <button mat-menu-item (click)="qEditType.emit('scale')" [disabled]="question.answerType==='scale'"><mat-icon>star_half</mat-icon>Rate</button>
+                <button mat-menu-item (click)="qEditType.emit('slider')" [disabled]="question.answerType==='slider'"><mat-icon>linear_scale</mat-icon>Slider</button>
+                <button mat-menu-item (click)="qEditType.emit('date')" [disabled]="question.answerType==='date'"><mat-icon>today</mat-icon>Date</button>
+                <button mat-menu-item (click)="qEditType.emit('time')" [disabled]="question.answerType==='time'"><mat-icon>schedule</mat-icon>Time</button>
+            </mat-menu>
 
-    <ng-template #formTime>
-        <app-form-time></app-form-time>
-    </ng-template>
+        </mat-card-actions>
+    </ng-container>
 
-    <ng-template #formScale>
-        <app-form-scale></app-form-scale>
-    </ng-template>
+    <mat-card-footer>
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>
 
-    <ng-template #formSlider>
-        <app-form-slider></app-form-slider>
-    </ng-template>
+<ng-template #formDefault>
+    <p>Unknown Template: {{question.answerType}}</p>
+</ng-template>
 
-</form>
+<ng-template #formText>
+    <app-form-text [choices]="question.choices" [editable]="editable"
+        (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
+        (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-text>
+</ng-template>
+
+<ng-template #formMulti>
+    <app-form-multi [choices]="question.choices" [allowOther]="question.allowOther"></app-form-multi>
+</ng-template>
+
+<ng-template #formCheck>
+    <app-form-check></app-form-check>
+</ng-template>
+
+<ng-template #formRank>
+    <app-form-rank [choices]="question.choices"></app-form-rank>
+</ng-template>
+
+<ng-template #formDate>
+    <app-form-date></app-form-date>
+</ng-template>
+
+<ng-template #formTime>
+    <app-form-time></app-form-time>
+</ng-template>
+
+<ng-template #formScale>
+    <app-form-scale></app-form-scale>
+</ng-template>
+
+<ng-template #formSlider>
+    <app-form-slider></app-form-slider>
+</ng-template>

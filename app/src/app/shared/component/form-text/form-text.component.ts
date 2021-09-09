@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-form-text',
@@ -8,6 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FormTextComponent implements OnInit {
 
     @Input() choices: string[] = [];
+    @Input() editable = false;
+    @Input() loading = false;
+
+    @Output() aEditText = new EventEmitter<number>();
+    @Output() aRandomize = new EventEmitter<number>();
+    @Output() aDelete = new EventEmitter<number>();
+    @Output() aAdd = new EventEmitter<void>();
 
     constructor() { }
 

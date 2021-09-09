@@ -4,8 +4,12 @@
             <mat-label><div [innerHTML]="choice"></div></mat-label>
             <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
         </mat-form-field>
-        <!-- <button mat-icon-button (click)="updateChoice(i)">
-            <mat-icon>casino</mat-icon>
-        </button> -->
+        <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
+        <mat-menu #edit="matMenu">
+            <button mat-menu-item (click)="aEditText.emit(i)"><mat-icon>edit</mat-icon>Edit Label</button>
+            <button mat-menu-item (click)="aRandomize.emit(i)"><mat-icon color="accent">casino</mat-icon>Randomize</button>
+            <button mat-menu-item (click)="aDelete.emit(i)"><mat-icon color="warn">delete</mat-icon>Delete</button>
+        </mat-menu>
     </div>
+    <button mat-button *ngIf="editable" (click)="aAdd.emit()"><mat-icon>add</mat-icon> Add</button>
 </div>

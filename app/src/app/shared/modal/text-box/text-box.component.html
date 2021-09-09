@@ -2,10 +2,10 @@
   <p>{{data.title}}</p>
   <mat-form-field appearance="fill" style="width: 100%;">
     <mat-label>{{data.inputLabel}}</mat-label>
-    <input matInput [(ngModel)]="data.value">
+    <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="data.value"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions fxLayoutAlign="end">
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.value" cdkFocusInitial>Ok</button>
+  <button mat-button color="warn" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" [mat-dialog-close]="data.value" cdkFocusInitial>Ok</button>
 </div>
