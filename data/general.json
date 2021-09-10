@@ -3,6 +3,7 @@
         "yes",
         "no"
     ],
+    "answer": ["Answer"],
     "generalAnswers": [
         "yes",
         "no",
@@ -58,7 +59,8 @@
         "violet",
         "white",
         "black",
-        "pink"
+        "pink",
+        "gold"
     ],
     "season": [
         "spring",
