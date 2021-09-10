@@ -3,9 +3,10 @@ import { v4 as guid } from 'uuid';
 
 export class Question {
     questionId: string = guid();
-    questionOrigin: number = -1; // Used to determine if question is custom
+    questionOrigin: number = -1;
     text: string = '';
     seed: string = '';
+    custom: boolean = true;
 
     // Choice/Answer
     answerType: AnswerType = 'text';

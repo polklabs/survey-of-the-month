@@ -5,6 +5,10 @@ mat-card {
     background-color: rgba(66, 66, 66, 0.5);
 }
 
+mat-card-content > p {
+    white-space: pre-wrap;
+}
+
 ::ng-deep img {
     width: 100%;
     height: auto;

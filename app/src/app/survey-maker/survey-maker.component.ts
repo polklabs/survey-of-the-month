@@ -45,14 +45,14 @@ export class SurveyMakerComponent implements OnInit {
 
         if (reset) {
             // Reset a basic template question
-            if (questionIndex !== -1 && this.survey.questions[questionIndex].questionOrigin === -1) {
+            if (questionIndex !== -1 && this.survey.questions[questionIndex].custom) {
                 this.addQuestion(this.survey.questions[questionIndex].answerType, questionIndex);
                 return;
             }
             questionData.seed = this.survey.questions[questionIndex].seed
         }
 
-        if (shuffle && questionIndex !== -1 && this.survey.questions[questionIndex].questionOrigin !== -1) {
+        if (shuffle && questionIndex !== -1 && !this.survey.questions[questionIndex].custom) {
             questionData.questionOrigin = this.survey.questions[questionIndex].questionOrigin;
             questionData.seed = this.survey.questions[questionIndex].seed
         }
