@@ -27,17 +27,26 @@ class Tracery {
     questionOrigin = -1;
     vars = {};
 
+    shuffleQuestion = false;
+
     rng;
     seed;
+    customSeed;
 
-    constructor(people = [], customSeed=undefined) {
+    constructor(people = [], customSeed=undefined, questionOrigin=-1) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
         this.seen = {};
-        this.questionOrigin = -1;
+        this.questionOrigin = questionOrigin;
         if (people.length > 0) {
             this.customDict['person'] = people;
+        }
+
+        if (questionOrigin !== -1) {
+            this.shuffleQuestion = true;
+            this.customSeed = customSeed;
+            customSeed = '';
         }
         [this.rng, this.seed] = tMath.setSeed(customSeed);
     }
@@ -73,7 +82,7 @@ class Tracery {
             answerCount: this.answerCount,
             allowOther: this.allowOther,
             questionOrigin: this.questionOrigin,
-            seed: this.seed,
+            seed: this.shuffleQuestion?this.customSeed:this.seed,
             vars: this.vars
         };
     }
@@ -112,7 +121,10 @@ class Tracery {
     }
 
     generateAnswer(index = -1) {
-        if (this.answerCount === 0) return;
+        if (this.answerCount === 0) {
+            this.choices = ['Answer'];
+            return;
+        }
 
         if (index === -1) {
             this.choices = [];
