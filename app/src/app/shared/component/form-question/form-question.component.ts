@@ -32,6 +32,7 @@ export class FormQuestionComponent implements OnInit {
     @Output() qRandomize = new EventEmitter<void>();
     @Output() qRandomizeAnswers = new EventEmitter<void>();
     @Output() qSeed = new EventEmitter<void>();
+    @Output() qShuffle = new EventEmitter<void>();
 
     @Output() aAdd = new EventEmitter<void>();
     @Output() aDelete = new EventEmitter<number>();

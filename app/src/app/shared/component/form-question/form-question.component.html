@@ -1,7 +1,7 @@
 <mat-card>
 
     <mat-card-subtitle *ngIf="questionNumber === undefined">Question: {{question.seed}}</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="questionNumber !== undefined">Question: {{questionNumber}}, Seed: {{question.seed}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="questionNumber !== undefined">Question: {{questionNumber}}<span *ngIf="question.seed !== ''">, Seed: {{question.seed}}</span></mat-card-subtitle>
 
 
     <mat-card-content>
@@ -16,16 +16,21 @@
             <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
                 <mat-icon>casino</mat-icon> Question
             </button>
-            <button mat-flat-button color="accent" [disabled]="loading" (click)="qRandomizeAnswers.emit()">
+            <button mat-flat-button color="accent" [disabled]="loading" *ngIf="question.questionOrigin !== -1" (click)="qRandomizeAnswers.emit()">
                 <mat-icon>casino</mat-icon> Answers
             </button>
+            <button mat-icon-button [mat-menu-trigger-for]="moreMenu" *ngIf="basicEdit"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #moreMenu="matMenu">
+                <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
+            </mat-menu>
 
             <div fxFlex></div>
             <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
             <mat-menu #edit="matMenu">
                 <button mat-menu-item (click)="qEditText.emit()"><mat-icon>edit</mat-icon>Edit Text</button>
                 <button mat-menu-item [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon>Answer Type</button>
-                <button mat-menu-item (click)="qSeed.emit()"><mat-icon>query_stats</mat-icon>Seed</button>
+                <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
+                <button mat-menu-item (click)="qShuffle.emit()"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
                 <button mat-menu-item (click)="qReset.emit()"><mat-icon color="accent">restart_alt</mat-icon>Reset Question</button>
                 <button mat-menu-item (click)="qDelete.emit()"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
             </mat-menu>
@@ -49,6 +54,8 @@
     </mat-card-footer>
 </mat-card>
 
+
+<!-- Answer Templates -->
 <ng-template #formDefault>
     <p>Unknown Template: {{question.answerType}}</p>
 </ng-template>
