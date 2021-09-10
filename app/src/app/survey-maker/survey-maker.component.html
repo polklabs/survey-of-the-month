@@ -11,7 +11,7 @@
         <div>
             <p>Who are these questions for?<mat-icon
                     matTooltip="Names entered here will be insterted into generated question and answers"
-                    matTooltipTouchGestures="on">info</mat-icon>
+                    matTooltipTouchGestures="on" class="help-icon">help</mat-icon>
             </p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
@@ -26,14 +26,20 @@
                         (matChipInputTokenEnd)="addUser($event)">
                 </mat-chip-list>
             </mat-form-field>
-        </div>
+        </div>        
 
         <!-- Questions -->
         <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
-            <app-form-question [question]="question" [loading]="loading" [editable]="true" [questionNumber]="(i+1).toString()"
-                (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)">
+            <app-form-question [question]="question" [loading]="loading[i]" [editable]="true" [questionNumber]="(i+1).toString()"
+                (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)"
+                (qSeed)="seedQuestion(i)" (qEditText)="editQuestion(i)" (qReset)="getQuestion(i, true)"
+                (qShuffle)="getQuestion(i, false, '', true)"
+                (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
+                (aEditText)="editAnswer(i, $event)">
             </app-form-question>
         </div>
+
+        <mat-progress-bar *ngIf="loadingUnknown" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
 
         <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center">
             <button mat-raised-button color="primary" (click)="getQuestion()"><mat-icon>add</mat-icon> Add Question</button>

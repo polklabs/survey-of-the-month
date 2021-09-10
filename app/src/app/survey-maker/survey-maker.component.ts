@@ -6,6 +6,8 @@ import { v4 as guid } from 'uuid';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 
 @Component({
     selector: 'app-survey-maker',
@@ -23,10 +25,12 @@ export class SurveyMakerComponent implements OnInit {
     survey: Survey = new Survey();
 
     debounceButton = false;
-    loading = false;
+    loading: boolean[] = [];
+    loadingUnknown = false;
 
     constructor(
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -36,36 +40,116 @@ export class SurveyMakerComponent implements OnInit {
 
     // Question --------------------------------------------------------------------------------------
 
-    getQuestion(index = -1): void {
-        this.callApi<Question>('question', { users: this.users })?.subscribe(data => {
+    getQuestion(questionIndex = -1, reset=false, seed='', shuffle = false): void {
+        const questionData: any =  { users: this.users, seed, questionOrigin: undefined };
+
+        if (reset) {
+            // Reset a basic template question
+            if (questionIndex !== -1 && this.survey.questions[questionIndex].questionOrigin === -1) {
+                this.addQuestion(this.survey.questions[questionIndex].answerType, questionIndex);
+                return;
+            }
+            questionData.seed = this.survey.questions[questionIndex].seed
+        }
+
+        if (shuffle && questionIndex !== -1 && this.survey.questions[questionIndex].questionOrigin !== -1) {
+            questionData.questionOrigin = this.survey.questions[questionIndex].questionOrigin;
+            questionData.seed = this.survey.questions[questionIndex].seed
+        }
+
+        console.log(questionData);
+
+        this.callApi<Question>('question', questionData, questionIndex)?.subscribe(data => {
             if (data !== null) {
-                if (index === -1) {
+                console.log(data);
+                if (questionIndex === -1) {
                     this.survey.questions.push(data);
+                    this.loading.push(false);
                 } else {
-                    this.survey.questions[index] = data;
+                    this.survey.questions[questionIndex] = data;
                 }
             }
         });
     }
 
-    getAnswer(index = -1, choiceIndex = -1): void {
-        this.callApi<Question>('choice', { question: this.survey.questions[index], users: this.users, choiceIndex })?.subscribe(
+    addQuestion(type: AnswerType, questionIndex = -1): void {
+        const question = new Question();
+        question.answerType = type;
+        question.text = 'Use the pencil button to edit this text...'
+        if (questionIndex === -1) {
+            this.survey.questions.push(question);
+            this.loading.push(false);
+        } else {
+            this.survey.questions[questionIndex] = question;
+        }
+    }
+
+    deleteQuestion(questionIndex: number): void {
+        this.survey.questions.splice(questionIndex, 1);
+        this.loading.splice(questionIndex,1);
+    }
+
+    seedQuestion(questionIndex = -1): void {
+        const dialogRef = this.dialog.open(TextBoxComponent, {
+            maxWidth: '95vw',
+            width: '500px',
+            data: { title: 'Enter the question # or a random value', inputLabel: 'Seed', value: '' }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                this.getQuestion(questionIndex, false, result);
+            }
+        });
+    }
+
+    editQuestion(questionIndex: number): void {
+        const question = this.survey.questions[questionIndex];
+
+        const dialogRef = this.dialog.open(TextBoxComponent, {
+            maxWidth: '95vw',
+            width: '800px',
+            data: { title: 'Enter the question text', inputLabel: 'Text', value: question.text }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                question.text = result;
+            }
+        });
+    }
+
+    // Answer -------------------------------------------------------------------------------------
+
+    getAnswer(questionIndex = -1, choiceIndex = -1): void {
+        this.callApi<Question>('choice', { question: this.survey.questions[questionIndex], users: this.users, choiceIndex }, questionIndex)?.subscribe(
             data => {
                 if (data !== null) {
-                    this.survey.questions[index] = data;
+                    this.survey.questions[questionIndex] = data;
                 }
             }
         );
     }
 
-    addQuestion(type: AnswerType): void {
-        const question = new Question();
-        question.answerType = type;
-        this.survey.questions.push(question);
+    addAnswer(questionIndex: number): void {
+        this.survey.questions[questionIndex].choices.push('New Answer...');
     }
 
-    deleteQuestion(index: number): void {
-        this.survey.questions.splice(index, 1);
+    deleteAnswer(questionIndex: number, choiceIndex: number): void {
+        this.survey.questions[questionIndex].choices.splice(choiceIndex, 1);
+    }
+
+    editAnswer(questionIndex: number, choiceIndex: number): void {
+        const question = this.survey.questions[questionIndex];
+
+        const dialogRef = this.dialog.open(TextBoxComponent, {
+            maxWidth: '95vw',
+            width: '800px',
+            data: { title: 'Enter the question text', inputLabel: 'Text', value: question.choices[choiceIndex] }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                question.choices[choiceIndex] = result;
+            }
+        });
     }
 
     // Survey -------------------------------------------------------------------------------------
@@ -135,24 +219,32 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     // API ---------------------------------------------------------------------------
-    callApi<T>(endpoint: string, data: any): BehaviorSubject<T | null> | null {
+    callApi<T>(endpoint: string, data: any, questionIndex: number): BehaviorSubject<T | null> | null {
         if (this.debounceButton) return null;
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
 
         const toReturn = new BehaviorSubject<T | null>(null);
 
-        this.loading = true;
+        this.setLoading(questionIndex, true);
         const [result, progress] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
             result.subscribe(data => {
                 toReturn.next(data);
                 toReturn.complete();
-                this.loading = false;
+                this.setLoading(questionIndex, false);
             });
         }, 500);
 
         return toReturn;
+    }
+
+    setLoading(index: number, value: boolean): void {
+        if (index !== -1 && this.loading.length > index) {
+            this.loading[index] = value;
+        } else {
+            this.loadingUnknown = value;
+        }
     }
 
 }
