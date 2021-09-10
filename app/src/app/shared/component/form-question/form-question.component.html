@@ -16,8 +16,11 @@
             <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
                 <mat-icon>casino</mat-icon> Question
             </button>
-            <button mat-flat-button color="accent" [disabled]="loading" *ngIf="question.questionOrigin !== -1" (click)="qRandomizeAnswers.emit()">
+            <button mat-flat-button color="accent" [disabled]="loading || question.custom" (click)="qRandomizeAnswers.emit()">
                 <mat-icon>casino</mat-icon> Answers
+            </button>
+            <button mat-flat-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" fxHide.lt-sm>
+                <mat-icon>shuffle</mat-icon>Shuffle Question
             </button>
             <button mat-icon-button [mat-menu-trigger-for]="moreMenu" *ngIf="basicEdit"><mat-icon>more_vert</mat-icon></button>
             <mat-menu #moreMenu="matMenu">
@@ -30,7 +33,7 @@
                 <button mat-menu-item (click)="qEditText.emit()"><mat-icon>edit</mat-icon>Edit Text</button>
                 <button mat-menu-item [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon>Answer Type</button>
                 <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
-                <button mat-menu-item (click)="qShuffle.emit()"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
+                <button mat-menu-item (click)="qShuffle.emit()" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
                 <button mat-menu-item (click)="qReset.emit()"><mat-icon color="accent">restart_alt</mat-icon>Reset Question</button>
                 <button mat-menu-item (click)="qDelete.emit()"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
             </mat-menu>
