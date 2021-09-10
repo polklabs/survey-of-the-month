@@ -12,7 +12,7 @@ export class Question {
     answerType: AnswerType = 'text';
     choices: string[] = ['Answer'];
     scaleValues: string[] = [];
-    answerKey: string = '';    
-    answerCount: number = 0;    
+    answerKey: string = 'answer';    
+    answerCount: number = 1;
     allowOther: boolean = true;    
 }

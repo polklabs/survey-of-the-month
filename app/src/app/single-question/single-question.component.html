@@ -20,7 +20,7 @@
         <app-form-question [question]="question" [loading]="loading"
             [basicEdit]="true"
             (qRandomize)="getQuestion()" (qSeed)="seedQuestion()"
-            (qRandomizeAnswers)="updateChoices()">
+            (qRandomizeAnswers)="updateChoices()" (qShuffle)="updateQuestion()">
         </app-form-question>
 
     </div>

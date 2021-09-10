@@ -131,10 +131,12 @@ export class SurveyMakerComponent implements OnInit {
 
     addAnswer(questionIndex: number): void {
         this.survey.questions[questionIndex].choices.push('New Answer...');
+        this.survey.questions[questionIndex].answerCount++;
     }
 
     deleteAnswer(questionIndex: number, choiceIndex: number): void {
         this.survey.questions[questionIndex].choices.splice(choiceIndex, 1);
+        this.survey.questions[questionIndex].answerCount--;
     }
 
     editAnswer(questionIndex: number, choiceIndex: number): void {
