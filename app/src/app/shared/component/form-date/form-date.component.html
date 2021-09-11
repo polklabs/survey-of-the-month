@@ -1,6 +1,19 @@
-<mat-form-field appearance="outline">
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+<div style="margin-top: 16px;">
+    <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+
+        <mat-form-field appearance="outline">
+            <mat-label><span [innerHTML]="choice"></span></mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+        <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
+        <mat-menu #edit="matMenu">
+            <button mat-menu-item (click)="aEditText.emit(i)"><mat-icon>edit</mat-icon>Edit Label</button>
+            <button mat-menu-item (click)="aRandomize.emit(i)"><mat-icon color="accent">casino</mat-icon>Randomize</button>
+            <button mat-menu-item (click)="aDelete.emit(i)"><mat-icon color="warn">delete</mat-icon>Delete</button>
+        </mat-menu>
+    </div>
+    <button mat-button *ngIf="editable" (click)="aAdd.emit()"><mat-icon>add</mat-icon> Add</button>
+</div>

@@ -23,6 +23,7 @@ export class SurveyMakerComponent implements OnInit {
 
     users: string[] = ['Bob', 'Alice'];
     survey: Survey = new Survey();
+    editable = true;
 
     debounceButton = false;
     loading: boolean[] = [];
@@ -165,6 +166,24 @@ export class SurveyMakerComponent implements OnInit {
 
     otherOptionAllow(questionIndex: number): void {
         this.survey.questions[questionIndex].otherOptionAllow = !this.survey.questions[questionIndex].otherOptionAllow;
+    }
+
+    editScaleValues(questionIndex: number): void {
+        const question = this.survey.questions[questionIndex];
+        const value = question.scaleValues.join(' ; ');
+
+        const dialogRef = this.dialog.open(TextBoxComponent, {
+            maxWidth: '95vw',
+            width: '800px',
+            data: { title: 'Enter the rating values separated by semicolons.', inputLabel: 'Values', value }
+        });
+        dialogRef.afterClosed().subscribe((result: string | undefined) => {
+            if (result !== undefined) {
+                
+                const results = result.split(';');
+                question.scaleValues = results.map(x => x.trim());
+            }
+        });
     }
 
     // Survey -------------------------------------------------------------------------------------

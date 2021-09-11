@@ -1,1 +1,40 @@
-<p>form-time works!</p>
+<div style="margin-top: 16px;">
+    <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+
+        <p [innerHTML]="choice"></p>
+        <p>:&nbsp;</p>
+        <mat-form-field fxFlex="64px" appearance="outline">
+            <input matInput type="number" max="12" min="1">
+        </mat-form-field>
+        <p>&nbsp;:&nbsp;</p>
+        <mat-form-field fxFlex="64px" appearance="outline">
+            <input matInput type="number" max="59" min="0">
+        </mat-form-field>
+        <p>&nbsp;&nbsp;</p>
+        <mat-form-field fxFlex="64px" appearance="outline">
+            <mat-select>
+                <mat-option value="AM">AM</mat-option>
+                <mat-option value="PM">PM</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <mat-menu #edit="matMenu">
+            <button mat-menu-item (click)="aEditText.emit(i)">
+                <mat-icon>edit</mat-icon>Edit Label
+            </button>
+            <button mat-menu-item (click)="aRandomize.emit(i)">
+                <mat-icon color="accent">casino</mat-icon>Randomize
+            </button>
+            <button mat-menu-item (click)="aDelete.emit(i)">
+                <mat-icon color="warn">delete</mat-icon>Delete
+            </button>
+        </mat-menu>
+    </div>
+    <button mat-button *ngIf="editable" (click)="aAdd.emit()">
+        <mat-icon>add</mat-icon> Add
+    </button>
+</div>

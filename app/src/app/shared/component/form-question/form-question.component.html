@@ -84,17 +84,25 @@
 </ng-template>
 
 <ng-template #formRank>
-    <app-form-rank [choices]="question.choices"></app-form-rank>
+    <app-form-rank [choices]="question.choices" [editable]="editable"
+    (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
+    (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-rank>
 </ng-template>
 
 <ng-template #formDate>
-    <app-form-date></app-form-date>
+    <app-form-date [choices]="question.choices" [editable]="editable"
+    (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
+    (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-date>
 </ng-template>
 
 <ng-template #formTime>
-    <app-form-time></app-form-time>
+    <app-form-time [choices]="question.choices" [editable]="editable"
+    (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
+    (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-time>
 </ng-template>
 
 <ng-template #formScale>
-    <app-form-scale></app-form-scale>
+    <app-form-scale [choices]="question.choices" [editable]="editable" [scaleValues]="question.scaleValues"
+    (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aEditScale)="aEditScale.emit()"
+    (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-scale>
 </ng-template>

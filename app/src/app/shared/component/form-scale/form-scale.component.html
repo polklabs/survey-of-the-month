@@ -1,1 +1,51 @@
-<p>form-scale works!</p>
+<div style="margin-top: 16px;">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th *ngFor="let header of scaleValues">
+                    <span [innerHTML]="header"></span>
+                </th>
+                <th>
+                    <button mat-icon-button *ngIf="editable" [disabled]="loading" (click)="aEditScale.emit()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let choice of choices; let choiceI = index;">
+                <td class="answerLabel">
+                    <span [innerHTML]="choice"></span>
+                </td>
+                <td *ngFor="let header of scaleValues; let i = index">
+                    <mat-radio-group class="radio-group" [(ngModel)]="answers[choiceI]">
+                        <mat-radio-button class="radio-button" [value]="i">
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </td>
+                <td>
+                    <!-- Customization Options -->
+                    <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <mat-menu #edit="matMenu">
+                        <button mat-menu-item (click)="aEditText.emit(choiceI)">
+                            <mat-icon>edit</mat-icon>Edit Label
+                        </button>
+                        <button mat-menu-item (click)="aRandomize.emit(choiceI)">
+                            <mat-icon color="accent">casino</mat-icon>Randomize
+                        </button>
+                        <button mat-menu-item (click)="deleteAnswer(choiceI)">
+                            <mat-icon color="warn">delete</mat-icon>Delete
+                        </button>
+                    </mat-menu>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button mat-button *ngIf="editable" (click)="addAnswer()">
+        <mat-icon>add</mat-icon> Add
+    </button>
+</div>

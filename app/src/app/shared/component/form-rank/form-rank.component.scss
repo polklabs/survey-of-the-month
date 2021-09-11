@@ -7,6 +7,7 @@
     background: #303030;
     border-radius: 4px;
     overflow: hidden;
+    margin-bottom: 8px;
 }
 
 .rank-box {
@@ -45,3 +46,17 @@
 .rank-list.cdk-drop-list-dragging .rank-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.mat-icon-button {
+
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+
+    .mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+  }

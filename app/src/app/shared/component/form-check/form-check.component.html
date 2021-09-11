@@ -1,8 +1,8 @@
 <div style="margin-top: 16px;">
     <section class="section">
 
-        <ul>
-            <li *ngFor="let choice of choices; let i = index;">
+        <div fxLayout="column">
+            <div *ngFor="let choice of choices; let i = index;">
                 <mat-checkbox class="margin"><span [innerHTML]="choice"></span></mat-checkbox>
                 <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
                     <mat-icon>edit</mat-icon>
@@ -18,9 +18,8 @@
                         <mat-icon color="warn">delete</mat-icon>Delete
                     </button>
                 </mat-menu>
-            </li>
-        </ul>
-
+            </div>
+        </div>
     </section>
 
     <button mat-button *ngIf="editable" (click)="aAdd.emit()">

@@ -38,6 +38,7 @@ export class FormQuestionComponent implements OnInit {
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aEditText = new EventEmitter<number>();
     @Output() aOtherOptionAllow = new EventEmitter<void>();
+    @Output() aEditScale = new EventEmitter<void>();
 
     constructor() { }
 
@@ -56,6 +57,10 @@ export class FormQuestionComponent implements OnInit {
                 return this.formDate;
             case 'check':
                 return this.formCheck;
+            case 'time':
+                return this.formTime;
+            case 'scale':
+                return this.formScale;
             default:
                 return this.formDefault;
         }
