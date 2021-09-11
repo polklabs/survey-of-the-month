@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const material = [
     MatButtonModule,
@@ -35,6 +36,7 @@ const material = [
     MatToolbarModule,
     MatTooltipModule,
     MatMenuModule,
+    MatCheckboxModule,
 ];
 
 @NgModule({

@@ -78,7 +78,9 @@
 </ng-template>
 
 <ng-template #formCheck>
-    <app-form-check></app-form-check>
+    <app-form-check [choices]="question.choices" [editable]="editable"
+        (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
+        (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-check>
 </ng-template>
 
 <ng-template #formRank>

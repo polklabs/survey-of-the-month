@@ -54,6 +54,8 @@ export class FormQuestionComponent implements OnInit {
                 return this.formRank;
             case 'date':
                 return this.formDate;
+            case 'check':
+                return this.formCheck;
             default:
                 return this.formDefault;
         }
