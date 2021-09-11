@@ -7,6 +7,7 @@ export class Question {
     text = '';
     seed = '';
     custom = true;
+    vars: any = {};
 
     // Choice/Answer
     answerType: AnswerType = 'text';
