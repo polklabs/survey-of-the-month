@@ -75,7 +75,7 @@ export class SurveyMakerComponent implements OnInit {
     addQuestion(type: AnswerType, questionIndex = -1): void {
         const question = new Question();
         question.answerType = type;
-        question.text = 'Use the pencil button to edit this text...'
+        question.text = 'Use the pencil button in the lower right to edit this text...'
         if (questionIndex === -1) {
             this.survey.questions.push(question);
             this.loading.push(false);
@@ -117,6 +117,10 @@ export class SurveyMakerComponent implements OnInit {
         });
     }
 
+    editQuestionType(questionIndex: number, answerType: AnswerType): void {
+        this.survey.questions[questionIndex].answerType = answerType;
+    }
+
     // Answer -------------------------------------------------------------------------------------
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
@@ -139,17 +143,26 @@ export class SurveyMakerComponent implements OnInit {
 
     editAnswer(questionIndex: number, choiceIndex: number): void {
         const question = this.survey.questions[questionIndex];
+        const value = choiceIndex === -1 ? question.otherOptionText : question.choices[choiceIndex];
 
         const dialogRef = this.dialog.open(TextBoxComponent, {
             maxWidth: '95vw',
             width: '800px',
-            data: { title: 'Enter the question text', inputLabel: 'Text', value: question.choices[choiceIndex] }
+            data: { title: 'Enter the question text', inputLabel: 'Text', value }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
-                question.choices[choiceIndex] = result;
+                if (choiceIndex === -1) {
+                    question.otherOptionText = result;
+                } else {
+                    question.choices[choiceIndex] = result;
+                }
             }
         });
+    }
+
+    otherOptionAllow(questionIndex: number): void {
+        this.survey.questions[questionIndex].otherOptionAllow = !this.survey.questions[questionIndex].otherOptionAllow;
     }
 
     // Survey -------------------------------------------------------------------------------------

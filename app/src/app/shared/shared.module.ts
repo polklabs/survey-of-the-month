@@ -11,7 +11,6 @@ import { FormCheckComponent } from './component/form-check/form-check.component'
 import { FormDateComponent } from './component/form-date/form-date.component';
 import { FormTimeComponent } from './component/form-time/form-time.component';
 import { FormScaleComponent } from './component/form-scale/form-scale.component';
-import { FormSliderComponent } from './component/form-slider/form-slider.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +23,6 @@ import { FormSliderComponent } from './component/form-slider/form-slider.compone
         FormDateComponent,
         FormTimeComponent,
         FormScaleComponent,
-        FormSliderComponent,
     ],
     exports: [
         FormTextComponent,

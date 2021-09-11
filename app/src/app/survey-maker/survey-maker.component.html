@@ -33,9 +33,9 @@
             <app-form-question [question]="question" [loading]="loading[i]" [editable]="true" [questionNumber]="(i+1).toString()"
                 (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)"
                 (qSeed)="seedQuestion(i)" (qEditText)="editQuestion(i)" (qReset)="getQuestion(i, true)"
-                (qShuffle)="getQuestion(i, false, '', true)"
+                (qShuffle)="getQuestion(i, false, '', true)" (qEditType)="editQuestionType(i, $event)"
                 (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
-                (aEditText)="editAnswer(i, $event)">
+                (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)">
             </app-form-question>
         </div>
 
@@ -50,7 +50,6 @@
                 <button mat-menu-item (click)="addQuestion('check')"><mat-icon>check_box</mat-icon>Check</button>
                 <button mat-menu-item (click)="addQuestion('rank')"><mat-icon>stacked_bar_chart</mat-icon>Rank</button>
                 <button mat-menu-item (click)="addQuestion('scale')"><mat-icon>star_half</mat-icon>Rate</button>
-                <button mat-menu-item (click)="addQuestion('slider')"><mat-icon>linear_scale</mat-icon>Slider</button>
                 <button mat-menu-item (click)="addQuestion('date')"><mat-icon>today</mat-icon>Date</button>
                 <button mat-menu-item (click)="addQuestion('time')"><mat-icon>schedule</mat-icon>Time</button>
             </mat-menu>

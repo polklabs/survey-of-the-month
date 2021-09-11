@@ -1,18 +1,19 @@
-export type AnswerType = 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale' | 'slider';
+export type AnswerType = 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale';
 import { v4 as guid } from 'uuid';
 
 export class Question {
-    questionId: string = guid();
-    questionOrigin: number = -1;
-    text: string = '';
-    seed: string = '';
-    custom: boolean = true;
+    questionId = guid();
+    questionOrigin = -1;
+    text = '';
+    seed = '';
+    custom = true;
 
     // Choice/Answer
     answerType: AnswerType = 'text';
-    choices: string[] = ['Answer'];
-    scaleValues: string[] = [];
-    answerKey: string = '';    
-    answerCount: number = 0;    
-    allowOther: boolean = true;    
+    choices = ['Answer'];
+    scaleValues = ['1', '2', '3', '4', '5'];
+    answerKey = '';    
+    answerCount = 0;    
+    otherOptionAllow = true;
+    otherOptionText = 'Other';
 }

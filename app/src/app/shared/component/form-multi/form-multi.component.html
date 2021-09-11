@@ -1,16 +1,60 @@
-<mat-radio-group class="radio-group">
-    <mat-radio-button class="radio-button" *ngFor="let choice of choices; let i = index;" [value]="i">
-        <div fxLayout="row" fxLayoutAlign="start center">
-            <div [innerHTML]="choice"></div>
-            <!-- <button mat-icon-button (click)="updateChoice(i)">
-                <mat-icon>casino</mat-icon>
-            </button> -->
+<div style="margin-top: 16px;">
+    <mat-radio-group class="radio-group">
+        <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+
+            <!-- Choices -->
+            <mat-radio-button class="radio-button" [value]="i">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div [innerHTML]="choice"></div>
+                </div>
+            </mat-radio-button>
+
+            <!-- Customization Options -->
+            <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <mat-menu #edit="matMenu">
+                <button mat-menu-item (click)="aEditText.emit(i)">
+                    <mat-icon>edit</mat-icon>Edit Label
+                </button>
+                <button mat-menu-item (click)="aRandomize.emit(i)">
+                    <mat-icon color="accent">casino</mat-icon>Randomize
+                </button>
+                <button mat-menu-item (click)="aDelete.emit(i)">
+                    <mat-icon color="warn">delete</mat-icon>Delete
+                </button>
+            </mat-menu>
+
         </div>
-    </mat-radio-button>
-    <mat-radio-button *ngIf="allowOther" class="radio-button" [value]="-1">
-        <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Other</mat-label>
-            <input matInput placeholder="Ex. something something">
-        </mat-form-field>
-    </mat-radio-button>
-</mat-radio-group>
+
+        <!-- Other Option -->
+        <div fxLayout="row" *ngIf="otherOptionAllow || editable">
+
+            <mat-radio-button [disabled]="!otherOptionAllow" class="radio-button" [value]="-1">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>{{otherOptionText}}</mat-label>
+                    <input matInput [disabled]="!otherOptionAllow" placeholder="Ex. something something">
+                    <mat-hint *ngIf="!otherOptionAllow">This Option Will Be Hidden</mat-hint>
+                </mat-form-field>
+            </mat-radio-button>
+
+            <!-- Customization Options -->
+            <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <mat-menu #edit="matMenu">
+                <button mat-menu-item (click)="aEditText.emit(-1)">
+                    <mat-icon>edit</mat-icon>Edit Label
+                </button>
+                <button mat-menu-item (click)="aOtherOptionAllow.emit()">
+                    <mat-icon color="warn">help_center</mat-icon>{{otherOptionAllow?'Disallow':'Allow'}} Other
+                </button>
+            </mat-menu>
+
+        </div>
+
+    </mat-radio-group>
+    <button mat-button *ngIf="editable" (click)="aAdd.emit()">
+        <mat-icon>add</mat-icon> Add
+    </button>
+</div>

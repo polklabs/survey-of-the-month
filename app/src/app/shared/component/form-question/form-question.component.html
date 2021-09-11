@@ -44,7 +44,6 @@
                 <button mat-menu-item (click)="qEditType.emit('check')" [disabled]="question.answerType==='check'"><mat-icon>check_box</mat-icon>Check</button>
                 <button mat-menu-item (click)="qEditType.emit('rank')" [disabled]="question.answerType==='rank'"><mat-icon>stacked_bar_chart</mat-icon>Rank</button>
                 <button mat-menu-item (click)="qEditType.emit('scale')" [disabled]="question.answerType==='scale'"><mat-icon>star_half</mat-icon>Rate</button>
-                <button mat-menu-item (click)="qEditType.emit('slider')" [disabled]="question.answerType==='slider'"><mat-icon>linear_scale</mat-icon>Slider</button>
                 <button mat-menu-item (click)="qEditType.emit('date')" [disabled]="question.answerType==='date'"><mat-icon>today</mat-icon>Date</button>
                 <button mat-menu-item (click)="qEditType.emit('time')" [disabled]="question.answerType==='time'"><mat-icon>schedule</mat-icon>Time</button>
             </mat-menu>
@@ -66,11 +65,16 @@
 <ng-template #formText>
     <app-form-text [choices]="question.choices" [editable]="editable"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
-        (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"></app-form-text>
+        (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)">
+    </app-form-text>
 </ng-template>
 
 <ng-template #formMulti>
-    <app-form-multi [choices]="question.choices" [allowOther]="question.allowOther"></app-form-multi>
+    <app-form-multi [choices]="question.choices" [editable]="editable"
+        [otherOptionAllow]="question.otherOptionAllow" [otherOptionText]="question.otherOptionText"
+        (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aOtherOptionAllow)="aOtherOptionAllow.emit()"
+        (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)">
+    </app-form-multi>
 </ng-template>
 
 <ng-template #formCheck>
@@ -91,8 +95,4 @@
 
 <ng-template #formScale>
     <app-form-scale></app-form-scale>
-</ng-template>
-
-<ng-template #formSlider>
-    <app-form-slider></app-form-slider>
 </ng-template>

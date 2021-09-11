@@ -16,7 +16,6 @@ export class FormQuestionComponent implements OnInit {
     @ViewChild('formDate', { static: true }) formDate!: TemplateRef<any>;
     @ViewChild('formTime', { static: true }) formTime!: TemplateRef<any>;
     @ViewChild('formScale', { static: true }) formScale!: TemplateRef<any>;
-    @ViewChild('formSlider', { static: true }) formSlider!: TemplateRef<any>;
 
 
     @Input() question: Question = new Question();
@@ -38,6 +37,7 @@ export class FormQuestionComponent implements OnInit {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aEditText = new EventEmitter<number>();
+    @Output() aOtherOptionAllow = new EventEmitter<void>();
 
     constructor() { }
 

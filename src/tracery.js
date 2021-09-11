@@ -23,7 +23,9 @@ class Tracery {
     answerKey = '';
     answerType = 'text';
     answerCount = 0;
-    allowOther = true;
+    scaleValues = ['1', '2', '3', '4', '5'];
+    otherOptionAllow = true;
+    otherOptionText = 'Other';
     questionOrigin = -1;
     vars = {};
 
@@ -61,7 +63,8 @@ class Tracery {
         this.answerKey = '';
         this.answerType = 'text';
         this.answerCount = 0;
-        this.allowOther = true;
+        this.scaleValues = ['1', '2', '3', '4', '5'];
+        this.otherOptionAllow = true;
         this.vars = {};
 
         this.generateQuestion(origin);
@@ -80,7 +83,9 @@ class Tracery {
             answerKey: this.answerKey,
             answerType: this.answerType,
             answerCount: this.answerCount,
-            allowOther: this.allowOther,
+            scaleValues: this.scaleValues,
+            otherOptionAllow: this.otherOptionAllow,
+            otherOptionText: this.otherOptionText,
             questionOrigin: this.questionOrigin,
             seed: this.shuffleQuestion?this.customSeed:this.seed,
             vars: this.vars
@@ -93,7 +98,9 @@ class Tracery {
         this.answerKey = json.answerKey;
         this.answerType = json.answerType;
         this.answerCount = json.answerCount;
-        this.allowOther = json.allowOther;
+        this.scaleValues = json.scaleValues;
+        this.otherOptionAllow = json.otherOptionAllow;
+        this.otherOptionText = json.otherOptionText;
         this.questionOrigin = json.questionOrigin;
         this.vars = json.vars;
         this.seed = json.seed;
@@ -105,7 +112,7 @@ class Tracery {
             this.answerType = this.vars['answerType'];
         }
         if (this.vars['answerAllowOther'] !== undefined) {
-            this.allowOther = this.vars['answerAllowOther'];
+            this.otherOptionAllow = this.vars['answerAllowOther'];
         }
         if (this.vars['answerKey'] !== undefined) {
             this.answerKey = this.vars['answerKey'];

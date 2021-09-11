@@ -1,9 +1,11 @@
 <div style="margin-top: 16px;">
     <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+
         <mat-form-field fxFlex appearance="outline">
             <mat-label><span [innerHTML]="choice"></span></mat-label>
             <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
         </mat-form-field>
+        
         <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
         <mat-menu #edit="matMenu">
             <button mat-menu-item (click)="aEditText.emit(i)"><mat-icon>edit</mat-icon>Edit Label</button>
