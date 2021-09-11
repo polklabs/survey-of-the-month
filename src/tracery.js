@@ -19,10 +19,10 @@ class Tracery {
     seen = {};
 
     question = '';
-    choices = ['Answer'];
-    answerKey = '';
+    choices = [];
+    answerKey = 'answer';
     answerType = 'text';
-    answerCount = 0;
+    answerCount = 1;
     scaleValues = ['1', '2', '3', '4', '5'];
     otherOptionAllow = true;
     otherOptionText = 'Other';
@@ -59,10 +59,10 @@ class Tracery {
         }
 
         this.question = '';
-        this.choices = ['Answer'];
-        this.answerKey = '';
+        this.choices = [];
+        this.answerKey = 'answer';
         this.answerType = 'text';
-        this.answerCount = 0;
+        this.answerCount = 1;
         this.scaleValues = ['1', '2', '3', '4', '5'];
         this.otherOptionAllow = true;
         this.vars = {};
@@ -120,7 +120,7 @@ class Tracery {
             if (this.vars['answerCount'] !== undefined) {
                 this.answerCount = +this.vars['answerCount'];
             }
-            if (this.answerCount === 0) {
+            if (this.answerCount <= 1) {
                 this.answerCount = tMath.randomNext(3, 5, this.rng);
                 if (this.answerKey === 'yesNo') this.answerCount = 2;
             }

@@ -12,7 +12,7 @@ export class Question {
     answerType: AnswerType = 'text';
     choices = ['Answer'];
     scaleValues = ['1', '2', '3', '4', '5'];
-    answerKey = '';    
+    answerKey = 'answer';    
     answerCount = 1;    
     otherOptionAllow = true;
     otherOptionText = 'Other';
