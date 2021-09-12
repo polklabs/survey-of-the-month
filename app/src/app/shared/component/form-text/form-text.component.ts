@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-form-text',
     templateUrl: './form-text.component.html',
     styleUrls: ['./form-text.component.scss']
 })
-export class FormTextComponent {
+export class FormTextComponent implements OnInit {
 
     @Input() choices: string[] = [];
 
@@ -17,6 +17,31 @@ export class FormTextComponent {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<string[]>();
+    answers: string[] = [];
+
     constructor() { }
+
+    ngOnInit(): void {
+        console.log('Init Text');
+        this.choices.forEach(c => {
+            this.answers.push('');
+        });
+        this.onChange();
+    }
+
+    addAnswer() {
+        this.answers.push('');
+        this.aAdd.emit();
+    }
+
+    deleteAnswer(i: number) {
+        this.answers.splice(i, 1);
+        this.aDelete.emit(i);
+    }
+
+    onChange() {
+        this.aUpdate.emit(this.answers);
+    }
 
 }

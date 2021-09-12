@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-form-check',
     templateUrl: './form-check.component.html',
     styleUrls: ['./form-check.component.scss']
 })
-export class FormCheckComponent {
+export class FormCheckComponent implements OnInit {
 
     @Input() choices: string[] = [];
 
@@ -17,6 +17,31 @@ export class FormCheckComponent {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<string[]>();
+    answers: boolean[] = [];
+
     constructor() { }
+
+    ngOnInit(): void {
+        console.log('Init Check');
+        this.choices.forEach(c => {
+            this.answers.push(false);
+        });
+        this.onChange();
+    }
+
+    addAnswer() {
+        this.answers.push(false);
+        this.aAdd.emit();
+    }
+
+    deleteAnswer(i: number) {
+        this.answers.splice(i, 1);
+        this.aDelete.emit(i);
+    }
+
+    onChange() {
+        this.aUpdate.emit(this.answers.map(x => x ? 'true' : 'false'));
+    }
 
 }

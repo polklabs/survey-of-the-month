@@ -19,24 +19,31 @@ export class FormScaleComponent implements OnInit {
     @Output() aAdd = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
 
-    answers: string[] = [];
+    @Output() aUpdate = new EventEmitter<(number | null)[]>();
+    answers: (number | null)[] = [];
 
     constructor() { }
 
     ngOnInit(): void {
+        console.log('Init Scale');
         this.choices.forEach(c => {
-            this.answers.push('');
+            this.answers.push(null);
         });
+        this.onChange();
     }
 
     addAnswer() {
-        this.answers.push('');
+        this.answers.push(null);
         this.aAdd.emit();
     }
 
     deleteAnswer(i: number) {
         this.answers.splice(i, 1);
         this.aDelete.emit(i);
+    }
+
+    onChange() {
+        this.aUpdate.emit(this.answers);
     }
 
 }

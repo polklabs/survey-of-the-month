@@ -9,6 +9,8 @@ import { AnswerType, Question } from '../../model/question.model';
 export class FormQuestionComponent implements OnInit {
 
     @ViewChild('formDefault', { static: true }) formDefault!: TemplateRef<any>;
+    @ViewChild('formEmpty', {static: true}) formEmpty!: TemplateRef<any>;
+
     @ViewChild('formText', { static: true }) formText!: TemplateRef<any>;
     @ViewChild('formMulti', { static: true }) formMulti!: TemplateRef<any>;
     @ViewChild('formCheck', { static: true }) formCheck!: TemplateRef<any>;
@@ -40,12 +42,21 @@ export class FormQuestionComponent implements OnInit {
     @Output() aOtherOptionAllow = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<(string | number | null)[]>();
+
+    currentAnswerType: string = '';
+
     constructor() { }
 
     ngOnInit(): void {
+        this.currentAnswerType = this.question.answerType;
     }
 
     getAnswerTemplate(): TemplateRef<any> {
+        if (this.currentAnswerType !== this.question.answerType) {
+            this.currentAnswerType = this.question.answerType;
+            return this.formEmpty;
+        }
         switch (this.question.answerType) {
             case 'text':
                 return this.formText;

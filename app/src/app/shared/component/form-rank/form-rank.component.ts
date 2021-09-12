@@ -1,12 +1,12 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-form-rank',
     templateUrl: './form-rank.component.html',
     styleUrls: ['./form-rank.component.scss']
 })
-export class FormRankComponent {
+export class FormRankComponent implements OnInit {
 
     @Input() choices: string[] = [];
 
@@ -18,10 +18,32 @@ export class FormRankComponent {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<number[]>();
+    answers: string[] = [];
+
     constructor() { }
+
+    ngOnInit(): void {
+        console.log('Init Rank');
+
+        if (this.editable) {
+            this.answers = this.choices
+        } else {
+            this.choices.forEach(c => {
+                this.answers.push(c);
+            });
+        }
+        this.onChange();
+    }
+
 
     drop(event: CdkDragDrop<string[]>) {
         moveItemInArray(this.choices, event.previousIndex, event.currentIndex);
+        this.onChange();
+    }
+
+    onChange() {
+        this.aUpdate.emit(this.choices.map(x => this.answers.indexOf(x)))
     }
 
 }

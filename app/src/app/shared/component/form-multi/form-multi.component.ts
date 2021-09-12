@@ -20,6 +20,32 @@ export class FormMultiComponent {
     @Output() aAdd = new EventEmitter<void>();
     @Output() aOtherOptionAllow = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<any[]>();
+    answer: string | number | null = null;
+    otherAnswer: string = '';
+
     constructor() { }
+
+    ngOnInit(): void {
+        console.log('Init Multi');
+        this.onChange();
+    }
+
+    addAnswer() {
+        this.aAdd.emit();
+    }
+
+    deleteAnswer(i: number) {
+        this.aDelete.emit(i);
+    }
+
+    onChange() {
+        if (this.answer === -1) {
+            this.aUpdate.emit([this.otherAnswer]);
+        } else {
+            this.aUpdate.emit([this.answer]);
+        }
+        
+    }
 
 }

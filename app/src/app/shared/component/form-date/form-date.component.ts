@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-form-date',
     templateUrl: './form-date.component.html',
     styleUrls: ['./form-date.component.scss']
 })
-export class FormDateComponent {
+export class FormDateComponent implements OnInit {
 
     @Input() choices: string[] = [];
 
@@ -17,6 +17,31 @@ export class FormDateComponent {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
 
+    @Output() aUpdate = new EventEmitter<(string | null)[]>();
+    answers: (Date|null)[] = [];
+
     constructor() { }
+
+    ngOnInit(): void {
+        console.log('Init Date');
+        this.choices.forEach(c => {
+            this.answers.push(null);
+        });
+        this.onChange();
+    }
+
+    addAnswer() {
+        this.answers.push(null);
+        this.aAdd.emit();
+    }
+
+    deleteAnswer(i: number) {
+        this.answers.splice(i, 1);
+        this.aDelete.emit(i);
+    }
+
+    onChange() {
+        this.aUpdate.emit(this.answers.map(x => x?.toLocaleDateString() ?? null));
+    }
 
 }

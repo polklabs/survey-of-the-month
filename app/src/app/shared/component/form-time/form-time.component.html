@@ -3,16 +3,16 @@
 
         <p [innerHTML]="choice"></p>
         <p>:&nbsp;</p>
-        <mat-form-field fxFlex="64px" appearance="outline">
-            <input matInput type="number" max="12" min="1">
+        <mat-form-field fxFlex="48px" appearance="outline">
+            <input matInput [(ngModel)]="answers[i].hour" (keyup)="onChange()">
         </mat-form-field>
         <p>&nbsp;:&nbsp;</p>
-        <mat-form-field fxFlex="64px" appearance="outline">
-            <input matInput type="number" max="59" min="0">
+        <mat-form-field fxFlex="48px" appearance="outline">
+            <input matInput [(ngModel)]="answers[i].minute" (keyup)="onChange()">
         </mat-form-field>
         <p>&nbsp;&nbsp;</p>
         <mat-form-field fxFlex="64px" appearance="outline">
-            <mat-select>
+            <mat-select [(ngModel)]="answers[i].ampm" (selectionChange)="onChange()">
                 <mat-option value="AM">AM</mat-option>
                 <mat-option value="PM">PM</mat-option>
             </mat-select>

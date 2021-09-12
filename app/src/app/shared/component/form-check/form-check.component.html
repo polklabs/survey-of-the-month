@@ -3,7 +3,7 @@
 
         <div fxLayout="column">
             <div *ngFor="let choice of choices; let i = index;">
-                <mat-checkbox class="margin"><span [innerHTML]="choice"></span></mat-checkbox>
+                <mat-checkbox class="margin" [(ngModel)]="answers[i]" (change)="onChange()"><span [innerHTML]="choice"></span></mat-checkbox>
                 <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
                     <mat-icon>edit</mat-icon>
                 </button>
@@ -14,7 +14,7 @@
                     <button mat-menu-item (click)="aRandomize.emit(i)">
                         <mat-icon color="accent">casino</mat-icon>Randomize
                     </button>
-                    <button mat-menu-item (click)="aDelete.emit(i)">
+                    <button mat-menu-item (click)="deleteAnswer(i)">
                         <mat-icon color="warn">delete</mat-icon>Delete
                     </button>
                 </mat-menu>
@@ -22,7 +22,7 @@
         </div>
     </section>
 
-    <button mat-button *ngIf="editable" (click)="aAdd.emit()">
+    <button mat-button *ngIf="editable" (click)="addAnswer()">
         <mat-icon>add</mat-icon> Add
     </button>
 

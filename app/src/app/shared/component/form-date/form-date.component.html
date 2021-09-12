@@ -3,7 +3,7 @@
 
         <mat-form-field appearance="outline">
             <mat-label><span [innerHTML]="choice"></span></mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="answers[i]" (dateChange)="onChange()">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -12,8 +12,8 @@
         <mat-menu #edit="matMenu">
             <button mat-menu-item (click)="aEditText.emit(i)"><mat-icon>edit</mat-icon>Edit Label</button>
             <button mat-menu-item (click)="aRandomize.emit(i)"><mat-icon color="accent">casino</mat-icon>Randomize</button>
-            <button mat-menu-item (click)="aDelete.emit(i)"><mat-icon color="warn">delete</mat-icon>Delete</button>
+            <button mat-menu-item (click)="deleteAnswer(i)"><mat-icon color="warn">delete</mat-icon>Delete</button>
         </mat-menu>
     </div>
-    <button mat-button *ngIf="editable" (click)="aAdd.emit()"><mat-icon>add</mat-icon> Add</button>
+    <button mat-button *ngIf="editable" (click)="addAnswer()"><mat-icon>add</mat-icon> Add</button>
 </div>

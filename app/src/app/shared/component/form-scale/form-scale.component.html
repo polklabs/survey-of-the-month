@@ -19,7 +19,7 @@
                     <span [innerHTML]="choice"></span>
                 </td>
                 <td *ngFor="let header of scaleValues; let i = index">
-                    <mat-radio-group class="radio-group" [(ngModel)]="answers[choiceI]">
+                    <mat-radio-group class="radio-group" [(ngModel)]="answers[choiceI]" (change)="onChange()">
                         <mat-radio-button class="radio-button" [value]="i">
                         </mat-radio-button>
                     </mat-radio-group>

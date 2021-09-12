@@ -3,7 +3,7 @@
 
         <mat-form-field fxFlex appearance="outline">
             <mat-label><span [innerHTML]="choice"></span></mat-label>
-            <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
+            <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..." [(ngModel)]="answers[i]" (keyup)="onChange()"></textarea>
         </mat-form-field>
         
         <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit"><mat-icon>edit</mat-icon></button>
