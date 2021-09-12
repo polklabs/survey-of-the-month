@@ -33,7 +33,6 @@ export class FormRankComponent implements OnInit {
                 this.answers.push(c);
             });
         }
-        this.onChange();
     }
 
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AnswerType, Question } from '../../model/question.model';
 
 @Component({
@@ -42,11 +42,13 @@ export class FormQuestionComponent implements OnInit {
     @Output() aOtherOptionAllow = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
 
-    @Output() aUpdate = new EventEmitter<(string | number | null)[]>();
+    @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
 
     currentAnswerType: string = '';
 
-    constructor() { }
+    constructor(
+        private cd: ChangeDetectorRef
+    ) { }
 
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
@@ -75,6 +77,12 @@ export class FormQuestionComponent implements OnInit {
             default:
                 return this.formDefault;
         }
+    }
+
+    clearAnswer(): void {
+        this.aUpdate.emit(null);
+        this.currentAnswerType = '';
+        this.cd.detectChanges();
     }
 
 }

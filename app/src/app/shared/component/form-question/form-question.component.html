@@ -9,6 +9,15 @@
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
     </mat-card-content>
 
+    <ng-container *ngIf="!editable && !basicEdit">
+        <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
+        <mat-card-actions fxLayoutGap="8px" fxLayout="row">
+            <button mat-flat-button color="warn" (click)="clearAnswer()">
+                Clear
+            </button>
+        </mat-card-actions>
+    </ng-container>
+
     <ng-container *ngIf="editable || basicEdit">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
 

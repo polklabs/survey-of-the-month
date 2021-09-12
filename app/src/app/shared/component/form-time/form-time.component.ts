@@ -27,7 +27,6 @@ export class FormTimeComponent {
         this.choices.forEach(c => {
             this.answers.push({hour: '00', minute: '00', ampm: 'AM'});
         });
-        this.onChange();
     }
 
     addAnswer() {

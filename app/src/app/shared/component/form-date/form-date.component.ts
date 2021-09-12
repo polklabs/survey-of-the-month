@@ -27,7 +27,6 @@ export class FormDateComponent implements OnInit {
         this.choices.forEach(c => {
             this.answers.push(null);
         });
-        this.onChange();
     }
 
     addAnswer() {

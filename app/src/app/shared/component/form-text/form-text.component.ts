@@ -27,7 +27,6 @@ export class FormTextComponent implements OnInit {
         this.choices.forEach(c => {
             this.answers.push('');
         });
-        this.onChange();
     }
 
     addAnswer() {

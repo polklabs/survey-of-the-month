@@ -27,7 +27,6 @@ export class FormCheckComponent implements OnInit {
         this.choices.forEach(c => {
             this.answers.push(false);
         });
-        this.onChange();
     }
 
     addAnswer() {
