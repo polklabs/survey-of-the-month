@@ -1,19 +1,17 @@
 import { Tracery } from './src/tracery';
 
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 const app = express();
 const port = 3080;
 
-const NodeCouchDb = require('node-couchdb');
+import NodeCouchDb from 'node-couchdb';
 const couch = new NodeCouchDb({
     auth: {
         user: 'admin',
         pass: 'lagrange'
     }
 });
-
-// const Tracery = require('./src/tracery.js');
 
 app.use(cors());
 app.use(express.json());
@@ -51,23 +49,23 @@ app.post('/api/choice', (req: any, res: any) => {
     res.json(tracery.getJSON());
 });
 
-// // Save survey
-// app.put('/api/survey', (req: any, res: any) => {
-//     couch.insert('surveys', req.body).then(({data, headers, status}) => {
-//         res.json({ok: true, data, headers, status});
-//     }, (err: any) => {
-//         res.json({ok: false, error: err});
-//     });
-// });
+// Save survey
+app.put('/api/survey', (req: any, res: any) => {
+    couch.insert('surveys', req.body).then(({data, headers, status}) => {
+        res.json({ok: true, data, headers, status});
+    }, (err: any) => {
+        res.json({ok: false, error: err});
+    });
+});
 
-// // Get Survey
-// app.get('/api/survey', (req: any, res: any) => {
-//     couch.get('surveys', req.query.id).then(({data, headers, status}) => {
-//         res.json({ok: true, data, headers, status});
-//     }, (err: any) => {
-//         res.json({ok: false, error: err});
-//     });
-// });
+// Get Survey
+app.get('/api/survey', (req: any, res: any) => {
+    couch.get('surveys', req.query.id).then(({data, headers, status}) => {
+        res.json({ok: true, data, headers, status});
+    }, (err: any) => {
+        res.json({ok: false, error: err});
+    });
+});
 
 // Submit answers
 app.put('/api/answer', (req: any, res: any) => {

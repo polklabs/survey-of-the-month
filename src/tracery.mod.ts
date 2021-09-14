@@ -1,4 +1,4 @@
-const tMath = require('./tracery.math');
+import { randomNext, roundUp } from './tracery.math';
 
 const vowels = 'aeiouAEIOU';
 const consonants = 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ';
@@ -40,10 +40,10 @@ export function ModString(value: string, mod: string, rng: any): string {
                 const start = +values[0];
                 const end = +values[1];
                 if (values.length === 3) {
-                    value = tMath.roundUp(tMath.randomNext(start, end, rng), +values[2]).toString();
+                    value = roundUp(randomNext(start, end, rng), +values[2]).toString();
                     break;
                 } else
-                    value = tMath.randomNext(start, end, rng).toString();
+                    value = randomNext(start, end, rng).toString();
                 break;
 
             // HTML Mods

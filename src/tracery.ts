@@ -1,9 +1,7 @@
 import {setSeed, randomNext} from './tracery.math';
 import {ModString} from './tracery.mod';
 
-const fs = require('fs');
-// const tMath = require('./tracery.math');
-// const tMod = require('./tracery.mod');
+import fs from 'fs';
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
