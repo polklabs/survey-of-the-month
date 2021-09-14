@@ -74,5 +74,5 @@ exports.default = series(
     createProdBuildFolder,
     buildAngularCodeTask,
     parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask),
-    zippingTask
+    // zippingTask
 );

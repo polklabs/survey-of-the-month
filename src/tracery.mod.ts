@@ -3,7 +3,7 @@ const tMath = require('./tracery.math');
 const vowels = 'aeiouAEIOU';
 const consonants = 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ';
 
-function ModString(value, mod, rng) {
+export function ModString(value: string, mod: string, rng: any): string {
     const mods = mod.split('.');
     mods.forEach(m => {
         switch (m) {
@@ -76,5 +76,3 @@ function ModString(value, mod, rng) {
     });
     return value;
 }
-
-module.exports.ModString = ModString;

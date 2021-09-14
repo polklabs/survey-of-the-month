@@ -1,6 +1,9 @@
+import {setSeed, randomNext} from './tracery.math';
+import {ModString} from './tracery.mod';
+
 const fs = require('fs');
-const tMath = require('./tracery.math');
-const tMod = require('./tracery.mod');
+// const tMath = require('./tracery.math');
+// const tMod = require('./tracery.mod');
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -9,17 +12,17 @@ const regexVars = /^(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])+)/m; // [key:value]Test -> 
 const regexString = /(#(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
 const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
 
-const grammar = {};
-const loadedfiles = [];
+const grammar: any = {};
+const loadedfiles: string[] = [];
 loadGrammar('survey.json');
 
-class Tracery {
+export class Tracery {
 
-    customDict = {};
-    seen = {};
+    customDict: any = {};
+    seen: any = {};
 
     question = '';
-    choices = [];
+    choices: string[] = [];
     answerKey = 'answer';
     answerType = 'text';
     answerCount = 1;
@@ -27,15 +30,15 @@ class Tracery {
     otherOptionAllow = true;
     otherOptionText = 'Other';
     questionOrigin = -1;
-    vars = {};
+    vars: any = {};
 
     shuffleQuestion = false;
 
     rng;
     seed;
-    customSeed;
+    customSeed: string|undefined;
 
-    constructor(people = [], customSeed=undefined, questionOrigin=-1) {
+    constructor(people = [], customSeed:string|undefined=undefined, questionOrigin=-1) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
@@ -50,7 +53,7 @@ class Tracery {
             this.customSeed = customSeed;
             customSeed = '';
         }
-        [this.rng, this.seed] = tMath.setSeed(customSeed);
+        [this.rng, this.seed] = setSeed(customSeed);
     }
 
     start(origin = 'question') {
@@ -71,7 +74,7 @@ class Tracery {
         this.generateAnswer();
     }
 
-    simpleStart(origin) {
+    simpleStart(origin: string) {
         this.vars = {};
         return this.ParseKey(origin);
     }
@@ -92,7 +95,7 @@ class Tracery {
         };
     }
 
-    setJSON(json) {
+    setJSON(json: any) {
         this.question = json.text;
         this.choices = json.choices;
         this.answerKey = json.answerKey;
@@ -106,7 +109,7 @@ class Tracery {
         this.seed = json.seed;
     }
 
-    generateQuestion(origin) {
+    generateQuestion(origin: string) {
         this.question = this.ParseKey(origin, true);
         if (this.vars['answerType'] !== undefined) {
             this.answerType = this.vars['answerType'];
@@ -121,7 +124,7 @@ class Tracery {
                 this.answerCount = +this.vars['answerCount'];
             }
             if (this.answerCount <= 1) {
-                this.answerCount = tMath.randomNext(3, 5, this.rng);
+                this.answerCount = randomNext(3, 5, this.rng);
                 if (this.answerKey === 'yesNo') this.answerCount = 2;
             }
         }
@@ -151,12 +154,12 @@ class Tracery {
         }
     }
 
-    GetRandom(key, isOrigin=false) {
+    GetRandom(key: string, isOrigin=false): string {
         var dict = grammar;
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
         if (dict[key].length === 0) return key;
-        const value = tMath.randomNext(0, dict[key].length, this.rng);
+        const value = randomNext(0, dict[key].length, this.rng);
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.questionOrigin !== -1) {
@@ -169,7 +172,7 @@ class Tracery {
         return dict[key][value];
     }
 
-    ParseVariables(variables) {
+    ParseVariables(variables: string) {
         let m;
         while ((m = regexVariable.exec(variables)) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
@@ -177,15 +180,15 @@ class Tracery {
                 regexVariable.lastIndex++;
             }
 
-            const key = m.groups['key'];
-            let value = m.groups['value'];
+            const key = m.groups?.['key'] ?? '';
+            let value = m.groups?.['value'] ?? '';
             value = this.ParseString(value);
 
             this.vars[key] = value;
         }
     }
 
-    ParseInlineChoice(value) {
+    ParseInlineChoice(value: string) {
         let m;
         while ((m = regexInlineChoice.exec(value)) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
@@ -193,15 +196,15 @@ class Tracery {
                 regexInlineChoice.lastIndex++;
             }
 
-            const choices = m.groups['choice'].split(':');
+            const choices = m.groups?.['choice'].split(':') ?? '';
             if (choices.length === 0) value = value.replace(m[0], '');
 
-            value = value.replace(m[0], choices[tMath.randomNext(0, choices.length, this.rng)]);
+            value = value.replace(m[0], choices[randomNext(0, choices.length, this.rng)]);
         }
         return value;
     }
 
-    ParseString(value) {
+    ParseString(value: string) {
         value = this.ParseInlineChoice(value);
 
         let m;
@@ -211,7 +214,7 @@ class Tracery {
                 regexVars.lastIndex++;
             }
 
-            this.ParseVariables(m.groups['vars']);
+            this.ParseVariables(m.groups?.['vars'] ?? '');
             value = value.replace(m[0], '');
         }
 
@@ -222,9 +225,9 @@ class Tracery {
                 regexString.lastIndex++;
             }
 
-            const variables = m.groups["vars"];
-            const key = m.groups["key"];
-            const mod = m.groups["mod"];
+            const variables = m.groups?.["vars"] ?? '';
+            const key = m.groups?.["key"] ?? '';
+            const mod = m.groups?.["mod"] ?? '';
 
             if (variables !== '') {
                 this.ParseVariables(variables);
@@ -232,7 +235,7 @@ class Tracery {
 
             let toReturn = this.ParseKey(key);
             if (mod !== '') {
-                toReturn = tMod.ModString(toReturn, mod, this.rng);
+                toReturn = ModString(toReturn, mod, this.rng);
             }
 
             value = value.replace(m[0], toReturn);
@@ -241,7 +244,7 @@ class Tracery {
         return value;
     }
 
-    ParseKey(key, isOrigin=false) {
+    ParseKey(key: string, isOrigin=false) {
         if (this.vars[key] !== undefined) {
             return this.vars[key];
         }
@@ -273,10 +276,10 @@ class Tracery {
 }
 
 // Load multiple grammar files and merge them
-function loadGrammar(filename) {
+function loadGrammar(filename: string) {
     loadedfiles.push(filename);
 
-    grammarTemp = JSON.parse(fs.readFileSync(`./data/${filename}`,
+    const grammarTemp = JSON.parse(fs.readFileSync(`./data/${filename}`,
         { encoding: 'utf8', flag: 'r' }));
 
     Object.keys(grammarTemp).forEach(key => {
@@ -289,8 +292,8 @@ function loadGrammar(filename) {
         }
 
         // Check for duplicate values
-        grammar[key].forEach((value, index) => {
-            const dupIndex = grammar[key].findIndex(x => x === value);
+        grammar[key].forEach((value: string, index: number) => {
+            const dupIndex = grammar[key].findIndex((x: string) => x === value);
             if (dupIndex < index && dupIndex >= 0) {
                 console.warn(`Duplicate value: ${filename} -> ${key}: [${value}] ${index}`);
             }
@@ -298,12 +301,10 @@ function loadGrammar(filename) {
     });
 
     if (grammarTemp['require!'] !== undefined) {
-        grammarTemp['require!'].forEach(file => {
+        grammarTemp['require!'].forEach((file: string) => {
             if (loadedfiles.findIndex(x => x === file) === -1) {
                 loadGrammar(file);
             }
         })
     }
 }
-
-module.exports = Tracery;

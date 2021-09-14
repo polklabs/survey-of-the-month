@@ -1,6 +1,6 @@
 var seedrandom = require('seedrandom');
 
-function setSeed(seed = '') {
+export function setSeed(seed = ''): [any, string] {
     if (seed === undefined || seed === '') {
         seed = seedrandom().int32().toString();
         return [seedrandom(seed), seed];
@@ -9,11 +9,11 @@ function setSeed(seed = '') {
     }
 }
 
-function randomNext(minValue, maxValue, rng) {
+export function randomNext(minValue: number, maxValue: number, rng: any): number {
     return Math.floor((rng() * (maxValue - minValue)) + minValue);
 }
 
-function roundUp(numToRound, multiple = 0) {
+export function roundUp(numToRound: number, multiple = 0): number {
     if (multiple === 0) return numToRound;
 
     const remainder = Math.abs(numToRound) % multiple;
@@ -25,7 +25,3 @@ function roundUp(numToRound, multiple = 0) {
         return numToRound + multiple - remainder;
     }
 }
-
-module.exports.randomNext = randomNext;
-module.exports.roundUp = roundUp;
-module.exports.setSeed = setSeed;
