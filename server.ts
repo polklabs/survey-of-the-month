@@ -1,6 +1,7 @@
 import { Tracery } from './src/tracery';
 import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
+import { SendEmail } from './src/email';
 
 import express from 'express';
 import cors from 'cors';
@@ -72,6 +73,25 @@ app.get('/api/survey', (req: {query: {id: string}}, res: any) => {
 // Submit answers
 app.put('/api/answer', (req: any, res: any) => {
 
+});
+
+// Submit Feedback
+app.post('/api/feedback', (req: {body: {subject: string, body: string, type: string, returnAddress: string}}, res: any) => {
+
+    let replyTo = req.body.returnAddress;
+    const subject = `Survey Of The Month - [${req.body.type}]`;
+    let text = req.body.subject + '\n\n' + req.body.body;
+
+    const r = SendEmail(subject, text, 'andrew@polklabs.com', 'andrew@polklabs.com', replyTo, (error, info) => {
+        if (error) {
+            res.json({ok: false, error});
+        } else {
+            res.json({ok: true});
+        }
+    });
+    if (r) {
+        res.json({ok: false, error: r}); 
+    }
 });
 
 // Get the angular app files

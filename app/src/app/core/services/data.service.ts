@@ -14,6 +14,9 @@ export class DataService {
 
   rootURL = '/api';
 
+  /**
+   * @returns [result, progress]
+   */
   getData(route: string): Observable<any>[] {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
@@ -32,6 +35,9 @@ export class DataService {
     return [result, progress];
   }
 
+  /**
+   * @returns [result, progress]
+   */
   postData(route: string, data: any): Observable<any>[] {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
@@ -50,6 +56,9 @@ export class DataService {
     return [result, progress];
   }
 
+  /**
+   * @returns [result, progress]
+   */
   putData(route: string, data: any): Observable<any>[] {
     const result = new AsyncSubject<any>();
     const progress = new BehaviorSubject<number>(0);
