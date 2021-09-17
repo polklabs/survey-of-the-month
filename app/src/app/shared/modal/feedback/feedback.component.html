@@ -1,0 +1,52 @@
+<form #feedbackForm="ngForm" novalidate (ngSubmit)="submit()" [formGroup]="feedback">
+
+    <h2 mat-dialog-title>Feedback</h2>
+    <mat-dialog-content>
+        <p>Please tell me what you think! All feedback is greatly appreciated</p>
+
+        <div fxLayout="row" fxLayoutAlign="space-around" class="button-container">
+            <button mat-flat-button [color]="getTypeField() === 'idea' ? 'primary' : ''"
+                type="button" (click)="updateTypeField('idea')">
+                <mat-icon>emoji_objects</mat-icon>
+                Idea
+            </button>
+            <button mat-flat-button [color]="getTypeField() === 'problem' ? 'primary' : ''"
+                type="button" (click)="updateTypeField('problem')">
+                <mat-icon>report_problem</mat-icon>
+                Problem
+            </button>
+            <button mat-flat-button [color]="getTypeField() === 'question' ? 'primary' : ''"
+                type="button" (click)="updateTypeField('question')">
+                <mat-icon>help</mat-icon>
+                Question
+            </button>
+            <button mat-flat-button [color]="getTypeField() === 'praise' ? 'primary' : ''"
+                type="button" (click)="updateTypeField('praise')">
+                <mat-icon>favorite</mat-icon>
+                Praise
+            </button>
+        </div>
+
+        <mat-form-field appearance="outline" style="width: 100%; padding-top: 16px;">
+            <mat-label>Short Summary *</mat-label>
+            <input matInput placeholder="Summary" autocomplete="off" formControlName="subject" class="form-control">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Your Feedback *</mat-label>
+            <textarea matInput placeholder="Feedback" style="height: 64px;" autocomplete="off"
+                formControlName="body" class="form-control"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 100%; padding-top: 16px;">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Your Email" autocomplete="off" formControlName="returnAddress" class="form-control">
+        </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions fxLayoutAlign="end">
+        <button mat-button color="warn" type="button" (click)="onNoClick()">Cancel</button>
+        <button mat-button color="primary" [disabled]="submitting">Send</button>
+    </mat-dialog-actions>
+</form>

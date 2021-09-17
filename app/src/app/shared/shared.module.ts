@@ -11,6 +11,8 @@ import { FormCheckComponent } from './component/form-check/form-check.component'
 import { FormDateComponent } from './component/form-date/form-date.component';
 import { FormTimeComponent } from './component/form-time/form-time.component';
 import { FormScaleComponent } from './component/form-scale/form-scale.component';
+import { FeedbackComponent } from './modal/feedback/feedback.component';
+import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +25,8 @@ import { FormScaleComponent } from './component/form-scale/form-scale.component'
         FormDateComponent,
         FormTimeComponent,
         FormScaleComponent,
+        FeedbackComponent,
+        OkDialogComponent,
     ],
     exports: [
         FormTextComponent,
