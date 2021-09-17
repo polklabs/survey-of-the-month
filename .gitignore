@@ -308,3 +308,4 @@ testem.log
 Thumbs.db
 
 /prod-build
+email.json
