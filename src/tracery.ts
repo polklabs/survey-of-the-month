@@ -1,5 +1,6 @@
-import {setSeed, randomNext} from './tracery.math';
-import {ModString} from './tracery.mod';
+import { setSeed, randomNext } from './tracery.math';
+import { ModString } from './tracery.mod';
+import { Question } from '../app/src/app/shared/model/question.model';
 
 import fs from 'fs';
 
@@ -18,40 +19,28 @@ export class Tracery {
 
     customDict: any = {};
     seen: any = {};
-
-    question = '';
-    choices: string[] = [];
-    answerKey = 'answer';
-    answerType = 'text';
-    answerCount = 1;
-    scaleValues = ['1', '2', '3', '4', '5'];
-    otherOptionAllow = true;
-    otherOptionText = 'Other';
-    questionOrigin = -1;
-    vars: any = {};
-
     shuffleQuestion = false;
-
     rng;
-    seed;
-    customSeed: string|undefined;
 
-    constructor(people = [], customSeed:string|undefined=undefined, questionOrigin=-1) {
+    question: Question = new Question();
+
+    constructor(people: string[] = [], customSeed = '', questionOrigin = -1) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
         this.seen = {};
-        this.questionOrigin = questionOrigin;
+        this.question.questionOrigin = questionOrigin;
         if (people.length > 0) {
             this.customDict['person'] = people;
         }
 
         if (questionOrigin !== -1) {
             this.shuffleQuestion = true;
-            this.customSeed = customSeed;
-            customSeed = '';
+            [this.rng, this.question.seed] = setSeed('');
+            this.question.seed = customSeed ?? '';
+        } else {
+            [this.rng, this.question.seed] = setSeed(customSeed);
         }
-        [this.rng, this.seed] = setSeed(customSeed);
     }
 
     start(origin = 'question') {
@@ -59,100 +48,79 @@ export class Tracery {
             origin = 'test!';
         }
 
-        this.question = '';
-        this.choices = [];
-        this.answerKey = 'answer';
-        this.answerType = 'text';
-        this.answerCount = 1;
-        this.scaleValues = ['1', '2', '3', '4', '5'];
-        this.otherOptionAllow = true;
-        this.vars = {};
+        this.question.text = '';
+        this.question.choices = [];
+        this.question.answerKey = 'answer';
+        this.question.answerType = 'text';
+        this.question.answerCount = 1;
+        this.question.scaleValues = ['1', '2', '3', '4', '5'];
+        this.question.otherOptionAllow = true;
+        this.question.custom = false;
+        this.question.vars = {};
 
         this.generateQuestion(origin);
         this.generateAnswer();
     }
 
     simpleStart(origin: string) {
-        this.vars = {};
+        this.question.vars = {};
         return this.ParseKey(origin);
     }
 
-    getJSON() {
-        return {
-            text: this.question,
-            choices: this.choices,
-            answerKey: this.answerKey,
-            answerType: this.answerType,
-            answerCount: this.answerCount,
-            scaleValues: this.scaleValues,
-            otherOptionAllow: this.otherOptionAllow,
-            otherOptionText: this.otherOptionText,
-            questionOrigin: this.questionOrigin,
-            seed: this.shuffleQuestion?this.customSeed:this.seed,
-            vars: this.vars
-        };
+    getQuestion(): Question {
+        return this.question;
     }
 
-    setJSON(json: any) {
-        this.question = json.text;
-        this.choices = json.choices;
-        this.answerKey = json.answerKey;
-        this.answerType = json.answerType;
-        this.answerCount = json.answerCount;
-        this.scaleValues = json.scaleValues;
-        this.otherOptionAllow = json.otherOptionAllow;
-        this.otherOptionText = json.otherOptionText;
-        this.questionOrigin = json.questionOrigin;
-        this.vars = json.vars;
-        this.seed = json.seed;
+    setQuestion(q: Question): void {
+        this.question = q;
     }
 
     generateQuestion(origin: string) {
-        this.question = this.ParseKey(origin, true);
-        if (this.vars['answerType'] !== undefined) {
-            this.answerType = this.vars['answerType'];
+        this.question.text = this.ParseKey(origin, true);
+        if (this.question.vars['answerType'] !== undefined) {
+            this.question.answerType = this.question.vars['answerType'];
         }
-        if (this.vars['answerAllowOther'] !== undefined) {
-            this.otherOptionAllow = this.vars['answerAllowOther'];
+        if (this.question.vars['answerAllowOther'] !== undefined) {
+            this.question.otherOptionAllow = this.question.vars['answerAllowOther'];
         }
-        if (this.vars['answerKey'] !== undefined) {
-            this.answerKey = this.vars['answerKey'];
+        if (this.question.vars['answerKey'] !== undefined) {
+            this.question.answerKey = this.question.vars['answerKey'];
 
-            if (this.vars['answerCount'] !== undefined) {
-                this.answerCount = +this.vars['answerCount'];
+            if (this.question.vars['answerCount'] !== undefined) {
+                this.question.answerCount = +this.question.vars['answerCount'];
             }
-            if (this.answerCount <= 1) {
-                this.answerCount = randomNext(3, 5, this.rng);
-                if (this.answerKey === 'yesNo') this.answerCount = 2;
+            if (this.question.answerCount <= 1) {
+                this.question.answerCount = randomNext(3, 5, this.rng);
+                if (this.question.answerKey === 'yesNo') this.question.answerCount = 2;
             }
         }
     }
 
     generateAnswer(index = -1) {
-        if (this.answerCount === 0) {
-            this.choices = ['Answer'];
+        if (this.question.answerCount === 0) {
+            this.question.choices = ['Answer'];
             return;
         }
 
         if (index === -1) {
-            this.choices = [];
-            if (this.answerCount === -1) {
-                let choice = this.ParseString(`#${this.answerKey}.capitalize#`);
-                while (this.choices.indexOf(choice) === -1) {
-                    this.choices.push(choice);
-                    choice = this.ParseString(`#${this.answerKey}.capitalize#`);
+            this.question.choices = [];
+            if (this.question.answerCount === -1) {
+                let choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
+                while (this.question.choices.indexOf(choice) === -1) {
+                    this.question.choices.push(choice);
+                    choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
                 }
             } else {
-                for (let i = 0; i < this.answerCount; i++) {
-                    this.choices.push(this.ParseString(`#${this.answerKey}.capitalize#`));
+                for (let i = 0; i < this.question.answerCount; i++) {
+                    this.question.choices.push(this.ParseString(`#${this.question.answerKey}.capitalize#`));
                 }
             }
         } else {
-            this.choices[index] = this.ParseString(`#${this.answerKey}.capitalize#`);
+            this.question.choices[index] = this.ParseString(`#${this.question.answerKey}.capitalize#`);
         }
     }
 
-    GetRandom(key: string, isOrigin=false): string {
+    GetRandom(key: string, isOrigin = false): string {
         var dict = grammar;
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
@@ -160,11 +128,11 @@ export class Tracery {
         const value = randomNext(0, dict[key].length, this.rng);
 
         // Overwrite or use origin to regenerate the same question
-        if (isOrigin && this.questionOrigin !== -1) {
-            return dict[key][this.questionOrigin];
+        if (isOrigin && this.question.questionOrigin !== -1) {
+            return dict[key][this.question.questionOrigin];
         }
         if (isOrigin) {
-            this.questionOrigin = value;
+            this.question.questionOrigin = value;
         }
 
         return dict[key][value];
@@ -182,7 +150,7 @@ export class Tracery {
             let value = m.groups?.['value'] ?? '';
             value = this.ParseString(value);
 
-            this.vars[key] = value;
+            this.question.vars[key] = value;
         }
     }
 
@@ -242,9 +210,9 @@ export class Tracery {
         return value;
     }
 
-    ParseKey(key: string, isOrigin=false) {
-        if (this.vars[key] !== undefined) {
-            return this.vars[key];
+    ParseKey(key: string, isOrigin = false) {
+        if (this.question.vars[key] !== undefined) {
+            return this.question.vars[key];
         }
 
         var dict = grammar;
