@@ -8,6 +8,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-survey-maker',
@@ -31,12 +32,20 @@ export class SurveyMakerComponent implements OnInit {
 
     constructor(
         private dataService: DataService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private router: Router,
+        private activatedroute: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
         this.survey = new Survey();
         this.getCachedUsers();
+        this.activatedroute.paramMap.subscribe(params => { 
+            const id = params.get('id'); 
+            if (id && id !== '0') {
+                this.getSurvey(id);
+            }
+        });
     }
 
     // Question --------------------------------------------------------------------------------------
@@ -188,24 +197,40 @@ export class SurveyMakerComponent implements OnInit {
 
     // Survey -------------------------------------------------------------------------------------
 
-    getSurvey(): void {
-        const guid = '7ca19ebd-e1fc-4638-9c25-050f27cd30ac';
+    getSurvey(guid: string): void {
         const [result, progress] = this.dataService.getData('survey?id=' + guid);
         result.subscribe((data: { ok: boolean, data?: Survey, headers?: any, status?: any, error?: any }) => {
             if (data.ok) {
                 this.survey = data.data!;
-                console.log(this.survey);
+                this.users = this.survey.users.map(x => x.name);
             } else {
-                console.log(data.error);
+                console.error(data.error);
             }
         });
     }
 
-    submitSurveyTest(): void {
+    saveSurvey(): void {
+        this.loadingUnknown = true;
         const [result, progress] = this.dataService.putData('survey', this.survey);
-        result.subscribe((data: { ok: boolean, data?: any, headers?: any, status?: any, error?: any }) => {
-            console.log(data);
-        });
+        result.subscribe(
+            (data: { ok: boolean, id?: string, rev?: string, error?: any }) => {
+            this.loadingUnknown = false;
+            if (data.ok && data.id) {
+                this.saveSurveyID(data.id);
+                this.router.navigateByUrl(`/manage-survey/${data.id}`);
+            }
+
+        }) ?? console.error('NULL Returned');
+    }
+
+    saveSurveyID(id: string): void {
+        const s = localStorage.getItem('Surveys');
+        let surveys: string[] = [];
+        if (s) {
+            surveys = JSON.parse(s);
+        }
+        surveys.push(id);
+        localStorage.setItem('Surveys', JSON.stringify(surveys));
     }
 
     // Edit Users ------------------------------------------
@@ -253,7 +278,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     // API ---------------------------------------------------------------------------
-    callApi<T>(endpoint: string, data: any, questionIndex: number): BehaviorSubject<T | null> | null {
+    callApi<T>(endpoint: string, data: any, questionIndex: number, dataServiceMethod = this.dataService.postData): BehaviorSubject<T | null> | null {
         if (this.debounceButton) return null;
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
