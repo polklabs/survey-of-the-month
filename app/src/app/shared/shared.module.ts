@@ -13,6 +13,7 @@ import { FormTimeComponent } from './component/form-time/form-time.component';
 import { FormScaleComponent } from './component/form-scale/form-scale.component';
 import { FeedbackComponent } from './modal/feedback/feedback.component';
 import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
+import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,8 @@ import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
         BrowserModule,
         CoreModule
     ],
-    providers: [],
+    providers: [
+        CanDeactivateGuard
+    ],
 })
 export class SharedModule { }

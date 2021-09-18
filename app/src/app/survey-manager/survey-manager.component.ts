@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../core/services/data.service';
+import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { Survey } from '../shared/model/survey.model';
 
 @Component({
@@ -15,6 +17,7 @@ export class SurveyManagerComponent implements OnInit {
     key: string = '';
     survey?: Survey;
     answerStatus?: { name: string, status: string, count: number }[];
+    hasData = false;
 
     managerLink = '';
     shareLink = '';
@@ -26,7 +29,8 @@ export class SurveyManagerComponent implements OnInit {
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -34,9 +38,20 @@ export class SurveyManagerComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(params => {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
-            if (this.id && this.key) this.getSurvey(this.id);
-            this.shareLink = `${window.location.origin}/survey/${this.id}/${this.key}`;
-            this.managerLink = window.location.toString();
+            if (this.id && this.id !== '0' && this.key && this.key !== '0') {
+                this.getSurvey(this.id);
+                this.shareLink = `${window.location.origin}/survey/${this.id}`;
+                this.managerLink = window.location.toString();
+            } else {
+                this.hasData = false;
+                this.survey = new Survey();
+                this.managerLink = '';
+                this.shareLink = '';
+                if (this.availableSurveys.length > 0) {
+                    this.availableSurveyIndex = 0;
+                    this.surveyChanged();
+                }
+            }
         });
     }
 
@@ -46,21 +61,19 @@ export class SurveyManagerComponent implements OnInit {
             this.availableSurveys = JSON.parse(ids);
         }
     }
-    
+
     surveyChanged(): void {
-        console.log(this.availableSurveyIndex);
         if (this.availableSurveyIndex === undefined) return;
         const id = this.availableSurveys[this.availableSurveyIndex][1];
         const key = this.availableSurveys[this.availableSurveyIndex][2];
-        console.log(`/manage-survey/${id}/${key}`);
-        this.router.navigateByUrl(`/manage-survey/${id}/${key}`, {skipLocationChange:false});
+        this.router.navigateByUrl(`/manage-survey/${id}/${key}`, { skipLocationChange: false });
     }
 
     getSurvey(id: string): void {
+        this.hasData = false;
         const [result, progress] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
         result.subscribe((data: { ok: boolean, data?: Survey, error?: any }) => {
             if (data.ok) {
-                console.log(data);
                 if (data.data) {
                     this.survey = data.data;
                     this.getAnswerStatus();
@@ -76,9 +89,11 @@ export class SurveyManagerComponent implements OnInit {
                             localStorage.setItem('Surveys', JSON.stringify(this.availableSurveys));
                         }
                     }
+                    this.hasData = true;
                 }
             } else {
-                console.error(data.error);
+                this.logError(data.error);
+                this.survey = new Survey();
             }
         });
     }
@@ -86,8 +101,8 @@ export class SurveyManagerComponent implements OnInit {
     getAnswerStatus(): void {
         const [result, progress] = this.dataService.postData('answer-status', this.survey?.users.map(x => x._id) ?? []);
         result.subscribe((data: { id: string, count: number }[]) => {
-            this.answerStatus = data.map(x => {return {name: this.getUsername(x.id), status: this.getStatus(x.count), count: x.count}});
-            this.answerStatus.sort((a,b) => a.name.localeCompare(b.name));
+            this.answerStatus = data.map(x => { return { name: this.getUsername(x.id), status: this.getStatus(x.count), count: x.count } });
+            this.answerStatus.sort((a, b) => a.name.localeCompare(b.name));
         });
     }
 
@@ -101,7 +116,7 @@ export class SurveyManagerComponent implements OnInit {
 
     copyLink(link: string): void {
         navigator.clipboard.writeText(link);
-        this.snackBar.open('Copied', 'OK', {duration: 3000});
+        this.snackBar.open('Copied', 'OK', { duration: 3000 });
     }
 
 
@@ -114,7 +129,7 @@ export class SurveyManagerComponent implements OnInit {
         this.answerStatus?.forEach(x => sum += x.count);
 
         if (total === 0) return '';
-        return `${Math.round((sum/total)*100)}%`;
+        return `${Math.round((sum / total) * 100)}%`;
     }
 
     getUsername(id: string): string {
@@ -127,7 +142,7 @@ export class SurveyManagerComponent implements OnInit {
             return 'Not Started';
         }
         if (count < total) {
-            return `${Math.round((count/total)*100)}%`;
+            return `${Math.round((count / total) * 100)}%`;
         }
         return 'Completed';
     }
@@ -141,6 +156,11 @@ export class SurveyManagerComponent implements OnInit {
             return `orange`;
         }
         return 'lime';
+    }
+
+    logError(error: string): void {
+        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
+        this.dialog.open(OkDialogComponent, DIALOG_DATA);
     }
 
 }

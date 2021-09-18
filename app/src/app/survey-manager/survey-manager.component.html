@@ -17,14 +17,16 @@
             </div>
         </div>
 
-        <mat-card class="answ-status-container">
+        <p *ngIf="!hasData">You entered an incorrect URL or a non existant URL</p>
+
+        <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
                 <mat-card-title>Mangement Link</mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="column" fxLayoutGap="8px">
 
                 <p>This is the link to managing your survey and retreiving answers. Do <span
-                        style="color:crimson">NOT</span> lose it.</p>
+                        style="color:crimson">NOT</span> lose it or share it.</p>
                 <div fxLayout="row" class="link-box" fxLayout="center center">
                     <p fxFlex>{{managerLink}}</p>
                     <button mat-icon-button (click)="copyLink(managerLink)" matTooltip="Copy">
@@ -36,7 +38,7 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="answ-status-container">
+        <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
                 <mat-card-title>Sharable Link</mat-card-title>
             </mat-card-header>
@@ -53,7 +55,7 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card *ngIf="answerStatus" class="answ-status-container">
+        <mat-card *ngIf="answerStatus && hasData" class="answ-status-container">
             <mat-card-header>
                 <mat-card-title>Survey Completion {{getTotalStatus()}}</mat-card-title>
             </mat-card-header>
@@ -71,7 +73,7 @@
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="answ-status-container">
+        <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
                 <mat-card-title>Actions</mat-card-title>
             </mat-card-header>
@@ -79,8 +81,8 @@
 
                 <button mat-raised-button color="primary" [routerLink]="'/make-survey/' + id + '/' + key">Edit
                     Survey</button>
-                <button mat-raised-button>Export Answers</button>
-                <button mat-raised-button color="warn">Delete Survey</button>
+                <button mat-raised-button disabled>Export Answers To CSV</button>
+                <button mat-raised-button color="warn" disabled>Delete Survey</button>
 
             </mat-card-content>
         </mat-card>

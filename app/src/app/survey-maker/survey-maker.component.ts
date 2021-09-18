@@ -5,12 +5,13 @@ import { Survey } from '../shared/model/survey.model';
 import { v4 as guid } from 'uuid';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
+import { DialogService } from '../core/services/dialog.service';
 
 @Component({
     selector: 'app-survey-maker',
@@ -42,6 +43,7 @@ export class SurveyMakerComponent implements OnInit {
         private dialog: MatDialog,
         private activatedroute: ActivatedRoute,
         private snackBar: MatSnackBar,
+        private dialogService: DialogService
     ) { }
 
     ngOnInit(): void {
@@ -58,9 +60,17 @@ export class SurveyMakerComponent implements OnInit {
         });
     }
 
+    canDeactivate(): Observable<boolean> | boolean {
+	    if (this.dirty) {
+        	return this.dialogService.confirm('Discard changes for Survey?');
+	    }
+	    return true;
+	}	
+
     // Question --------------------------------------------------------------------------------------
 
     getQuestion(questionIndex = -1, reset=false, seed='', shuffle = false): void {
+        this.dirty = true;
         const questionData: any =  { users: this.users, seed, questionOrigin: undefined };
 
         if (reset) {
@@ -77,11 +87,8 @@ export class SurveyMakerComponent implements OnInit {
             questionData.seed = this.survey.questions[questionIndex].seed
         }
 
-        console.log(questionData);
-
         this.callApi<Question>('question', questionData, questionIndex)?.subscribe(data => {
             if (data !== null) {
-                console.log(data);
                 if (questionIndex === -1) {
                     this.survey.questions.push(data);
                     this.loading.push(false);
@@ -93,6 +100,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     addQuestion(type: AnswerType, questionIndex = -1): void {
+        this.dirty = true;
         const question = new Question();
         question.answerType = type;
         question.text = 'Use the pencil button in the lower right to edit this text...'
@@ -105,11 +113,13 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     deleteQuestion(questionIndex: number): void {
+        this.dirty = true;
         this.survey.questions.splice(questionIndex, 1);
         this.loading.splice(questionIndex,1);
     }
 
     seedQuestion(questionIndex = -1): void {
+        this.dirty = true;
         const dialogRef = this.dialog.open(TextBoxComponent, {
             maxWidth: '95vw',
             width: '500px',
@@ -123,6 +133,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     editQuestion(questionIndex: number): void {
+        this.dirty = true;
         const question = this.survey.questions[questionIndex];
 
         const dialogRef = this.dialog.open(TextBoxComponent, {
@@ -138,12 +149,14 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     editQuestionType(questionIndex: number, answerType: AnswerType): void {
+        this.dirty = true;
         this.survey.questions[questionIndex].answerType = answerType;
     }
 
     // Answer -------------------------------------------------------------------------------------
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
+        this.dirty = true;
         this.callApi<Question>('choice', { question: this.survey.questions[questionIndex], users: this.users, choiceIndex }, questionIndex)?.subscribe(
             data => {
                 if (data !== null) {
@@ -154,16 +167,19 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     addAnswer(questionIndex: number): void {
+        this.dirty = true;
         this.survey.questions[questionIndex].choices.push('New Answer...');
         this.survey.questions[questionIndex].answerCount++;
     }
 
     deleteAnswer(questionIndex: number, choiceIndex: number): void {
+        this.dirty = true;
         this.survey.questions[questionIndex].choices.splice(choiceIndex, 1);
         this.survey.questions[questionIndex].answerCount--;
     }
 
     editAnswer(questionIndex: number, choiceIndex: number): void {
+        this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = choiceIndex === -1 ? question.otherOptionText : question.choices[choiceIndex];
 
@@ -184,10 +200,12 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     otherOptionAllow(questionIndex: number): void {
+        this.dirty = true;
         this.survey.questions[questionIndex].otherOptionAllow = !this.survey.questions[questionIndex].otherOptionAllow;
     }
 
     editScaleValues(questionIndex: number): void {
+        this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = question.scaleValues.join(' ; ');
 
@@ -232,6 +250,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.saveSurveyID(this.survey.name, data.id, data.key);
                 this.survey._rev = data.rev;
                 this.snackBar.open('Saved!', 'OK', {duration: 3000});
+                this.dirty = false;
             } else if(!data.ok) {
                 this.logError(data.error??'Unknown Error');
             }
@@ -258,6 +277,7 @@ export class SurveyMakerComponent implements OnInit {
     // Edit Users ------------------------------------------
 
     addUser(event: MatChipInputEvent): void {
+        this.dirty = true;
         const input = event.input;
         const value = event.value;
 
@@ -274,6 +294,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     removeUser(user: string): void {
+        this.dirty = true;
         const index = this.users.indexOf(user);
 
         if (index >= 0) {
