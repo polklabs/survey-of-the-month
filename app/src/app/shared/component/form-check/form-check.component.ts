@@ -23,7 +23,6 @@ export class FormCheckComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Check');
         this.choices.forEach(c => {
             this.answers.push(false);
         });

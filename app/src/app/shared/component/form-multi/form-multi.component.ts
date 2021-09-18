@@ -27,7 +27,6 @@ export class FormMultiComponent {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Multi');
     }
 
     addAnswer() {

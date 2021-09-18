@@ -23,7 +23,6 @@ export class FormDateComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Date');
         this.choices.forEach(c => {
             this.answers.push(null);
         });

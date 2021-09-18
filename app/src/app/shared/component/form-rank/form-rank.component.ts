@@ -24,8 +24,6 @@ export class FormRankComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Rank');
-
         if (this.editable) {
             this.answers = this.choices
         } else {

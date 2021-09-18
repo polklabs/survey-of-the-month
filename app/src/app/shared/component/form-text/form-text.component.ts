@@ -23,7 +23,6 @@ export class FormTextComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Text');
         this.choices.forEach(c => {
             this.answers.push('');
         });

@@ -25,7 +25,6 @@ export class FormScaleComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Scale');
         this.choices.forEach(c => {
             this.answers.push(null);
         });

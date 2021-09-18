@@ -23,7 +23,6 @@ export class FormTimeComponent {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('Init Time');
         this.choices.forEach(c => {
             this.answers.push({hour: '00', minute: '00', ampm: 'AM'});
         });
