@@ -13,7 +13,12 @@
 
         <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px;">
             <mat-slide-toggle [(ngModel)]="editable" matTooltip="Preview how the survey will look">Edit Survey</mat-slide-toggle>
-            <button mat-raised-button color="accent" [disabled]="loadingUnknown" (click)="saveSurvey()">Save Survey</button>
+            <button mat-raised-button color="primary" [disabled]="loadingUnknown" (click)="saveSurvey()">Save Survey</button>
+            <button mat-raised-button *ngIf="key !== ''"  [routerLink]="'/manage-survey/' + id + '/' + key">Manage Survey</button>
+        </div>
+
+        <div *ngIf="!editable">
+            <p style="text-align: center;">This is what the people taking your survey will see.</p>
         </div>
 
         <!-- People Chooser -->
@@ -51,8 +56,8 @@
         <mat-progress-bar *ngIf="loadingUnknown" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
 
         <div *ngIf="editable" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center">
-            <button mat-raised-button color="primary" (click)="getQuestion()"><mat-icon>add</mat-icon> Add Question</button>
-            <button mat-raised-button color="accent" [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon> From Template</button>
+            <button mat-raised-button color="primary" [disabled]="loadingUnknown" (click)="getQuestion()"><mat-icon>add</mat-icon> Add Question</button>
+            <button mat-raised-button color="accent" [disabled]="loadingUnknown" [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon> From Template</button>
             <mat-menu #questionType="matMenu">
                 <button mat-menu-item (click)="addQuestion('text')"><mat-icon>create</mat-icon>Text</button>
                 <button mat-menu-item (click)="addQuestion('multi')"><mat-icon>radio_button_checked</mat-icon>Choice</button>

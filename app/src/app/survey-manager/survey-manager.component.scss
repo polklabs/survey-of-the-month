@@ -1,0 +1,39 @@
+.root {
+    height: 100%;
+}
+
+.mat-select-value-text {
+    width: max-content;
+    margin: auto;
+    margin-top: 32px;
+    margin-bottom: 4px;
+    font-family: 'Chalk', 'arial', sans-serif;
+    font-size: xxx-large;
+}
+
+p {
+    font-size: 14px;
+}
+
+mat-card {
+    margin: 8px;
+}
+
+.answ-status-container {
+    background-color: rgba(66, 66, 66, 0.5);
+    width: min-content;
+    min-width: 400px;
+    // margin: auto;
+}
+
+.answ-status {
+    font-size: larger;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.link-box {
+    border: white solid 1px;
+    border-radius: 16px;
+    padding: 8px;
+}

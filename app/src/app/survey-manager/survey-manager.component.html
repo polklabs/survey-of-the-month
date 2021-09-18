@@ -1,1 +1,89 @@
-<p>survey-manager works!</p>
+<div fxLayoutAlign="center center" class="root" *ngIf="survey">
+    <div style="margin: auto; width: 1000px; min-width: 250px;" fxLayout="row wrap" fxLayoutAlign="center">
+        <!-- <div fxFlex="100%">
+            <h1 class="large" fxHide.lt-sm>{{survey.name}}</h1>
+            <h1 fxHide.gt-xs>{{survey.name}}</h1>
+        </div> -->
+
+        <div fxFlex="100%">
+            <div style="margin: auto; width: min-content;">
+                <mat-form-field appearance="outline" style="min-width: 400px;">
+                    <mat-select [(ngModel)]="availableSurveyIndex" (selectionChange)="surveyChanged()">
+                        <mat-option *ngFor="let s of availableSurveys; let i = index" [value]="i">
+                            {{s[0]}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-card class="answ-status-container">
+            <mat-card-header>
+                <mat-card-title>Mangement Link</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column" fxLayoutGap="8px">
+
+                <p>This is the link to managing your survey and retreiving answers. Do <span
+                        style="color:crimson">NOT</span> lose it.</p>
+                <div fxLayout="row" class="link-box" fxLayout="center center">
+                    <p fxFlex>{{managerLink}}</p>
+                    <button mat-icon-button (click)="copyLink(managerLink)" matTooltip="Copy">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                </div>
+
+
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="answ-status-container">
+            <mat-card-header>
+                <mat-card-title>Sharable Link</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column" fxLayoutGap="8px">
+
+                <p>Share this link with others so they can take your survey.</p>
+                <div fxLayout="row" class="link-box" fxLayout="center center">
+                    <p fxFlex>{{shareLink}}</p>
+                    <button mat-icon-button (click)="copyLink(shareLink)" matTooltip="Copy">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card *ngIf="answerStatus" class="answ-status-container">
+            <mat-card-header>
+                <mat-card-title>Survey Completion {{getTotalStatus()}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+                <mat-divider [inset]="false"></mat-divider>
+                <div *ngFor="let status of answerStatus" class="answ-status">
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <div fxFlex>{{status.name}}</div>
+                        <div [ngStyle]="{color: getStatusColor(status.count)}">{{status.status}}</div>
+                    </div>
+                    <mat-divider [inset]="false"></mat-divider>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="answ-status-container">
+            <mat-card-header>
+                <mat-card-title>Actions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column" fxLayoutGap="8px">
+
+                <button mat-raised-button color="primary" [routerLink]="'/make-survey/' + id + '/' + key">Edit
+                    Survey</button>
+                <button mat-raised-button>Export Answers</button>
+                <button mat-raised-button color="warn">Delete Survey</button>
+
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</div>

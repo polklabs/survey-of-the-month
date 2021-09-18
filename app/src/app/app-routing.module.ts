@@ -14,14 +14,14 @@ const routes: Routes = [
         }
     },
     {
-        path: 'make-survey/:id',
+        path: 'make-survey/:id/:key',
         component: SurveyMakerComponent,
         data: {
             title: 'Survey OTM | New',
         }
     },
     {
-        path: 'manage-survey/:id',
+        path: 'manage-survey/:id/:key',
         component: SurveyManagerComponent,
         data: {
             title: 'Survey OTM | Manage',
@@ -44,7 +44,7 @@ const routes: Routes = [
     // },
     {
         path: 'make-survey',
-        redirectTo: 'make-survey/0',
+        redirectTo: 'make-survey/0/0',
         pathMatch: 'full'
     },
     {

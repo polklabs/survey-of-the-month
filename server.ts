@@ -1,6 +1,7 @@
 import { Tracery } from './src/tracery';
 import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
+import { Answer } from './app/src/app/shared/model/answer.model';
 import { SendEmail } from './src/email';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
@@ -8,6 +9,7 @@ import express from 'express';
 import cors from 'cors';
 import NodeCouchDb from 'node-couchdb';
 import fs from 'fs';
+import crypto from 'crypto';
 
 // Create basic express app -------------------------------------------
 const app = express();
@@ -21,7 +23,7 @@ app.use(express.static(process.cwd() + "/app/dist/app/"));
 
 // Initialize connection to counchDB ----------------------------------
 const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
-        { encoding: 'utf8', flag: 'r' }));
+    { encoding: 'utf8', flag: 'r' }));
 const couch = new NodeCouchDb(couchDbSettings);
 
 // Setup rate limiters ------------------------------------------------
@@ -70,11 +72,33 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
 });
 
 // Save survey
-app.put('/api/survey', speedLimiter, (req: {body: Survey}, res: any) => {
-    couch.insert('surveys', req.body).then(({ data, headers, status }) => {
-        res.json( data );
-    }, (err: any) => {
-        res.json({ ok: false, error: err });
+app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, key: string } }, res: any) => {
+
+    couch.get('survey-lock', req.body.survey._id).then(({data}: {data: {key: string}}) => {
+        // Document Exists
+        const key = data.key;
+        if (req.body.key === key) {
+            couch.update('surveys', req.body.survey).then(({ data }) => {
+                res.json({...data, key});
+            }, (err: any) => {
+                res.json({ ok: false, error: err });
+            });
+        } else {
+            res.json({ok: false, error: 'Key does not match'});
+        }
+    },(err: any) => {
+        // Document Doesn't exist
+        const lock = {_id: req.body.survey._id, key: crypto.randomBytes(8).toString('hex')};
+
+        couch.insert('survey-lock', lock).then(({ data }) => {
+            couch.insert('surveys', req.body.survey).then(({ data }) => {
+                res.json({...data, key: lock.key});
+            }, (err: any) => {
+                res.json({ ok: false, error: err });
+            });
+        }, (err: any) => {
+            res.json({ ok: false, error: err });
+        }); 
     });
 });
 
@@ -84,6 +108,47 @@ app.get('/api/survey', speedLimiter, (req: { query: { id: string } }, res: any) 
         res.json({ ok: true, data });
     }, (err: any) => {
         res.json({ ok: false, error: err });
+    });
+});
+
+// Get Survey for editing
+app.get('/api/survey-edit', speedLimiter, (req: { query: { id: string, key: string } }, res: any) => {
+
+    couch.get('survey-lock', req.query.id).then(({data}: {data: {key: string}}) => {
+        // Document Exists
+        if (req.query.key === data.key) {
+            couch.get('surveys', req.query.id).then(({ data }) => {
+                res.json({ ok: true, data });
+            }, (err: any) => {
+                res.json({ ok: false, error: err });
+            });
+        } else {
+            res.json({ok: false, error: 'Key does not match'});
+        }
+    },(err: any) => {
+        couch.get('surveys', req.query.id).then(({ data }) => {
+            res.json({ ok: true, data });
+        }, (err: any) => {
+            res.json({ ok: false, error: err });
+        });
+    });
+});
+
+app.post('/api/answer-status', speedLimiter, (req: { body: string[] }, res: any) => {
+    const answerStatus: { id: string, count: number }[] = [];
+    req.body.forEach(id => {
+        couch.get('answers', id).then(({ data, headers, status }) => {
+            const answer = <Answer>data;
+            answerStatus.push({ id, count: answer.answers.length });
+            if (answerStatus.length >= req.body.length) {
+                res.json(answerStatus);
+            }
+        }, (err: any) => {
+            answerStatus.push({ id, count: 0 });
+            if (answerStatus.length >= req.body.length) {
+                res.json(answerStatus);
+            }
+        });
     });
 });
 

@@ -9,6 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 
 @Component({
     selector: 'app-survey-maker',
@@ -22,6 +24,9 @@ export class SurveyMakerComponent implements OnInit {
     usersAddOnBlur = true;
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
+    id = '';
+    key = '';
+
     users: string[] = ['Bob', 'Alice'];
     survey: Survey = new Survey();
     editable = true;
@@ -30,20 +35,25 @@ export class SurveyMakerComponent implements OnInit {
     loading: boolean[] = [];
     loadingUnknown = false;
 
+    dirty = false;
+
     constructor(
         private dataService: DataService,
         private dialog: MatDialog,
-        private router: Router,
-        private activatedroute: ActivatedRoute
+        private activatedroute: ActivatedRoute,
+        private snackBar: MatSnackBar,
     ) { }
 
     ngOnInit(): void {
         this.survey = new Survey();
         this.getCachedUsers();
         this.activatedroute.paramMap.subscribe(params => { 
-            const id = params.get('id'); 
-            if (id && id !== '0') {
-                this.getSurvey(id);
+            const id = params.get('id');
+            const key = params.get('key'); 
+            if (id && id !== '0' && key && key !== '0') {
+                this.id = id;
+                this.key = key;
+                this.getSurvey();
             }
         });
     }
@@ -197,39 +207,51 @@ export class SurveyMakerComponent implements OnInit {
 
     // Survey -------------------------------------------------------------------------------------
 
-    getSurvey(guid: string): void {
-        const [result, progress] = this.dataService.getData('survey?id=' + guid);
+    getSurvey(): void {
+        this.loadingUnknown = true;
+        const [result, progress] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
         result.subscribe((data: { ok: boolean, data?: Survey, headers?: any, status?: any, error?: any }) => {
             if (data.ok) {
                 this.survey = data.data!;
                 this.users = this.survey.users.map(x => x.name);
             } else {
-                console.error(data.error);
+                this.logError(data.error??'Unknown Error');
             }
+            this.loadingUnknown = false;
         });
     }
 
     saveSurvey(): void {
         this.loadingUnknown = true;
-        const [result, progress] = this.dataService.putData('survey', this.survey);
+
+        const [result, progress] = this.dataService.putData('survey', { survey: this.survey, key: this.key });
         result.subscribe(
-            (data: { ok: boolean, id?: string, rev?: string, error?: any }) => {
+            (data: { ok: boolean, id?: string, rev?: string, key?: string, error?: any }) => {
             this.loadingUnknown = false;
-            if (data.ok && data.id) {
-                this.saveSurveyID(data.id);
-                this.router.navigateByUrl(`/manage-survey/${data.id}`);
+            if (data.ok && data.id && data.key) {
+                this.saveSurveyID(this.survey.name, data.id, data.key);
+                this.survey._rev = data.rev;
+                this.snackBar.open('Saved!', 'OK', {duration: 3000});
+            } else if(!data.ok) {
+                this.logError(data.error??'Unknown Error');
             }
 
-        }) ?? console.error('NULL Returned');
+        }) ?? this.logError('Save returned NULL');
     }
 
-    saveSurveyID(id: string): void {
+    saveSurveyID(name: string, id: string, key: string): void {
+        const idStrings = [name, id, key];
         const s = localStorage.getItem('Surveys');
-        let surveys: string[] = [];
+        let surveys: string[][] = [];
         if (s) {
             surveys = JSON.parse(s);
         }
-        surveys.push(id);
+        const index = surveys.findIndex(x => x[1] === id && x[2] === key)
+        if (index !== -1) {
+            surveys.splice(index, 1);
+            
+        }
+        surveys.push(idStrings);
         localStorage.setItem('Surveys', JSON.stringify(surveys));
     }
 
@@ -304,6 +326,11 @@ export class SurveyMakerComponent implements OnInit {
         } else {
             this.loadingUnknown = value;
         }
+    }
+    
+    logError(error: string): void {
+        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
+        this.dialog.open(OkDialogComponent, DIALOG_DATA);
     }
 
 }
