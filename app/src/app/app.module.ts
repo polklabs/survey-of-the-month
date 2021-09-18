@@ -8,6 +8,8 @@ import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
+import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
+import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { SharedModule } from './shared/shared.module';
     SingleQuestionComponent,
     SurveyMakerComponent,
     HomeComponent,
+    SurveyManagerComponent,
+    SurveyTakerComponent,
   ],
   imports: [
     BrowserModule,

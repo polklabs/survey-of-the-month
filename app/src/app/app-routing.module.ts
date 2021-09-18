@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SingleQuestionComponent } from './single-question/single-question.component';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
+import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
+import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 
 const routes: Routes = [
     {
@@ -13,19 +14,26 @@ const routes: Routes = [
         }
     },
     {
-        path: 'make-survey',
+        path: 'make-survey/:id',
         component: SurveyMakerComponent,
         data: {
             title: 'Survey OTM | New',
         }
     },
-    // {
-    //     path: 'survey/:id',
-    //     component: SurveyAnswer,
-    //     data: {
-    //         title: 'Ledger |',
-    //     }
-    // },
+    {
+        path: 'manage-survey/:id',
+        component: SurveyManagerComponent,
+        data: {
+            title: 'Survey OTM | Manage',
+        }
+    },
+    {
+        path: 'survey/:id',
+        component: SurveyTakerComponent,
+        data: {
+            title: 'Survey OTM',
+        }
+    },
     
     // {
     //     path: 'results',
@@ -34,6 +42,11 @@ const routes: Routes = [
     //         title: 'Survey OTM |',
     //     }
     // },
+    {
+        path: 'make-survey',
+        redirectTo: 'make-survey/0',
+        pathMatch: 'full'
+    },
     {
         path: '',
         redirectTo: 'home',
