@@ -5,9 +5,13 @@ import { Observable, of } from "rxjs";
     providedIn: 'root'
 })
 export class DialogService {
-  confirm(message?: string): Observable<boolean> {
-    const confirmation = window.confirm(message || 'Are you sure?');
+    confirm(message?: string): Observable<boolean> {
+        const confirmation = window.confirm(message || 'Are you sure?');
 
-    return of(confirmation);
-  };
-} 
+        return of(confirmation);
+    };
+
+    alert(message?: string): void {
+        window.alert(message || 'Alert!');
+    };
+}

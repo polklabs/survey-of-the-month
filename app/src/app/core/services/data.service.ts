@@ -77,6 +77,27 @@ export class DataService {
     return [result, progress];
   }
 
+  /**
+   * @returns [result, progress]
+   */
+   deleteData(route: string): Observable<any>[] {
+    const result = new AsyncSubject<any>();
+    const progress = new BehaviorSubject<number>(0);
+
+    this.http.delete(`${this.rootURL}/${route}`,
+      {
+        observe: 'events',
+        reportProgress: true,
+        responseType: 'json'
+      }).subscribe(
+        (response: HttpEvent<any>) => {
+          this.httpEvent(response, result, progress);
+        }
+    );
+
+    return [result, progress];
+  }
+
   private httpEvent(response: HttpEvent<any>, result: AsyncSubject<any>, progress: BehaviorSubject<number>): void {
     switch (response.type) {
       case 0:

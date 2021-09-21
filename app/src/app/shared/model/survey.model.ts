@@ -6,6 +6,7 @@ export class Survey {
     _rev?: string;
     name: string = 'Survey';
     createdDate: string = new Date().toUTCString();
+    lastModifiedDate: string = new Date().toUTCString();
 
     questions: Question[] = [];
     users: { name: string, _id: string }[] = [];
