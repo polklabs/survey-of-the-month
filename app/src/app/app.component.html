@@ -3,14 +3,14 @@
         <div fxHide.lt-sm>
             <button mat-button routerLink="/home" style="margin-right: 16px;"><mat-icon>poll</mat-icon> Survey Of The Month</button>
             <button mat-button routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
-            <button mat-button [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
+            <button mat-button [mat-menu-trigger-for]="manageMenu">Create/Manage ▼</button>
             <button mat-button (click)="openFeedback()">Feedback</button>
         </div>
         <div fxHide.gt-xs>
             <button mat-button [mat-menu-trigger-for]="menu"><mat-icon>poll</mat-icon> Survey Of The Month <mat-icon>arrow_drop_down</mat-icon></button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
-                <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
+                <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage ▼</button>
                 <button mat-menu-item (click)="openFeedback()">Feedback</button>
             </mat-menu>
         </div>

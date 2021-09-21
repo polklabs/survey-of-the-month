@@ -45,6 +45,7 @@ export class FormQuestionComponent implements OnInit {
     @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
 
     currentAnswerType: string = '';
+    dirty = false;
 
     constructor(
         private cd: ChangeDetectorRef
@@ -83,6 +84,12 @@ export class FormQuestionComponent implements OnInit {
         this.aUpdate.emit(null);
         this.currentAnswerType = '';
         this.cd.detectChanges();
+        this.dirty = false;
+    }
+
+    answerUpdate($event: (string | number | null)[] | null): void {
+        this.dirty = true;
+        this.aUpdate.emit($event);
     }
 
 }

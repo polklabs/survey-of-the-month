@@ -1,8 +1,6 @@
 <mat-card>
 
-    <mat-card-subtitle *ngIf="questionNumber === undefined">Question: {{question.seed}}</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="questionNumber !== undefined">Question: {{questionNumber}}<span *ngIf="question.seed !== ''">, Seed: {{question.seed}}</span></mat-card-subtitle>
-
+    <mat-card-subtitle *ngIf="questionNumber !== undefined">Question: {{questionNumber}}</mat-card-subtitle>
 
     <mat-card-content>
         <p [innerHTML]="question.text"></p>
@@ -12,7 +10,7 @@
     <ng-container *ngIf="!editable && !basicEdit">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
         <mat-card-actions fxLayoutGap="8px" fxLayout="row">
-            <button mat-flat-button color="warn" (click)="clearAnswer()">
+            <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty">
                 Clear
             </button>
         </mat-card-actions>
@@ -77,7 +75,7 @@
     <app-form-text [choices]="question.choices" [editable]="editable"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-        (aUpdate)="aUpdate.emit($event)">
+        (aUpdate)="answerUpdate($event)">
     </app-form-text>
 </ng-template>
 
@@ -86,7 +84,7 @@
         [otherOptionAllow]="question.otherOptionAllow" [otherOptionText]="question.otherOptionText"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aOtherOptionAllow)="aOtherOptionAllow.emit()"
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-        (aUpdate)="aUpdate.emit($event)">
+        (aUpdate)="answerUpdate($event)">
     </app-form-multi>
 </ng-template>
 
@@ -94,7 +92,7 @@
     <app-form-check [choices]="question.choices" [editable]="editable"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-        (aUpdate)="aUpdate.emit($event)">
+        (aUpdate)="answerUpdate($event)">
     </app-form-check>
 </ng-template>
 
@@ -102,7 +100,7 @@
     <app-form-rank [choices]="question.choices" [editable]="editable"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-    (aUpdate)="aUpdate.emit($event)">
+    (aUpdate)="answerUpdate($event)">
 </app-form-rank>
 </ng-template>
 
@@ -110,7 +108,7 @@
     <app-form-date [choices]="question.choices" [editable]="editable"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-    (aUpdate)="aUpdate.emit($event)">
+    (aUpdate)="answerUpdate($event)">
 </app-form-date>
 </ng-template>
 
@@ -118,7 +116,7 @@
     <app-form-time [choices]="question.choices" [editable]="editable"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-    (aUpdate)="aUpdate.emit($event)">
+    (aUpdate)="answerUpdate($event)">
 </app-form-time>
 </ng-template>
 
@@ -126,6 +124,6 @@
     <app-form-scale [choices]="question.choices" [editable]="editable" [scaleValues]="question.scaleValues"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aEditScale)="aEditScale.emit()"
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
-    (aUpdate)="aUpdate.emit($event)">
+    (aUpdate)="answerUpdate($event)">
 </app-form-scale>
 </ng-template>

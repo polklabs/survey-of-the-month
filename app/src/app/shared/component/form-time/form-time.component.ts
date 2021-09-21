@@ -18,18 +18,18 @@ export class FormTimeComponent {
     @Output() aAdd = new EventEmitter<void>();
 
     @Output() aUpdate = new EventEmitter<string[]>();
-    answers: {hour: string, minute: string, ampm: string}[] = [];
+    answers: { hour: string, minute: string, ampm: string }[] = [];
 
     constructor() { }
 
     ngOnInit(): void {
         this.choices.forEach(c => {
-            this.answers.push({hour: '00', minute: '00', ampm: 'AM'});
+            this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
         });
     }
 
     addAnswer() {
-        this.answers.push({hour: '00', minute: '00', ampm: 'AM'});
+        this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
         this.aAdd.emit();
     }
 
@@ -39,11 +39,27 @@ export class FormTimeComponent {
     }
 
     onChange() {
+        this.answers.forEach(answ => {
+            if (answ.hour) {
+                let hour = Number.parseInt(answ.hour);
+                if (isNaN(hour)) hour = 1;
+                if (hour > 12) hour = 12;
+                if (hour < 1) hour = 1;
+                answ.hour = hour.toString();
+            }
+            if (answ.minute) {
+                let minute = Number.parseInt(answ.minute);
+                if (isNaN(minute)) minute = 0;
+                if (minute > 59) minute = 59;
+                if (minute < 0) minute = 0;
+                answ.minute = minute.toString();
+            }
+        });
         this.aUpdate.emit(this.answers.map(x => `${this.padNumber(x.hour, 2)}:${this.padNumber(x.minute, 2)} ${x.ampm}`));
     }
 
     padNumber(value: string, count: number, pad = '0'): string {
-        while(value.length < count) {
+        while (value.length < count) {
             value = pad + value;
         }
         return value;
