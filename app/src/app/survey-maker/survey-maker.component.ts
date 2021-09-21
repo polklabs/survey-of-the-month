@@ -8,11 +8,12 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
+import { SurveyContainer } from '../shared/model/survey-container.model';
 
 @Component({
     selector: 'app-survey-maker',
@@ -44,7 +45,8 @@ export class SurveyMakerComponent implements OnInit {
         private activatedroute: ActivatedRoute,
         private snackBar: MatSnackBar,
         private dialogService: DialogService,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -57,7 +59,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.key = key;
                 this.getSurvey();
             } else if (id && id === '0' && key && key === '0') {
-                this.id = '';
+                this.id = guid();
                 this.key = '';
                 this.survey = new Survey();
                 this.getCachedUsers();
@@ -233,11 +235,15 @@ export class SurveyMakerComponent implements OnInit {
     getSurvey(): void {
         this.loadingUnknown = true;
         const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
-        result.subscribe((data: { ok: boolean, data?: Survey, headers?: any, status?: any, error?: any }) => {
+        result.subscribe((data: { ok: boolean, data?: SurveyContainer, error?: any }) => {
             if (data.ok) {
-                this.survey = data.data!;
+                if (!data.data) {
+                    this.dialogService.alert('Survey has no data.');
+                    return;
+                }
+                this.survey = data.data?.survey;
             } else {
-                this.logError(data.error??'Unknown Error');
+                this.dialogService.alert(data.error??'Unknown Error');
             }
             this.loadingUnknown = false;
         });
@@ -246,20 +252,21 @@ export class SurveyMakerComponent implements OnInit {
     saveSurvey(): void {
         this.loadingUnknown = true;
 
-        const [result, _] = this.dataService.putData('survey', { survey: this.survey, key: this.key });
-        result.subscribe(
-            (data: { ok: boolean, id?: string, rev?: string, key?: string, error?: any }) => {
+        const [result, _] = this.dataService.putData('survey', { survey: this.survey, id: this.id, key: this.key });
+        result.subscribe((data: { ok: boolean, id?: string, key?: string, error?: any }) => {
             this.loadingUnknown = false;
             if (data.ok && data.id && data.key) {
                 this.localStorageService.addSurvey(this.survey.name, data.id, data.key);
-                this.survey._rev = data.rev;
+                this.id = data.id;
+                this.key = data.key;
                 this.snackBar.open('Saved!', 'OK', {duration: 3000});
                 this.dirty = false;
+                this.router.navigateByUrl(`/make-survey/${this.id}/${this.key}`);
             } else if(!data.ok) {
-                this.logError(data.error??'Unknown Error');
+                this.dialogService.alert(data.error??'Unknown Error');
             }
 
-        }) ?? this.logError('Save returned NULL');
+        });
     }
 
     // Edit Users ------------------------------------------

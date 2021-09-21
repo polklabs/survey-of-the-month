@@ -3,7 +3,7 @@ import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { Answer } from './app/src/app/shared/model/answer.model';
 import { SendEmail } from './src/email';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, couch } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, couch, answerStatus } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
@@ -65,9 +65,10 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
     res.json(tracery.getQuestion());
 });
 
-// Save survey
-app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, key: string } }, res: any) => {
-    upsertSurvey(req.body.survey, req.body.key, res);
+// Surveys ------------------------------------------------------------------------------------------
+
+app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, id: string, key: string } }, res: any) => {
+    upsertSurvey(req.body.survey, req.body.id, req.body.key, res);
 });
 
 // Get Survey
@@ -84,22 +85,8 @@ app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string
     deleteSurvey(req.query.id, req.query.key, res);
 });
 
-app.post('/api/answer-status', speedLimiter, (req: { body: string[] }, res: any) => {
-    const answerStatus: { id: string, count: number }[] = [];
-    req.body.forEach(id => {
-        couch.get('answers', id).then(({data}) => {
-            const answer = <Answer>data;
-            answerStatus.push({ id, count: answer.answers.length });
-            if (answerStatus.length >= req.body.length) {
-                res.json(answerStatus);
-            }
-        }, () => {
-            answerStatus.push({ id, count: 0 });
-            if (answerStatus.length >= req.body.length) {
-                res.json(answerStatus);
-            }
-        });
-    });
+app.get('/api/answer-status', speedLimiter, (req: { query: {id: string} }, res: any) => {
+    answerStatus(req.query.id, res);
 });
 
 // Submit answers

@@ -6,6 +6,7 @@ import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
+import { SurveyContainer } from '../shared/model/survey-container.model';
 import { Survey } from '../shared/model/survey.model';
 
 @Component({
@@ -17,8 +18,8 @@ export class SurveyManagerComponent implements OnInit {
 
     id: string = '';
     key: string = '';
-    survey?: Survey;
-    answerStatus?: { name: string, status: string, count: number }[];
+    surveyContainer?: SurveyContainer;
+    answerStatus: { name: string, status: string, count: number }[] = [];
     hasData = false;
 
     managerLink = '';
@@ -43,37 +44,45 @@ export class SurveyManagerComponent implements OnInit {
                 this.shareLink = `${window.location.origin}/survey/${this.id}`;
                 this.managerLink = window.location.toString();
             } else {
-                this.hasData = false;
-                this.survey = new Survey();
-                this.managerLink = '';
-                this.shareLink = '';
+                this.initNew();
             }
         });
+    }
+
+    initNew() {
+        this.hasData = false;
+        this.surveyContainer = new SurveyContainer();
+        this.surveyContainer.survey = new Survey();
+        this.managerLink = '';
+        this.shareLink = '';
     }
 
     getSurvey(id: string): void {
         this.hasData = false;
         const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
-        result.subscribe((data: { ok: boolean, data?: Survey, error?: any }) => {
+        result.subscribe((data: { ok: boolean, data?: SurveyContainer, error?: any }) => {
             if (data.ok) {
                 if (data.data) {
-                    this.survey = data.data;
+                    this.surveyContainer = data.data;
                     this.getAnswerStatus();
 
-                    this.localStorageService.addSurvey(this.survey.name, this.id, this.key);
+                    this.localStorageService.addSurvey(this.surveyContainer.survey.name, this.id, this.key);
                     this.hasData = true;
                 }
             } else {
-                this.logError(data.error);
-                this.survey = new Survey();
+                this.dialogService.alert(JSON.stringify(data.error));
+                this.initNew();
             }
         });
     }
 
     getAnswerStatus(): void {
-        const [result, progress] = this.dataService.postData('answer-status', this.survey?.users.map(x => x._id) ?? []);
-        result.subscribe((data: { id: string, count: number }[]) => {
-            this.answerStatus = data.map(x => { return { name: this.getUsername(x.id), status: this.getStatus(x.count), count: x.count } });
+        const [result, _] = this.dataService.getData(`answer-status?id=${this.id}`);
+        result.subscribe((data: {ok: boolean, data: { id: string, count: number }[]}) => {
+            this.answerStatus = this.surveyContainer?.survey.users.map(x => {
+                const user = data.data.find(u => u.id === x._id);
+                return {name: this.getUsername(x._id), status: this.getStatus(user?.count??0), count: user?.count??0};
+            }) ?? [];
             this.answerStatus.sort((a, b) => a.name.localeCompare(b.name));
         });
     }
@@ -104,11 +113,15 @@ export class SurveyManagerComponent implements OnInit {
         this.snackBar.open('Copied', 'OK', { duration: 3000 });
     }
 
+    getSurveyName(): void {
+        this.surveyContainer?.survey.name ?? '{Unknown}';
+    }
+
 
     // Survey Completion -------------------------------------------------------
     getTotalStatus(): string {
-        let total = this.survey?.questions.length ?? 0;
-        total *= this.survey?.users.length ?? 0;
+        let total = this.surveyContainer?.survey.questions.length ?? 0;
+        total *= this.surveyContainer?.survey.users.length ?? 0;
 
         let sum = 0;
         this.answerStatus?.forEach(x => sum += x.count);
@@ -118,11 +131,11 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     getUsername(id: string): string {
-        return this.survey?.users.find(x => x._id === id)?.name ?? 'Unknown';
+        return this.surveyContainer?.survey.users.find(x => x._id === id)?.name ?? 'Unknown';
     }
 
     getStatus(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
+        const total = this.surveyContainer?.survey.questions.length ?? 0;
         if (count === 0) {
             return 'Not Started';
         }
@@ -133,7 +146,7 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     getStatusColor(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
+        const total = this.surveyContainer?.survey.questions.length ?? 0;
         if (count === 0) {
             return 'lightcoral';
         }

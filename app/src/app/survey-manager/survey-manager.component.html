@@ -1,8 +1,8 @@
-<div fxLayoutAlign="center center" class="root" *ngIf="survey">
+<div fxLayoutAlign="center center" class="root" *ngIf="surveyContainer">
     <div style="margin: auto; width: 1000px; min-width: 250px;" fxLayout="row wrap" fxLayoutAlign="center">
         <div fxFlex="100%">
-            <h1 class="large" fxHide.lt-sm>{{survey.name}}</h1>
-            <h1 fxHide.gt-xs>{{survey.name}}</h1>
+            <h1 class="large" fxHide.lt-sm>{{getSurveyName()}}</h1>
+            <h1 fxHide.gt-xs>{{getSurveyName()}}</h1>
         </div>
 
         <!-- <p *ngIf="!hasData">You entered an incorrect URL or a non existant URL</p> -->
