@@ -52,8 +52,9 @@ export class SurveyTakerComponent implements OnInit {
         result.subscribe((data: { ok: boolean, data?: Survey, headers?: any, status?: any, error?: any }) => {
             if (data.ok) {
                 this.survey = data.data!;
+                console.log(this.survey.users);
             } else {
-                this.dialogService.alert(`Error: ${data.error}`);
+                this.dialogService.alert(`Error: ${JSON.stringify(data.error)}`);
             }
             this.loadingUnknown = false;
         });
