@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import { Survey } from '../app/src/app/shared/model/survey.model';
 import { SurveyContainer } from '../app/src/app/shared/model/survey-container.model';
 import { Answer } from '../app/src/app/shared/model/answer.model';
+import { response } from '../server';
 
 // TODO: Make into await/synchronous functions
 
@@ -12,23 +13,23 @@ const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
     { encoding: 'utf8', flag: 'r' }));
 export const couch = new NodeCouchDb(couchDbSettings);
 
-export function upsertSurvey(survey: Survey, id: string, key: string, res: any): void {
+export function upsertSurvey(survey: Survey, id: string, key: string, res: response): void {
 
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         // Document Exists
         if (key === data.key) {
             updateSurvey(data, survey, res);
         } else {
-            res.json({ ok: false, error: 'Invalid Key' });
+            res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
         }
-    }, (error: any) => {
+    }, () => {
         // Document Doesn't exist
         insertSurvey(survey, res);
     });
 
 }
 
-function updateSurvey(container: SurveyContainer, survey: Survey, res: any): void {
+function updateSurvey(container: SurveyContainer, survey: Survey, res: response): void {
     container.survey = survey;
     container.lastModifiedDate = new Date().toISOString();
     couch.update('survey', container).then(({ data }) => {
@@ -38,7 +39,7 @@ function updateSurvey(container: SurveyContainer, survey: Survey, res: any): voi
     });
 }
 
-function insertSurvey(survey: Survey, res: any): void {
+function insertSurvey(survey: Survey, res: response): void {
     const container = new SurveyContainer();
     container.key = crypto.randomBytes(8).toString('hex');
     container.survey = survey;
@@ -50,7 +51,7 @@ function insertSurvey(survey: Survey, res: any): void {
     });
 }
 
-export function getSurvey(id: string, res: any): void {
+export function getSurvey(id: string, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         res.json({ ok: true, data: data.survey });
     }, (error: any) => {
@@ -58,19 +59,19 @@ export function getSurvey(id: string, res: any): void {
     });
 }
 
-export function getEditSurvey(id: string, key: string, res: any): void {
+export function getEditSurvey(id: string, key: string, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         if (key === data.key) {
             res.json({ ok: true, data })
         } else {
-            res.json({ ok: false, error: 'Invalid Key' });
+            res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
         }
     }, (err: any) => {
         res.json({ ok: false, error: err });
     });
 }
 
-export function deleteSurvey(id: string, key: string, res: any): void {
+export function deleteSurvey(id: string, key: string, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         if (key === data.key) {
 
@@ -81,14 +82,14 @@ export function deleteSurvey(id: string, key: string, res: any): void {
             });
 
         } else {
-            res.json({ ok: false, error: 'Invalid Key' });
+            res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
         }
     }, (error: any) => {
         res.json({ ok: false, error });
     });
 }
 
-export function answerStatus(id: string, res: any): void {
+export function answerStatus(id: string, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         const answerStatus = data.answers.map(x => { return { id: x.userId, count: x.answers.length } });
         res.json({ ok: true, data: answerStatus });
@@ -97,7 +98,7 @@ export function answerStatus(id: string, res: any): void {
     });
 }
 
-export function submitAnswers(id: string, answers: Answer, res: any): void {
+export function submitAnswers(id: string, answers: Answer, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
 
         const index = data.answers.findIndex(x => x.userId === answers.userId);

@@ -1,14 +1,15 @@
 import { Tracery } from './src/tracery';
 import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
-import { Answer } from './app/src/app/shared/model/answer.model';
+import { APIError } from './app/src/app/shared/model/api-error.model';
 import { SendEmail } from './src/email';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, couch, answerStatus } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
 import cors from 'cors';
-import crypto from 'crypto';
+
+export type response = {json: (res: {ok: boolean, data?: any, error?: APIError}) => any};
 
 // Create basic express app -------------------------------------------
 const app = express();
@@ -67,25 +68,25 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
 
 // Surveys ------------------------------------------------------------------------------------------
 
-app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, id: string, key: string } }, res: any) => {
+app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, id: string, key: string } }, res: response) => {
     upsertSurvey(req.body.survey, req.body.id, req.body.key, res);
 });
 
 // Get Survey
-app.get('/api/survey', speedLimiter, (req: { query: { id: string } }, res: any) => {
+app.get('/api/survey', speedLimiter, (req: { query: { id: string } }, res: response) => {
     getSurvey(req.query.id, res);
 });
 
 // Get Survey for editing
-app.get('/api/survey-edit', speedLimiter, (req: { query: { id: string, key: string } }, res: any) => {
+app.get('/api/survey-edit', speedLimiter, (req: { query: { id: string, key: string } }, res: response) => {
     getEditSurvey(req.query.id, req.query.key, res);
 });
 
-app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string } }, res: any) => {
+app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string } }, res: response) => {
     deleteSurvey(req.query.id, req.query.key, res);
 });
 
-app.get('/api/answer-status', speedLimiter, (req: { query: {id: string} }, res: any) => {
+app.get('/api/answer-status', speedLimiter, (req: { query: {id: string} }, res: response) => {
     answerStatus(req.query.id, res);
 });
 
@@ -95,7 +96,7 @@ app.put('/api/answer', speedLimiter, (req: any, res: any) => {
 });
 
 // Submit Feedback
-app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body: string, type: string, returnAddress: string } }, res: any) => {
+app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body: string, type: string, returnAddress: string } }, res: response) => {
 
     let replyTo = req.body.returnAddress;
     const subject = `Survey Of The Month - [${req.body.type}]`;
@@ -109,7 +110,7 @@ app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body
         }
     });
     if (r) {
-        res.json({ ok: false, error: r });
+        res.json({ ok: false, error: {code: 'EMAILERROR', body: {error: r, reason: ''}} });
     }
 });
 
