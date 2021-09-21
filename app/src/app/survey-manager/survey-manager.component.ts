@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../core/services/data.service';
+import { DialogService } from '../core/services/dialog.service';
+import { LocalStorageService } from '../core/services/local-storage.service';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { Survey } from '../shared/model/survey.model';
 
@@ -22,19 +24,17 @@ export class SurveyManagerComponent implements OnInit {
     managerLink = '';
     shareLink = '';
 
-    availableSurveys: string[][] = [];
-    availableSurveyIndex?: number;
-
     constructor(
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
+        private dialog: MatDialog,
         private router: Router,
-        private dialog: MatDialog
+        private localStorageService: LocalStorageService,
+        private dialogService: DialogService
     ) { }
 
     ngOnInit(): void {
-        this.getLocalIds();
         this.activatedRoute.paramMap.subscribe(params => {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
@@ -47,48 +47,20 @@ export class SurveyManagerComponent implements OnInit {
                 this.survey = new Survey();
                 this.managerLink = '';
                 this.shareLink = '';
-                if (this.availableSurveys.length > 0) {
-                    this.availableSurveyIndex = 0;
-                    this.surveyChanged();
-                }
             }
         });
     }
 
-    getLocalIds(): void {
-        const ids = localStorage.getItem('Surveys');
-        if (ids) {
-            this.availableSurveys = JSON.parse(ids);
-        }
-    }
-
-    surveyChanged(): void {
-        if (this.availableSurveyIndex === undefined) return;
-        const id = this.availableSurveys[this.availableSurveyIndex][1];
-        const key = this.availableSurveys[this.availableSurveyIndex][2];
-        this.router.navigateByUrl(`/manage-survey/${id}/${key}`, { skipLocationChange: false });
-    }
-
     getSurvey(id: string): void {
         this.hasData = false;
-        const [result, progress] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
+        const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
         result.subscribe((data: { ok: boolean, data?: Survey, error?: any }) => {
             if (data.ok) {
                 if (data.data) {
                     this.survey = data.data;
                     this.getAnswerStatus();
 
-                    const stored = this.availableSurveys.findIndex(x => x[1] === this.id && x[2] === this.key);
-                    if (stored === -1) {
-                        this.availableSurveyIndex = this.availableSurveys.push([this.survey.name, this.id, this.key]) - 1;
-                        localStorage.setItem('Surveys', JSON.stringify(this.availableSurveys));
-                    } else {
-                        this.availableSurveyIndex = stored;
-                        if (this.availableSurveys[this.availableSurveyIndex][0] !== this.survey.name) {
-                            this.availableSurveys[this.availableSurveyIndex][0] = this.survey.name;
-                            localStorage.setItem('Surveys', JSON.stringify(this.availableSurveys));
-                        }
-                    }
+                    this.localStorageService.addSurvey(this.survey.name, this.id, this.key);
                     this.hasData = true;
                 }
             } else {
@@ -111,7 +83,20 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     deleteButton(): void {
-        console.log('TODO');
+        this.dialogService.confirm('Do you want to delete?').subscribe(
+            del => {
+                if (del) {
+                    const [result, _] = this.dataService.deleteData(`survey?id=${this.id}&key=${this.key}`);
+                    result.subscribe((data: { ok: boolean, error?: any }) => {
+                        if (data.ok) {
+                            this.localStorageService.delSurvey(this.id);
+                            this.snackBar.open('Deleted', 'OK', {duration: 3000});
+                            this.router.navigateByUrl('/home');
+                        }
+                    });
+                }
+            }
+        )
     }
 
     copyLink(link: string): void {

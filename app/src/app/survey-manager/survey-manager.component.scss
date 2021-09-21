@@ -2,6 +2,23 @@
     height: 100%;
 }
 
+h1,
+h2 {
+    text-align: center;
+}
+
+h1.large {
+    font-size: xxx-large;
+}
+
+h1 {
+    width: max-content;
+    margin: auto;
+    margin-top: 32px;
+    margin-bottom: 4px;
+    font-family: 'Chalk', 'arial', sans-serif;
+}
+
 .mat-select-value-text {
     width: max-content;
     margin: auto;

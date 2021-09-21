@@ -5,6 +5,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageService } from '../core/services/local-storage.service';
 
 @Component({
     selector: 'app-single-question',
@@ -19,18 +20,19 @@ export class SingleQuestionComponent implements OnInit {
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
     question: Question = new Question();
-    users: string[] = ['Bob', 'Alice'];
+    users: string[] = [];
 
     debounceButton = false;
     loading = false;
 
     constructor(
         private dataService: DataService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private localStorageService: LocalStorageService
     ) { }
 
     ngOnInit(): void {
-        this.getCachedUsers();
+        this.users = this.localStorageService.getUsers();
         this.getQuestion();
     }
 
@@ -70,7 +72,7 @@ export class SingleQuestionComponent implements OnInit {
         setTimeout(() => this.debounceButton = false, 750);
 
         this.loading = true;
-        const [result, progress] = this.dataService.postData(endpoint, data);
+        const [result, _] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
             result.subscribe((data: Question) => {
                 this.question = data;
@@ -92,7 +94,7 @@ export class SingleQuestionComponent implements OnInit {
         if (input) {
             input.value = '';
         }
-        this.cacheUsers();
+        this.localStorageService.setUsers(this.users);
     }
 
     removeUser(user: string): void {
@@ -101,18 +103,7 @@ export class SingleQuestionComponent implements OnInit {
         if (index >= 0) {
             this.users.splice(index, 1);
         }
-        this.cacheUsers();
-    }
-
-    cacheUsers(): void {
-        localStorage.setItem('users', JSON.stringify(this.users));
-    }
-
-    getCachedUsers(): void {
-        const usersString = localStorage.getItem('users');
-        if (usersString !== null) {
-            this.users = JSON.parse(usersString);
-        }
+        this.localStorageService.setUsers(this.users);
     }
 
 }

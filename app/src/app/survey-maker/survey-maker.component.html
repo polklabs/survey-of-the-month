@@ -30,9 +30,9 @@
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
-                    <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
+                    <mat-chip *ngFor="let user of survey.users" [selectable]="usersSelectable" [removable]="usersRemovable"
                         (removed)="removeUser(user)">
-                        {{user}}
+                        {{user.name}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                     <input placeholder="New Person..." [matChipInputFor]="chipList"

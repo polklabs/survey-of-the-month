@@ -1,23 +1,11 @@
 <div fxLayoutAlign="center center" class="root" *ngIf="survey">
     <div style="margin: auto; width: 1000px; min-width: 250px;" fxLayout="row wrap" fxLayoutAlign="center">
-        <!-- <div fxFlex="100%">
+        <div fxFlex="100%">
             <h1 class="large" fxHide.lt-sm>{{survey.name}}</h1>
             <h1 fxHide.gt-xs>{{survey.name}}</h1>
-        </div> -->
-
-        <div fxFlex="100%">
-            <div style="margin: auto; width: min-content;">
-                <mat-form-field appearance="outline" style="min-width: 400px;">
-                    <mat-select [(ngModel)]="availableSurveyIndex" (selectionChange)="surveyChanged()">
-                        <mat-option *ngFor="let s of availableSurveys; let i = index" [value]="i">
-                            {{s[0]}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
         </div>
 
-        <p *ngIf="!hasData">You entered an incorrect URL or a non existant URL</p>
+        <!-- <p *ngIf="!hasData">You entered an incorrect URL or a non existant URL</p> -->
 
         <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
@@ -82,7 +70,7 @@
                 <button mat-raised-button color="primary" [routerLink]="'/make-survey/' + id + '/' + key">Edit
                     Survey</button>
                 <button mat-raised-button disabled>Export Answers To CSV</button>
-                <button mat-raised-button color="warn" disabled>Delete Survey</button>
+                <button mat-raised-button color="warn" (click)="deleteButton()">Delete Survey</button>
 
             </mat-card-content>
         </mat-card>

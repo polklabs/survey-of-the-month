@@ -8,10 +8,11 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { DialogService } from '../core/services/dialog.service';
+import { LocalStorageService } from '../core/services/local-storage.service';
 
 @Component({
     selector: 'app-survey-maker',
@@ -28,7 +29,6 @@ export class SurveyMakerComponent implements OnInit {
     id = '';
     key = '';
 
-    users: string[] = ['Bob', 'Alice'];
     survey: Survey = new Survey();
     editable = true;
 
@@ -43,11 +43,11 @@ export class SurveyMakerComponent implements OnInit {
         private dialog: MatDialog,
         private activatedroute: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private localStorageService: LocalStorageService
     ) { }
 
     ngOnInit(): void {
-        this.survey = new Survey();
         this.getCachedUsers();
         this.activatedroute.paramMap.subscribe(params => { 
             const id = params.get('id');
@@ -56,6 +56,11 @@ export class SurveyMakerComponent implements OnInit {
                 this.id = id;
                 this.key = key;
                 this.getSurvey();
+            } else if (id && id === '0' && key && key === '0') {
+                this.id = '';
+                this.key = '';
+                this.survey = new Survey();
+                this.getCachedUsers();
             }
         });
     }
@@ -71,7 +76,7 @@ export class SurveyMakerComponent implements OnInit {
 
     getQuestion(questionIndex = -1, reset=false, seed='', shuffle = false): void {
         this.dirty = true;
-        const questionData: any =  { users: this.users, seed, questionOrigin: undefined };
+        const questionData: any =  { users: this.getUserNames(), seed, questionOrigin: undefined };
 
         if (reset) {
             // Reset a basic template question
@@ -157,7 +162,7 @@ export class SurveyMakerComponent implements OnInit {
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
         this.dirty = true;
-        this.callApi<Question>('choice', { question: this.survey.questions[questionIndex], users: this.users, choiceIndex }, questionIndex)?.subscribe(
+        this.callApi<Question>('choice', { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex }, questionIndex)?.subscribe(
             data => {
                 if (data !== null) {
                     this.survey.questions[questionIndex] = data;
@@ -227,11 +232,10 @@ export class SurveyMakerComponent implements OnInit {
 
     getSurvey(): void {
         this.loadingUnknown = true;
-        const [result, progress] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
+        const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
         result.subscribe((data: { ok: boolean, data?: Survey, headers?: any, status?: any, error?: any }) => {
             if (data.ok) {
                 this.survey = data.data!;
-                this.users = this.survey.users.map(x => x.name);
             } else {
                 this.logError(data.error??'Unknown Error');
             }
@@ -242,12 +246,12 @@ export class SurveyMakerComponent implements OnInit {
     saveSurvey(): void {
         this.loadingUnknown = true;
 
-        const [result, progress] = this.dataService.putData('survey', { survey: this.survey, key: this.key });
+        const [result, _] = this.dataService.putData('survey', { survey: this.survey, key: this.key });
         result.subscribe(
             (data: { ok: boolean, id?: string, rev?: string, key?: string, error?: any }) => {
             this.loadingUnknown = false;
             if (data.ok && data.id && data.key) {
-                this.saveSurveyID(this.survey.name, data.id, data.key);
+                this.localStorageService.addSurvey(this.survey.name, data.id, data.key);
                 this.survey._rev = data.rev;
                 this.snackBar.open('Saved!', 'OK', {duration: 3000});
                 this.dirty = false;
@@ -258,22 +262,6 @@ export class SurveyMakerComponent implements OnInit {
         }) ?? this.logError('Save returned NULL');
     }
 
-    saveSurveyID(name: string, id: string, key: string): void {
-        const idStrings = [name, id, key];
-        const s = localStorage.getItem('Surveys');
-        let surveys: string[][] = [];
-        if (s) {
-            surveys = JSON.parse(s);
-        }
-        const index = surveys.findIndex(x => x[1] === id && x[2] === key)
-        if (index !== -1) {
-            surveys.splice(index, 1);
-            
-        }
-        surveys.push(idStrings);
-        localStorage.setItem('Surveys', JSON.stringify(surveys));
-    }
-
     // Edit Users ------------------------------------------
 
     addUser(event: MatChipInputEvent): void {
@@ -281,9 +269,8 @@ export class SurveyMakerComponent implements OnInit {
         const input = event.input;
         const value = event.value;
 
-        // Add our fruit
         if ((value || '').trim()) {
-            this.users.push(value.trim());
+            this.survey.users.push({_id: guid(), name: value.trim()});
         }
 
         // Reset the input value
@@ -293,35 +280,30 @@ export class SurveyMakerComponent implements OnInit {
         this.cacheUsers();
     }
 
-    removeUser(user: string): void {
+    removeUser(user: {_id: string, name: string}): void {
         this.dirty = true;
-        const index = this.users.indexOf(user);
+        const index = this.survey.users.indexOf(user);
 
         if (index >= 0) {
-            this.users.splice(index, 1);
+            this.survey.users.splice(index, 1);
         }
         this.cacheUsers();
     }
 
+    getUserNames(): string[] {
+        return this.survey.users.map(x => x.name);
+    }
+
     cacheUsers(): void {
-        localStorage.setItem('users', JSON.stringify(this.users));
-        this.assignUsers();
+        this.localStorageService.setUsers(this.getUserNames());
     }
 
     getCachedUsers(): void {
-        const usersString = localStorage.getItem('users');
-        if (usersString !== null) {
-            this.users = JSON.parse(usersString);
-            this.assignUsers();
-        }
-    }
-
-    assignUsers(): void {
-        this.survey.users = this.users.map(x => { return { name: x, _id: guid() } });
+        this.survey.users = this.localStorageService.getUsers().map(x => { return { name: x, _id: guid() } });
     }
 
     // API ---------------------------------------------------------------------------
-    callApi<T>(endpoint: string, data: any, questionIndex: number, dataServiceMethod = this.dataService.postData): BehaviorSubject<T | null> | null {
+    callApi<T>(endpoint: string, data: any, questionIndex: number): BehaviorSubject<T | null> | null {
         if (this.debounceButton) return null;
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
@@ -329,7 +311,7 @@ export class SurveyMakerComponent implements OnInit {
         const toReturn = new BehaviorSubject<T | null>(null);
 
         this.setLoading(questionIndex, true);
-        const [result, progress] = this.dataService.postData(endpoint, data);
+        const [result, _] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
             result.subscribe(data => {
                 toReturn.next(data);
