@@ -1,1 +1,17 @@
-<p>survey-taker works!</p>
+<div fxLayoutAlign="center center" class="root">
+    <div style="margin: auto; width: 800px; min-width: 250px;">
+        <div>
+            <h1 class="large" fxHide.lt-sm>{{survey.name}}</h1>
+            <h1 fxHide.gt-xs>{{survey.name}}</h1>
+        </div>       
+
+        <!-- Questions -->
+        <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
+            <app-form-question [question]="question" [loading]="loading[i]" [editable]="false" [questionNumber]="(i+1).toString()">
+            </app-form-question>
+        </div>
+
+        <mat-progress-bar *ngIf="loadingUnknown" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
+
+    </div>
+</div>

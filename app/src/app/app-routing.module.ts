@@ -32,6 +32,7 @@ const routes: Routes = [
     {
         path: 'survey/:id',
         component: SurveyTakerComponent,
+        canDeactivate: [CanDeactivateGuard],
         data: {
             title: 'Survey OTM',
         }
