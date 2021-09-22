@@ -46,6 +46,7 @@ export class FormQuestionComponent implements OnInit {
 
     currentAnswerType: string = '';
     dirty = false;
+    clearVar = 0; // Increment this to clear answers from question form;
 
     constructor(
         private cd: ChangeDetectorRef
@@ -58,7 +59,7 @@ export class FormQuestionComponent implements OnInit {
     getAnswerTemplate(): TemplateRef<any> {
         if (this.currentAnswerType !== this.question.answerType) {
             this.currentAnswerType = this.question.answerType;
-            return this.formEmpty;
+            this.clearAnswer();
         }
         switch (this.question.answerType) {
             case 'text':
@@ -80,9 +81,9 @@ export class FormQuestionComponent implements OnInit {
         }
     }
 
-    clearAnswer(): void {
+    public clearAnswer(): void {
         this.aUpdate.emit(null);
-        this.currentAnswerType = '';
+        this.clearVar++;
         this.cd.detectChanges();
         this.dirty = false;
     }

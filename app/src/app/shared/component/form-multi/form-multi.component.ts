@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-multi',
     templateUrl: './form-multi.component.html',
     styleUrls: ['./form-multi.component.scss']
 })
-export class FormMultiComponent {
+export class FormMultiComponent implements OnChanges {
 
     @Input() choices: string[] = [];
     @Input() otherOptionAllow: boolean = true;
@@ -13,6 +13,7 @@ export class FormMultiComponent {
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = 0;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -26,7 +27,11 @@ export class FormMultiComponent {
 
     constructor() { }
 
-    ngOnInit(): void {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            this.answer = null;
+            this.otherAnswer = '';
+        }
     }
 
     addAnswer() {

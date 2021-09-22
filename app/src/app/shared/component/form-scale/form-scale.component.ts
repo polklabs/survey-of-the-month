@@ -1,17 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-scale',
     templateUrl: './form-scale.component.html',
     styleUrls: ['./form-scale.component.scss']
 })
-export class FormScaleComponent implements OnInit {
+export class FormScaleComponent implements OnChanges {
 
     @Input() choices: string[] = [];
     @Input() scaleValues: string[] = [];
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = -1;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -24,10 +25,13 @@ export class FormScaleComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-        this.choices.forEach(c => {
-            this.answers.push(null);
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            this.answers = [];
+            this.choices.forEach(() => {
+                this.answers.push(null);
+            });
+        }
     }
 
     addAnswer() {

@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-text',
     templateUrl: './form-text.component.html',
     styleUrls: ['./form-text.component.scss']
 })
-export class FormTextComponent implements OnInit {
+export class FormTextComponent implements OnChanges {
 
     @Input() choices: string[] = [];
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = -1;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -22,10 +23,13 @@ export class FormTextComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-        this.choices.forEach(c => {
-            this.answers.push('');
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            this.answers = [];
+            this.choices.forEach(() => {
+                this.answers.push('');
+            });
+        }
     }
 
     addAnswer() {

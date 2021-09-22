@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-time',
     templateUrl: './form-time.component.html',
     styleUrls: ['./form-time.component.scss']
 })
-export class FormTimeComponent {
+export class FormTimeComponent implements OnChanges {
 
     @Input() choices: string[] = [];
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = -1;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -22,10 +23,13 @@ export class FormTimeComponent {
 
     constructor() { }
 
-    ngOnInit(): void {
-        this.choices.forEach(c => {
-            this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            this.answers = [];
+            this.choices.forEach(() => {
+                this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
+            });
+        }
     }
 
     addAnswer() {

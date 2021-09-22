@@ -72,7 +72,7 @@
 <ng-template #formEmpty></ng-template>
 
 <ng-template #formText>
-    <app-form-text [choices]="question.choices" [editable]="editable"
+    <app-form-text [choices]="question.choices" [editable]="editable" [clear]="clearVar"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
         (aUpdate)="answerUpdate($event)">
@@ -80,7 +80,7 @@
 </ng-template>
 
 <ng-template #formMulti>
-    <app-form-multi [choices]="question.choices" [editable]="editable"
+    <app-form-multi [choices]="question.choices" [editable]="editable" [clear]="clearVar"
         [otherOptionAllow]="question.otherOptionAllow" [otherOptionText]="question.otherOptionText"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aOtherOptionAllow)="aOtherOptionAllow.emit()"
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
@@ -89,7 +89,7 @@
 </ng-template>
 
 <ng-template #formCheck>
-    <app-form-check [choices]="question.choices" [editable]="editable"
+    <app-form-check [choices]="question.choices" [editable]="editable" [clear]="clearVar"
         (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
         (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
         (aUpdate)="answerUpdate($event)">
@@ -97,7 +97,7 @@
 </ng-template>
 
 <ng-template #formRank>
-    <app-form-rank [choices]="question.choices" [editable]="editable"
+    <app-form-rank [choices]="question.choices" [editable]="editable" [clear]="clearVar"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
     (aUpdate)="answerUpdate($event)">
@@ -105,7 +105,7 @@
 </ng-template>
 
 <ng-template #formDate>
-    <app-form-date [choices]="question.choices" [editable]="editable"
+    <app-form-date [choices]="question.choices" [editable]="editable" [clear]="clearVar"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
     (aUpdate)="answerUpdate($event)">
@@ -113,7 +113,7 @@
 </ng-template>
 
 <ng-template #formTime>
-    <app-form-time [choices]="question.choices" [editable]="editable"
+    <app-form-time [choices]="question.choices" [editable]="editable" [clear]="clearVar"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" 
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
     (aUpdate)="answerUpdate($event)">
@@ -121,7 +121,7 @@
 </ng-template>
 
 <ng-template #formScale>
-    <app-form-scale [choices]="question.choices" [editable]="editable" [scaleValues]="question.scaleValues"
+    <app-form-scale [choices]="question.choices" [editable]="editable" [scaleValues]="question.scaleValues" [clear]="clearVar"
     (aAdd)="aAdd.emit()" (aDelete)="aDelete.emit($event)" (aEditScale)="aEditScale.emit()"
     (aEditText)="aEditText.emit($event)" (aRandomize)="aRandomize.emit($event)"
     (aUpdate)="answerUpdate($event)">

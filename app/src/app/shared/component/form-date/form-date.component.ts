@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-date',
     templateUrl: './form-date.component.html',
     styleUrls: ['./form-date.component.scss']
 })
-export class FormDateComponent implements OnInit {
+export class FormDateComponent implements OnChanges {
 
     @Input() choices: string[] = [];
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = 0;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -22,10 +23,13 @@ export class FormDateComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-        this.choices.forEach(c => {
-            this.answers.push(null);
-        });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            this.answers = [];
+            this.choices.forEach(() => {
+                this.answers.push(null);
+            });
+        }
     }
 
     addAnswer() {

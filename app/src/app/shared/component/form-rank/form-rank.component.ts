@@ -1,17 +1,18 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-rank',
     templateUrl: './form-rank.component.html',
     styleUrls: ['./form-rank.component.scss']
 })
-export class FormRankComponent implements OnInit {
+export class FormRankComponent implements OnChanges {
 
     @Input() choices: string[] = [];
 
     @Input() editable = false;
     @Input() loading = false;
+    @Input() clear = -1;
 
     @Output() aEditText = new EventEmitter<number>();
     @Output() aRandomize = new EventEmitter<number>();
@@ -23,16 +24,18 @@ export class FormRankComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-        if (this.editable) {
-            this.answers = this.choices
-        } else {
-            this.choices.forEach(c => {
-                this.answers.push(c);
-            });
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['clear']) {
+            if (this.editable) {
+                this.answers = this.choices
+            } else {
+                this.answers = [];
+                this.choices.forEach(c => {
+                    this.answers.push(c);
+                });
+            }
         }
     }
-
 
     drop(event: CdkDragDrop<string[]>) {
         moveItemInArray(this.choices, event.previousIndex, event.currentIndex);
