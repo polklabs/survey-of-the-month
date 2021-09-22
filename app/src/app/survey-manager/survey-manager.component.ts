@@ -6,6 +6,7 @@ import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
+import { AnswerStatus } from '../shared/model/answer.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 import { Survey } from '../shared/model/survey.model';
 
@@ -19,8 +20,10 @@ export class SurveyManagerComponent implements OnInit {
     id: string = '';
     key: string = '';
     surveyContainer?: SurveyContainer;
-    answerStatus: { name: string, status: string, count: number }[] = [];
+    answerStatus: AnswerStatus[] = [];
     hasData = false;
+
+    displayedColumns: string[] = ['name', 'lastModifiedDate', 'status'];
 
     managerLink = '';
     shareLink = '';
@@ -78,11 +81,8 @@ export class SurveyManagerComponent implements OnInit {
 
     getAnswerStatus(): void {
         const [result, _] = this.dataService.getData(`answer-status?id=${this.id}`);
-        result.subscribe((data: {ok: boolean, data: { id: string, count: number }[]}) => {
-            this.answerStatus = this.surveyContainer?.survey.users.map(x => {
-                const user = data.data.find(u => u.id === x._id);
-                return {name: this.getUsername(x._id), status: this.getStatus(user?.count??0), count: user?.count??0};
-            }) ?? [];
+        result.subscribe((data: {ok: boolean, data?: AnswerStatus[]}) => {
+            this.answerStatus = data.data ?? [];
             this.answerStatus.sort((a, b) => a.name.localeCompare(b.name));
         });
     }

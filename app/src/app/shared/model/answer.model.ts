@@ -1,6 +1,20 @@
 export class Answer {
     userId!: string;
-    createdDate: string = new Date().toUTCString();
     lastModifiedDate: string = new Date().toUTCString();
-    answers: { questionId: string, value: null | any }[] = [];
+    answers: {
+        questionId: string,
+        lastModifiedDate: string;
+        value: null | any
+    }[] = [];
+}
+
+export class AnswerStatus { 
+    userId!: string;
+    name!: string;
+    count!: number; 
+    lastModifiedDate?: string;
+    answered!: {
+        questionId: string,
+        lastModifiedDate: string;
+    }[]
 }

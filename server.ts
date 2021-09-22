@@ -3,11 +3,12 @@ import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIError } from './app/src/app/shared/model/api-error.model';
 import { SendEmail } from './src/email';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
 import cors from 'cors';
+import { Answer } from './app/src/app/shared/model/answer.model';
 
 export type response = {json: (res: {ok: boolean, data?: any, error?: APIError}) => any};
 
@@ -91,8 +92,8 @@ app.get('/api/answer-status', speedLimiter, (req: { query: {id: string} }, res: 
 });
 
 // Submit answers
-app.put('/api/answer', speedLimiter, (req: any, res: any) => {
-
+app.put('/api/answer', speedLimiter, (req: {body: {id: string, answers: Answer}}, res: any) => {
+    submitAnswers(req.body.id, req.body.answers, res);
 });
 
 // Submit Feedback
