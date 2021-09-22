@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 import { SurveysStorage, UserStorage } from "src/app/shared/model/local-storage.model";
-import { Survey } from "src/app/shared/model/survey.model";
 
 const USERS = 'users';
 const SURVEYS = 'Surveys';
@@ -11,7 +10,7 @@ const SURVEYS = 'Surveys';
 })
 export class LocalStorageService {
   
-    
+    surveyBS = new BehaviorSubject<SurveysStorage[]>([]);
 
     getUsers(): UserStorage[] {
         const usersString = localStorage.getItem(USERS);
@@ -31,6 +30,12 @@ export class LocalStorageService {
             return JSON.parse(surveyStrings);
         }
         return [];
+    }
+
+    getSurveysWatch(): BehaviorSubject<SurveysStorage[]> {
+        const s = this.getSurveys();
+        this.surveyBS.next(s);
+        return this.surveyBS;
     }
 
     addSurvey(name: string, id: string, key: string): void {
@@ -54,6 +59,7 @@ export class LocalStorageService {
 
     setSurveys(surveys: SurveysStorage[]): void {
         localStorage.setItem(SURVEYS, JSON.stringify(surveys));
+        this.surveyBS.next(surveys);
     }
 
 } 

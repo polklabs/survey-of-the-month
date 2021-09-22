@@ -28,7 +28,11 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.availableSurveys = this.localStorageService.getSurveys();
+        this.localStorageService.getSurveysWatch().subscribe(
+            s => {
+                this.availableSurveys = s;
+            }
+        );
     }
 
     openFeedback(): void {
