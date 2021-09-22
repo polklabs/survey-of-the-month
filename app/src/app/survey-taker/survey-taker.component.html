@@ -1,21 +1,68 @@
-<div fxLayoutAlign="center center" class="root">
+<div fxLayoutAlign="center center" class="root" *ngIf="survey">
     <div style="margin: auto; width: 800px; min-width: 250px;">
         <div>
             <h1 class="large" fxHide.lt-sm>{{survey.name}}</h1>
             <h1 fxHide.gt-xs>{{survey.name}}</h1>
-        </div>       
-
-        <!-- Questions -->
-        <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
-            <app-form-question [question]="question" [loading]="loading[i]" [editable]="false" [questionNumber]="(i+1).toString()">
-            </app-form-question>
         </div>
 
-        <div fxLayoutAlign="end" style="margin-bottom: 32px;">
-            <button mat-raised-button color="primary">Submit</button>
-        </div>
+        <ng-container *ngIf="!answer.userId">
+            <mat-card *ngIf="answerStatus" class="answ-status-container">
+                <mat-card-header>
+                    <mat-card-title>Who Are You?</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
 
-        <mat-progress-bar *ngIf="loadingUnknown" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
+                    <table mat-table [dataSource]="answerStatus" style="width: 100%;">
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="lastModifiedDate">
+                            <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+                            <td mat-cell *matCellDef="let element"> {{element.lastModifiedDate | date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element"><span [ngStyle]="{color: getStatusColor(element.count)}">{{getStatus(element.count)}}</span> </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="start">
+                            <th mat-header-cell *matHeaderCellDef> Start </th>
+                            <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary" (click)="selectUser(element.userId, element.name)">Start</button> </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="answer.userId">
+            <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center">
+                <h2>{{name}}</h2>
+                <button mat-raised-button color="accent" (click)="selectUser('', '')">Change User</button>
+            </div>
+            
+            <!-- Questions -->
+            <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
+                <div>Answered On: {{getAnswerLastModified(question.questionId)}}</div>
+                <app-form-question [question]="question" [editable]="false" [questionNumber]="(i+1).toString()"
+                    (aUpdate)="updateAnswer(i, $event)">
+                </app-form-question>
+            </div>
+
+            <div fxLayoutAlign="end" style="margin-bottom: 32px;">
+                <button mat-raised-button color="primary" [disabled]="disableSubmit()"
+                    (click)="startSubmit()">Submit</button>
+            </div>
+        </ng-container>
+
+        <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
 
     </div>
 </div>
