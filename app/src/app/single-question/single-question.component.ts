@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../core/services/data.service';
 import { Question } from '../shared/model/question.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -6,6 +6,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../core/services/local-storage.service';
+import { FormQuestionComponent } from '../shared/component/form-question/form-question.component';
 
 @Component({
     selector: 'app-single-question',
@@ -14,6 +15,8 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 })
 export class SingleQuestionComponent implements OnInit {
 
+    @ViewChild('singleQuestion', {static: false}) questionComp?: FormQuestionComponent;
+
     usersSelectable = true;
     usersRemovable = true;
     usersAddOnBlur = true;
@@ -21,6 +24,8 @@ export class SingleQuestionComponent implements OnInit {
 
     question: Question = new Question();
     users: string[] = [];
+
+    scrollDelay?: HTMLElement;
 
     debounceButton = false;
     loading = false;
@@ -77,6 +82,8 @@ export class SingleQuestionComponent implements OnInit {
             result.subscribe((data: Question) => {
                 this.question = data;
                 this.loading = false;
+                if(this.questionComp) this.questionComp.clearAnswer();
+                this.scroll();
             });
         }, 500);
     }
@@ -104,6 +111,19 @@ export class SingleQuestionComponent implements OnInit {
             this.users.splice(index, 1);
         }
         this.localStorageService.setUsers(this.users);
+    }
+
+    setScroll(el?: HTMLElement): void {
+        this.scrollDelay = el;
+    }
+
+    scroll(): void {
+        if (this.scrollDelay) {
+            setTimeout(() => {
+                this.scrollDelay?.scrollIntoView();
+                this.scrollDelay = undefined;
+            }, 250);
+        }
     }
 
 }

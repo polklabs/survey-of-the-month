@@ -54,3 +54,7 @@ mat-card {
     border-radius: 16px;
     padding: 8px;
 }
+
+::ng-deep thead {
+    display: none;
+}

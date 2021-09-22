@@ -96,6 +96,17 @@ export class SurveyTakerComponent implements OnInit {
         return 'lime';
     }
 
+    getStartButtonText(count: number): string {
+        const total = this.survey?.questions.length ?? 0;
+        if (count === 0) {
+            return 'Start';
+        }
+        if (count < total) {
+            return 'Continue';
+        }
+        return 'Update';
+    }
+
     selectUser(userId: string, name: string): void {
         this.answer.userId = userId;
         this.name = name;
@@ -167,6 +178,7 @@ export class SurveyTakerComponent implements OnInit {
                         if (data.ok) {
                             this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                             this.answer = new Answer();
+                            this.getAnswerStatus();
                         } else if (!data.ok) {
                             this.dialogService.alert(data.error ?? 'Unknown Error');
                         }

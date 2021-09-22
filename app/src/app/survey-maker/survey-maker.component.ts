@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../core/services/data.service';
 import { AnswerType, Question } from '../shared/model/question.model';
 import { Survey } from '../shared/model/survey.model';
@@ -36,6 +36,8 @@ export class SurveyMakerComponent implements OnInit {
     debounceButton = false;
     loading: boolean[] = [];
     loadingUnknown = false;
+
+    scrollDelay?: HTMLElement;
 
     dirty = false;
 
@@ -99,6 +101,7 @@ export class SurveyMakerComponent implements OnInit {
                 if (questionIndex === -1) {
                     this.survey.questions.push(data);
                     this.loading.push(false);
+                    this.scroll();
                 } else {
                     this.survey.questions[questionIndex] = data;
                 }
@@ -114,6 +117,7 @@ export class SurveyMakerComponent implements OnInit {
         if (questionIndex === -1) {
             this.survey.questions.push(question);
             this.loading.push(false);
+            this.scroll();
         } else {
             this.survey.questions[questionIndex] = question;
         }
@@ -338,9 +342,17 @@ export class SurveyMakerComponent implements OnInit {
         }
     }
     
-    logError(error: string): void {
-        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
-        this.dialog.open(OkDialogComponent, DIALOG_DATA);
+    setScroll(el?: HTMLElement): void {
+        this.scrollDelay = el;
+    }
+
+    scroll(): void {
+        if (this.scrollDelay) {
+            setTimeout(() => {
+                this.scrollDelay?.scrollIntoView();
+                this.scrollDelay = undefined;
+            }, 100);
+        }
     }
 
 }
