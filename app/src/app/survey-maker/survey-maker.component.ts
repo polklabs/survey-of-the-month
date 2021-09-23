@@ -267,7 +267,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.dirty = false;
                 this.router.navigateByUrl(`/make-survey/${this.id}/${this.key}`);
             } else if(!data.ok) {
-                this.dialogService.alert(data.error??'Unknown Error');
+                this.dialogService.alert(JSON.stringify(data.error));
             }
 
         });

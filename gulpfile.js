@@ -14,7 +14,9 @@ const paths = {
     angular_dist: 'prod-build/app/dist',
     zipped_file_name: 'angular-nodejs.zip',
     tracery_src: 'data/*',
-    tracery_dist: 'prod-build/data'
+    tracery_dist: 'prod-build/data',
+    email_json: 'email.json',
+    couchDb_json: 'couchDb.json',
 };
 
 function clean() {
@@ -61,6 +63,18 @@ function copyDataCodeTask() {
         .pipe(dest(`${paths.tracery_dist}`));
 }
 
+function copyEmailConfig() {
+    log('copying email config')
+    return src(`${paths.email_json}`)
+        .pipe(dest(`${paths.prod_build}`));
+}
+
+function copyCouchDbConfig() {
+    log('copying couchDb config')
+    return src(`${paths.couchDb_json}`)
+        .pipe(dest(`${paths.prod_build}`));
+}
+
 function zippingTask() {
     log('zipping the code ')
     return src(`${paths.prod_build}/**`)
@@ -73,6 +87,6 @@ exports.default = series(
     clean,
     createProdBuildFolder,
     buildAngularCodeTask,
-    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask),
+    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask, copyEmailConfig, copyCouchDbConfig),
     // zippingTask
 );

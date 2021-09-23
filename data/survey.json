@@ -17,15 +17,13 @@
 		"If you have a question you want on the next survey, you may write it below",
 		"Tell me something you really like about one other person taking this survey"
 	],
-    "otherQuestions": [
+	"question": [
         "The ^$most recent:strangest$ dream you can remember?",
         "If you could train any animal in the world to be your pet/protector, what would it be?",
         "[answerType:multi][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
         "[answerType:multi][answerKey:yesNo]Have you ever told someone you had a crush on them?",
 		"Last ^$show:movie$ you watched?",
-		"If you could speak another language fluently, what language would you choose?"
-    ],
-	"question": [
+		"If you could speak another language fluently, what language would you choose?",
 		"What is your favorite #favoriteCategory#?",
 		"Would you rather have #houseFeature.a# or #houseFeature.a#?",
 		"If you could travel to any #place# (all expense paid), where would you go?",
