@@ -14,6 +14,26 @@
         "of course",
         "what kind of question is that"
     ],
+    
+    "allAnswers": [
+        "#answer_yes#", "#answer_no#", "#answer_neutral#", "#answer_mostlyYes#", "#answer_mostlyNo#"
+    ],
+    "answer_yes": [
+        "yes", "yeah", "yup", "yeppers", "ya", "definitely", "totally", "completely", "for sure"
+    ],
+    "answer_no": [
+        "no", "nope", "nah", "definitely not", "never", "what kind of question is that"
+    ],
+    "answer_neutral": [
+        "no opinion", "don't care", "it's fine", "maybe", "..."
+    ],
+    "answer_mostlyYes": [
+        "probably", "kind of", "mostly", "sorta", "perhaps"
+    ],
+    "answer_mostlyNo": [
+        "not really", "probably not", "eh", "i don't think so"
+    ],
+
     "generalReaction": [
         "Nice",
         "Cool",

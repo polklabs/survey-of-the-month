@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-rank',
@@ -38,7 +38,7 @@ export class FormRankComponent implements OnChanges {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        moveItemInArray(this.choices, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.answers, event.previousIndex, event.currentIndex);
         this.onChange();
     }
 

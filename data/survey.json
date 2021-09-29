@@ -1,26 +1,26 @@
 {
     "test!X": [],
     
-    "require!": ["characters.json", "general.json", "worlds.json", "things.json", "homePage.json", "taskmaster.json", "memes.json"],
+    "require!": ["characters.json", "general.json", "worlds.json", "things.json", "homePage.json", "taskmaster.json", "memes.json", "groups.json"],
 
 	"origin": [ "#intro_question#", "#question#", "#close_question#" ],
 
 	"intro_question": [
 		"How are you doing this fine day of #monthNow#?",
-		"[answerType:multi][answerKey:generalAnswers]Are you excited to take this survey?"
+		"[answerType:multi][answerKey:allAnswers][answerCount:-1]Are you excited to take this survey?"
 	],
 	"close_question": [
 		"Anything you need to get off your chest?",
 		"What's a question you have for #person.capitalize#?",
 		"Anything ~scandalous~ to share?",
-		"[answerType:multi][answerKey:generalAnswers]Did you enjoy this survey?",
+		"[answerType:multi][answerKey:allAnswers][answerCount:-1]Did you enjoy this survey?",
 		"If you have a question you want on the next survey, you may write it below",
 		"Tell me something you really like about one other person taking this survey"
 	],
 	"question": [
         "The ^$most recent:strangest$ dream you can remember?",
         "If you could train any animal in the world to be your pet/protector, what would it be?",
-        "[answerType:multi][answerKey:generalAnswers]Are your intentions are pure (regarding what is up to your discretion)?",
+        "[answerType:multi][answerKey:allAnswers][answerCount:-1]Are your intentions are pure (regarding what is up to your discretion)?",
         "[answerType:multi][answerKey:yesNo]Have you ever told someone you had a crush on them?",
 		"Last ^$show:movie$ you watched?",
 		"If you could speak another language fluently, what language would you choose?",
@@ -58,7 +58,7 @@
 		"[answerType:multi][answerKey:enchantedItem]You're on a #quest# to #quest_objective# a #quest_entity# and #quest_objective# a #quest_entity#. Which item do you choose?",
 		"[answerType:multi][answerKey:traits]You have two new character traits, what are they?",
 		"What's a #favoriteCategory# you're weirdly obsessed with?",
-		"[answerType:multi][answerKey:generalAnswers]Do you believe in ghosts and/or the paranormal/supernatural?",
+		"[answerType:multi][answerKey:allAnswers][answerCount:-1]Do you believe in ghosts and/or the paranormal/supernatural?",
 		"[answerType:rank][answerKey:generalThings]Rank your #rankType# to the following.",
         "[answerType:rank][answerKey:^$bodyPart:characterClothes:character$]Rank your attaction to the following.",
 		"What's a ^$song:movie:TV show:book:podcast$ you think #person.capitalize# would like?",
@@ -75,7 +75,7 @@
         "You wake up to find the sky #color#. What happened?",
         "You find yourself in the country of #country# with only #object.a# and $#1:50.range#. How do you get home?",
         "[answerType:multi][answerKey:object_descriptive]#state# is the nation's leader of?",
-        "[answerType:multi][answerKey:generalAnswers]Do #animal.s# #verb_transitive# #object.s#?",
+        "[answerType:multi][answerKey:allAnswers][answerCount:-1]Do #animal.s# #verb_transitive# #object.s#?",
         "You wake up to the #networth_group# knocking at your door #networth_action# ^$how:why$ you're net worth is $#1:1000:20.range# #numberMagnatude#. What do you tell them?",
         "What is the fastest way to get fired from your job as a #career#?",
         "[objectA:#object#]You have 5 minutes to hide a #objectA# in your home. A detective has #1:24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
@@ -110,7 +110,9 @@
 		"You have the power of #superpower# but only for #1:60.range# minutes each day. What do you use it for?",
 		"[answerType:time]During what time of day are you most ^$#trait_good#:#trait_bad#:#adjective#$?",
 		"[answerType:check][answerKey:dessert]How many of the following have you tried?",
-		"[answerType:scale][answerKey:bodyPart]Rate the following:"
+		"[answerType:scale][answerKey:bodyPart]Rate the following:",
+		"Create a new law related to or involving: #generalThings#",
+		"[answerType:multi][answerCount:-1]#group_choice#"
 	],
 
 	"adjective": [ "adorable", "adventurous", "aggressive", "agreeable", "alert", "alive", "amused", "angry", "annoyed", "annoying", "anxious", "arrogant", "ashamed", "attractive", "average", "awful", "bad", "beautiful", "better", "bewildered", "black", "bloody", "blue", "blue eyed", "blushing", "bored", "brainy", "brave", "breakable", "bright", "busy", "calm", "careful", "cautious", "charming", "cheerful", "clean", "clear", "clever", "cloudy", "clumsy", "colorful", "combative", "comfortable", "concerned", "condemned", "confused", "cooperative", "courageous", "crazy", "creepy", "crowded", "cruel", "curious", "cute", "dangerous", "dark", "dead", "defeated", "defiant", "delightful", "depressed", "determined", "different", "difficult", "disgusted", "distinct", "disturbed", "dizzy", "doubtful", "drab", "dull", "eager", "easy", "elated", "elegant", "embarrassed", "enchanting", "encouraging", "energetic", "enthusiastic", "envious", "evil", "excited", "expensive", "exuberant", "fair", "faithful", "famous", "fancy", "fantastic", "fierce", "filthy", "fine", "foolish", "fragile", "frail", "frantic", "friendly", "frightened", "funny", "gentle", "gifted", "glamorous", "gleaming", "glorious", "good", "gorgeous", "graceful", "grieving", "grotesque", "grumpy", "handsome", "happy", "healthy", "helpful", "helpless", "hilarious", "homeless", "homely", "horrible", "hungry", "hurt", "ill", "important", "impossible", "inexpensive", "innocent", "inquisitive", "itchy", "jealous", "jittery", "jolly", "joyous", "kind", "lazy", "light", "lively", "lonely", "long", "lovely", "lucky", "magnificent", "misty", "modern", "motionless", "muddy", "mushy", "mysterious", "nasty", "naughty", "nervous", "nice", "nutty", "obedient", "obnoxious", "odd", "old", "fashioned", "open", "outrageous", "outstanding", "panicky", "perfect", "plain", "pleasant", "poised", "poor", "powerful", "precious", "prickly", "proud", "putrid", "puzzled", "quaint", "real", "relieved", "repulsive", "rich", "scary", "selfish", "shiny", "shy", "silly", "sleepy", "smiling", "smoggy", "sore", "sparkling", "splendid", "spotless", "stormy", "strange", "stupid", "successful", "super", "talented", "tame", "tasty", "tender", "tense", "terrible", "thankful", "thoughtful", "thoughtless", "tired", "tough", "troubled", "ugliest", "ugly", "uninterested", "unsightly", "unusual", "upset", "uptight", "vast", "victorious", "vivacious", "wandering", "weary", "wicked", "wide eyed", "wild", "witty", "worried", "worrisome", "wrong", "zany", "zealous" ],
@@ -181,7 +183,7 @@
     "1Percent": ["Owning ^$#animal.s#:#object.s#:#instrument.s#$", "Eating too much ^$#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "#instrument# players", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#", "Collecting ^$#character# figurines:#object.s#$"],
 	"olympicSport": [ "archery", "artistic swimming", "athletics", "badminton", "baseball", "basketball", "beach volleyball", "boxing", "breaking", "canoe slalom", "canoe sprint", "cycling BMX", "cycling mountain bike", "cycling road", "cycling track", "diving", "equestrian / dressage", "equestrian eventing", "equestrian jumping", "fencing", "field hockey", "golf", "gymnastics artistic", "gymnastics rhythmic", "handball", "judo", "karate", "marathon swimming", "modern pentathlon", "rowing", "rugby", "sailing", "shooting", "skateboarding", "soccer", "softball", "sport climbing", "surfing", "swimming", "table tennis", "taekwondo", "tennis", "trampoline", "triathlon", "volleyball", "water polo", "weightlifting", "wrestling freestyle", "wrestling greco-roman" ],
 	"photoDatingApp": ["bedroom", "car", "kitchen", "shoes", "how they have their ^$tea:coffee$", "bookshelf", "closet", "pantry", "fridge", "bathroom sink"],
-    "word_definition": ["The ^$desire:need$ to watch #world# on repeat.", "Feeling of an overwhelming ^$#trait_good#:#trait_bad#$ feeling, and ^$#trait_good#:#trait_bad#$ at the same time.", "The sudden need to #verb_transitive#"],
+    "word_definition": ["The ^$desire:need$ to watch #world# on repeat.", "An overwhelming ^$#trait_good#:#trait_bad#$ feeling, and ^$#trait_good#:#trait_bad#$ at the same time.", "The sudden need to #verb_transitive#"],
 	"rpg_theme": ["bounty hunter", "space", "cyberpunk", "steampunk", "ghost hunter", "gangster", "heist", "pirate", "high fantasy", "modern fantasy", "monster hunter", "noir", "post apocalyptic", "sci-fi", "space opera", "spy", "space western", "time travel", "zombie"],
 	"superpower": ["produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight" ],
 	"environmentType": ["clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"]

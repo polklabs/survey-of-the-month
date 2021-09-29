@@ -7,8 +7,8 @@ import fs from 'fs';
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm; // [key:value] -> key, value
-const regexVars = /^(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])+)/m; // [key:value]Test -> [key:value]
-const regexString = /(#(?<vars>(\[[a-zA-Z0-9_ :.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
+const regexVars = /^(?<vars>(\[[a-zA-Z0-9_ -:.#]+?\])+)/m; // [key:value]Test -> [key:value]
+const regexString = /(#(?<vars>(\[[a-zA-Z0-9_ -:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
 const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
 
 const grammar: any = {};

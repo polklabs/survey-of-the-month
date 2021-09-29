@@ -1,0 +1,14 @@
+{
+    "group_choice": [
+        "[answerKey:group_heist]Oh shoooot we're pulling off a heist! Choose your role?", 
+        "[answerKey:group_circus]What is your act in our circus?", 
+        "[answerKey:group_yearbook]What would you be voted as in our yearbook?",
+        "[answerKye:group_film]What is your role on a film set?",
+        "[answerKye:group_spaceShip]What is your role on a space ship?"
+    ],
+    "group_circus": ["Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"],
+    "group_heist": ["Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"],
+    "group_yearbook": ["best all-around", "class clown/funniest", "smartest", "life of the party", "most athletic", "most likely to succeed", "biggest flirt", "best hair"],
+    "group_film": ["Director", "Writer", "Actor", "Camera Operator", "Sound Person", "Special Effects/Animation", "Costume Design", "Hair/Makeup", "Stunt Person"],
+    "group_spaceShip": ["Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"]
+}
