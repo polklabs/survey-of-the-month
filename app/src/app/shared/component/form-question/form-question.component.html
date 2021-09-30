@@ -4,6 +4,16 @@
 
     <mat-card-content>
         <p [innerHTML]="question.text"></p>
+        
+        <!-- <div fxLayout="column" *ngIf="editable">
+            <mat-slide-toggle #extraTextToggle>Extra Text For Presentation</mat-slide-toggle>
+            <mat-form-field fxFlex appearance="outline" *ngIf="extraTextToggle.checked">
+                <mat-label>Text</mat-label>
+                <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
+                <mat-hint>This text will only be shown during the result presentation.</mat-hint>
+            </mat-form-field>
+        </div> -->
+
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
     </mat-card-content>
 

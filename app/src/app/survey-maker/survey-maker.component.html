@@ -3,7 +3,7 @@
         <div fxLayoutAlign="center" *ngIf="editable">
             <mat-form-field class="title-input" appearance="outline">
                 <mat-label>Survey Name</mat-label>
-                <input matInput [(ngModel)]="survey.name" placeholder="Type Something...">
+                <input matInput [(ngModel)]="survey.name" (keyup)="dirty = true" placeholder="Type Something...">
             </mat-form-field>
         </div>
         <div *ngIf="!editable">

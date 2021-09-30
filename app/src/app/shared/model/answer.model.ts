@@ -1,6 +1,6 @@
 export class Answer {
     userId!: string;
-    lastModifiedDate: string = new Date().toUTCString();
+    lastModifiedDate: string = new Date().toISOString();
     answers: {
         questionId: string,
         lastModifiedDate: string;

@@ -5,7 +5,37 @@
             <h1 fxHide.gt-xs>{{getSurveyName()}}</h1>
         </div>
 
-        <!-- <p *ngIf="!hasData">You entered an incorrect URL or a non existant URL</p> -->
+        <mat-card class="answ-status-container" *ngIf="hasData">
+            <mat-card-header>
+                <mat-card-title>Info</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column" fxLayoutGap="8px">
+
+                <table>
+                    <tr>
+                        <td>Title</td>
+                        <td>{{surveyContainer.survey.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Created Date</td>
+                        <td>{{surveyContainer.createdDate | date:'short'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Modified Date</td>
+                        <td>{{surveyContainer.survey.lastModifiedDate | date:'short'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Questions</td>
+                        <td>{{surveyContainer.survey.questions.length}}</td>
+                    </tr>
+                    <tr *ngFor="let q of surveyContainer.survey.questions; let i = index">
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;{{i+1}}. {{getQuestionSubstring(q.text)}}</td>
+                        <td>{{answerTypeToString(q.answerType)}}</td>
+                    </tr>
+                </table>
+
+            </mat-card-content>
+        </mat-card>
 
         <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
@@ -24,9 +54,9 @@
 
 
             </mat-card-content>
-        </mat-card>
 
-        <mat-card class="answ-status-container" *ngIf="hasData">
+            <mat-divider [inset]="true" style="margin-top: 16px; margin-bottom: 16px;"></mat-divider>
+
             <mat-card-header>
                 <mat-card-title>Sharable Link</mat-card-title>
             </mat-card-header>
@@ -63,7 +93,9 @@
 
                     <ng-container matColumnDef="status">
                         <th mat-header-cell *matHeaderCellDef> Status </th>
-                        <td mat-cell *matCellDef="let element"><span [ngStyle]="{color: getStatusColor(element.count)}">{{getStatus(element.count)}}</span> </td>
+                        <td mat-cell *matCellDef="let element"><span
+                                [ngStyle]="{color: getStatusColor(element.count)}">{{getStatus(element.count)}}</span>
+                        </td>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -81,7 +113,7 @@
 
                 <button mat-raised-button color="primary" [routerLink]="'/make-survey/' + id + '/' + key">Edit
                     Survey</button>
-                <button mat-raised-button disabled>Export Answers To CSV</button>
+                <a mat-raised-button download="{{exportFilename}}" [href]="exportData" _target="blank">Export Answers To CSV</a>
                 <button mat-raised-button color="warn" (click)="deleteButton()">Delete Survey</button>
 
             </mat-card-content>

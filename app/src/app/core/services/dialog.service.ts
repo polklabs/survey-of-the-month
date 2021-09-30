@@ -11,7 +11,9 @@ export class DialogService {
         return of(confirmation);
     };
 
-    alert(message?: string): void {
-        window.alert(message || 'Alert!');
+    alert(message?: string): Observable<boolean> {
+        const closed = window.alert(message || 'Alert!');
+        // return of(closed);
+        return of(true);
     };
 }

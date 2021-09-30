@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CsvExportService } from '../core/services/csvExport.service';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { AnswerStatus } from '../shared/model/answer.model';
+import { AnswerType } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 import { Survey } from '../shared/model/survey.model';
 
@@ -28,14 +31,19 @@ export class SurveyManagerComponent implements OnInit {
     managerLink = '';
     shareLink = '';
 
+    exportData: SafeResourceUrl = '';
+    exportFilename = '';
+
     constructor(
+        private csvExport: CsvExportService,
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
         private dialog: MatDialog,
         private router: Router,
         private localStorageService: LocalStorageService,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private sanitizer: DomSanitizer
     ) { }
 
     ngOnInit(): void {
@@ -69,11 +77,20 @@ export class SurveyManagerComponent implements OnInit {
                     this.surveyContainer = data.data;
                     this.getAnswerStatus();
 
+                    this.exportData = this.sanitizer.bypassSecurityTrustUrl(this.csvExport.export(this.surveyContainer));
+                    this.exportFilename = this.csvExport.exportName(this.surveyContainer);
+
                     this.localStorageService.addSurvey(this.surveyContainer.survey.name, this.id, this.key);
                     this.hasData = true;
                 }
             } else {
-                this.dialogService.alert(JSON.stringify(data.error));
+                if (data.error.code === 'EDOCMISSING') {
+                    this.dialogService.alert(`Could not find survey: ${data.error.body.reason}`);
+                    this.localStorageService.delSurvey(this.id);
+                } else {
+                    this.dialogService.alert(JSON.stringify(data.error));
+                }
+                this.router.navigateByUrl('/home');
                 this.initNew();
             }
         });
@@ -113,8 +130,8 @@ export class SurveyManagerComponent implements OnInit {
         this.snackBar.open('Copied', 'OK', { duration: 3000 });
     }
 
-    getSurveyName(): void {
-        this.surveyContainer?.survey.name ?? '{Unknown}';
+    getSurveyName(): string {
+        return this.surveyContainer?.survey.name ?? '{Unknown}';
     }
 
 
@@ -159,6 +176,32 @@ export class SurveyManagerComponent implements OnInit {
     logError(error: string): void {
         const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
         this.dialog.open(OkDialogComponent, DIALOG_DATA);
+    }
+
+    answerTypeToString(answerType: AnswerType): string {
+        switch(answerType) {
+            case 'multi':
+                return 'Multiple Choice';
+            case 'text':
+                return 'Free Answer';
+            case 'check':
+                return 'Check Boxes';
+            case 'rank':
+                return 'Rank the Following';
+            case 'date':
+                return 'Date Picker';
+            case 'time':
+                return 'Time Picker';
+            case 'scale':
+                return 'Rate the Following';
+        }
+        return answerType;
+    }
+
+    getQuestionSubstring(text: string): string {
+        if (!text) return '';
+        if (text.length <= 25) return text;
+        return text.substr(0, 24) + '...';
     }
 
 }
