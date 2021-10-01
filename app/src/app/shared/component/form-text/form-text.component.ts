@@ -24,7 +24,7 @@ export class FormTextComponent implements OnChanges {
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             this.answers = [];
             this.choices.forEach(() => {
                 this.answers.push('');
@@ -32,17 +32,17 @@ export class FormTextComponent implements OnChanges {
         }
     }
 
-    addAnswer() {
+    addAnswer(): void {
         this.answers.push('');
         this.aAdd.emit();
     }
 
-    deleteAnswer(i: number) {
+    deleteAnswer(i: number): void {
         this.answers.splice(i, 1);
         this.aDelete.emit(i);
     }
 
-    onChange() {
+    onChange(): void {
         this.aUpdate.emit(this.answers);
     }
 

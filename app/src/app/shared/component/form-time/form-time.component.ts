@@ -24,7 +24,7 @@ export class FormTimeComponent implements OnChanges {
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             this.answers = [];
             this.choices.forEach(() => {
                 this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
@@ -32,30 +32,30 @@ export class FormTimeComponent implements OnChanges {
         }
     }
 
-    addAnswer() {
+    addAnswer(): void {
         this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
         this.aAdd.emit();
     }
 
-    deleteAnswer(i: number) {
+    deleteAnswer(i: number): void {
         this.answers.splice(i, 1);
         this.aDelete.emit(i);
     }
 
-    onChange() {
+    onChange(): void {
         this.answers.forEach(answ => {
             if (answ.hour) {
-                let hour = Number.parseInt(answ.hour);
-                if (isNaN(hour)) hour = 1;
-                if (hour > 12) hour = 12;
-                if (hour < 1) hour = 1;
+                let hour = Number.parseInt(answ.hour, 10);
+                if (isNaN(hour)) { hour = 1; }
+                if (hour > 12) { hour = 12; }
+                if (hour < 1) { hour = 1; }
                 answ.hour = hour.toString();
             }
             if (answ.minute) {
-                let minute = Number.parseInt(answ.minute);
-                if (isNaN(minute)) minute = 0;
-                if (minute > 59) minute = 59;
-                if (minute < 0) minute = 0;
+                let minute = Number.parseInt(answ.minute, 10);
+                if (isNaN(minute)) { minute = 0; }
+                if (minute > 59) { minute = 59; }
+                if (minute < 0) { minute = 0; }
                 answ.minute = minute.toString();
             }
         });

@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Question } from "src/app/shared/model/question.model";
-import { SurveyContainer } from "src/app/shared/model/survey-container.model";
+import { Injectable } from '@angular/core';
+import { Question } from 'src/app/shared/model/question.model';
+import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 
 @Injectable({
     providedIn: 'root'
@@ -9,15 +9,15 @@ export class CsvExportService {
 
     export(container: SurveyContainer): string {
 
-        let contentsArray: string[] = [];
+        const contentsArray: string[] = [];
         contentsArray.push(this.generateHeader(container));
-        
-        container.survey.users.sort((a,b) => a.name.localeCompare(b.name));
+
+        container.survey.users.sort((a, b) => a.name.localeCompare(b.name));
         container.survey.users.forEach(u => {
             contentsArray.push(this.generateRow(container, u));
         });
 
-        let fileContents = contentsArray.join('\n');
+        const fileContents = contentsArray.join('\n');
 
         const filetype = 'text/csv;charset=utf-8;';
         const data = new Blob([fileContents], {type: filetype});
@@ -26,21 +26,21 @@ export class CsvExportService {
     }
 
     exportName(container: SurveyContainer): string {
-        return `survey_${container.survey.name.replace(/[^\x00-\x7F]/g, "")}.csv`;
+        return `survey_${container.survey.name.replace(/[^\x00-\x7F]/g, '')}.csv`;
     }
 
     private generateHeader(container: SurveyContainer): string {
-        let toReturn: string[] = ['name'];
+        const toReturn: string[] = ['name'];
 
         container.survey.questions.forEach((_, index) => {
-            toReturn.push(`Question ${index+1}`);
+            toReturn.push(`Question ${index + 1}`);
         });
 
         return toReturn.join(',');
     }
 
     private generateRow(container: SurveyContainer, user: { name: string, _id: string }): string {
-        let toReturn: string[] = [user.name];
+        const toReturn: string[] = [user.name];
         const answers = container.answers.find(x => x.userId === user._id);
 
         container.survey.questions.forEach(q => {
@@ -56,10 +56,10 @@ export class CsvExportService {
     }
 
     private answerToString(q: Question, answer: (null | string | number)[]): string {
-        switch(q.answerType) {
+        switch (q.answerType) {
             case 'multi':
                 const a = answer[0];
-                if (a === null) return '';
+                if (a === null) { return ''; }
                 if (typeof a === 'string') {
                     return a.toString();
                 }
@@ -69,15 +69,14 @@ export class CsvExportService {
             case 'check':
                 return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x).join(',');
             case 'rank':
-                const a_: number[] = <number[]>answer;   
-                return a_.map((x: number) => q.choices[x]).join(',');
+                const a2: number[] = answer as number[];
+                return a2.map((x: number) => q.choices[x]).join(',');
             case 'date':
                 return answer.join(',');
             case 'time':
                 return answer.join(',');
             case 'scale':
-                return answer.map((a, i) => a ? `${q.choices[i]}:${q.scaleValues[a]}` : '').join(',');
+                return answer.map((a3, i) => a3 ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').join(',');
         }
     }
-
 }
