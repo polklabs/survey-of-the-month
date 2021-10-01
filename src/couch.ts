@@ -137,9 +137,6 @@ export function answerStatus(id: string, res: response): void {
 
 export function submitAnswers(id: string, answer: Answer, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
-
-        data.lastModifiedDate = new Date().toISOString();
-
         const index = data.answers.findIndex(x => x.userId === answer.userId);
         if (index === -1) {
             data.answers.push(answer);

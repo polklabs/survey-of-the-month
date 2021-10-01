@@ -47,7 +47,7 @@
                         style="color:crimson">NOT</span> lose it or share it.</p>
                 <div fxLayout="row" class="link-box" fxLayout="center center">
                     <p fxFlex>{{managerLink}}</p>
-                    <button mat-icon-button (click)="copyLink(managerLink)" matTooltip="Copy">
+                    <button mat-icon-button (click)="copyLink(managerLink, true)" matTooltip="Copy">
                         <mat-icon>content_copy</mat-icon>
                     </button>
                 </div>
@@ -65,7 +65,7 @@
                 <p style="height: 34px;">Share this link with others so they can take your survey.</p>
                 <div fxLayout="row" class="link-box" fxLayout="center center">
                     <p fxFlex>{{shareLink}}</p>
-                    <button mat-icon-button (click)="copyLink(shareLink)" matTooltip="Copy">
+                    <button mat-icon-button (click)="copyLink(shareLink, false)" matTooltip="Copy">
                         <mat-icon>content_copy</mat-icon>
                     </button>
                 </div>
@@ -75,7 +75,7 @@
 
         <mat-card *ngIf="answerStatus && hasData" class="answ-status-container">
             <mat-card-header>
-                <mat-card-title>Survey Completion {{getTotalStatus()}}%</mat-card-title>
+                <mat-card-title>Survey Completion {{getTotalStatus() | percent:'2.'}}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
 

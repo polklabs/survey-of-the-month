@@ -14,6 +14,7 @@ import { FormScaleComponent } from './component/form-scale/form-scale.component'
 import { FeedbackComponent } from './modal/feedback/feedback.component';
 import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
 import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
+import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
         FormScaleComponent,
         FeedbackComponent,
         OkDialogComponent,
+        ConfirmDialogComponent,
     ],
     exports: [
         FormTextComponent,

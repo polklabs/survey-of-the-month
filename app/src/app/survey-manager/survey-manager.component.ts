@@ -7,7 +7,6 @@ import { CsvExportService } from '../core/services/csvExport.service';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { AnswerStatus } from '../shared/model/answer.model';
 import { APIData } from '../shared/model/api-data.model';
 import { AnswerType } from '../shared/model/question.model';
@@ -40,7 +39,6 @@ export class SurveyManagerComponent implements OnInit {
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private dialog: MatDialog,
         private router: Router,
         private localStorageService: LocalStorageService,
         private dialogService: DialogService,
@@ -87,12 +85,19 @@ export class SurveyManagerComponent implements OnInit {
                 }
             } else {
                 if (data.error!.code === 'EDOCMISSING') {
-                    this.dialogService.alert(`Could not find survey: ${data.error!.body.reason}`);
-                    this.localStorageService.delSurvey(this.id);
+                    this.dialogService.confirm(`Could not find survey: ${data.error!.body.reason}\n\nDo you want to remove this from the survey dropdown?`).subscribe(
+                        ok =>  {
+                            if (ok) {
+                                this.localStorageService.delSurvey(this.id);
+                            }
+                            this.router.navigateByUrl('/home');
+                        }
+                    );
                 } else {
-                    this.dialogService.alert(JSON.stringify(data.error));
+                    this.dialogService.error(data.error).subscribe(
+                        () => this.router.navigateByUrl('/home')
+                    );
                 }
-                this.router.navigateByUrl('/home');
                 this.initNew();
             }
         });
@@ -107,15 +112,19 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     deleteButton(): void {
-        this.dialogService.confirm('Do you want to delete?').subscribe(
+        this.dialogService.confirm('Are you sure you want to delete this survey? This cannot be undone.').subscribe(
             del => {
                 if (del) {
                     const [result, _] = this.dataService.deleteData(`survey?id=${this.id}&key=${this.key}`);
                     result.subscribe((data: APIData) => {
                         if (data.ok) {
                             this.localStorageService.delSurvey(this.id);
-                            this.snackBar.open('Deleted', 'OK', {duration: 3000});
+                            this.snackBar.open('Deleted', 'OK', { duration: 3000 });
                             this.router.navigateByUrl('/home');
+                        } else {
+                            this.dialogService.error(data.error).subscribe(
+                                () => this.router.navigateByUrl('/home')
+                            );
                         }
                     });
                 }
@@ -123,7 +132,10 @@ export class SurveyManagerComponent implements OnInit {
         );
     }
 
-    copyLink(link: string): void {
+    copyLink(link: string, managerLink: boolean): void {
+        if (managerLink) {
+            this.dialogService.alert('This is the management link. If you share it with other\'s they will have the ability to edit and delete this survey.');
+        }
         navigator.clipboard.writeText(link);
         this.snackBar.open('Copied', 'OK', { duration: 3000 });
     }
@@ -138,7 +150,7 @@ export class SurveyManagerComponent implements OnInit {
         if (this.getTotalStatus() < 100) {
             this.dialogService.confirm(
                 'Not everyone has completed the survey. Are you sure you want to begin the final presentation?'
-                ).subscribe(
+            ).subscribe(
                 result => {
                     if (result) {
                         console.log('Starting');
@@ -160,7 +172,7 @@ export class SurveyManagerComponent implements OnInit {
         this.answerStatus?.forEach(x => sum += x.count);
 
         if (total === 0) { return 0; }
-        return Math.round((sum / total) * 100);
+        return sum / total;
     }
 
     getUsername(id: string): string {
@@ -189,11 +201,6 @@ export class SurveyManagerComponent implements OnInit {
         return 'lime';
     }
 
-    logError(error: string): void {
-        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}};
-        this.dialog.open(OkDialogComponent, DIALOG_DATA);
-    }
-
     answerTypeToString(answerType: AnswerType): string {
         switch (answerType) {
             case 'multi':
@@ -211,13 +218,12 @@ export class SurveyManagerComponent implements OnInit {
             case 'scale':
                 return 'Rate the Following';
         }
-        return answerType;
     }
 
     getQuestionSubstring(text: string): string {
         if (!text) { return ''; }
         if (text.length <= 25) { return text; }
-        return text.substr(0, 24) + '...';
+        return text.substr(0, 24) + '…';
     }
 
 }

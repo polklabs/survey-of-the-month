@@ -13,8 +13,4 @@ export class OkDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { title: string, content: string }
   ) { }
 
-  onOkClick(): void {
-    this.dialogRef.close();
-  }
-
 }

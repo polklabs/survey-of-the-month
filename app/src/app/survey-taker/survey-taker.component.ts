@@ -61,7 +61,7 @@ export class SurveyTakerComponent implements OnInit {
                 this.survey = data.data;
                 this.getAnswerStatus();
             } else {
-                this.dialogService.alert(`Error: ${JSON.stringify(data.error)}`);
+                this.dialogService.error(data.error);
             }
             this.loading = false;
         });
@@ -69,9 +69,13 @@ export class SurveyTakerComponent implements OnInit {
 
     getAnswerStatus(): void {
         const [result, _] = this.dataService.getData(`answer-status?id=${this.id}`);
-        result.subscribe((data: {ok: boolean, data?: AnswerStatus[]}) => {
-            this.answerStatus = data.data ?? [];
-            this.answerStatus.sort((a, b) => a.name.localeCompare(b.name));
+        result.subscribe((data: APIData) => {
+            if (data.ok) {
+                this.answerStatus = data.data ?? [];
+                this.answerStatus?.sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                this.dialogService.error(data.error);
+            }
         });
     }
 
@@ -109,8 +113,19 @@ export class SurveyTakerComponent implements OnInit {
     }
 
     selectUser(userId: string, name: string): void {
-        this.answer.userId = userId;
-        this.name = name;
+        this.dialogService.yesNo(`Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nAre you "${name}"?`).subscribe(
+            ok => {
+                if (ok) {
+                    this.answer.userId = userId;
+                    this.name = name;
+                }
+            }
+        );
+    }
+
+    unSelectUser(): void {
+        this.answer.userId = '';
+        this.name = '';
     }
 
     updateAnswer(questionNumber: number, $event: (string | number | null)[] | null): void {
@@ -154,20 +169,14 @@ export class SurveyTakerComponent implements OnInit {
         if (!this.survey) { return; }
 
         if (this.answer.answers.length < this.survey.questions.length) {
-            this.dialogService.confirm('You have not completed all question. Are you sure you want to submit?').subscribe(
-                result => {
-                    if (result) {
-                        this.submit();
-                    }
-                }
-            );
+            this.submit('You have not answered all questions.\n\n');
         } else {
             this.submit();
         }
     }
 
-    submit(): void {
-        this.dialogService.confirm('Once you submit you will not be able to view your answers until everyone has finished. You can resubmit answers later. Submit?').subscribe(
+    submit(extraText = ''): void {
+        this.dialogService.yesNo(extraText + 'Once you submit you will not be able to view your answers. You can overwrite answers by submitting again later.\n\nSubmit?').subscribe(
             result => {
                 if (result) {
 
@@ -181,7 +190,7 @@ export class SurveyTakerComponent implements OnInit {
                             this.answer = new Answer();
                             this.getAnswerStatus();
                         } else if (!data.ok) {
-                            this.dialogService.alert(JSON.stringify(data.error));
+                            this.dialogService.error(data.error);
                         }
 
                     });

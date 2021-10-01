@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiPort: '3080'
+  apiPort: '3080',
+  githubIssues: 'https://github.com/polklabs/survey-of-the-month/issues'
 };
 
 /*

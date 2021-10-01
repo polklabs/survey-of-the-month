@@ -106,6 +106,10 @@ export class SurveyMakerComponent implements OnInit {
                     } else {
                         this.survey.questions[questionIndex] = data.data;
                     }
+                } else {
+                    this.dialogService.error(data.error).subscribe(
+                        () => this.router.navigateByUrl('/home')
+                    );
                 }
             }
         });
@@ -178,6 +182,10 @@ export class SurveyMakerComponent implements OnInit {
                 if (data !== null) {
                     if (data.ok) {
                         this.survey.questions[questionIndex] = data.data;
+                    } else {
+                        this.dialogService.error(data.error).subscribe(
+                            () => this.router.navigateByUrl('/home')
+                        );
                     }
                 }
             }
