@@ -3,3 +3,11 @@ td:not(.answerLabel) {
     min-width: 32px;
     text-align: center;
 }
+
+thead {
+    display: contents !important;
+}
+
+mat-radio-group {
+    margin-left: 8px;
+}
