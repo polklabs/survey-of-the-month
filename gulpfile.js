@@ -16,7 +16,7 @@ const paths = {
     tracery_src: 'data/*',
     tracery_dist: 'prod-build/data',
     email_json: 'email.json',
-    couchDb_json: 'couchDb.json',
+    couchDb_json: 'couchDB.json',
 };
 
 function clean() {
