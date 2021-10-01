@@ -17,7 +17,8 @@
 
         <mat-menu #manageMenu="matMenu">
             <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage-survey/'+survey.id+'/'+survey.key">{{survey.name}}</button>
-            <button mat-menu-item routerLink="/make-survey">+ Create</button>
+            <button mat-menu-item routerLink="/make-survey"><mat-icon>add</mat-icon>Create</button>
+            <button mat-menu-item (click)="lostLink()"><mat-icon>search</mat-icon>Lost Link</button>
         </mat-menu>
     </div>
 

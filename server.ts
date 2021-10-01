@@ -3,7 +3,7 @@ import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
 import { SendEmail } from './src/email';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
@@ -70,7 +70,7 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
 // Surveys ------------------------------------------------------------------------------------------
 
 app.put('/api/survey', speedLimiter, (req: { body: { survey: Survey, id: string, key: string } }, res: response) => {
-    upsertSurvey(req.body.survey, req.body.id, req.body.key, res);
+    upsertSurvey(req.body.survey, req.body.id, req.body.key, req, res);
 });
 
 // Get Survey
@@ -113,6 +113,10 @@ app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body
     if (r) {
         res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: '' } } });
     }
+});
+
+app.get('/api/find', feedbackLimiter, (req: { query: { email: string } }, res: response) => {
+    findSurveys(req.query.email, req, res);
 });
 
 // Get the angular app files

@@ -5,6 +5,7 @@ import { Survey } from '../app/src/app/shared/model/survey.model';
 import { SurveyContainer } from '../app/src/app/shared/model/survey-container.model';
 import { Answer, AnswerStatus } from '../app/src/app/shared/model/answer.model';
 import { response } from '../server';
+import { SendEmail, SendSurveyEmail } from './email';
 
 // TODO: Make into await/synchronous functions
 
@@ -13,23 +14,23 @@ const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
     { encoding: 'utf8', flag: 'r' }));
 export const couch = new NodeCouchDb(couchDbSettings);
 
-export function upsertSurvey(survey: Survey, id: string, key: string, res: response): void {
+export function upsertSurvey(survey: Survey, id: string, key: string, req: any, res: response): void {
 
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
         // Document Exists
         if (key === data.key) {
-            updateSurvey(data, survey, res);
+            updateSurvey(data, survey, req, res);
         } else {
             res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
         }
     }, () => {
         // Document Doesn't exist
-        insertSurvey(survey, res);
+        insertSurvey(survey, req, res);
     });
 
 }
 
-function updateSurvey(container: SurveyContainer, survey: Survey, res: response): void {
+function updateSurvey(container: SurveyContainer, survey: Survey, req: any, res: response): void {
     container.survey = survey;
     container.lastModifiedDate = new Date().toISOString();
     container.survey.lastModifiedDate = new Date().toISOString();
@@ -57,6 +58,11 @@ function updateSurvey(container: SurveyContainer, survey: Survey, res: response)
         container.answers.splice(index, 1);
     });
 
+    if (!survey.emailSent) {
+        SendSurveyEmail(req, container._id, container.key, survey);
+        survey.emailSent = true;
+    }
+
     couch.update('survey', container).then(({ data }) => {
         res.json({ ...data, key: container.key });
     }, (error: any) => {
@@ -64,10 +70,15 @@ function updateSurvey(container: SurveyContainer, survey: Survey, res: response)
     });
 }
 
-function insertSurvey(survey: Survey, res: response): void {
+function insertSurvey(survey: Survey, req: any, res: response): void {
     const container = new SurveyContainer();
     container.key = crypto.randomBytes(8).toString('hex');
     container.survey = survey;
+
+    if (!survey.emailSent) {
+        SendSurveyEmail(req, container._id, container.key, survey);
+        survey.emailSent = true;
+    }
 
     couch.insert('survey', container).then(({ data }) => {
         res.json({ ...data, key: container.key });
@@ -133,6 +144,18 @@ export function answerStatus(id: string, res: response): void {
     });
 }
 
+export function getSurveyEmail(id: string, key: string, callback: (survey?: SurveyContainer) => any, res: response): void {
+    couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
+        if (key === data.key) {
+            callback(data);
+        } else {
+            res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
+        }
+    }, (err: any) => {
+        res.json({ ok: false, error: err });
+    });
+}
+
 // Submit answers ----------------------------------------------------------------------
 
 export function submitAnswers(id: string, answer: Answer, res: response): void {
@@ -158,6 +181,46 @@ export function submitAnswers(id: string, answer: Answer, res: response): void {
         }, (error: any) => {
             res.json({ ok: false, error });
         });
+    }, (error: any) => {
+        res.json({ ok: false, error });
+    });
+}
+
+export function findSurveys(email: string, req: any, res: response): void {
+    const query = {
+        selector: {
+            "survey.email": email
+        },
+        fields: [
+            "_id",
+            "key",
+            "survey.email",
+            "survey.name"
+        ]
+    };
+
+    couch.mango('survey', query, {}).then(({data}) => {
+        
+        const subject = `Survey Of The Month - Link Retrieval`;
+        let text = `Here are the survey link I could find matching your email\n\n`;
+
+        data.docs.forEach(doc => {
+            var fullUrl = req.protocol + '://' + req.get('host') + '/manage-survey/' + doc._id + '/' + doc.key;
+            text += doc.survey.name + '\n' + fullUrl + '\n\n';
+        });
+    
+        const r = SendEmail(subject, text, 'andrew@polklabs.com', email, 'andrew@polklabs.com', (error, info) => {
+            if (error) {
+                res.json({ ok: false, error });
+            } else {
+                res.json({ ok: true });
+            }
+        });
+        if (r) {
+            res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: '' } } });
+        }
+
+
     }, (error: any) => {
         res.json({ ok: false, error });
     });
