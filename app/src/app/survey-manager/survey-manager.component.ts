@@ -85,7 +85,16 @@ export class SurveyManagerComponent implements OnInit {
                 }
             } else {
                 if (data.error!.code === 'EDOCMISSING') {
-                    this.dialogService.confirm(`Could not find survey: ${data.error!.body.reason}\n\nDo you want to remove this from the survey dropdown?`).subscribe(
+                    this.dialogService.confirm(`Could not find survey: ${data.error!.body.reason}\n\nDo you want to remove this survey from the survey dropdown?`).subscribe(
+                        ok =>  {
+                            if (ok) {
+                                this.localStorageService.delSurvey(this.id);
+                            }
+                            this.router.navigateByUrl('/home');
+                        }
+                    );
+                } else if (data.error!.code === 'KEY') {
+                    this.dialogService.confirm(`The url you entered is Incorrect\n\nDo you want to remove this survey from the survey dropdown?`).subscribe(
                         ok =>  {
                             if (ok) {
                                 this.localStorageService.delSurvey(this.id);
