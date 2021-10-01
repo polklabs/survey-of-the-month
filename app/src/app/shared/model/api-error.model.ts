@@ -3,5 +3,5 @@ export class APIError {
     body!: {
         error: string;
         reason: string;
-    }
+    };
 }

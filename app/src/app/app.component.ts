@@ -12,7 +12,7 @@ import { SurveysStorage } from './shared/model/local-storage.model';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    
+
     title = 'app';
     year = (new Date()).getFullYear();
 
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
             maxWidth: '95vw',
             minWidth: '300px',
             autoFocus: false
-        }
+        };
         this.dialog.open(FeedbackComponent, modalData);
     }
 

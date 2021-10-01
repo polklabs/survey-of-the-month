@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -9,11 +9,11 @@ export class DialogService {
         const confirmation = window.confirm(message || 'Are you sure?');
 
         return of(confirmation);
-    };
+    }
 
     alert(message?: string): Observable<boolean> {
         const closed = window.alert(message || 'Alert!');
         // return of(closed);
         return of(true);
-    };
+    }
 }

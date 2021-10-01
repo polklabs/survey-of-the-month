@@ -20,8 +20,8 @@ import { Survey } from '../shared/model/survey.model';
 })
 export class SurveyManagerComponent implements OnInit {
 
-    id: string = '';
-    key: string = '';
+    id = '';
+    key = '';
     surveyContainer?: SurveyContainer;
     answerStatus: AnswerStatus[] = [];
     hasData = false;
@@ -60,7 +60,7 @@ export class SurveyManagerComponent implements OnInit {
         });
     }
 
-    initNew() {
+    initNew(): void {
         this.hasData = false;
         this.surveyContainer = new SurveyContainer();
         this.surveyContainer.survey = new Survey();
@@ -104,10 +104,6 @@ export class SurveyManagerComponent implements OnInit {
         });
     }
 
-    exportButton(): void {
-        console.log('TODO');
-    }
-
     deleteButton(): void {
         this.dialogService.confirm('Do you want to delete?').subscribe(
             del => {
@@ -122,7 +118,7 @@ export class SurveyManagerComponent implements OnInit {
                     });
                 }
             }
-        )
+        );
     }
 
     copyLink(link: string): void {
@@ -134,17 +130,35 @@ export class SurveyManagerComponent implements OnInit {
         return this.surveyContainer?.survey.name ?? '{Unknown}';
     }
 
+    // Survey Presentation -----------------------------------------------------
+
+    beginPresentation(): void {
+        if (this.getTotalStatus() < 100) {
+            this.dialogService.confirm(
+                'Not everyone has completed the survey. Are you sure you want to begin the final presentation?'
+                ).subscribe(
+                result => {
+                    if (result) {
+                        console.log('Starting');
+                    }
+                }
+            );
+        } else {
+            console.log('Starting');
+        }
+    }
+
 
     // Survey Completion -------------------------------------------------------
-    getTotalStatus(): string {
+    getTotalStatus(): number {
         let total = this.surveyContainer?.survey.questions.length ?? 0;
         total *= this.surveyContainer?.survey.users.length ?? 0;
 
         let sum = 0;
         this.answerStatus?.forEach(x => sum += x.count);
 
-        if (total === 0) return '';
-        return `${Math.round((sum / total) * 100)}%`;
+        if (total === 0) { return 0; }
+        return Math.round((sum / total) * 100);
     }
 
     getUsername(id: string): string {
@@ -174,12 +188,12 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     logError(error: string): void {
-        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
+        const DIALOG_DATA = {data: {title: 'Error', content: `An error occurred while trying to perform action.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue through the feedback form in the header or on Github <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}};
         this.dialog.open(OkDialogComponent, DIALOG_DATA);
     }
 
     answerTypeToString(answerType: AnswerType): string {
-        switch(answerType) {
+        switch (answerType) {
             case 'multi':
                 return 'Multiple Choice';
             case 'text':
@@ -199,8 +213,8 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     getQuestionSubstring(text: string): string {
-        if (!text) return '';
-        if (text.length <= 25) return text;
+        if (!text) { return ''; }
+        if (text.length <= 25) { return text; }
         return text.substr(0, 24) + '...';
     }
 

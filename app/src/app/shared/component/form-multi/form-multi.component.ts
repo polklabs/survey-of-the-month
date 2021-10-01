@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 export class FormMultiComponent implements OnChanges {
 
     @Input() choices: string[] = [];
-    @Input() otherOptionAllow: boolean = true;
-    @Input() otherOptionText: string = 'Other';
+    @Input() otherOptionAllow = true;
+    @Input() otherOptionText = 'Other';
 
     @Input() editable = false;
     @Input() loading = false;
@@ -23,32 +23,32 @@ export class FormMultiComponent implements OnChanges {
 
     @Output() aUpdate = new EventEmitter<any[]>();
     answer: string | number | null = null;
-    otherAnswer: string = '';
+    otherAnswer = '';
 
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             this.answer = null;
             this.otherAnswer = '';
         }
     }
 
-    addAnswer() {
+    addAnswer(): void {
         this.aAdd.emit();
     }
 
-    deleteAnswer(i: number) {
+    deleteAnswer(i: number): void {
         this.aDelete.emit(i);
     }
 
-    onChange() {
+    onChange(): void {
         if (this.answer === -1) {
             this.aUpdate.emit([this.otherAnswer]);
         } else {
             this.aUpdate.emit([this.answer]);
         }
-        
+
     }
 
 }

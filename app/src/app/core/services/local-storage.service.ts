@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, of } from "rxjs";
-import { SurveysStorage, UserStorage } from "src/app/shared/model/local-storage.model";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { SurveysStorage, UserStorage } from 'src/app/shared/model/local-storage.model';
 
 const USERS = 'users';
 const SURVEYS = 'Surveys';
@@ -9,7 +9,7 @@ const SURVEYS = 'Surveys';
     providedIn: 'root'
 })
 export class LocalStorageService {
-  
+
     surveyBS = new BehaviorSubject<SurveysStorage[]>([]);
 
     getUsers(): UserStorage[] {
@@ -40,7 +40,7 @@ export class LocalStorageService {
 
     addSurvey(name: string, id: string, key: string): void {
         const surveys = this.getSurveys();
-        const index = surveys.findIndex(x => x.id === id && x.key === key)
+        const index = surveys.findIndex(x => x.id === id && x.key === key);
         if (index !== -1) {
             surveys.splice(index, 1);
         }
@@ -50,7 +50,7 @@ export class LocalStorageService {
 
     delSurvey(id: string): void {
         const surveys = this.getSurveys();
-        const index = surveys.findIndex(x => x.id === id)
+        const index = surveys.findIndex(x => x.id === id);
         if (index !== -1) {
             surveys.splice(index, 1);
         }
@@ -62,4 +62,4 @@ export class LocalStorageService {
         this.surveyBS.next(surveys);
     }
 
-} 
+}

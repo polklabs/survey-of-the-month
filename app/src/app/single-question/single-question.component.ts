@@ -72,17 +72,17 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     callApi(endpoint: string, data: any): void {
-        if (this.debounceButton) return;
+        if (this.debounceButton) { return; }
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
 
         this.loading = true;
         const [result, _] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
-            result.subscribe((data: Question) => {
-                this.question = data;
+            result.subscribe((resultData: Question) => {
+                this.question = resultData;
                 this.loading = false;
-                if(this.questionComp) this.questionComp.clearAnswer();
+                if (this.questionComp) { this.questionComp.clearAnswer(); }
                 this.scroll();
             });
         }, 500);

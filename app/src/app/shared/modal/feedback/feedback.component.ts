@@ -17,7 +17,7 @@ export class FeedbackComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<FeedbackComponent>,
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private dataService: DataService,
   ) { }
 
@@ -34,27 +34,27 @@ export class FeedbackComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  updateTypeField(type: string) {
+  updateTypeField(type: string): void {
     const field = this.feedback.get('type');
-    if (!field) return;
+    if (!field) { return; }
     field.setValue(type);
     field.updateValueAndValidity();
   }
 
   getTypeField(): string {
     const field = this.feedback.get('type');
-    if (!field) return '';
+    if (!field) { return ''; }
     return field.value;
   }
 
   submit(): void {
-    if (!this.feedback.valid) return;
+    if (!this.feedback.valid) { return; }
     this.submitting = true;
 
     const [result, _] = this.dataService.postData('feedback', this.feedback.value);
     result.subscribe((data: {ok: boolean, error?: string}) => {
       if (!data.ok) {
-        this.submitError(data.error??'');
+        this.submitError(data.error ?? '');
       } else {
         this.dialogRef.close();
       }
@@ -63,7 +63,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   submitError(error: string): void {
-    const DIALOG_DATA = {data: {title: 'Error Submitting', content: `An error occurred while trying to submit your feedback.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}}
+    const DIALOG_DATA = {data: {title: 'Error Submitting', content: `An error occurred while trying to submit your feedback.\n\nError:\n${JSON.stringify(error)}\n\nPlease submit the issue <a href="https://github.com/polklabs/survey-of-the-month/issues" target="_blank" rel="noreferrer">here</a>`}};
     this.dialog.open(OkDialogComponent, DIALOG_DATA);
   }
 

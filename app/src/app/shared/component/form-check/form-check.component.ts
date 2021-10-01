@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-check',
@@ -24,7 +24,7 @@ export class FormCheckComponent implements OnChanges {
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             this.answers = [];
             this.choices.forEach(() => {
                 this.answers.push(false);
@@ -32,17 +32,17 @@ export class FormCheckComponent implements OnChanges {
         }
     }
 
-    addAnswer() {
+    addAnswer(): void {
         this.answers.push(false);
         this.aAdd.emit();
     }
 
-    deleteAnswer(i: number) {
+    deleteAnswer(i: number): void {
         this.answers.splice(i, 1);
         this.aDelete.emit(i);
     }
 
-    onChange() {
+    onChange(): void {
         this.aUpdate.emit(this.answers.map(x => x ? 'true' : 'false'));
     }
 

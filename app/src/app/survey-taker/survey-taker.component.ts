@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
@@ -30,7 +30,6 @@ export class SurveyTakerComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private dataService: DataService,
         private snackBar: MatSnackBar,
-        private router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -57,7 +56,8 @@ export class SurveyTakerComponent implements OnInit {
         const [result, _] = this.dataService.getData(`survey?id=${this.id}`);
         result.subscribe((data: { ok: boolean, data?: Survey, error?: any }) => {
             if (data.ok) {
-                this.survey = data.data!;
+                if (!data.data) { throw Error('Data is null'); }
+                this.survey = data.data;
                 this.getAnswerStatus();
             } else {
                 this.dialogService.alert(`Error: ${JSON.stringify(data.error)}`);
@@ -113,7 +113,7 @@ export class SurveyTakerComponent implements OnInit {
     }
 
     updateAnswer(questionNumber: number, $event: (string | number | null)[] | null): void {
-        if (!this.survey) return;
+        if (!this.survey) { return; }
 
         const qId = this.survey.questions[questionNumber].questionId;
         const aIndex = this.answer.answers.findIndex(x => x.questionId === qId);
@@ -135,10 +135,10 @@ export class SurveyTakerComponent implements OnInit {
 
     getAnswerLastModified(qId: string): string {
         const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
-        if (!a) return 'Never';
-        
+        if (!a) { return 'Never'; }
+
         const aStatus = a.answered.find(x => x.questionId === qId);
-        if (!aStatus) return 'Never';
+        if (!aStatus) { return 'Never'; }
 
         const date = new Date(aStatus.lastModifiedDate);
 
@@ -150,7 +150,7 @@ export class SurveyTakerComponent implements OnInit {
     }
 
     startSubmit(): void {
-        if (!this.survey) return;
+        if (!this.survey) { return; }
 
         if (this.answer.answers.length < this.survey.questions.length) {
             this.dialogService.confirm('You have not completed all question. Are you sure you want to submit?').subscribe(
@@ -172,8 +172,8 @@ export class SurveyTakerComponent implements OnInit {
 
                     this.loading = true;
 
-                    const [result, _] = this.dataService.putData('answer', { id: this.id, answers: this.answer });
-                    result.subscribe((data: { ok: boolean, error?: any }) => {
+                    const [dataResult, _] = this.dataService.putData('answer', { id: this.id, answers: this.answer });
+                    dataResult.subscribe((data: { ok: boolean, error?: any }) => {
                         this.loading = false;
                         if (data.ok) {
                             this.snackBar.open('Saved!', 'OK', { duration: 3000 });
@@ -187,6 +187,6 @@ export class SurveyTakerComponent implements OnInit {
 
                 }
             }
-        )
+        );
     }
 }

@@ -10,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { SurveyContainer } from '../shared/model/survey-container.model';
@@ -53,9 +52,9 @@ export class SurveyMakerComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCachedUsers();
-        this.activatedroute.paramMap.subscribe(params => { 
+        this.activatedroute.paramMap.subscribe(params => {
             const id = params.get('id');
-            const key = params.get('key'); 
+            const key = params.get('key');
             if (id && id !== '0' && key && key !== '0') {
                 this.id = id;
                 this.key = key;
@@ -70,17 +69,17 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     canDeactivate(): Observable<boolean> | boolean {
-	    if (this.dirty) {
-        	return this.dialogService.confirm('Discard changes for Survey?');
-	    }
-	    return true;
-	}	
+        if (this.dirty) {
+            return this.dialogService.confirm('Discard changes for Survey?');
+        }
+        return true;
+    }
 
     // Question --------------------------------------------------------------------------------------
 
-    getQuestion(questionIndex = -1, reset=false, seed='', shuffle = false): void {
+    getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false): void {
         this.dirty = true;
-        const questionData: any =  { users: this.getUserNames(), seed, questionOrigin: undefined };
+        const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined };
 
         if (reset) {
             // Reset a basic template question
@@ -88,12 +87,12 @@ export class SurveyMakerComponent implements OnInit {
                 this.addQuestion(this.survey.questions[questionIndex].answerType, questionIndex);
                 return;
             }
-            questionData.seed = this.survey.questions[questionIndex].seed
+            questionData.seed = this.survey.questions[questionIndex].seed;
         }
 
         if (shuffle && questionIndex !== -1 && !this.survey.questions[questionIndex].custom) {
             questionData.questionOrigin = this.survey.questions[questionIndex].questionOrigin;
-            questionData.seed = this.survey.questions[questionIndex].seed
+            questionData.seed = this.survey.questions[questionIndex].seed;
         }
 
         this.callApi<Question>('question', questionData, questionIndex)?.subscribe(data => {
@@ -113,7 +112,7 @@ export class SurveyMakerComponent implements OnInit {
         this.dirty = true;
         const question = new Question();
         question.answerType = type;
-        question.text = 'Use the pencil button in the lower right to edit this text...'
+        question.text = 'Use the pencil button in the lower right to edit this text...';
         if (questionIndex === -1) {
             this.survey.questions.push(question);
             this.loading.push(false);
@@ -126,7 +125,7 @@ export class SurveyMakerComponent implements OnInit {
     deleteQuestion(questionIndex: number): void {
         this.dirty = true;
         this.survey.questions.splice(questionIndex, 1);
-        this.loading.splice(questionIndex,1);
+        this.loading.splice(questionIndex, 1);
     }
 
     seedQuestion(questionIndex = -1): void {
@@ -168,7 +167,10 @@ export class SurveyMakerComponent implements OnInit {
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
         this.dirty = true;
-        this.callApi<Question>('choice', { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex }, questionIndex)?.subscribe(
+        this.callApi<Question>(
+            'choice',
+            { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex },
+            questionIndex)?.subscribe(
             data => {
                 if (data !== null) {
                     this.survey.questions[questionIndex] = data;
@@ -227,7 +229,7 @@ export class SurveyMakerComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe((result: string | undefined) => {
             if (result !== undefined) {
-                
+
                 const results = result.split(';');
                 question.scaleValues = results.map(x => x.trim());
             }
@@ -247,7 +249,7 @@ export class SurveyMakerComponent implements OnInit {
                 }
                 this.survey = data.data?.survey;
             } else {
-                this.dialogService.alert(data.error??'Unknown Error');
+                this.dialogService.alert(data.error ?? 'Unknown Error');
             }
             this.loadingUnknown = false;
         });
@@ -263,10 +265,10 @@ export class SurveyMakerComponent implements OnInit {
                 this.localStorageService.addSurvey(this.survey.name, data.id, data.key);
                 this.id = data.id;
                 this.key = data.key;
-                this.snackBar.open('Saved!', 'OK', {duration: 3000});
+                this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                 this.dirty = false;
                 this.router.navigateByUrl(`/make-survey/${this.id}/${this.key}`);
-            } else if(!data.ok) {
+            } else if (!data.ok) {
                 this.dialogService.alert(JSON.stringify(data.error));
             }
 
@@ -281,7 +283,7 @@ export class SurveyMakerComponent implements OnInit {
         const value = event.value;
 
         if ((value || '').trim()) {
-            this.survey.users.push({_id: guid(), name: value.trim()});
+            this.survey.users.push({ _id: guid(), name: value.trim() });
         }
 
         // Reset the input value
@@ -291,7 +293,7 @@ export class SurveyMakerComponent implements OnInit {
         this.cacheUsers();
     }
 
-    removeUser(user: {_id: string, name: string}): void {
+    removeUser(user: { _id: string, name: string }): void {
         this.dirty = true;
         const index = this.survey.users.indexOf(user);
 
@@ -310,12 +312,12 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     getCachedUsers(): void {
-        this.survey.users = this.localStorageService.getUsers().map(x => { return { name: x, _id: guid() } });
+        this.survey.users = this.localStorageService.getUsers().map(x => ({ name: x, _id: guid() }));
     }
 
     // API ---------------------------------------------------------------------------
     callApi<T>(endpoint: string, data: any, questionIndex: number): BehaviorSubject<T | null> | null {
-        if (this.debounceButton) return null;
+        if (this.debounceButton) { return null; }
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
 
@@ -324,8 +326,8 @@ export class SurveyMakerComponent implements OnInit {
         this.setLoading(questionIndex, true);
         const [result, _] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
-            result.subscribe(data => {
-                toReturn.next(data);
+            result.subscribe(resultData => {
+                toReturn.next(resultData);
                 toReturn.complete();
                 this.setLoading(questionIndex, false);
             });
@@ -341,7 +343,7 @@ export class SurveyMakerComponent implements OnInit {
             this.loadingUnknown = value;
         }
     }
-    
+
     setScroll(el?: HTMLElement): void {
         this.scrollDelay = el;
     }

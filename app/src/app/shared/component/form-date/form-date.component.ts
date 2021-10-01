@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
     selector: 'app-form-date',
@@ -24,7 +24,7 @@ export class FormDateComponent implements OnChanges {
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             this.answers = [];
             this.choices.forEach(() => {
                 this.answers.push(null);
@@ -32,17 +32,17 @@ export class FormDateComponent implements OnChanges {
         }
     }
 
-    addAnswer() {
+    addAnswer(): void {
         this.answers.push(null);
         this.aAdd.emit();
     }
 
-    deleteAnswer(i: number) {
+    deleteAnswer(i: number): void {
         this.answers.splice(i, 1);
         this.aDelete.emit(i);
     }
 
-    onChange() {
+    onChange(): void {
         this.aUpdate.emit(this.answers.map(x => x?.toLocaleDateString() ?? null));
     }
 

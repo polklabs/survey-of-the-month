@@ -8,13 +8,13 @@ export class Answer {
     }[] = [];
 }
 
-export class AnswerStatus { 
+export class AnswerStatus {
     userId!: string;
     name!: string;
-    count!: number; 
+    count!: number;
     lastModifiedDate?: string;
     answered!: {
         questionId: string,
         lastModifiedDate: string;
-    }[]
+    }[];
 }

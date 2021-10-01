@@ -25,9 +25,9 @@ export class FormRankComponent implements OnChanges {
     constructor() { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['clear']) {
+        if (changes.clear) {
             if (this.editable) {
-                this.answers = this.choices
+                this.answers = this.choices;
             } else {
                 this.answers = [];
                 this.choices.forEach(c => {
@@ -37,13 +37,13 @@ export class FormRankComponent implements OnChanges {
         }
     }
 
-    drop(event: CdkDragDrop<string[]>) {
+    drop(event: CdkDragDrop<string[]>): void {
         moveItemInArray(this.answers, event.previousIndex, event.currentIndex);
         this.onChange();
     }
 
-    onChange() {
-        this.aUpdate.emit(this.choices.map(x => this.answers.indexOf(x)))
+    onChange(): void {
+        this.aUpdate.emit(this.choices.map(x => this.answers.indexOf(x)));
     }
 
 }

@@ -37,7 +37,6 @@ const routes: Routes = [
             title: 'Survey OTM',
         }
     },
-    
     // {
     //     path: 'results',
     //     component: SurveyResults,

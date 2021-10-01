@@ -44,7 +44,7 @@ export class FormQuestionComponent implements OnInit {
 
     @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
 
-    currentAnswerType: string = '';
+    currentAnswerType = '';
     dirty = false;
     clearVar = 0; // Increment this to clear answers from question form;
 
