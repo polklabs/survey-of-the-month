@@ -1,5 +1,5 @@
 <div style="margin-top: 16px;">
-    <mat-radio-group class="radio-group" [(ngModel)]="answer" (change)="onChange()">
+    <mat-radio-group #optionGroup class="radio-group" [(ngModel)]="answer" (change)="onChange()">
         <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
 
             <!-- Choices -->
@@ -30,10 +30,10 @@
         <!-- Other Option -->
         <div fxLayout="row" *ngIf="otherOptionAllow || editable">
 
-            <mat-radio-button [disabled]="!otherOptionAllow" class="radio-button" [value]="-1">
+            <mat-radio-button #otherOption [disabled]="!otherOptionAllow" class="radio-button" [value]="-1">
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>{{otherOptionText}}</mat-label>
-                    <input matInput [disabled]="!otherOptionAllow" placeholder="Ex. something something" [(ngModel)]="otherAnswer" (keyup)="onChange()">
+                    <input matInput #otherOptionInput [disabled]="!otherOptionAllow" placeholder="Ex. something something" [(ngModel)]="otherAnswer" (focusin)="triggerRadioButton(); onChange();" (keyup)="onChange();">
                     <mat-hint *ngIf="!otherOptionAllow">This Option Will Be Hidden</mat-hint>
                 </mat-form-field>
             </mat-radio-button>

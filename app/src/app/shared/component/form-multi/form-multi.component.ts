@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-form-multi',
@@ -6,6 +6,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
     styleUrls: ['./form-multi.component.scss']
 })
 export class FormMultiComponent implements OnChanges {
+
+    @ViewChild('otherOptionInput', {static: false}) otherOptionInput?: ElementRef;
 
     @Input() choices: string[] = [];
     @Input() otherOptionAllow = true;
@@ -44,11 +46,18 @@ export class FormMultiComponent implements OnChanges {
 
     onChange(): void {
         if (this.answer === -1) {
+            if (this.otherOptionInput) {
+                this.otherOptionInput.nativeElement.focus();
+            }
             this.aUpdate.emit([this.otherAnswer]);
         } else {
             this.aUpdate.emit([this.answer]);
         }
 
+    }
+
+    triggerRadioButton(): void {
+        this.answer = -1;
     }
 
 }
