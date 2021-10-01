@@ -6,6 +6,9 @@
         </div>
 
         <ng-container *ngIf="!answer.userId">
+
+            <p *ngIf="survey.subtitle" [innerHTML]="survey.subtitle"></p>
+
             <mat-card *ngIf="answerStatus" class="answ-status-container">
                 <mat-card-header>
                     <mat-card-title>Who Are You?</mat-card-title>

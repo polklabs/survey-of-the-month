@@ -1,9 +1,14 @@
 <div mat-dialog-content>
-  <p>{{data.title}}</p>
+  <p [innerHTML]="data.title"></p>
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>{{data.inputLabel}}</mat-label>
     <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="data.value"></textarea>
   </mat-form-field>
+
+  <ng-container *ngIf="data.showPreview">
+    <h3>Preview</h3>
+    <p [innerHTML]="data.value"></p>
+  </ng-container>
 </div>
 <div mat-dialog-actions fxLayoutAlign="end">
   <button mat-button color="warn" (click)="onNoClick()">Cancel</button>

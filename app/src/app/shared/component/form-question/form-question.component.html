@@ -51,7 +51,7 @@
                 <button mat-menu-item [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon>Answer Type</button>
                 <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
                 <button mat-menu-item (click)="qShuffle.emit()" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
-                <button mat-menu-item (click)="qReset.emit()"><mat-icon color="accent">restart_alt</mat-icon>Reset Question</button>
+                <button mat-menu-item (click)="qReset.emit()" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
                 <button mat-menu-item (click)="qDelete.emit()"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
             </mat-menu>
 

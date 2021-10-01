@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../core/services/data.service';
 import { AnswerType, Question } from '../shared/model/question.model';
 import { Survey } from '../shared/model/survey.model';
@@ -12,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import { SurveyContainer } from '../shared/model/survey-container.model';
 import { APIData } from '../shared/model/api-data.model';
 
 @Component({
@@ -156,7 +155,7 @@ export class SurveyMakerComponent implements OnInit {
         const dialogRef = this.dialog.open(TextBoxComponent, {
             maxWidth: '95vw',
             width: '800px',
-            data: { title: 'Enter the question text', inputLabel: 'Text', value: question.text }
+            data: { title: 'Enter the question text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.', inputLabel: 'Text', value: question.text, showPreview: true }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
@@ -212,7 +211,7 @@ export class SurveyMakerComponent implements OnInit {
         const dialogRef = this.dialog.open(TextBoxComponent, {
             maxWidth: '95vw',
             width: '800px',
-            data: { title: 'Enter the question text', inputLabel: 'Text', value }
+            data: { title: 'Enter the answer text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.', inputLabel: 'Text', value, showPreview: true }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
@@ -262,19 +261,20 @@ export class SurveyMakerComponent implements OnInit {
                 }
                 this.survey = data.data?.survey;
             } else {
-                this.dialogService.alert(JSON.stringify(data.error));
+                this.dialogService.error(data.error);
             }
             this.loadingUnknown = false;
         });
     }
 
     saveSurvey(): void {
+        this.survey.email = this.survey.email.trim().toLowerCase();
         this.loadingUnknown = true;
-
         const [result, _] = this.dataService.putData('survey', { survey: this.survey, id: this.id, key: this.key });
         result.subscribe((data: { ok: boolean, id?: string, key?: string, error?: any }) => {
             this.loadingUnknown = false;
             if (data.ok && data.id && data.key) {
+                this.survey.emailSent = true;
                 this.localStorageService.addSurvey(this.survey.name, data.id, data.key);
                 this.id = data.id;
                 this.key = data.key;
@@ -282,7 +282,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.dirty = false;
                 this.router.navigateByUrl(`/make-survey/${this.id}/${this.key}`);
             } else if (!data.ok) {
-                this.dialogService.alert(JSON.stringify(data.error));
+                this.dialogService.error(data.error);
             }
 
         });

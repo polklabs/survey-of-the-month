@@ -11,7 +11,21 @@
             <h1 fxHide.gt-xs>{{survey.name}}</h1>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px;">
+        <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center" *ngIf="editable">
+            <mat-form-field appearance="outline">
+                <mat-label>Content</mat-label>
+                <textarea matInput [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..."></textarea>
+                <mat-hint>This text will be displayed before users take the survey</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="survey.email" (keyup)="dirty = true; survey.emailSent = false;" placeholder="email@email.com">
+                <mat-hint>This email can be used to retrieve lost survey links</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px; margin-top: 32px;">
             <mat-slide-toggle [(ngModel)]="editable" matTooltip="Preview how the survey will look">Edit Survey</mat-slide-toggle>
             <button mat-raised-button color="primary" [disabled]="loadingUnknown || !dirty" (click)="saveSurvey()">Save Survey</button>
             <button mat-raised-button *ngIf="key !== ''"  [routerLink]="'/manage-survey/' + id + '/' + key">Manage Survey</button>

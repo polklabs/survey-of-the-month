@@ -10,7 +10,7 @@ export class TextBoxComponent {
 
     constructor(
         public dialogRef: MatDialogRef<TextBoxComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { title: string, inputLabel: string, value: string }) { }
+        @Inject(MAT_DIALOG_DATA) public data: { title: string, inputLabel: string, value: string, showPreview: boolean }) { }
 
     onNoClick(): void {
         this.dialogRef.close();
