@@ -87,11 +87,13 @@ export class Tracery {
             this.question.answerKey = this.question.vars['answerKey'];
 
             if (this.question.vars['answerCount'] !== undefined) {
-                this.question.answerCount = +this.question.vars['answerCount'];
+                this.question.answerCount = parseInt(this.question.vars['answerCount'], 10);
+                if (isNaN(this.question.answerCount)) {
+                    this.question.answerCount = 1;
+                }
             }
-            if (this.question.answerCount <= 1) {
+            if (this.question.answerCount === 1) {
                 this.question.answerCount = randomNext(3, 5, this.rng);
-                if (this.question.answerKey === 'yesNo') this.question.answerCount = 2;
             }
         }
     }
@@ -105,11 +107,16 @@ export class Tracery {
         if (index === -1) {
             this.question.choices = [];
             if (this.question.answerCount === -1) {
-                let choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
-                while (this.question.choices.indexOf(choice) === -1) {
+                const allAnswers: string[] = grammar[this.question.answerKey] ?? [];
+                allAnswers.forEach(a => {
+                    let choice = ModString(this.ParseKey(a), 'capitalize', this.rng);
                     this.question.choices.push(choice);
-                    choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
-                }
+                });
+                // let choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
+                // while (this.question.choices.indexOf(choice) === -1) {
+                //     this.question.choices.push(choice);
+                //     choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
+                // }
             } else {
                 for (let i = 0; i < this.question.answerCount; i++) {
                     this.question.choices.push(this.ParseString(`#${this.question.answerKey}.capitalize#`));
