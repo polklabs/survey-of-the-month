@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { SurveyContainer } from '../shared/model/survey-container.model';
+import { APIData } from '../shared/model/api-data.model';
 
 @Component({
     selector: 'app-survey-maker',
@@ -95,14 +96,16 @@ export class SurveyMakerComponent implements OnInit {
             questionData.seed = this.survey.questions[questionIndex].seed;
         }
 
-        this.callApi<Question>('question', questionData, questionIndex)?.subscribe(data => {
+        this.callApi('question', questionData, questionIndex)?.subscribe(data => {
             if (data !== null) {
-                if (questionIndex === -1) {
-                    this.survey.questions.push(data);
-                    this.loading.push(false);
-                    this.scroll();
-                } else {
-                    this.survey.questions[questionIndex] = data;
+                if (data.ok) {
+                    if (questionIndex === -1) {
+                        this.survey.questions.push(data.data);
+                        this.loading.push(false);
+                        this.scroll();
+                    } else {
+                        this.survey.questions[questionIndex] = data.data;
+                    }
                 }
             }
         });
@@ -167,13 +170,15 @@ export class SurveyMakerComponent implements OnInit {
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
         this.dirty = true;
-        this.callApi<Question>(
+        this.callApi(
             'choice',
             { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex },
             questionIndex)?.subscribe(
             data => {
                 if (data !== null) {
-                    this.survey.questions[questionIndex] = data;
+                    if (data.ok) {
+                        this.survey.questions[questionIndex] = data.data;
+                    }
                 }
             }
         );
@@ -241,7 +246,7 @@ export class SurveyMakerComponent implements OnInit {
     getSurvey(): void {
         this.loadingUnknown = true;
         const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
-        result.subscribe((data: { ok: boolean, data?: SurveyContainer, error?: any }) => {
+        result.subscribe((data: APIData) => {
             if (data.ok) {
                 if (!data.data) {
                     this.dialogService.alert('Survey has no data.');
@@ -249,7 +254,7 @@ export class SurveyMakerComponent implements OnInit {
                 }
                 this.survey = data.data?.survey;
             } else {
-                this.dialogService.alert(data.error ?? 'Unknown Error');
+                this.dialogService.alert(JSON.stringify(data.error));
             }
             this.loadingUnknown = false;
         });
@@ -316,12 +321,12 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     // API ---------------------------------------------------------------------------
-    callApi<T>(endpoint: string, data: any, questionIndex: number): BehaviorSubject<T | null> | null {
+    callApi(endpoint: string, data: any, questionIndex: number): BehaviorSubject<APIData | null> | null {
         if (this.debounceButton) { return null; }
         this.debounceButton = true;
         setTimeout(() => this.debounceButton = false, 750);
 
-        const toReturn = new BehaviorSubject<T | null>(null);
+        const toReturn = new BehaviorSubject<APIData | null>(null);
 
         this.setLoading(questionIndex, true);
         const [result, _] = this.dataService.postData(endpoint, data);

@@ -7,6 +7,7 @@ import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { FormQuestionComponent } from '../shared/component/form-question/form-question.component';
+import { APIData } from '../shared/model/api-data.model';
 
 @Component({
     selector: 'app-single-question',
@@ -79,8 +80,8 @@ export class SingleQuestionComponent implements OnInit {
         this.loading = true;
         const [result, _] = this.dataService.postData(endpoint, data);
         setTimeout(() => {
-            result.subscribe((resultData: Question) => {
-                this.question = resultData;
+            result.subscribe((resultData: APIData) => {
+                this.question = resultData.data;
                 this.loading = false;
                 if (this.questionComp) { this.questionComp.clearAnswer(); }
                 this.scroll();

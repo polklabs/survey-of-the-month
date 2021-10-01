@@ -1,7 +1,7 @@
 import { Tracery } from './src/tracery';
 import { Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
-import { APIError } from './app/src/app/shared/model/api-error.model';
+import { APIData } from './app/src/app/shared/model/api-data.model';
 import { SendEmail } from './src/email';
 import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers } from './src/couch';
 import slowDown from 'express-slow-down';
@@ -10,7 +10,7 @@ import express from 'express';
 import cors from 'cors';
 import { Answer } from './app/src/app/shared/model/answer.model';
 
-export type response = {json: (res: {ok: boolean, data?: any, error?: APIError}) => any};
+export type response = { json: (res: APIData) => any };
 
 // Create basic express app -------------------------------------------
 const app = express();
@@ -45,26 +45,26 @@ app.get('/api/home', speedLimiter, (_, res: any) => {
     res.json({ subtitle, text });
 });
 
-app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: any) => {
+app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: response) => {
     let tracery = new Tracery();
     const text = tracery.simpleStart(req.query.id);
-    res.json({ text });
+    res.json({ ok: true, data: text });
 });
 
 // Generate a completely new question
-app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number } }, res: any) => {
+app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number } }, res: response) => {
     let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin);
     tracery.start();
-    res.json(tracery.getQuestion());
+    res.json({ok: true, data: tracery.getQuestion() });
 });
 
 // Regenerate answers for a specific choice or all
 // choiceIndex = -1 for all
-app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number } }, res: any) => {
+app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number } }, res: response) => {
     let tracery = new Tracery(req.body.users, req.body.seed);
     tracery.setQuestion(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
-    res.json(tracery.getQuestion());
+    res.json({ok: true, data: tracery.getQuestion() });
 });
 
 // Surveys ------------------------------------------------------------------------------------------
@@ -87,12 +87,12 @@ app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string
     deleteSurvey(req.query.id, req.query.key, res);
 });
 
-app.get('/api/answer-status', speedLimiter, (req: { query: {id: string} }, res: response) => {
+app.get('/api/answer-status', speedLimiter, (req: { query: { id: string } }, res: response) => {
     answerStatus(req.query.id, res);
 });
 
 // Submit answers
-app.put('/api/answer', speedLimiter, (req: {body: {id: string, answers: Answer}}, res: any) => {
+app.put('/api/answer', speedLimiter, (req: { body: { id: string, answers: Answer } }, res: response) => {
     submitAnswers(req.body.id, req.body.answers, res);
 });
 
@@ -111,7 +111,7 @@ app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body
         }
     });
     if (r) {
-        res.json({ ok: false, error: {code: 'EMAILERROR', body: {error: r, reason: ''}} });
+        res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: '' } } });
     }
 });
 

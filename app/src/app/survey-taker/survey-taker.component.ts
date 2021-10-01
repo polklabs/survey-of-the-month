@@ -6,6 +6,7 @@ import { DialogService } from '../core/services/dialog.service';
 import { Survey } from '../shared/model/survey.model';
 import { Answer, AnswerStatus } from '../shared/model/answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { APIData } from '../shared/model/api-data.model';
 
 @Component({
     selector: 'app-survey-taker',
@@ -54,7 +55,7 @@ export class SurveyTakerComponent implements OnInit {
     getSurvey(): void {
         this.loading = true;
         const [result, _] = this.dataService.getData(`survey?id=${this.id}`);
-        result.subscribe((data: { ok: boolean, data?: Survey, error?: any }) => {
+        result.subscribe((data: APIData) => {
             if (data.ok) {
                 if (!data.data) { throw Error('Data is null'); }
                 this.survey = data.data;
@@ -173,14 +174,14 @@ export class SurveyTakerComponent implements OnInit {
                     this.loading = true;
 
                     const [dataResult, _] = this.dataService.putData('answer', { id: this.id, answers: this.answer });
-                    dataResult.subscribe((data: { ok: boolean, error?: any }) => {
+                    dataResult.subscribe((data: APIData) => {
                         this.loading = false;
                         if (data.ok) {
                             this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                             this.answer = new Answer();
                             this.getAnswerStatus();
                         } else if (!data.ok) {
-                            this.dialogService.alert(data.error ?? 'Unknown Error');
+                            this.dialogService.alert(JSON.stringify(data.error));
                         }
 
                     });

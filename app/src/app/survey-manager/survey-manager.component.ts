@@ -9,6 +9,7 @@ import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { OkDialogComponent } from '../shared/modal/ok-dialog/ok-dialog.component';
 import { AnswerStatus } from '../shared/model/answer.model';
+import { APIData } from '../shared/model/api-data.model';
 import { AnswerType } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 import { Survey } from '../shared/model/survey.model';
@@ -51,7 +52,7 @@ export class SurveyManagerComponent implements OnInit {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
             if (this.id && this.id !== '0' && this.key && this.key !== '0') {
-                this.getSurvey(this.id);
+                this.getSurvey();
                 this.shareLink = `${window.location.origin}/survey/${this.id}`;
                 this.managerLink = window.location.toString();
             } else {
@@ -68,13 +69,14 @@ export class SurveyManagerComponent implements OnInit {
         this.shareLink = '';
     }
 
-    getSurvey(id: string): void {
+    getSurvey(): void {
         this.hasData = false;
         const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
-        result.subscribe((data: { ok: boolean, data?: SurveyContainer, error?: any }) => {
+        result.subscribe((data: APIData) => {
             if (data.ok) {
                 if (data.data) {
                     this.surveyContainer = data.data;
+                    if (!this.surveyContainer) { throw Error('Survey is undefined'); }
                     this.getAnswerStatus();
 
                     this.exportData = this.sanitizer.bypassSecurityTrustUrl(this.csvExport.export(this.surveyContainer));
@@ -84,8 +86,8 @@ export class SurveyManagerComponent implements OnInit {
                     this.hasData = true;
                 }
             } else {
-                if (data.error.code === 'EDOCMISSING') {
-                    this.dialogService.alert(`Could not find survey: ${data.error.body.reason}`);
+                if (data.error!.code === 'EDOCMISSING') {
+                    this.dialogService.alert(`Could not find survey: ${data.error!.body.reason}`);
                     this.localStorageService.delSurvey(this.id);
                 } else {
                     this.dialogService.alert(JSON.stringify(data.error));
@@ -98,7 +100,7 @@ export class SurveyManagerComponent implements OnInit {
 
     getAnswerStatus(): void {
         const [result, _] = this.dataService.getData(`answer-status?id=${this.id}`);
-        result.subscribe((data: {ok: boolean, data?: AnswerStatus[]}) => {
+        result.subscribe((data: APIData) => {
             this.answerStatus = data.data ?? [];
             this.answerStatus.sort((a, b) => a.name.localeCompare(b.name));
         });
@@ -109,7 +111,7 @@ export class SurveyManagerComponent implements OnInit {
             del => {
                 if (del) {
                     const [result, _] = this.dataService.deleteData(`survey?id=${this.id}&key=${this.key}`);
-                    result.subscribe((data: { ok: boolean, error?: any }) => {
+                    result.subscribe((data: APIData) => {
                         if (data.ok) {
                             this.localStorageService.delSurvey(this.id);
                             this.snackBar.open('Deleted', 'OK', {duration: 3000});

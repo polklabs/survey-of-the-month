@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
+import { APIData } from '../shared/model/api-data.model';
 
 @Component({
     selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
     constructor(private dataService: DataService) { }
 
     ngOnInit(): void {
-        const [result, progress] = this.dataService.getData('home');
+        const [result, _] = this.dataService.getData('home');
         result.subscribe((data: { subtitle: string, text: string }) => {
             this.subtitle = data.subtitle;
             this.text = data.text;
@@ -38,9 +39,9 @@ export class HomeComponent implements OnInit {
     }
 
     updateSubtitle(): void {
-        const [result, progress] = this.dataService.getData('single?id=home_page_subtitle');
-        result.subscribe((data: { text: string }) => {
-            this.subtitle = data.text;
+        const [result, _] = this.dataService.getData('single?id=home_page_subtitle');
+        result.subscribe((data: APIData) => {
+            this.subtitle = data.data.text;
         });
     }
 
