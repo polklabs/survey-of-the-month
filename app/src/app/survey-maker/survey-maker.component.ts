@@ -14,6 +14,7 @@ import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { APIData } from '../shared/model/api-data.model';
 import { QuestionHolderService } from '../core/services/questionHolder.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-survey-maker',
@@ -386,6 +387,21 @@ export class SurveyMakerComponent implements OnInit {
                 this.scrollDelay = undefined;
             }, 100);
         }
+    }
+
+    canMoveUp(i: number): boolean {
+        if (i === 0) { return false; }
+        return true;
+    }
+
+    canMoveDown(i: number): boolean {
+        if (i === this.survey.questions.length - 1) { return false; }
+        return true;
+    }
+
+    move(i: number, dir: 1 | -1): void {
+        moveItemInArray(this.survey.questions, i, i + dir);
+        this.dirty = true;
     }
 
 }

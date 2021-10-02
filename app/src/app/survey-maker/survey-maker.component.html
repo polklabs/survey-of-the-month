@@ -25,8 +25,8 @@
             </mat-form-field>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px; margin-top: 32px;">
-            <mat-slide-toggle [(ngModel)]="editable" matTooltip="Preview how the survey will look">Edit Survey</mat-slide-toggle>
+        <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px; margin-top: 32px;">
+            <mat-slide-toggle [(ngModel)]="editable" matTooltip="Preview how the survey will look">Edit/Preview Survey</mat-slide-toggle>
             <button mat-raised-button color="primary" [disabled]="loadingUnknown || !dirty" (click)="saveSurvey()">Save Survey</button>
             <button mat-raised-button *ngIf="key !== ''"  [routerLink]="'/manage-survey/' + id + '/' + key">Manage Survey</button>
         </div>
@@ -57,14 +57,19 @@
         </div>        
 
         <!-- Questions -->
-        <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
-            <app-form-question [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
+        <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;" fxLayout="row">
+            <app-form-question fxFlex [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
                 (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)"
                 (qSeed)="seedQuestion(i)" (qEditText)="editQuestion(i)" (qReset)="getQuestion(i, true)"
                 (qShuffle)="getQuestion(i, false, '', true)" (qEditType)="editQuestionType(i, $event)"
                 (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
                 (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)">
             </app-form-question>
+            <div fxFlex="none" fxLayout="column">
+                <button mat-icon-button [disabled]="!canMoveUp(i)" (click)="move(i, -1)"><mat-icon>arrow_upward</mat-icon></button>
+                <div style="text-align: center;">{{i + 1}}</div>
+                <button mat-icon-button [disabled]="!canMoveDown(i)" (click)="move(i, 1)"><mat-icon>arrow_downward</mat-icon></button>
+            </div>
         </div>
 
         <mat-progress-bar *ngIf="loadingUnknown" mode="indeterminate" style="margin-bottom: 16px;"></mat-progress-bar>
