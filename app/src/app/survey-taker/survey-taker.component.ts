@@ -151,14 +151,14 @@ export class SurveyTakerComponent implements OnInit {
 
     getAnswerLastModified(qId: string): string {
         const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
-        if (!a) { return 'Never'; }
+        if (!a) { return 'Not Answered'; }
 
         const aStatus = a.answered.find(x => x.questionId === qId);
-        if (!aStatus) { return 'Never'; }
+        if (!aStatus) { return 'Not Answered'; }
 
         const date = new Date(aStatus.lastModifiedDate);
 
-        return date.toLocaleString();
+        return `Answered On: ${date.toLocaleString()}`;
     }
 
     disableSubmit(): boolean {

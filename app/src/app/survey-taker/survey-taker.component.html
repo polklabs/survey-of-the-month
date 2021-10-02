@@ -53,7 +53,7 @@
             
             <!-- Questions -->
             <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
-                <div>Answered On: {{getAnswerLastModified(question.questionId)}}</div>
+                <div>{{getAnswerLastModified(question.questionId)}}</div>
                 <app-form-question [question]="question" [editable]="false" [questionNumber]="(i+1).toString()"
                     (aUpdate)="updateAnswer(i, $event)">
                 </app-form-question>

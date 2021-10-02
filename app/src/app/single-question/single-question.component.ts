@@ -9,6 +9,8 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { FormQuestionComponent } from '../shared/component/form-question/form-question.component';
 import { APIData } from '../shared/model/api-data.model';
 import { DialogService } from '../core/services/dialog.service';
+import { QuestionHolderService } from '../core/services/questionHolder.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-single-question',
@@ -36,7 +38,9 @@ export class SingleQuestionComponent implements OnInit {
         private dialogService: DialogService,
         private dataService: DataService,
         private dialog: MatDialog,
-        private localStorageService: LocalStorageService
+        private localStorageService: LocalStorageService,
+        private questionHolderService: QuestionHolderService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -131,6 +135,11 @@ export class SingleQuestionComponent implements OnInit {
                 this.scrollDelay = undefined;
             }, 250);
         }
+    }
+
+    createSurvey(): void {
+        this.questionHolderService.saveQuestion(this.question);
+        this.router.navigateByUrl('/make-survey/0/0');
     }
 
 }
