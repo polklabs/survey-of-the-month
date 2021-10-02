@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     updateSubtitle(): void {
         const [result, _] = this.dataService.getData('single?id=home_page_subtitle');
         result.subscribe((data: APIData) => {
-            this.subtitle = data.data.text;
+            this.subtitle = data.data;
         });
     }
 
