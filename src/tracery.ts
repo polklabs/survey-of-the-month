@@ -109,7 +109,7 @@ export class Tracery {
             if (this.question.answerCount === -1) {
                 const allAnswers: string[] = grammar[this.question.answerKey] ?? [];
                 allAnswers.forEach(a => {
-                    let choice = ModString(this.ParseKey(a), 'capitalize', this.rng);
+                    let choice = ModString(this.ParseString(a), 'capitalize', this.rng);
                     this.question.choices.push(choice);
                 });
                 // let choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);

@@ -204,6 +204,11 @@ export function findSurveys(email: string, req: any, res: response): void {
         const subject = `Survey Of The Month - Link Retrieval`;
         let text = `Here are the survey link I could find matching your email\n\n`;
 
+        if (data.docs.length <= 0) {
+            res.json({ok: false, error: {code: 'EMPTYDOC', body: {error: '', reason: 'No surveys found.'}}})
+            return;
+        }
+
         data.docs.forEach(doc => {
             var fullUrl = req.protocol + '://' + req.get('host') + '/manage-survey/' + doc._id + '/' + doc.key;
             text += doc.survey.name + '\n' + fullUrl + '\n\n';
@@ -217,7 +222,7 @@ export function findSurveys(email: string, req: any, res: response): void {
             }
         });
         if (r) {
-            res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: '' } } });
+            res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: r } } });
         }
 
 
