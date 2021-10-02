@@ -1,6 +1,6 @@
 import { setSeed, randomNext } from './tracery.math';
 import { ModString } from './tracery.mod';
-import { Question } from '../app/src/app/shared/model/question.model';
+import { AnswerType, Question } from '../app/src/app/shared/model/question.model';
 
 import fs from 'fs';
 
@@ -20,11 +20,12 @@ export class Tracery {
     customDict: any = {};
     seen: any = {};
     shuffleQuestion = false;
-    rng;
+    typeFilter?: AnswerType;
+    rng: any;
 
     question: Question = new Question();
 
-    constructor(people: string[] = [], customSeed = '', questionOrigin = -1) {
+    constructor(people: string[] = [], customSeed = '', questionOrigin = -1, typeFilter?: AnswerType) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
@@ -41,6 +42,8 @@ export class Tracery {
         } else {
             [this.rng, this.question.seed] = setSeed(customSeed);
         }
+
+        this.typeFilter = typeFilter;
     }
 
     start(origin = 'question') {
@@ -132,6 +135,13 @@ export class Tracery {
         if (dict[key] === undefined) dict = this.customDict;
         if (dict[key] === undefined) return key;
         if (dict[key].length === 0) return key;
+
+        if (this.typeFilter && isOrigin) {
+            const temp = dict[key].filter((x: string) => x.includes(`[answerType:${this.typeFilter}]`));
+            dict = {};
+            dict[key] = temp;
+        }
+
         const value = randomNext(0, dict[key].length, this.rng);
 
         // Overwrite or use origin to regenerate the same question

@@ -1,5 +1,5 @@
 import { Tracery } from './src/tracery';
-import { Question } from './app/src/app/shared/model/question.model';
+import { AnswerType, Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
 import { SendEmail } from './src/email';
@@ -52,9 +52,9 @@ app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: respo
 });
 
 // Generate a completely new question
-app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number } }, res: response) => {
-    let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin);
-    tracery.start();
+app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, origin?: string } }, res: response) => {
+    let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter);
+    tracery.start(req.body.origin);
     res.json({ok: true, data: tracery.getQuestion() });
 });
 

@@ -66,3 +66,8 @@ a {
 .help-icon:hover {
     cursor: pointer;
 }
+
+
+textarea, input {
+    overflow: visible;
+}

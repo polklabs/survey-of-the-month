@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { APIData } from '../shared/model/api-data.model';
+import { QuestionHolderService } from '../core/services/questionHolder.service';
 
 @Component({
     selector: 'app-survey-maker',
@@ -47,7 +48,8 @@ export class SurveyMakerComponent implements OnInit {
         private snackBar: MatSnackBar,
         private dialogService: DialogService,
         private localStorageService: LocalStorageService,
-        private router: Router
+        private router: Router,
+        private questionHolderService: QuestionHolderService
     ) { }
 
     ngOnInit(): void {
@@ -64,6 +66,10 @@ export class SurveyMakerComponent implements OnInit {
                 this.key = '';
                 this.survey = new Survey();
                 this.getCachedUsers();
+                const qTemp = this.questionHolderService.getQuestion();
+                if (qTemp) {
+                    this.survey.questions.push(qTemp);
+                }
             }
         });
     }
@@ -77,9 +83,17 @@ export class SurveyMakerComponent implements OnInit {
 
     // Question --------------------------------------------------------------------------------------
 
-    getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false): void {
+    getQuestionWithFilter(typeFilter: AnswerType): void {
+        this.getQuestion(undefined, undefined, undefined, undefined, typeFilter);
+    }
+
+    getQuestionWithOrigin(origin: string): void {
+        this.getQuestion(undefined, undefined, undefined, undefined, undefined, origin);
+    }
+
+    getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false, typeFilter?: AnswerType, origin?: string): void {
         this.dirty = true;
-        const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined };
+        const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined, typeFilter, origin };
 
         if (reset) {
             // Reset a basic template question
@@ -119,6 +133,10 @@ export class SurveyMakerComponent implements OnInit {
         const question = new Question();
         question.answerType = type;
         question.text = 'Use the pencil button in the lower right to edit this text...';
+        if (question.answerType === 'rank') {
+            question.answerCount = 2;
+            question.choices.push('Answer 2');
+        }
         if (questionIndex === -1) {
             this.survey.questions.push(question);
             this.loading.push(false);
