@@ -14,7 +14,7 @@ import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { APIData } from '../shared/model/api-data.model';
 import { QuestionHolderService } from '../core/services/questionHolder.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-survey-maker',
