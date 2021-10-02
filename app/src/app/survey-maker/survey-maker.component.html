@@ -3,7 +3,7 @@
         <div fxLayoutAlign="center" *ngIf="editable">
             <mat-form-field class="title-input" appearance="outline">
                 <mat-label>Survey Name</mat-label>
-                <input matInput [(ngModel)]="survey.name" (keyup)="dirty = true" placeholder="Type Something...">
+                <input matInput [(ngModel)]="survey.name" (keyup)="dirty = true" placeholder="Type Something..." maxlength="100">
             </mat-form-field>
         </div>
         <div *ngIf="!editable">
@@ -14,13 +14,13 @@
         <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center" *ngIf="editable">
             <mat-form-field appearance="outline">
                 <mat-label>Content</mat-label>
-                <textarea matInput [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..."></textarea>
+                <textarea matInput [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                 <mat-hint>This text will be displayed before users take the survey</mat-hint>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput type="email" [(ngModel)]="survey.email" (keyup)="dirty = true; survey.emailSent = false;" placeholder="email@email.com">
+                <input matInput type="email" [(ngModel)]="survey.email" (keyup)="dirty = true; survey.emailSent = false;" placeholder="email@email.com" maxlength="320">
                 <mat-hint>This email can be used to retrieve lost survey links</mat-hint>
             </mat-form-field>
         </div>
@@ -51,7 +51,7 @@
                     </mat-chip>
                     <input placeholder="New Person..." [matChipInputFor]="chipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="usersAddOnBlur"
-                        (matChipInputTokenEnd)="addUser($event)">
+                        (matChipInputTokenEnd)="addUser($event)" maxlength="100">
                 </mat-chip-list>
             </mat-form-field>
         </div>        

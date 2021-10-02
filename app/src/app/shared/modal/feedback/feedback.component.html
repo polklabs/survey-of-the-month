@@ -29,18 +29,18 @@
 
         <mat-form-field appearance="outline" style="width: 100%; padding-top: 16px;">
             <mat-label>Short Summary *</mat-label>
-            <input matInput placeholder="Summary" autocomplete="off" formControlName="subject" class="form-control">
+            <input matInput placeholder="Summary" autocomplete="off" formControlName="subject" class="form-control" maxlength="100">
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Your Feedback *</mat-label>
             <textarea matInput placeholder="Feedback" style="height: 64px;" autocomplete="off"
-                formControlName="body" class="form-control"></textarea>
+                formControlName="body" class="form-control" maxlength="1000"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="width: 100%; padding-top: 16px;">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="Your Email" autocomplete="off" formControlName="returnAddress" class="form-control">
+            <input matInput placeholder="Your Email" autocomplete="off" formControlName="returnAddress" class="form-control" maxlength="320">
         </mat-form-field>
 
     </mat-dialog-content>

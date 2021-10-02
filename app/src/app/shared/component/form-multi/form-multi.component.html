@@ -33,7 +33,7 @@
             <mat-radio-button #otherOption [disabled]="!otherOptionAllow" class="radio-button" [value]="-1">
                 <mat-form-field class="full-width" appearance="outline">
                     <mat-label>{{otherOptionText}}</mat-label>
-                    <input matInput #otherOptionInput [disabled]="!otherOptionAllow" placeholder="Ex. something something" [(ngModel)]="otherAnswer" (focusin)="triggerRadioButton(); onChange();" (keyup)="onChange();">
+                    <input matInput #otherOptionInput [disabled]="!otherOptionAllow" placeholder="Ex. something something" [(ngModel)]="otherAnswer" (focusin)="triggerRadioButton(); onChange();" (keyup)="onChange();" maxlength="500">
                     <mat-hint *ngIf="!otherOptionAllow">This Option Will Be Hidden</mat-hint>
                 </mat-form-field>
             </mat-radio-button>
