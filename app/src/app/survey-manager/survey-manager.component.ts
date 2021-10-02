@@ -156,18 +156,18 @@ export class SurveyManagerComponent implements OnInit {
     // Survey Presentation -----------------------------------------------------
 
     beginPresentation(): void {
-        if (this.getTotalStatus() < 100) {
+        if (this.getTotalStatus() < 1) {
             this.dialogService.confirm(
                 'Not everyone has completed the survey. Are you sure you want to begin the final presentation?'
             ).subscribe(
                 result => {
                     if (result) {
-                        console.log('Starting');
+                        this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
                     }
                 }
             );
         } else {
-            console.log('Starting');
+            this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
         }
     }
 

@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CanDeactivateGuard } from './shared/guard/can-deactivate-guard.service';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
+import { SurveyResultsComponent } from './survey-results/survey-results.component';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 
 const routes: Routes = [
@@ -37,13 +38,13 @@ const routes: Routes = [
             title: 'Survey OTM',
         }
     },
-    // {
-    //     path: 'results',
-    //     component: SurveyResults,
-    //     data: {
-    //         title: 'Survey OTM |',
-    //     }
-    // },
+    {
+        path: 'results/:id/:key',
+        component: SurveyResultsComponent,
+        data: {
+            title: 'Survey OTM | Results',
+        }
+    },
     {
         path: 'make-survey',
         redirectTo: 'make-survey/0/0',

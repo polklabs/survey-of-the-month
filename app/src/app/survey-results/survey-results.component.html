@@ -1,0 +1,53 @@
+<div fxLayoutAlign="center center" class="root">
+    <div style="margin: auto; width: 600px; min-width: 250px;">
+
+        <div *ngIf="surveyContainer else loading">
+            <div style="width: 100%; text-align: center;">
+                Slide: {{slideNum+2}}/{{slideCount}}<br>
+                Prev: [←]&nbsp;&nbsp;&nbsp;&nbsp;Next: [Space]/[→]
+            </div>
+
+            <h1 class="large">{{surveyContainer.survey.name}}</h1>
+
+            <div fxLayout="column" fxLayoutGap="16px">
+                <ng-container *ngFor="let item of slide; let i = index">
+                    <ng-template [ngTemplateOutlet]="getTemplate(item.itemType)" [ngTemplateOutletContext]="{index:i}">
+                    </ng-template>    
+                </ng-container>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<ng-template #loading>
+    <h1>Loading...</h1>
+    <mat-progress-bar></mat-progress-bar>
+</ng-template>
+
+<ng-template #textForm let-index="index">
+    <div *ngIf="slide[index].visible" [@fadeInOut] [innerHTML]="slide[index].text"></div>
+</ng-template>
+
+<ng-template #answerForm let-index="index">
+    <div *ngIf="slide[index].visible" [@slideLeftInOut]>
+        <mat-card>
+            <div [innerHTML]="slide[index].text"></div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button (click)="toggleVisible(index)"><mat-icon>visibility</mat-icon></button>
+                <span *ngIf="slide[index].nameVisible" [@fadeInOut] style="position: absolute; left: 56px;">{{slide[index].name}}</span> 
+                <span *ngIf="!slide[index].nameVisible" [@fadeInOut] style="position: absolute; left: 56px;">[Hidden]</span> 
+            </div>
+        </mat-card>
+    </div>
+</ng-template>
+
+<ng-template #questionForm let-index="index">
+    <div *ngIf="slide[index].visible" [@slideDownInOut]>
+        <mat-card>
+            <mat-card-subtitle>Question: {{index+1}}</mat-card-subtitle>
+            <div [innerHTML]="slide[index].text"></div>
+        </mat-card>
+    </div>
+</ng-template>

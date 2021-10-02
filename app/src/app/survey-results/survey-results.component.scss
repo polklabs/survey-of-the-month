@@ -1,0 +1,27 @@
+.root {
+    height: 100%;
+}
+
+h1 {
+    width: max-content;
+    margin: auto;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-family: 'Chalk', 'arial', sans-serif;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+h1.large {
+    font-size: xxx-large;
+}
+
+mat-card {
+    width: calc(100% - 32px);
+    height: auto;
+    max-width: 800px;
+    background-color: rgba(66, 66, 66, 0.5);
+}

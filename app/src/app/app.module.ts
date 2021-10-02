@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
+import { SurveyResultsComponent } from './survey-results/survey-results.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
     HomeComponent,
     SurveyManagerComponent,
     SurveyTakerComponent,
+    SurveyResultsComponent,
   ],
   imports: [
     BrowserModule,
