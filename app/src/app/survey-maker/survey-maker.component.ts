@@ -70,7 +70,7 @@ export class SurveyMakerComponent implements OnInit {
 
     canDeactivate(): Observable<boolean> | boolean {
         if (this.dirty) {
-            return this.dialogService.confirm('Discard changes for Survey?');
+            return this.dialogService.confirm('Discard changes to this Survey?');
         }
         return true;
     }

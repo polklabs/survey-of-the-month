@@ -16,7 +16,7 @@
     ],
     
     "allAnswers": [
-        "#answer_yes#", "#answer_no#", "#answer_neutral#", "#answer_mostlyYes#", "#answer_mostlyNo#"
+        "#answer_yes#", "#answer_mostlyYes#", "#answer_neutral#", "#answer_mostlyNo#", "#answer_no#"
     ],
     "answer_yes": [
         "yes", "yeah", "yup", "yeppers", "ya", "definitely", "totally", "completely", "for sure"

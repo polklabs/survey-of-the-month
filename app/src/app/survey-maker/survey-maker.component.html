@@ -14,7 +14,7 @@
         <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center" *ngIf="editable">
             <mat-form-field appearance="outline">
                 <mat-label>Content</mat-label>
-                <textarea matInput [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                 <mat-hint>This text will be displayed before users take the survey</mat-hint>
             </mat-form-field>
 
