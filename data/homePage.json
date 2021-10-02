@@ -2,8 +2,8 @@
     "home_page_subtitle": ["Do #animal.s# #verb_transitive# #object.s#?", "#greeting#", "How are you doing this fine day of #monthNow#?", "Are you excited to take this survey?", "Anything ~#_hp_scandalous#~ to share?"],
     "home_page_text": ["#home_page_intoSentence# #home_page_2ndSentence# #home_page_3rdSentence# #home_page_endSentence#"],    
 
-    "home_page_intoSentence": ["[adj1:#adjective#]Have you ever wanted to make your #_hp_relation# take a \"#adj1#\" survey but struggled to think of \"#adj1#\" questions."],
-    "home_page_2ndSentence": ["Well want no longer, this is the #_hp_solution#.", "Not sure this app will help but it'll do it's best."],
+    "home_page_intoSentence": ["[adj1:#adjective#]Have you ever wanted to make your #_hp_relation# take a \"#adj1#\" survey but struggled to think of \"#adj1#\" questions?"],
+    "home_page_2ndSentence": ["Well want no longer, this is the #_hp_solution#.", "Not sure this app will help but it'll do its best."],
     "home_page_3rdSentence": ["Questions are generated through the use of #_hp_clever# algorithms and some form of #_hp_magic# (maybe it's just more algorithms)."],
     "home_page_endSentence": ["Get started by creating a new survey, checking out the source code or trying out some \"#adjective#\" questions below!"],
 
