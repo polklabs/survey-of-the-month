@@ -45,3 +45,12 @@ mat-toolbar {
 .linkActive {
     background-color: rgba(0,0,0,0.15);
 }
+
+.grouping-item {
+    margin-left: 8px;
+    font-size: smaller;
+    color: gold;
+    border-bottom: solid gold 1px;
+    width: 90%;
+    display: block;
+}

@@ -174,7 +174,14 @@ export class SurveyResultsComponent implements OnInit {
             if (user) {
                 const qAnsw = answ.answers.find(x => x.questionId === question.questionId);
                 if (qAnsw) {
-                    this.slide.push({ itemType: 'answer', text: this.answerToString(question, qAnsw.value), name: user.name, nameVisible: false, visible: false, alwaysVisible: false });
+                    this.slide.push({
+                        itemType: 'answer',
+                        text: this.answerToString(question, qAnsw.value),
+                        name: user.name,
+                        nameVisible: false,
+                        visible: false,
+                        alwaysVisible: false
+                    });
                 }
             }
         });

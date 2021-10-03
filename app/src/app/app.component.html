@@ -10,13 +10,15 @@
             <button mat-button [mat-menu-trigger-for]="menu"><mat-icon>poll</mat-icon> Survey Of The Month <mat-icon>arrow_drop_down</mat-icon></button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
-                <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage <mat-icon>arrow_drop_down</mat-icon></button>
+                <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
                 <button mat-menu-item (click)="openFeedback()">Feedback</button>
             </mat-menu>
         </div>
 
         <mat-menu #manageMenu="matMenu">
+            <span *ngIf="availableSurveys.length > 0" class="grouping-item">Your Surveys</span>
             <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage-survey/'+survey.id+'/'+survey.key">{{survey.name}}</button>
+            <span *ngIf="availableSurveys.length > 0" class="grouping-item">Options</span>
             <button mat-menu-item routerLink="/make-survey"><mat-icon>add</mat-icon>Create</button>
             <button mat-menu-item (click)="lostLink()"><mat-icon>search</mat-icon>Lost Link</button>
         </mat-menu>

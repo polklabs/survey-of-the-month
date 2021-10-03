@@ -6,7 +6,6 @@ import { v4 as guid } from 'uuid';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../core/services/dialog.service';
@@ -193,18 +192,18 @@ export class SurveyMakerComponent implements OnInit {
             'choice',
             { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex },
             questionIndex)?.subscribe(
-            data => {
-                if (data !== null) {
-                    if (data.ok) {
-                        this.survey.questions[questionIndex] = data.data;
-                    } else {
-                        this.dialogService.error(data.error).subscribe(
-                            () => this.router.navigateByUrl('/home')
-                        );
+                data => {
+                    if (data !== null) {
+                        if (data.ok) {
+                            this.survey.questions[questionIndex] = data.data;
+                        } else {
+                            this.dialogService.error(data.error).subscribe(
+                                () => this.router.navigateByUrl('/home')
+                            );
+                        }
                     }
                 }
-            }
-        );
+            );
     }
 
     addAnswer(questionIndex: number): void {
@@ -397,6 +396,10 @@ export class SurveyMakerComponent implements OnInit {
     move(i: number, dir: 1 | -1): void {
         moveItemInArray(this.survey.questions, i, i + dir);
         this.dirty = true;
+    }
+
+    openFeedback(): void {
+        this.dialogService.feedback();
     }
 
 }

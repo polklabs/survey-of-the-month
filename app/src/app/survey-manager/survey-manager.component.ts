@@ -235,4 +235,8 @@ export class SurveyManagerComponent implements OnInit {
         return text.substr(0, 24) + '…';
     }
 
+    openFeedback(): void {
+        this.dialogService.feedback();
+    }
+
 }
