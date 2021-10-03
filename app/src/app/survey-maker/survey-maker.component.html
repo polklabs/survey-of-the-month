@@ -54,7 +54,8 @@
         </div>        
 
         <!-- Questions -->
-        <div *ngFor="let question of survey.questions; let i = index;" style="margin-bottom: 32px;" fxLayout="row">
+        <div *ngFor="let question of survey.questions; let i = index;" 
+            [@slideUpDown]="getQuestionPos(question.questionId)" style="margin-bottom: 32px;" fxLayout="row">
             <app-form-question fxFlex [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
                 (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)"
                 (qSeed)="seedQuestion(i)" (qEditText)="editQuestion(i)" (qReset)="getQuestion(i, true)"
@@ -63,9 +64,9 @@
                 (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)">
             </app-form-question>
             <div fxFlex="none" fxLayout="column" *ngIf="editable">
-                <button mat-icon-button [disabled]="!canMoveUp(i)" (click)="move(i, -1)"><mat-icon>arrow_upward</mat-icon></button>
+                <button mat-icon-button [disabled]="!canMoveUp(i) || movingQuestion" (click)="move(i, -1)"><mat-icon>arrow_upward</mat-icon></button>
                 <div style="text-align: center;">{{i + 1}}</div>
-                <button mat-icon-button [disabled]="!canMoveDown(i)" (click)="move(i, 1)"><mat-icon>arrow_downward</mat-icon></button>
+                <button mat-icon-button [disabled]="!canMoveDown(i) || movingQuestion" (click)="move(i, 1)"><mat-icon>arrow_downward</mat-icon></button>
             </div>
         </div>
 

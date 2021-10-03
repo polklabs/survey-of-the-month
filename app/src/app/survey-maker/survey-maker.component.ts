@@ -13,11 +13,24 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { APIData } from '../shared/model/api-data.model';
 import { QuestionHolderService } from '../core/services/questionHolder.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { animate, style, transition, trigger } from '@angular/animations';
+
+const animationTime = 400;
 
 @Component({
     selector: 'app-survey-maker',
     templateUrl: './survey-maker.component.html',
-    styleUrls: ['./survey-maker.component.scss']
+    styleUrls: ['./survey-maker.component.scss'],
+    animations: [
+        trigger('slideUpDown', [
+            transition(':increment', [
+                animate(animationTime + 'ms ease-in', style({ transform: 'translateY(100%)', opacity: 0 }))
+            ]),
+            transition(':decrement', [
+                animate(animationTime + 'ms ease-in', style({ transform: 'translateY(-100%)', opacity: 0 }))
+            ])
+        ])
+    ]
 })
 export class SurveyMakerComponent implements OnInit {
 
@@ -39,6 +52,10 @@ export class SurveyMakerComponent implements OnInit {
     scrollDelay?: HTMLElement;
 
     dirty = false;
+
+    // For animations
+    questionPos: string[] = [];
+    movingQuestion = false;
 
     constructor(
         private dataService: DataService,
@@ -114,6 +131,7 @@ export class SurveyMakerComponent implements OnInit {
                         this.survey.questions.push(data.data);
                         this.loading.push(false);
                         this.scroll();
+                        this.calculateQuestionPos();
                     } else {
                         this.survey.questions[questionIndex] = data.data;
                     }
@@ -139,6 +157,7 @@ export class SurveyMakerComponent implements OnInit {
             this.survey.questions.push(question);
             this.loading.push(false);
             this.scroll();
+            this.calculateQuestionPos();
         } else {
             this.survey.questions[questionIndex] = question;
         }
@@ -148,6 +167,7 @@ export class SurveyMakerComponent implements OnInit {
         this.dirty = true;
         this.survey.questions.splice(questionIndex, 1);
         this.loading.splice(questionIndex, 1);
+        this.calculateQuestionPos();
     }
 
     seedQuestion(questionIndex = -1): void {
@@ -273,6 +293,7 @@ export class SurveyMakerComponent implements OnInit {
                     return;
                 }
                 this.survey = data.data?.survey;
+                this.calculateQuestionPos();
             } else {
                 this.dialogService.error(data.error);
             }
@@ -394,12 +415,30 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     move(i: number, dir: 1 | -1): void {
-        moveItemInArray(this.survey.questions, i, i + dir);
-        this.dirty = true;
+        if (this.movingQuestion) { return; }
+        this.movingQuestion = true;
+
+        moveItemInArray(this.questionPos, i, i + dir);
+
+        setTimeout(() => {
+            moveItemInArray(this.survey.questions, i, i + dir);
+            this.dirty = true;
+            this.movingQuestion = false;
+        }, animationTime);
     }
 
     openFeedback(): void {
         this.dialogService.feedback();
+    }
+
+    calculateQuestionPos(): void {
+        this.questionPos = this.survey.questions.map(x => x.questionId);
+    }
+
+    getQuestionPos(id: string): number {
+        const i = this.questionPos.findIndex(x => x === id);
+        if (i === -1) { return -1; }
+        return i;
     }
 
 }
