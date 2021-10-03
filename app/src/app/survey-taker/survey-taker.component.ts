@@ -26,6 +26,8 @@ export class SurveyTakerComponent implements OnInit {
     loading = false;
     dirty = false;
 
+    submitted = false;
+
     constructor(
         private dialogService: DialogService,
         private activatedRoute: ActivatedRoute,
@@ -192,11 +194,15 @@ export class SurveyTakerComponent implements OnInit {
                         } else if (!data.ok) {
                             this.dialogService.error(data.error);
                         }
-
+                        this.submitted = true;
                     });
 
                 }
             }
         );
+    }
+
+    openFeedback(): void {
+        this.dialogService.feedback();
     }
 }
