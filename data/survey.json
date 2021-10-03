@@ -116,7 +116,9 @@
 		"[answerType:multi][answerCount:-1]#group_choice#",
         "[answerType:date]What is the best day of the year?",
         "[answerType:multi][answerCount:-1][answerKey:yesNo]Should we get rid of #dayOfWeek.s#?",
-        "[answerType:text]Who would win in a fight between #animal.a# and #animal.a#?"
+        "[answerType:text]Who would win in a fight between #animal.a# and #animal.a#?",
+        "[answerType:text]You got #object.a# in your hand, what do you do with it?",
+        "[answerType:text]Didn't you hear!? They're remaking #world# and getting #character_actor# to play the lead!"
 
 	],
 
