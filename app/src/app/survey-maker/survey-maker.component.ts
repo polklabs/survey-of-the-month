@@ -299,7 +299,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.key = data.key;
                 this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                 this.dirty = false;
-                this.router.navigateByUrl(`/make-survey/${this.id}/${this.key}`);
+                this.router.navigateByUrl(`/manage-survey/${this.id}/${this.key}`);
             } else if (!data.ok) {
                 this.dialogService.error(data.error);
             }

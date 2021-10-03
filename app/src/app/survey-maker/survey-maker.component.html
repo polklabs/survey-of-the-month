@@ -37,10 +37,7 @@
 
         <!-- People Chooser -->
         <div *ngIf="editable">
-            <p>Who are these questions for?<mat-icon
-                    matTooltip="Names entered here will be insterted into generated question and answers"
-                    matTooltipTouchGestures="on" class="help-icon">help</mat-icon>
-            </p>
+            <p>Who are these questions for? Who are these questions for? Enter the names of people "or character" that will be taking your suvey. Names entered here will be randomly insterted into generated question and answers"</p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
@@ -65,7 +62,7 @@
                 (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
                 (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)">
             </app-form-question>
-            <div fxFlex="none" fxLayout="column">
+            <div fxFlex="none" fxLayout="column" *ngIf="editable">
                 <button mat-icon-button [disabled]="!canMoveUp(i)" (click)="move(i, -1)"><mat-icon>arrow_upward</mat-icon></button>
                 <div style="text-align: center;">{{i + 1}}</div>
                 <button mat-icon-button [disabled]="!canMoveDown(i)" (click)="move(i, 1)"><mat-icon>arrow_downward</mat-icon></button>

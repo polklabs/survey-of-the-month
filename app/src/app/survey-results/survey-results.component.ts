@@ -264,7 +264,7 @@ export class SurveyResultsComponent implements OnInit {
             case 'time':
                 return answer.join('<br>');
             case 'scale':
-                return answer.map((a3, i) => a3 ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').join('<br>');
+                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').join('<br>');
         }
     }
 
