@@ -3,8 +3,6 @@ import { DataService } from '../core/services/data.service';
 import { Question } from '../shared/model/question.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
-import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { FormQuestionComponent } from '../shared/component/form-question/form-question.component';
 import { APIData } from '../shared/model/api-data.model';
@@ -37,7 +35,6 @@ export class SingleQuestionComponent implements OnInit {
     constructor(
         private dialogService: DialogService,
         private dataService: DataService,
-        private dialog: MatDialog,
         private localStorageService: LocalStorageService,
         private questionHolderService: QuestionHolderService,
         private router: Router
@@ -65,13 +62,12 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     seedQuestion(): void {
-        const dialogRef = this.dialog.open(TextBoxComponent, {
-            maxWidth: '95vw',
-            width: '400px',
-            data: { title: 'Enter the question # or a random value', inputLabel: 'Seed', value: '' }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogService.textInput(
+            'Enter the question # or a random value',
+            'Seed',
+            '',
+            false
+        ).subscribe(result => {
             if (result !== undefined) {
                 this.callApi('question', { users: this.users, seed: result });
             }

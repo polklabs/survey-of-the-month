@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
+import { DialogService } from '../core/services/dialog.service';
 import { APIData } from '../shared/model/api-data.model';
 
 @Component({
@@ -17,7 +18,9 @@ export class HomeComponent implements OnInit {
     timeout = 10000;
     progress = 0;
 
-    constructor(private dataService: DataService) { }
+    constructor(
+        private dataService: DataService,
+        private dialogService: DialogService) { }
 
     ngOnInit(): void {
         const [result, _] = this.dataService.getData('home');
@@ -54,6 +57,10 @@ export class HomeComponent implements OnInit {
         }
 
         this.progress = (this.timeout / 10000) * 100;
+    }
+
+    openFeedback(): void {
+        this.dialogService.feedback();
     }
 
 }

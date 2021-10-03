@@ -7,7 +7,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { TextBoxComponent } from '../shared/modal/text-box/text-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogService } from '../core/services/dialog.service';
@@ -44,7 +43,6 @@ export class SurveyMakerComponent implements OnInit {
 
     constructor(
         private dataService: DataService,
-        private dialog: MatDialog,
         private activatedroute: ActivatedRoute,
         private snackBar: MatSnackBar,
         private dialogService: DialogService,
@@ -155,12 +153,12 @@ export class SurveyMakerComponent implements OnInit {
 
     seedQuestion(questionIndex = -1): void {
         this.dirty = true;
-        const dialogRef = this.dialog.open(TextBoxComponent, {
-            maxWidth: '95vw',
-            width: '500px',
-            data: { title: 'Enter the question # or a random value', inputLabel: 'Seed', value: '' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogService.textInput(
+            'Enter the question # or a random value',
+            'Seed',
+            '',
+            false
+        ).subscribe(result => {
             if (result !== undefined) {
                 this.getQuestion(questionIndex, false, result);
             }
@@ -170,13 +168,12 @@ export class SurveyMakerComponent implements OnInit {
     editQuestion(questionIndex: number): void {
         this.dirty = true;
         const question = this.survey.questions[questionIndex];
-
-        const dialogRef = this.dialog.open(TextBoxComponent, {
-            maxWidth: '95vw',
-            width: '800px',
-            data: { title: 'Enter the question text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.', inputLabel: 'Text', value: question.text, showPreview: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogService.textInput(
+            'Enter the question text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
+            'Text',
+            question.text,
+            true
+        ).subscribe(result => {
             if (result !== undefined) {
                 question.text = result;
             }
@@ -226,13 +223,12 @@ export class SurveyMakerComponent implements OnInit {
         this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = choiceIndex === -1 ? question.otherOptionText : question.choices[choiceIndex];
-
-        const dialogRef = this.dialog.open(TextBoxComponent, {
-            maxWidth: '95vw',
-            width: '800px',
-            data: { title: 'Enter the answer text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.', inputLabel: 'Text', value, showPreview: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogService.textInput(
+            'Enter the answer text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
+            'Text',
+            value,
+            true
+        ).subscribe(result => {
             if (result !== undefined) {
                 if (choiceIndex === -1) {
                     question.otherOptionText = result;
@@ -252,13 +248,12 @@ export class SurveyMakerComponent implements OnInit {
         this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = question.scaleValues.join(' ; ');
-
-        const dialogRef = this.dialog.open(TextBoxComponent, {
-            maxWidth: '95vw',
-            width: '800px',
-            data: { title: 'Enter the rating values separated by semicolons.', inputLabel: 'Values', value }
-        });
-        dialogRef.afterClosed().subscribe((result: string | undefined) => {
+        this.dialogService.textInput(
+            'Enter the rating values separated by semicolons.',
+            'Values',
+            value,
+            false
+        ).subscribe((result: string | undefined) => {
             if (result !== undefined) {
 
                 const results = result.split(';');
