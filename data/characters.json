@@ -1,15 +1,18 @@
 {
     "character": [
-        "#character_theOffice#",
-        "#character_parksRec#",
-        "#character_lotr#",
+        "#character_theOffice# (The Office)",
+        "#character_parksRec# (Parks & Rec)",
+        "#character_lotr# (LotR)",
         "#character_pixar#",
         "#character_harryPotter#",
         "#character_marvel#^$: pre powers$",
-        "#character_friends#",
-        "#character_singer#",
+        "#character_friends# (Friends)",
+        "#character_singer# (Musician)",
         "#character_dc#",
-        "#character_actor#",
+        "#character_actor# (Actor)",
+        "#character_movie_other#"
+    ],
+    "character_movie_other": [
         "All five Bennet sisters",
         "Yzma and her shapeshifting potions",
         "Steven Esqueleto",
@@ -27,7 +30,7 @@
         "Velma",
         "Ed Edd n Eddy",
         "Audrey Ramirez (Atlantis)",
-        "Ghostbusters",
+        "The Ghostbusters",
         "Indiana Jones",
         "John Wick",
         "Katniss Everdeen",
@@ -38,14 +41,13 @@
         "Captain Jack Sparrow",
         "Captain Kirk",
         "Spock",
+        "Princess Leia",
         "Luke Skywalker",
         "Darth Vader",
         "Terminator",
         "Optimus Prime",
         "Wolverine",
-        "Professor X",
-        "BTS Jimin",
-        "BTS Jungkook"
+        "Professor X"
     ],
     "character_theOffice": [
         "Michael Scott",
@@ -235,7 +237,9 @@
         "Bob Marley",
         "Freddie Mercury",
         "The Beatles",
-        "Elvis"
+        "Elvis",
+        "BTS Jimin",
+        "BTS Jungkook"
     ],
     "characterGroup": [
         "#character#, #character#, and #character#"

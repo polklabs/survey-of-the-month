@@ -77,12 +77,7 @@
         "Emperor's New Groove",
         "Zootopia"
     ],
-    "world": [
-        "#world_pixar#",
-        "#world_sitcom#",
-        "#world_dreamworks#",
-        "#world_bluesky#",
-        "#disney#",
+    "world_other": [
         "Marvel",
         "DC",
         "Star Wars",
@@ -107,5 +102,13 @@
         "Spy Kids",
         "Coraline",
         "Secret Life of Walter Mitty"
+    ],
+    "world": [
+        "#world_pixar#",
+        "#world_sitcom#",
+        "#world_dreamworks#",
+        "#world_bluesky#",
+        "#disney#",
+        "#world_other#"
     ]
 }

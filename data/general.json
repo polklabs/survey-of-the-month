@@ -35,10 +35,10 @@
     ],
 
     "generalReaction": [
-        "Nice",
-        "Cool",
-        "Woah",
-        "K"
+        "ah", "aha", "ahem", "alas", "amen", "aw", "awesome", "aww", "^$bada-bing:bada-bing, bada-bing, bada-boom$", "bah", "baloney", "big deal", "bingo", "boo", "boo-hoo", "^$booyah:boo-yah$", "^$boy:boy oh boy$", "bravo", "brilliant", "brrr", "bull", "^$bye:bye-bye$", "cheers", "^$come on:c'mon$", "cool", "cowabunga", "dang", "^$darn:darn it$", "dear me", "duck", "duh", "eh", "enjoy", "excellent", "fabulous", "fantastic", "^$fiddledeedee:fiddle-dee-dee$", "finally", "for heaven's sake", "fore", "foul", "freeze", "^$gee:gee whiz:gee willikers$", "^$giddyap:giddyup$", "^$golly:good golly:golly gee willikers$", "^$goodbye:good-bye$", "good grief", "good heavens", "gosh", "great", "great balls of fire", "ha", "hallelujah", "^$heavens:heavens above:heavens to betsy$", "heigh-ho", "hello", "help", "^$hey:hey there$", "^$hi:hiya$", "hip, hip, hooray", "^$hmm:hrm$", "ho-ho-ho", "^$holy mackerel:holy cow:holy moly:holy moses:holy smokes$", "ho-hum", "^$hooray:hurrah, hurray$", "^$howdy:howdy do$", "huh", "ick", "indeed", "jeez", "kaboom", "kapow", "^$lordy:lordy, lordy$", "mama mia", "man", "marvelous", "my", "^$my goodness:my heavens:my stars:my word$", "nah", "no problem", "^$no way:no way josé$", "nope", "nuts", "^$oh:oh boy:oh dear:oh my:oh my gosh:oh my goodness:oh no:oh well$", "^$ok:okay$", "ouch", "ow", "please", "poof", "shh", "super", "swell", "welcome", "well", "whoop-de-doo", "woo-hoo", "wow", "yabba dabba doo", "yadda, yadda, yadda", "yippee", "yummy",
+        "nice",
+        "woah",
+        "k"
     ],
     "month": [
         "January",

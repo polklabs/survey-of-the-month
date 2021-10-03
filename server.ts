@@ -28,7 +28,10 @@ const speedLimiter = slowDown({
     windowMs: 10 * 60 * 1000, // 15 minutes
     delayAfter: 100, // allow 100 requests per 15 minutes, then...
     delayMs: 500, // begin adding 500ms of delay per request above 100:
-    maxDelayMs: 10000 // Will not increase past 10 seconds
+    maxDelayMs: 10000, // Will not increase past 10 seconds,
+    skip: (req) => {
+        return req.ip.startsWith('192.168.1.');
+    }
 });
 const feedbackLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window

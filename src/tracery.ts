@@ -110,7 +110,10 @@ export class Tracery {
         if (index === -1) {
             this.question.choices = [];
             if (this.question.answerCount === -1) {
-                const allAnswers: string[] = grammar[this.question.answerKey] ?? [];
+                let allAnswers: string[] = grammar[this.question.answerKey] ?? [];
+                if (allAnswers.length === 0) {
+                    allAnswers = this.customDict[this.question.answerKey] ?? [];
+                }
                 allAnswers.forEach(a => {
                     let choice = ModString(this.ParseString(a), 'capitalize', this.rng);
                     this.question.choices.push(choice);
