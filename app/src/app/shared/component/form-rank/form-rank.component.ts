@@ -43,7 +43,7 @@ export class FormRankComponent implements OnChanges {
     }
 
     onChange(): void {
-        this.aUpdate.emit(this.choices.map(x => this.answers.indexOf(x)));
+        this.aUpdate.emit(this.answers.map(x => this.choices.indexOf(x)));
     }
 
 }

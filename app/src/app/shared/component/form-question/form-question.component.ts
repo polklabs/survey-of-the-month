@@ -93,4 +93,8 @@ export class FormQuestionComponent implements OnInit {
         this.aUpdate.emit($event);
     }
 
+    disableAnswerRandom(): boolean {
+        return this.question.choices.length === 1 && this.question.choices[0] === 'Answer';
+    }
+
 }

@@ -14,7 +14,7 @@
             </mat-form-field>
         </div> -->
 
-        <div style="font-size: smaller; color:gold" *ngIf="editable && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
+        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
 
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
     </mat-card-content>
@@ -35,7 +35,7 @@
             <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
                 <mat-icon>casino</mat-icon> Question
             </button>
-            <button mat-flat-button color="accent" [disabled]="loading || question.custom" (click)="qRandomizeAnswers.emit()">
+            <button mat-flat-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()">
                 <mat-icon>casino</mat-icon> Answers
             </button>
             <button mat-flat-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" fxHide.lt-sm>
