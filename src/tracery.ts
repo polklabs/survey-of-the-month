@@ -139,13 +139,15 @@ export class Tracery {
         if (dict[key] === undefined) return key;
         if (dict[key].length === 0) return key;
 
+        let value = 0;
         if (this.typeFilter && isOrigin) {
             const temp = dict[key].filter((x: string) => x.includes(`[answerType:${this.typeFilter}]`));
-            dict = {};
-            dict[key] = temp;
-        }
-
-        const value = randomNext(0, dict[key].length, this.rng);
+            value = randomNext(0, temp.length, this.rng);
+            value = dict[key].findIndex((x: string) => x === temp[value]);
+            if (value === -1) { value = 0; }
+        } else {
+            value = randomNext(0, dict[key].length, this.rng);
+        }        
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.question.questionOrigin !== -1) {
