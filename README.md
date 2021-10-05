@@ -24,7 +24,7 @@ The basic idea is you load a dictionary with each entry having an array of strin
  - Modifiers are added after keys and will perform further changes to the inserted string
     - #person.capitalize# -> alice -> Alice
  - You can string multiple modifiers together and they will be performed in order
-    - #color.a.ed# -> yellow -> an yellowed
+    - #object.a.s# -> oven -> an ovens
  - Available mods
     - `capitalize` - Make the first letter uppercase
     - `a` - Add 'a' or 'an' before a word
@@ -47,21 +47,24 @@ The basic idea is you load a dictionary with each entry having an array of strin
  - Keys can also be handled without inserting them into text and using them later
  - A string starting with [keyName:#value#] will be can later be accessed by #keyName#
  - This is useful for using the same value multiple times or saving a separate value for context
- - Values will be calculated on saving, you can also save static values
+ - Values will be calculated on key parsing, you can also save static values
     - [key:#color#] or [key:blue]
  - Values stored this way are global, once they are stored can be accessed from anywhere in the grammar.
     - ```
         "origin": ["You're off to fight #fighter# but can't find your #fighter_weapon#!],
         "fighter": ["[fighter_weapon:sword]Dragon", "[fighter_weapon:slingshot]Goliath"]
         ```
+    - Origin is parsed, then fighter, then fighter_weapon is saved, then fighter_weapon is parsed
 ### Inline Choices
  - Sometimes you only have a small number of options and don't want to create a whole new key and string array. That's where inline choices come in.
  - Formatted as `^$optionA:optionB$`. Examples:
     - `"Last ^$show:movie$ you watched?"` -> "Last show you watched?" OR "Last movie you watched"
     - `"Could you fight ^$#animal.a#:#character#$?"` -> "Could you figh a duck" OR "Could you fight Dwight K. Schrute"
     - `Hello^$:, How are you$?` -> "Hello?" OR "Hello, How are you?"
+    - `^$I have \\$100:I'm broke$` -> "I have $100" OR "I'm broke"
+    - `^$Testing\\:1:Done$` -> "Testin:1" OR "Done"
  - Choices are applied before everything else.
-    - `[answerType:mc][answerKey:^$character:animal:singer$]Choose your protector.` becomes `[answerType:mc][answerKey:animal]Choose your protector.` before we start to parse temporary values
+    - `[type:mulit][key:^$character:animal:singer$]Choose your protector.` becomes `[type:multi][key:animal]Choose your protector.` before we start to parse temporary values
 
 ### Duplicate Prevention
  - In order to stop the same values appearing multiple times in the same result we check to see if we've already seen the given value.
@@ -69,6 +72,11 @@ The basic idea is you load a dictionary with each entry having an array of strin
   - `#color# with #color# and #color#` -> "blue with red and green"
     - Should never become "blue with blue and red"
 
+### Order Of Operations
+ - Inline choices are always parsed first, allowing you to choose between multiple keys before parsing them
+ - Variables are next, variable values are parsed during this time too.
+    - Ex: [animal1:#animal#] -> "animal1":"duck"
+ - Lastly all remaining keys are parsed
 ---
 
 ## WIP

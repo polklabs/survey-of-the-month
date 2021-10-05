@@ -9,7 +9,8 @@ const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for quest
 
 const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/m; // [key:value] -> key, value
 const regexString = /(#(?<key>[a-zA-Z0-9_]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
-const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
+const regexInlineChoiceGroup = /\^\$(?<choices>(?:[^\$\\]*(?:\\.)?)*)\$/m; // ^$first:second$ -> first:second
+const regexInlineChoices = /(?<choice>(?:\\.|[^:\\]+)+)/gm; // first:second -> ["first", "second"]
 
 const grammar: { [key: string]: string[] } = {};
 const loadedfiles: string[] = [];
@@ -19,7 +20,7 @@ checkGrammar();
 export class Tracery {
 
     customDict: { [key: string]: string[] } = {};
-    seen: {[key: string]: Set<string>} = {};
+    seen: { [key: string]: Set<string> } = {};
     shuffleQuestion = false;
     typeFilter?: AnswerType;
     rng: any;
@@ -82,7 +83,7 @@ export class Tracery {
         this.chance = 1;
         this.question.text = this.ParseKey(origin, true);
         this.question.qChance = this.chance;
-        
+
         if (this.question.vars['type'] !== undefined) {
             this.question.answerType = this.question.vars['type'];
             delete this.question.vars['type'];
@@ -139,14 +140,14 @@ export class Tracery {
         let value = 0;
         if (this.typeFilter && isOrigin) {
             const temp = dict[key].filter((x: string) => x.includes(`[type:${this.typeFilter}]`));
-            this.chance *= temp.length;
+            this.chance *= temp.length || 1;
             value = randomNext(0, temp.length, this.rng);
             value = dict[key].findIndex((x: string) => x === temp[value]);
             if (value === -1) { value = 0; }
         } else {
-            this.chance *= dict[key].length;
+            this.chance *= dict[key].length || 1;
             value = randomNext(0, dict[key].length, this.rng);
-        }        
+        }
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.question.questionOrigin !== -1) {
@@ -159,13 +160,30 @@ export class Tracery {
         return dict[key][value];
     }
 
+    // Theres probably a better way to do this while allowing $ and : in the text
     ParseInlineChoice(value: string) {
         let m;
-        while ((m = regexInlineChoice.exec(value)) !== null) {
-            const choices = m.groups?.['choice'].split(':') ?? '';
-            if (choices.length === 0) value = value.replace(m[0], '');
+        // Look for all text between ^$ and $
+        while ((m = regexInlineChoiceGroup.exec(value)) !== null) {
+            let choiceGroup: string = m.groups?.['choices'] ?? '';
+            choiceGroup = choiceGroup.replace(/\\\$/g, '$'); // Fixed escaped $ character
 
-            this.chance *= choices.length;
+            const choices: string[] = [];
+
+            let n;
+            // Look for all groups in text a:b:c...
+            while ((n = regexInlineChoices.exec(choiceGroup)) !== null) {
+                if (n.index === regexInlineChoices.lastIndex) {
+                    regexInlineChoices.lastIndex++;
+                }
+
+                let choice = n.groups?.['choice'] ?? '';
+                choice = choice.replace(/\\:/g, ':'); // Fixed escaped : character
+                choices.push(choice);
+            }
+
+            this.chance *= choices.length || 1;
+            if (choices.length === 0) value = value.replace(m[0], '');
             value = value.replace(m[0], choices[randomNext(0, choices.length, this.rng)]);
         }
         return value;
@@ -270,9 +288,10 @@ function checkGrammar() {
         });
     });
 
+    // Check for reserved keys
     keys.forEach(key => {
         if (reservedKeys.includes(key)) {
             console.error(`Cannot use reserved key: "${key}":[...]`);
         }
-    })
+    });
 }

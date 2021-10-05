@@ -36,7 +36,7 @@
             <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
                 <mat-icon>casino</mat-icon> Question
             </button>
-            <button mat-flat-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" fxHide.lt-sm>
+            <button mat-flat-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()">
                 <mat-icon>casino</mat-icon> Answers
             </button>
             <button mat-flat-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" fxHide.lt-sm>
