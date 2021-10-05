@@ -1,10 +1,10 @@
 {
     "group_choice": [
-        "[answerKey:group_heist]Oh shoooot we're pulling off a heist! Choose your role?", 
-        "[answerKey:group_circus]What is your act in our circus?", 
-        "[answerKey:group_yearbook]What would you be voted as in our yearbook?",
-        "[answerKey:group_film]What is your role on a film set?",
-        "[answerKey:group_spaceShip]What is your role on a space ship?"
+        "[key:group_heist]Oh shoooot we're pulling off a heist! Choose your role?", 
+        "[key:group_circus]What is your act in our circus?", 
+        "[ey:group_yearbook]What would you be voted as in our yearbook?",
+        "[key:group_film]What is your role on a film set?",
+        "[key:group_spaceShip]What is your role on a space ship?"
     ],
     "group_circus": ["Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"],
     "group_heist": ["Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"],
