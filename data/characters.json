@@ -1,16 +1,16 @@
 {
     "character": [
-        "#character_theOffice# (The Office)",
-        "#character_parksRec# (Parks & Rec)",
-        "#character_lotr# (LotR)",
-        "#character_pixar#",
-        "#character_harryPotter#",
-        "#character_marvel#^$: pre powers$",
-        "#character_friends# (Friends)",
-        "#character_singer# (Musician)",
-        "#character_dc#",
-        "#character_actor# (Actor)",
-        "#character_movie_other#"
+        "[tag:tv_theOffice]#character_theOffice# (The Office)",
+        "[tag:tv_parksAndRec]#character_parksRec# (Parks & Rec)",
+        "[tag:movies_lotr]#character_lotr# (LotR)",
+        "[tag:movies_pixar]#character_pixar#",
+        "[tag:movies_harryPotter]#character_harryPotter#",
+        "[tag:movies_marvel]#character_marvel#^$: pre powers$",
+        "[tag:tv_friends]#character_friends# (Friends)",
+        "[tag:music]#character_singer# (Musician)",
+        "[tag:movies_dc]#character_dc#",
+        "[tag:actor]#character_actor# (Actor)",
+        "[tag:movies]#character_movie_other#"
     ],
     "character_movie_other": [
         "All five Bennet sisters",

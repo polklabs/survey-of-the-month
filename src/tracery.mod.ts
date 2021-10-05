@@ -38,12 +38,34 @@ export function ModString(value: string, mod: string, rng: any): string {
             case 'range':
                 const [start, end, step, pad] = value.split("_").map(x => +x);
                 if (step) {
-                    value = roundUp(randomNext(start, end, rng), step).toString();
+                    value = roundUp(randomNext(start, end+1, rng), step).toString();
                 } else {
-                    value = randomNext(start, end, rng).toString();
+                    value = randomNext(start, end+1, rng).toString();
                 }
                 if (pad) {
                     value = value.padStart(pad, '0');
+                }
+                break;
+            case 'ord':
+                const num = parseInt(value, 10);
+                if (isNaN(num)) { break; }
+                if (num >= 4 && num <= 20) { 
+                    value += 'th';
+                } else {
+                    const ones = Math.floor(num % 10);
+                    switch (ones) {
+                        case 1:
+                            value += 'st';
+                            break;
+                        case 2:
+                            value += 'nd';
+                            break;
+                        case 3:
+                            value += 'rd';
+                            break;
+                        default:
+                            value += 'th';
+                    }
                 }
                 break;
 

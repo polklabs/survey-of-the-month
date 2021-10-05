@@ -19,7 +19,7 @@
 	],
 	"question": [
         "[type:text]The ^$most recent:strangest$ dream you can remember?",
-        "[type:text]If you could train any animal in the world to be your pet/protector, what would it be?",
+        "[type:text]If you could train any animal ^$in the world:from #continent#$ to be your ^$pet:protector$, what would it be?",
         "[type:multi][key:allAnswers][count:-1]Are your intentions are pure (regarding what is up to your discretion)?",
         "[type:multi][key:yesNo][count:-1]Have you ever told someone you had a crush on them?",
 		"[type:text]Last ^$show:movie$ you watched?",
@@ -43,7 +43,7 @@
 		"[type:date]Predict the date that #person.capitalize# will get a BF/GF.",
 		"[type:text]Have you ever gotten #receivedThing#? What for?",
 		"[type:text]Your last #messageType# is going to be the only marking on your tombstone. So what does it say?",
-		"[type:text]The #numberPlace# sentence on page #1_150.range# of the book closest to you, describes your #lifeAspect#",
+		"[type:text]The #1_4.range.ord# sentence on page #1_150.range# of the book closest to you, describes your #lifeAspect#",
 		"[type:text]What was your first impression of #person.capitalize#?",
 		"[type:text]For some reason you're making your cashier at #store# very uncomfortable. What are you buying?",
 		"[type:multi][key:enchantedObject]You're off to fight #fighter.a# but can't find your #fighter_weapon#! Choose an alternative weapon you can find",
@@ -89,7 +89,7 @@
         "[type:text]You have to spend $#1_100.range# #numberMagnatude# as fast as possible, what do you buy?",
 		"[type:text]You're given #animal.a# as a pet. What do you name them?",
 		"[type:multi][key:olympicSport]You must participate in an Olympic Sport.",
-		"[type:text]It's #1_12_1.range#:#0_59_1_2.range# ^$AM:PM$ on a #dayOfWeek# in #month#, we've got a full tank of gas, we're wearing #clothing.s# and it #10_1000.range# miles to ___.",
+		"[type:text]It's #1_12_1.range#:#0_59_1_2.range# ^$AM:PM$ on a #dayOfWeek# in #month#, we've got a full tank of gas, we're wearing #clothing.s# and it #10_1000_10.range# miles to ___.",
 		"[type:multi][key:house]Choose your future home.",
 		"[type:text]What is your one rule?",
 		"[type:multi][key:^$character:animal$]Choose one to take on in a fight.",
@@ -146,7 +146,7 @@
 	
 	"location": [ "on an island", "in an elevator", "at a beach house" ],
 	"receivedThing": [ "detention", "a ticket", "an award" ],
-	"messageType": [ "social media post", "text", "email" ],
+	"messageType": [ "social media post", "text", "email", "text you sent to #person#", "text you got from #person#" ],
 	
 	"lifeAspect": [ "sex life", "love life", "career", "family", "BF/GF", "husband/wife" ],
 	"dayAspect": [ "temperature", "weather" ],

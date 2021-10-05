@@ -7,15 +7,19 @@ import fs from 'fs';
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
 
-const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/m; // [key:value] -> key, value
-const regexString = /(#(?<key>[a-zA-Z0-9_]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
-const regexInlineChoiceGroup = /\^\$(?<choices>(?:[^\$\\]*(?:\\.)?)*)\$/m; // ^$first:second$ -> first:second
+const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
+const regexString = /(#(?<key>[a-zA-Z0-9_]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#
+const regexInlineChoiceGroup = /\^\$(?<choices>(?:[^\$\\]*(?:\\.)?)*)\$/gm; // ^$first:second$ -> first:second
 const regexInlineChoices = /(?<choice>(?:\\.|[^:\\]+)+)/gm; // first:second -> ["first", "second"]
 
 const grammar: { [key: string]: string[] } = {};
+const tags: Set<string> = new Set();
+
 const loadedfiles: string[] = [];
 loadGrammar('survey.json');
+
 checkGrammar();
+checkTags();
 
 export class Tracery {
 
@@ -162,60 +166,61 @@ export class Tracery {
 
     // Theres probably a better way to do this while allowing $ and : in the text
     ParseInlineChoice(value: string) {
-        let m;
         // Look for all text between ^$ and $
-        while ((m = regexInlineChoiceGroup.exec(value)) !== null) {
-            let choiceGroup: string = m.groups?.['choices'] ?? '';
+        value = value.replace(new RegExp(regexInlineChoiceGroup), (...match: string[]) => {
+            const groups = match.pop();
+            let choiceGroup: string = groups?.['choices'] ?? '';
             choiceGroup = choiceGroup.replace(/\\\$/g, '$'); // Fixed escaped $ character
 
             const choices: string[] = [];
 
-            let n;
+            let m;
             // Look for all groups in text a:b:c...
-            while ((n = regexInlineChoices.exec(choiceGroup)) !== null) {
-                if (n.index === regexInlineChoices.lastIndex) {
+            while ((m = regexInlineChoices.exec(choiceGroup)) !== null) {
+                if (m.index === regexInlineChoices.lastIndex) {
                     regexInlineChoices.lastIndex++;
                 }
 
-                let choice = n.groups?.['choice'] ?? '';
+                let choice = m.groups?.['choice'] ?? '';
                 choice = choice.replace(/\\:/g, ':'); // Fixed escaped : character
                 choices.push(choice);
             }
 
             this.chance *= choices.length || 1;
-            if (choices.length === 0) value = value.replace(m[0], '');
-            value = value.replace(m[0], choices[randomNext(0, choices.length, this.rng)]);
-        }
+            if (choices.length === 0) { return ''; }
+            return choices[randomNext(0, choices.length, this.rng)];
+        });
         return value;
     }
 
-    ParseString(value: string) {
-        value = this.ParseInlineChoice(value);
+    ParseString(str: string) {
+        str = this.ParseInlineChoice(str);
 
-        let m;
-        while ((m = regexVariable.exec(value)) !== null) {
-            const key = m.groups?.['key'] ?? '';
-            let variable = m.groups?.['value'] ?? '';
-            variable = this.ParseString(variable);
+        str = str.replace(new RegExp(regexVariable), (...match: string[]) => {
+            const groups = match.pop();
+            const key = groups?.['key'] ?? '';
+            const val = groups?.['value'] ?? '';
+
+            let variable = this.ParseString(val);
             this.question.vars[key] = variable;
+            return '';
+        });
 
-            value = value.replace(m[0], '');
-        }
 
-
-        while ((m = regexString.exec(value)) !== null) {
-            const key = m.groups?.["key"] ?? '';
-            const mod = m.groups?.["mod"] ?? '';
+        str = str.replace(new RegExp(regexString), (...match: string[]) => {
+            const groups = match.pop();
+            const key = groups?.["key"] ?? '';
+            const mod = groups?.["mod"] ?? '';
 
             let toReturn = this.ParseKey(key);
-            if (mod !== '') {
+            if (mod) {
                 toReturn = ModString(toReturn, mod, this.rng);
             }
 
-            value = value.replace(m[0], toReturn);
-        }
+            return toReturn;
+        });
 
-        return value;
+        return str;
     }
 
     ParseKey(key: string, isOrigin = false) {
@@ -294,4 +299,26 @@ function checkGrammar() {
             console.error(`Cannot use reserved key: "${key}":[...]`);
         }
     });
+}
+
+function checkTags() {
+    const keys: string[] = Object.keys(grammar);
+
+    keys.forEach(key => {
+        grammar[key].forEach((str: string, index: number) => {
+
+            grammar[key][index] = str.replace(new RegExp(regexVariable), (...match: string[]) => {
+                const groups = match.pop();
+                const key = groups?.['key'] ?? '';
+                if (key === 'tag') {
+                    const value = groups?.['value'] ?? '';
+                    value.split(',').forEach((x: string) => tags.add(x));
+                    return '';
+                }
+                return match[0];
+            });
+        });
+    });
+
+    console.log(tags);
 }
