@@ -31,9 +31,10 @@ The basic idea is you load a dictionary with each entry having an array of strin
     - `ed` - Add 'ed' to the end of a word
     - `s` -  Add 's'/'es'/'ies' to the end of a word
     - `possessive` - Add 's to a word
-    - `range` - Converts the a key in the format #start:end:step.range# into a number
-        - #1:10.range# -> 5
-        - #20:500:20.range# -> 140
+    - `range` - Converts the a key in the format #start_end_step_pad.range# into a number
+        - #1_10.range# -> 5
+        - #20_500_20.range# -> 140
+        - #1_10_1_2.range# -> 05
     - `html_i` - Italics
     - `html_b` - Bold
     - `html_em` - Emphasize

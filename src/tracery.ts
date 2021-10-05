@@ -5,23 +5,25 @@ import { AnswerType, Question } from '../app/src/app/shared/model/question.model
 import fs from 'fs';
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
 
-const regexVariable = /\[(?<key>.+?):(?<value>.+?)\]/gm; // [key:value] -> key, value
-const regexVars = /^(?<vars>(\[[a-zA-Z0-9_ -:.#]+?\])+)/m; // [key:value]Test -> [key:value]
-const regexString = /(#(?<vars>(\[[a-zA-Z0-9_ -:.#]+?\])*?)(?<key>[a-zA-Z0-9_:]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
+const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/m; // [key:value] -> key, value
+const regexString = /(#(?<key>[a-zA-Z0-9_]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/m; // #key#, #key.s#, #[key:value]key#
 const regexInlineChoice = /\^\$(?<choice>.*?:.*?)\$/m; // ^$first:second$ -> first or second
 
-const grammar: any = {};
+const grammar: { [key: string]: string[] } = {};
 const loadedfiles: string[] = [];
 loadGrammar('survey.json');
+checkGrammar();
 
 export class Tracery {
 
-    customDict: any = {};
-    seen: any = {};
+    customDict: { [key: string]: string[] } = {};
+    seen: {[key: string]: Set<string>} = {};
     shuffleQuestion = false;
     typeFilter?: AnswerType;
     rng: any;
+    chance = 1;
 
     question: Question = new Question();
 
@@ -31,9 +33,7 @@ export class Tracery {
 
         this.seen = {};
         this.question.questionOrigin = questionOrigin;
-        if (people.length > 0) {
-            this.customDict['person'] = people;
-        }
+        this.customDict['person'] = people;
 
         if (questionOrigin !== -1) {
             this.shuffleQuestion = true;
@@ -79,18 +79,25 @@ export class Tracery {
     }
 
     generateQuestion(origin: string) {
+        this.chance = 1;
         this.question.text = this.ParseKey(origin, true);
-        if (this.question.vars['answerType'] !== undefined) {
-            this.question.answerType = this.question.vars['answerType'];
+        this.question.qChance = this.chance;
+        
+        if (this.question.vars['type'] !== undefined) {
+            this.question.answerType = this.question.vars['type'];
+            delete this.question.vars['type'];
         }
-        if (this.question.vars['answerAllowOther'] !== undefined) {
-            this.question.otherOptionAllow = this.question.vars['answerAllowOther'];
+        if (this.question.vars['other'] !== undefined) {
+            this.question.otherOptionAllow = this.question.vars['other'];
+            delete this.question.vars['other'];
         }
-        if (this.question.vars['answerKey'] !== undefined) {
-            this.question.answerKey = this.question.vars['answerKey'];
+        if (this.question.vars['key'] !== undefined) {
+            this.question.answerKey = this.question.vars['key'];
+            delete this.question.vars['key'];
 
-            if (this.question.vars['answerCount'] !== undefined) {
-                this.question.answerCount = parseInt(this.question.vars['answerCount'], 10);
+            if (this.question.vars['count'] !== undefined) {
+                this.question.answerCount = parseInt(this.question.vars['count'], 10);
+                delete this.question.vars['count'];
                 if (isNaN(this.question.answerCount)) {
                     this.question.answerCount = 1;
                 }
@@ -110,19 +117,11 @@ export class Tracery {
         if (index === -1) {
             this.question.choices = [];
             if (this.question.answerCount === -1) {
-                let allAnswers: string[] = grammar[this.question.answerKey] ?? [];
-                if (allAnswers.length === 0) {
-                    allAnswers = this.customDict[this.question.answerKey] ?? [];
-                }
+                let allAnswers: string[] = grammar[this.question.answerKey] ?? this.customDict[this.question.answerKey] ?? [];
                 allAnswers.forEach(a => {
                     let choice = ModString(this.ParseString(a), 'capitalize', this.rng);
                     this.question.choices.push(choice);
                 });
-                // let choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
-                // while (this.question.choices.indexOf(choice) === -1) {
-                //     this.question.choices.push(choice);
-                //     choice = this.ParseString(`#${this.question.answerKey}.capitalize#`);
-                // }
             } else {
                 for (let i = 0; i < this.question.answerCount; i++) {
                     this.question.choices.push(this.ParseString(`#${this.question.answerKey}.capitalize#`));
@@ -134,18 +133,18 @@ export class Tracery {
     }
 
     GetRandom(key: string, isOrigin = false): string {
-        var dict = grammar;
-        if (dict[key] === undefined) dict = this.customDict;
-        if (dict[key] === undefined) return key;
-        if (dict[key].length === 0) return key;
+        var dict = grammar[key] ? grammar : this.customDict;
+        if (!dict[key] || dict[key].length === 0) return key;
 
         let value = 0;
         if (this.typeFilter && isOrigin) {
-            const temp = dict[key].filter((x: string) => x.includes(`[answerType:${this.typeFilter}]`));
+            const temp = dict[key].filter((x: string) => x.includes(`[type:${this.typeFilter}]`));
+            this.chance *= temp.length;
             value = randomNext(0, temp.length, this.rng);
             value = dict[key].findIndex((x: string) => x === temp[value]);
             if (value === -1) { value = 0; }
         } else {
+            this.chance *= dict[key].length;
             value = randomNext(0, dict[key].length, this.rng);
         }        
 
@@ -160,33 +159,13 @@ export class Tracery {
         return dict[key][value];
     }
 
-    ParseVariables(variables: string) {
-        let m;
-        while ((m = regexVariable.exec(variables)) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === regexVariable.lastIndex) {
-                regexVariable.lastIndex++;
-            }
-
-            const key = m.groups?.['key'] ?? '';
-            let value = m.groups?.['value'] ?? '';
-            value = this.ParseString(value);
-
-            this.question.vars[key] = value;
-        }
-    }
-
     ParseInlineChoice(value: string) {
         let m;
         while ((m = regexInlineChoice.exec(value)) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === regexInlineChoice.lastIndex) {
-                regexInlineChoice.lastIndex++;
-            }
-
             const choices = m.groups?.['choice'].split(':') ?? '';
             if (choices.length === 0) value = value.replace(m[0], '');
 
+            this.chance *= choices.length;
             value = value.replace(m[0], choices[randomNext(0, choices.length, this.rng)]);
         }
         return value;
@@ -196,30 +175,19 @@ export class Tracery {
         value = this.ParseInlineChoice(value);
 
         let m;
-        while ((m = regexVars.exec(value)) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === regexVars.lastIndex) {
-                regexVars.lastIndex++;
-            }
+        while ((m = regexVariable.exec(value)) !== null) {
+            const key = m.groups?.['key'] ?? '';
+            let variable = m.groups?.['value'] ?? '';
+            variable = this.ParseString(variable);
+            this.question.vars[key] = variable;
 
-            this.ParseVariables(m.groups?.['vars'] ?? '');
             value = value.replace(m[0], '');
         }
 
 
         while ((m = regexString.exec(value)) !== null) {
-            // This is necessary to avoid infinite loops with zero-width matches
-            if (m.index === regexString.lastIndex) {
-                regexString.lastIndex++;
-            }
-
-            const variables = m.groups?.["vars"] ?? '';
             const key = m.groups?.["key"] ?? '';
             const mod = m.groups?.["mod"] ?? '';
-
-            if (variables !== '') {
-                this.ParseVariables(variables);
-            }
 
             let toReturn = this.ParseKey(key);
             if (mod !== '') {
@@ -278,14 +246,6 @@ function loadGrammar(filename: string) {
             console.warn(`Key already exists in grammar: ${key}`);
             grammar[key].concat(grammarTemp[key]);
         }
-
-        // Check for duplicate values
-        grammar[key].forEach((value: string, index: number) => {
-            const dupIndex = grammar[key].findIndex((x: string) => x === value);
-            if (dupIndex < index && dupIndex >= 0) {
-                console.warn(`Duplicate value: ${filename} -> ${key}: [${value}] ${index}`);
-            }
-        });
     });
 
     if (grammarTemp['require!'] !== undefined) {
@@ -295,4 +255,24 @@ function loadGrammar(filename: string) {
             }
         })
     }
+}
+
+function checkGrammar() {
+    const keys: string[] = Object.keys(grammar);
+
+    // Check for duplicate values
+    keys.forEach(key => {
+        grammar[key].forEach((value: string, index: number) => {
+            const dupIndex = grammar[key].findIndex((x: string) => x === value);
+            if (dupIndex < index && dupIndex >= 0) {
+                console.warn(`Duplicate value: "${key}"": "${value}" (${index})`);
+            }
+        });
+    });
+
+    keys.forEach(key => {
+        if (reservedKeys.includes(key)) {
+            console.error(`Cannot use reserved key: "${key}":[...]`);
+        }
+    })
 }

@@ -36,14 +36,15 @@ export function ModString(value: string, mod: string, rng: any): string {
                     value = `${value}'s`;
                 break;
             case 'range':
-                const values = value.split(":");
-                const start = +values[0];
-                const end = +values[1];
-                if (values.length === 3) {
-                    value = roundUp(randomNext(start, end, rng), +values[2]).toString();
-                    break;
-                } else
+                const [start, end, step, pad] = value.split("_").map(x => +x);
+                if (step) {
+                    value = roundUp(randomNext(start, end, rng), step).toString();
+                } else {
                     value = randomNext(start, end, rng).toString();
+                }
+                if (pad) {
+                    value = value.padStart(pad, '0');
+                }
                 break;
 
             // HTML Mods

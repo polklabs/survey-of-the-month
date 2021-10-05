@@ -8,6 +8,7 @@ export class Question {
     seed = '';
     custom = true;
     vars: any = {};
+    qChance = 1; // Chance of a question being displayed
 
     // Choice/Answer
     answerType: AnswerType = 'text';
