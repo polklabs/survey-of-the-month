@@ -1,7 +1,8 @@
 <mat-card>
 
     <mat-card-subtitle *ngIf="questionNumber !== undefined">Question: {{questionNumber}}</mat-card-subtitle>
-
+    <mat-card-subtitle *ngIf="question.qChance > 1 && basicEdit">Question Probability: 1 in {{question.qChance | number}}</mat-card-subtitle>
+    
     <mat-card-content>
         <p [innerHTML]="question.text"></p>
         

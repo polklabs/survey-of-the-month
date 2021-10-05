@@ -28,6 +28,14 @@ export class DataService {
       }).subscribe(
         (response: HttpEvent<any>) => {
           this.httpEvent(response, result, progress);
+        },
+        (error) => {
+            progress.next(100);
+            progress.complete();
+
+            result.next({ok: false, error: {code: 'HTTPERROR', body: {error: error.name, reason: error.statusText}}});
+            console.log(error);
+            result.complete();
         }
     );
 
@@ -49,6 +57,14 @@ export class DataService {
       }).subscribe(
         (response: HttpEvent<any>) => {
           this.httpEvent(response, result, progress);
+        },
+        (error) => {
+            progress.next(100);
+            progress.complete();
+
+            result.next({ok: false, error: {code: 'HTTPERROR', body: {error: error.name, reason: error.statusText}}});
+            console.log(error);
+            result.complete();
         }
     );
 
@@ -70,6 +86,14 @@ export class DataService {
       }).subscribe(
         (response: HttpEvent<any>) => {
           this.httpEvent(response, result, progress);
+        },
+        (error) => {
+            progress.next(100);
+            progress.complete();
+
+            result.next({ok: false, error: {code: 'HTTPERROR', body: {error: error.name, reason: error.statusText}}});
+            console.log(error);
+            result.complete();
         }
     );
 
@@ -91,6 +115,14 @@ export class DataService {
       }).subscribe(
         (response: HttpEvent<any>) => {
           this.httpEvent(response, result, progress);
+        },
+        (error) => {
+            progress.next(100);
+            progress.complete();
+
+            result.next({ok: false, error: {code: 'HTTPERROR', body: {error: error.name, reason: error.statusText}}});
+            console.log(error);
+            result.complete();
         }
     );
 
