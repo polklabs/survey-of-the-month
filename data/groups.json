@@ -2,7 +2,7 @@
     "group_choice": [
         "[key:group_heist]Oh shoooot we're pulling off a heist! Choose your role?", 
         "[key:group_circus]What is your act in our circus?", 
-        "[ey:group_yearbook]What would you be voted as in our yearbook?",
+        "[key:group_yearbook]What would you be voted as in our yearbook?",
         "[key:group_film]What is your role on a film set?",
         "[key:group_spaceShip]What is your role on a space ship?"
     ],

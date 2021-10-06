@@ -8,11 +8,12 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
 
 const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
-const regexString = /(#(?<key>[a-zA-Z0-9_]+)\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#
+const regexString = /(#(?<key>([a-zA-Z0-9_]+|[*]))\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#, #*#
 const regexInlineChoiceGroup = /\^\$(?<choices>(?:[^\$\\]*(?:\\.)?)*)\$/gm; // ^$first:second$ -> first:second
 const regexInlineChoices = /(?<choice>(?:\\.|[^:\\]+)+)/gm; // first:second -> ["first", "second"]
 
 const grammar: { [key: string]: string[] } = {};
+const grammarKeys: string[] = [];
 const tags: Set<string> = new Set();
 
 const loadedfiles: string[] = [];
@@ -86,7 +87,6 @@ export class Tracery {
     generateQuestion(origin: string) {
         this.chance = 1;
         this.question.text = this.ParseKey(origin, true);
-        this.question.qChance = this.chance;
 
         if (this.question.vars['type'] !== undefined) {
             this.question.answerType = this.question.vars['type'];
@@ -111,8 +111,10 @@ export class Tracery {
                 this.question.answerCount = randomNext(3, 5, this.rng);
             }
             this.question.answerKeys = this.question.answerKey.split(',');
+            this.chance *= this.question.answerKeys.length;
             this.question.answerKey = this.question.answerKeys[randomNext(0, this.question.answerKeys.length, this.rng)];
         }
+        this.question.qChance = this.chance;
     }
 
     generateAnswer(index = -1) {
@@ -226,6 +228,12 @@ export class Tracery {
     }
 
     ParseKey(key: string, isOrigin = false) {
+        // Handle wildcard key
+        if (key === '*') {
+            this.chance *= grammarKeys.length || 1;
+            key = grammarKeys[randomNext(0, grammarKeys.length, this.rng)];
+        }
+
         if (this.question.vars[key] !== undefined) {
             return this.question.vars[key];
         }
@@ -280,6 +288,15 @@ function loadGrammar(filename: string) {
             }
         })
     }
+
+    grammarKeys.push(...Object.keys(grammar).filter(x => {
+        if (x.includes('!')) { return false; }
+        if (x.includes('origin')) { return false; }
+        if (x.includes('intro_question')) { return false; }
+        if (x.includes('close_question')) { return false; }
+        if (x.includes('question')) { return false; }
+        return true;
+    }));
 }
 
 function checkGrammar() {

@@ -37,8 +37,9 @@ export function ModString(value: string, mod: string, rng: any): string {
                 break;
             case 'range':
                 const [start, end, step, pad] = value.split("_").map(x => +x);
+                // No idea why but when you roundUp end doesn't need the +1
                 if (step) {
-                    value = roundUp(randomNext(start, end+1, rng), step).toString();
+                    value = roundUp(randomNext(start, end, rng), step).toString();
                 } else {
                     value = randomNext(start, end+1, rng).toString();
                 }

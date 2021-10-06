@@ -20,6 +20,10 @@ The basic idea is you load a dictionary with each entry having an array of strin
 ## Logic
 ### #key#
  - Denotes a new string that sould be inserted randomly from an array of strings
+ - Keys incluce
+    - #animal# -> dog
+    - #character# -> batman
+    - #*# -> `a random key` -> ???
 ### #key.mod#
  - Modifiers are added after keys and will perform further changes to the inserted string
     - #person.capitalize# -> alice -> Alice

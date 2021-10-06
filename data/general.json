@@ -64,6 +64,7 @@
         "Sunday"
     ],
     "timeRange": [
+        "hour",
         "day",
         "week",
         "month",
@@ -122,6 +123,9 @@
     ],
     "state": [
         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+    ],
+    "language": [
+        "Konkani", "Balochi", "Belarusian", "Xhosa", "Mossi", "Hiligaynon/Ilonggo (Visayan)", "Uyghur", "Shona", "Hmong", "Swedish", "Kirundi", "Quechua", "Ilocano", "Eastern Min (Fuzhounese)", "Haitian Creole", "Dhundhari", "Kinyarwanda", "Czech", "Zulu", "Sylheti", "Northern Min", "Kazakh", "Akan", "Deccan", "Chewa", "Greek", "Chhattisgarhi", "Hungarian", "Haryanvi", "Magahi", "Marwari", "Somali", "Madurese", "Assamese", "Turkmen", "Khmer", "Zhuang", "Chittagonian", "Sinhalese", "Nepali", "Saraiki", "Malagasy", "Serbo-Croatian", "Kurdish", "Dutch", "Cebuano (Visayan)", "Gan Chinese", "Awadhi", "Azerbaijani", "Igbo", "Oromo", "Romanian", "Fula", "Amharic", "Sindhi", "Uzbek", "Maithili", "Yoruba", "Tagalog (Filipino)", "Bhojpuri", "Ukrainian", "Hakka", "Burmese", "Odia (Oriya)", "Hausa", "Sundanese", "Malayalam", "Xiang (Hunanese)", "Kannada", "Pashto", "Polish", "Persian", "Southern Min", "Jin", "Gujarati", "Thai", "Yue (Cantonese)", "Italian", "Turkish", "Urdu", "Tamil", "Marathi", "French", "Korean", "Vietnamese", "Telugu", "Malay", "Wu (Shanghainese)", "Javanese", "German", "Punjabi", "Japanese", "Russian", "Bengali", "Portuguese", "Arabic", "Hindi[a]", "English", "Spanish", "Mandarin"
     ],
     "numberMagnatude": ["", "thousand", "million", "billion"]
 }

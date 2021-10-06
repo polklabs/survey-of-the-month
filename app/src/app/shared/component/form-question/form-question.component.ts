@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { HelperService } from 'src/app/core/services/helperService.service';
 import { AnswerType, Question } from '../../model/question.model';
 
 @Component({
@@ -51,6 +52,7 @@ export class FormQuestionComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
+        console.log(this.question);
     }
 
     getAnswerTemplate(): TemplateRef<any> {
@@ -92,6 +94,16 @@ export class FormQuestionComponent implements OnInit {
 
     disableAnswerRandom(): boolean {
         return this.question.choices.length === 1 && this.question.choices[0] === 'Answer';
+    }
+
+    answerKeyChange(newKey: string): void {
+        this.question.answerKey = newKey;
+        console.log(this.question.answerKey);
+        this.qRandomizeAnswers.emit();
+    }
+
+    answerKeyString(key: string): string {
+        return HelperService.answerKeyToString(key);
     }
 
 }
