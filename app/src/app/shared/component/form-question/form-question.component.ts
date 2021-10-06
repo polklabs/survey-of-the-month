@@ -26,10 +26,6 @@ export class FormQuestionComponent implements OnInit {
     @Input() basicEdit = false; // For the homepage
     @Input() questionNumber?: string;
 
-    @Output() qReset = new EventEmitter<void>();
-    @Output() qDelete = new EventEmitter<void>();
-    @Output() qEditText = new EventEmitter<void>();
-    @Output() qEditType = new EventEmitter<AnswerType>();
     @Output() qRandomize = new EventEmitter<void>();
     @Output() qRandomizeAnswers = new EventEmitter<void>();
     @Output() qSeed = new EventEmitter<void>();
@@ -41,6 +37,7 @@ export class FormQuestionComponent implements OnInit {
     @Output() aEditText = new EventEmitter<number>();
     @Output() aOtherOptionAllow = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
 

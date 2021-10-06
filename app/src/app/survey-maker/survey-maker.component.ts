@@ -107,7 +107,6 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false, typeFilter?: AnswerType, origin?: string): void {
-        this.dirty = true;
         const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined, typeFilter, origin };
 
         if (reset) {
@@ -135,6 +134,7 @@ export class SurveyMakerComponent implements OnInit {
                     } else {
                         this.survey.questions[questionIndex] = data.data;
                     }
+                    this.dirty = true;
                 } else {
                     this.dialogService.error(data.error).subscribe(
                         () => this.router.navigateByUrl('/home')
@@ -148,7 +148,7 @@ export class SurveyMakerComponent implements OnInit {
         this.dirty = true;
         const question = new Question();
         question.answerType = type;
-        question.text = 'Use the pencil button in the lower right to edit this text...';
+        question.text = 'Use the pencil button to the right to edit this text...';
         if (question.answerType === 'rank') {
             question.answerCount = 2;
             question.choices.push('Answer 2');
@@ -164,14 +164,19 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     deleteQuestion(questionIndex: number): void {
-        this.dirty = true;
-        this.survey.questions.splice(questionIndex, 1);
-        this.loading.splice(questionIndex, 1);
-        this.calculateQuestionPos();
+        this.dialogService.yesNo('Are you sure?', 'Delete').subscribe(
+            ok => {
+                if (ok) {
+                    this.survey.questions.splice(questionIndex, 1);
+                    this.loading.splice(questionIndex, 1);
+                    this.calculateQuestionPos();
+                    this.dirty = true;
+                }
+            }
+        );
     }
 
     seedQuestion(questionIndex = -1): void {
-        this.dirty = true;
         this.dialogService.textInput(
             'Enter the question # or a random value',
             'Seed',
@@ -185,7 +190,6 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     editQuestion(questionIndex: number): void {
-        this.dirty = true;
         const question = this.survey.questions[questionIndex];
         this.dialogService.textInput(
             'Enter the question text. Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
@@ -195,19 +199,20 @@ export class SurveyMakerComponent implements OnInit {
         ).subscribe(result => {
             if (result !== undefined) {
                 question.text = result;
+
+                this.dirty = true;
             }
         });
     }
 
     editQuestionType(questionIndex: number, answerType: AnswerType): void {
-        this.dirty = true;
         this.survey.questions[questionIndex].answerType = answerType;
+        this.dirty = true;
     }
 
     // Answer -------------------------------------------------------------------------------------
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
-        this.dirty = true;
         this.callApi(
             'choice',
             { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex },
@@ -216,6 +221,7 @@ export class SurveyMakerComponent implements OnInit {
                     if (data !== null) {
                         if (data.ok) {
                             this.survey.questions[questionIndex] = data.data;
+                            this.dirty = true;
                         } else {
                             this.dialogService.error(data.error).subscribe(
                                 () => this.router.navigateByUrl('/home')
@@ -227,19 +233,24 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     addAnswer(questionIndex: number): void {
-        this.dirty = true;
         this.survey.questions[questionIndex].choices.push('New Answer...');
         this.survey.questions[questionIndex].answerCount++;
+        this.dirty = true;
     }
 
     deleteAnswer(questionIndex: number, choiceIndex: number): void {
-        this.dirty = true;
-        this.survey.questions[questionIndex].choices.splice(choiceIndex, 1);
-        this.survey.questions[questionIndex].answerCount--;
+        this.dialogService.yesNo('Are you sure?', 'Delete').subscribe(
+            ok => {
+                if (ok) {
+                    this.survey.questions[questionIndex].choices.splice(choiceIndex, 1);
+                    this.survey.questions[questionIndex].answerCount--;
+                    this.dirty = true;
+                }
+            }
+        );
     }
 
     editAnswer(questionIndex: number, choiceIndex: number): void {
-        this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = choiceIndex === -1 ? question.otherOptionText : question.choices[choiceIndex];
         this.dialogService.textInput(
@@ -254,17 +265,23 @@ export class SurveyMakerComponent implements OnInit {
                 } else {
                     question.choices[choiceIndex] = result;
                 }
+                this.dirty = true;
             }
         });
     }
 
-    otherOptionAllow(questionIndex: number): void {
+    orderAnswer(questionIndex: number, event: {previousIndex: number, currentIndex: number}): void {
+        moveItemInArray(this.survey.questions[questionIndex].choices, event.previousIndex, event.currentIndex);
         this.dirty = true;
+        console.log('Answers Reordered!');
+    }
+
+    otherOptionAllow(questionIndex: number): void {
         this.survey.questions[questionIndex].otherOptionAllow = !this.survey.questions[questionIndex].otherOptionAllow;
+        this.dirty = true;
     }
 
     editScaleValues(questionIndex: number): void {
-        this.dirty = true;
         const question = this.survey.questions[questionIndex];
         const value = question.scaleValues.join(' ; ');
         this.dialogService.textInput(
@@ -274,9 +291,10 @@ export class SurveyMakerComponent implements OnInit {
             false
         ).subscribe((result: string | undefined) => {
             if (result !== undefined) {
-
                 const results = result.split(';');
                 question.scaleValues = results.map(x => x.trim());
+
+                this.dirty = true;
             }
         });
     }
@@ -405,13 +423,11 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     canMoveUp(i: number): boolean {
-        if (i === 0) { return false; }
-        return true;
+        return i !== 0;
     }
 
     canMoveDown(i: number): boolean {
-        if (i === this.survey.questions.length - 1) { return false; }
-        return true;
+        return i !== this.survey.questions.length - 1;
     }
 
     move(i: number, dir: 1 | -1): void {

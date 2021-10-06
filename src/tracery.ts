@@ -110,6 +110,8 @@ export class Tracery {
             if (this.question.answerCount === 1) {
                 this.question.answerCount = randomNext(3, 5, this.rng);
             }
+            this.question.answerKeys = this.question.answerKey.split(',');
+            this.question.answerKey = this.question.answerKeys[randomNext(0, this.question.answerKeys.length, this.rng)];
         }
     }
 
@@ -307,16 +309,20 @@ function checkTags() {
     keys.forEach(key => {
         grammar[key].forEach((str: string, index: number) => {
 
-            grammar[key][index] = str.replace(new RegExp(regexVariable), (...match: string[]) => {
-                const groups = match.pop();
-                const key = groups?.['key'] ?? '';
-                if (key === 'tag') {
-                    const value = groups?.['value'] ?? '';
-                    value.split(',').forEach((x: string) => tags.add(x));
-                    return '';
+            let m;
+            const r = new RegExp(regexVariable);
+            while ((m = r.exec(str)) !== null) {
+                if (m.index === r.lastIndex) {
+                    r.lastIndex++;
                 }
-                return match[0];
-            });
+
+                const key = m.groups?.['key'] ?? '';
+                if (key === 'tag') {
+                    const value = m.groups?.['value'] ?? '';
+                    value.split(',').forEach((x: string) => tags.add(x));
+                }
+            }
+
         });
     });
 

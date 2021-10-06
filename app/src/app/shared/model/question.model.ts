@@ -15,6 +15,7 @@ export class Question {
     choices = ['Answer'];
     scaleValues = ['1', '2', '3', '4', '5'];
     answerKey = 'answer';
+    answerKeys: string[] = [];
     answerCount = 1;
     otherOptionAllow = true;
     otherOptionText = 'Other';

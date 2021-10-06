@@ -57,16 +57,36 @@
         <div *ngFor="let question of survey.questions; let i = index;" 
             [@slideUpDown]="getQuestionPos(question.questionId)" style="margin-bottom: 32px;" fxLayout="row">
             <app-form-question fxFlex [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
-                (qDelete)="deleteQuestion(i)" (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)"
-                (qSeed)="seedQuestion(i)" (qEditText)="editQuestion(i)" (qReset)="getQuestion(i, true)"
-                (qShuffle)="getQuestion(i, false, '', true)" (qEditType)="editQuestionType(i, $event)"
-                (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
+                (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)" (qShuffle)="getQuestion(i, false, '', true)" 
+                (aOrder)="orderAnswer(i, $event)" (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
                 (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)">
             </app-form-question>
+
+            <!-- Question Actions -->
             <div fxFlex="none" fxLayout="column" *ngIf="editable">
-                <button mat-icon-button [disabled]="!canMoveUp(i) || movingQuestion" (click)="move(i, -1)"><mat-icon>arrow_upward</mat-icon></button>
+                <button mat-icon-button [disabled]="!canMoveUp(i) || movingQuestion" (click)="move(i, -1)" matTooltip="Move Question Up"><mat-icon>arrow_upward</mat-icon></button>
                 <div style="text-align: center;">{{i + 1}}</div>
-                <button mat-icon-button [disabled]="!canMoveDown(i) || movingQuestion" (click)="move(i, 1)"><mat-icon>arrow_downward</mat-icon></button>
+                <button mat-icon-button [disabled]="!canMoveDown(i) || movingQuestion" (click)="move(i, 1)" matTooltip="Move Question Down"><mat-icon>arrow_downward</mat-icon></button>
+
+                <button mat-icon-button [disabled]="loading[i]" (click)="editQuestion(i)" matTooltip="Edit Text"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button [disabled]="loading[i]" [mat-menu-trigger-for]="questionType" matTooltip="Edit Type"><mat-icon>view_carousel</mat-icon></button>
+                
+                <button mat-icon-button *ngIf="editable" [disabled]="loading[i]" [matMenuTriggerFor]="questionOptions" matTooltip="More Options"><mat-icon>more_vert</mat-icon></button>
+                <mat-menu #questionOptions="matMenu">
+                    <button mat-menu-item (click)="getQuestion(i, false, '', true)" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
+                    <button mat-menu-item (click)="seedQuestion(i)"><mat-icon>search</mat-icon>Seed</button>
+                    <button mat-menu-item (click)="getQuestion(i, true)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
+                    <button mat-menu-item (click)="deleteQuestion(i)"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
+                </mat-menu>
+                <mat-menu #questionType="matMenu">
+                    <button mat-menu-item (click)="editQuestionType(i, 'text')" [disabled]="question.answerType==='text'"><mat-icon>create</mat-icon>Text</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'multi')" [disabled]="question.answerType==='multi'"><mat-icon>radio_button_checked</mat-icon>Choice</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'check')" [disabled]="question.answerType==='check'"><mat-icon>check_box</mat-icon>Check</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'rank')" [disabled]="question.answerType==='rank'"><mat-icon>stacked_bar_chart</mat-icon>Rank</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'scale')" [disabled]="question.answerType==='scale'"><mat-icon>star_half</mat-icon>Rate</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'date')" [disabled]="question.answerType==='date'"><mat-icon>today</mat-icon>Date</button>
+                    <button mat-menu-item (click)="editQuestionType(i, 'time')" [disabled]="question.answerType==='time'"><mat-icon>schedule</mat-icon>Time</button>
+                </mat-menu>
             </div>
         </div>
 
