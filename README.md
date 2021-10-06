@@ -2,7 +2,7 @@
 
 ## Tracery
 
-This app is build around the idea of [Tracery](http://www.tracery.io/), with some custom modifications.
+This app is build around a scratch build version of [Tracery](http://www.tracery.io/), with some custom modifications.
 
 The basic idea is you load a dictionary with each entry having an array of strings. You start with some origin key then take a random string from that list and look for any more keys denoted by `This is a #key#`.
 
@@ -11,8 +11,8 @@ The basic idea is you load a dictionary with each entry having an array of strin
     "origin": [ "#intro_question#", "#question#", "#close_question#" ],
 
     "intro_question": [
-        "[answerType:text]How are you doing this fine day of #monthNow#?",
-        "[answerType:mc][answerKey:generalAnswers]Are you excited to take this survey?"
+        "[type:text]How are you doing this fine day of #monthNow#?",
+        "[type:multi][key:generalAnswers]Are you excited to take this survey?"
     ]
 }
 ```
