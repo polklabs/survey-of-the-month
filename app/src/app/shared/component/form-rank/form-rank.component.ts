@@ -18,6 +18,7 @@ export class FormRankComponent implements OnChanges {
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<number[]>();
     answers: string[] = [];
@@ -38,12 +39,20 @@ export class FormRankComponent implements OnChanges {
     }
 
     drop(event: CdkDragDrop<string[]>): void {
-        moveItemInArray(this.answers, event.previousIndex, event.currentIndex);
-        this.onChange();
+        if (this.editable) {
+            this.aOrder.emit(event);
+        } else {
+            moveItemInArray(this.answers, event.previousIndex, event.currentIndex);
+            this.onChange();
+        }
     }
 
     onChange(): void {
         this.aUpdate.emit(this.answers.map(x => this.choices.indexOf(x)));
+    }
+
+    move(index: number, direction: 1 | -1): void {
+        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
     }
 
 }

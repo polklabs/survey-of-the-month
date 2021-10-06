@@ -17,6 +17,7 @@ export class FormTimeComponent implements OnChanges {
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<string[]>();
     answers: { hour: string, minute: string, ampm: string }[] = [];
@@ -67,6 +68,10 @@ export class FormTimeComponent implements OnChanges {
             value = pad + value;
         }
         return value;
+    }
+
+    move(index: number, direction: 1 | -1): void {
+        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
     }
 
 }

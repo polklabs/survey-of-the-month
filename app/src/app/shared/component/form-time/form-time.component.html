@@ -1,5 +1,53 @@
 <div style="margin-top: 16px;">
-    <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+    <table>
+        <tr *ngFor="let choice of choices; let i = index;">
+            <td>
+                <span [innerHTML]="choice"></span>:&nbsp;
+            </td>
+            <td style="width: 200px;">
+                <mat-form-field fxFlex="48px" appearance="outline">
+                    <input matInput [(ngModel)]="answers[i].hour" (keyup)="onChange()">
+                </mat-form-field>
+                <p>&nbsp;:&nbsp;</p>
+                <mat-form-field fxFlex="48px" appearance="outline">
+                    <input matInput [(ngModel)]="answers[i].minute" (keyup)="onChange()">
+                </mat-form-field>
+                <p>&nbsp;&nbsp;</p>
+                <mat-form-field fxFlex="74px" appearance="outline">
+                    <mat-select [(ngModel)]="answers[i].ampm" (selectionChange)="onChange()">
+                        <mat-option value="AM">AM</mat-option>
+                        <mat-option value="PM">PM</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <!-- Customization Options -->
+                <div *ngIf="editable">
+                    <button mat-icon-button [disabled]="loading" (click)="aEditText.emit(i)" matTooltip="Edit Text">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button [disabled]="loading" [matMenuTriggerFor]="edit" matTooltip="More Options">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #edit="matMenu">
+                        <button mat-menu-item (click)="move(i, -1)" [disabled]="i === 0">
+                            <mat-icon>arrow_upward</mat-icon>Move Up
+                        </button>
+                        <button mat-menu-item (click)="move(i, 1)" [disabled]="i === choices.length - 1">
+                            <mat-icon>arrow_downward</mat-icon>Move Down
+                        </button>
+                        <button mat-menu-item (click)="aRandomize.emit(i)">
+                            <mat-icon color="accent">casino</mat-icon>Randomize
+                        </button>
+                        <button mat-menu-item (click)="deleteAnswer(i)">
+                            <mat-icon color="warn">delete</mat-icon>Delete
+                        </button>
+                    </mat-menu>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
 
         <p [innerHTML]="choice"></p>
         <p>:&nbsp;</p>
@@ -33,8 +81,8 @@
                 <mat-icon color="warn">delete</mat-icon>Delete
             </button>
         </mat-menu>
-    </div>
-    <button mat-button *ngIf="editable" (click)="aAdd.emit()">
+    </div> -->
+    <button mat-button *ngIf="editable" (click)="addAnswer()">
         <mat-icon>add</mat-icon> Add
     </button>
 </div>

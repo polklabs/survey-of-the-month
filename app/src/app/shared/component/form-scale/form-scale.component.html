@@ -6,8 +6,8 @@
                 <th *ngFor="let header of scaleValues">
                     <span [innerHTML]="header"></span>
                 </th>
-                <th>
-                    <button mat-icon-button *ngIf="editable" [disabled]="loading" (click)="aEditScale.emit()">
+                <th style="text-align: start;">
+                    <button mat-icon-button *ngIf="editable" [disabled]="loading" (click)="aEditScale.emit()" matTooltip="Edit Rate Values">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </th>
@@ -24,22 +24,30 @@
                         </mat-radio-button>
                     </mat-radio-group>
                 </td>
-                <td>
-                    <!-- Customization Options -->
-                    <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <mat-menu #edit="matMenu">
-                        <button mat-menu-item (click)="aEditText.emit(choiceI)">
-                            <mat-icon>edit</mat-icon>Edit Label
+                <td style="text-align: start;">
+                   <!-- Customization Options -->
+                    <div *ngIf="editable" fxLayout="row">
+                        <button mat-icon-button [disabled]="loading" (click)="aEditText.emit(choiceI)" matTooltip="Edit Text">
+                            <mat-icon>edit</mat-icon>
                         </button>
-                        <button mat-menu-item (click)="aRandomize.emit(choiceI)">
-                            <mat-icon color="accent">casino</mat-icon>Randomize
+                        <button mat-icon-button [disabled]="loading" [matMenuTriggerFor]="edit" matTooltip="More Options">
+                            <mat-icon>more_vert</mat-icon>
                         </button>
-                        <button mat-menu-item (click)="deleteAnswer(choiceI)">
-                            <mat-icon color="warn">delete</mat-icon>Delete
-                        </button>
-                    </mat-menu>
+                        <mat-menu #edit="matMenu">
+                            <button mat-menu-item (click)="move(choiceI, -1)" [disabled]="choiceI === 0">
+                                <mat-icon>arrow_upward</mat-icon>Move Up
+                            </button>
+                            <button mat-menu-item (click)="move(choiceI, 1)" [disabled]="choiceI === choices.length - 1">
+                                <mat-icon>arrow_downward</mat-icon>Move Down
+                            </button>
+                            <button mat-menu-item (click)="aRandomize.emit(choiceI)">
+                                <mat-icon color="accent">casino</mat-icon>Randomize
+                            </button>
+                            <button mat-menu-item (click)="deleteAnswer(choiceI)">
+                                <mat-icon color="warn">delete</mat-icon>Delete
+                            </button>
+                        </mat-menu>
+                    </div>
                 </td>
             </tr>
         </tbody>

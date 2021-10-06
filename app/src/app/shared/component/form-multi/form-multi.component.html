@@ -1,6 +1,6 @@
 <div style="margin-top: 16px;">
-    <mat-radio-group #optionGroup class="radio-group" [(ngModel)]="answer" (change)="onChange()">
-        <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
+    <mat-radio-group class="radio-group" [(ngModel)]="answer" (change)="onChange()">
+        <div *ngFor="let choice of choices; let i = index;" fxLayout="row" fxLayoutAlign="space-between center">
 
             <!-- Choices -->
             <mat-radio-button class="radio-button" [value]="i">
@@ -10,25 +10,33 @@
             </mat-radio-button>
 
             <!-- Customization Options -->
-            <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <mat-menu #edit="matMenu">
-                <button mat-menu-item (click)="aEditText.emit(i)">
-                    <mat-icon>edit</mat-icon>Edit Label
+            <div *ngIf="editable">
+                <button mat-icon-button [disabled]="loading" (click)="aEditText.emit(i)" matTooltip="Edit Text">
+                    <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-menu-item (click)="aRandomize.emit(i)">
-                    <mat-icon color="accent">casino</mat-icon>Randomize
+                <button mat-icon-button [disabled]="loading" [matMenuTriggerFor]="edit" matTooltip="More Options">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-menu-item (click)="aDelete.emit(i)">
-                    <mat-icon color="warn">delete</mat-icon>Delete
-                </button>
-            </mat-menu>
+                <mat-menu #edit="matMenu">
+                    <button mat-menu-item (click)="move(i, -1)" [disabled]="i === 0">
+                        <mat-icon>arrow_upward</mat-icon>Move Up
+                    </button>
+                    <button mat-menu-item (click)="move(i, 1)" [disabled]="i === choices.length - 1">
+                        <mat-icon>arrow_downward</mat-icon>Move Down
+                    </button>
+                    <button mat-menu-item (click)="aRandomize.emit(i)">
+                        <mat-icon color="accent">casino</mat-icon>Randomize
+                    </button>
+                    <button mat-menu-item (click)="deleteAnswer(i)">
+                        <mat-icon color="warn">delete</mat-icon>Delete
+                    </button>
+                </mat-menu>
+            </div>
 
         </div>
 
         <!-- Other Option -->
-        <div fxLayout="row" *ngIf="otherOptionAllow || editable">
+        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="otherOptionAllow || editable">
 
             <mat-radio-button #otherOption [disabled]="!otherOptionAllow" class="radio-button" [value]="-1">
                 <mat-form-field class="full-width" appearance="outline">
@@ -54,7 +62,7 @@
         </div>
 
     </mat-radio-group>
-    <button mat-button *ngIf="editable" (click)="aAdd.emit()">
+    <button mat-button *ngIf="editable" (click)="addAnswer()">
         <mat-icon>add</mat-icon> Add
     </button>
 </div>

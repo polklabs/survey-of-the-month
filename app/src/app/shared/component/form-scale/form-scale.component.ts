@@ -19,6 +19,7 @@ export class FormScaleComponent implements OnChanges {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<(number | null)[]>();
     answers: (number | null)[] = [];
@@ -47,5 +48,10 @@ export class FormScaleComponent implements OnChanges {
     onChange(): void {
         this.aUpdate.emit(this.answers);
     }
+
+    move(index: number, direction: 1 | -1): void {
+        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
+    }
+
 
 }

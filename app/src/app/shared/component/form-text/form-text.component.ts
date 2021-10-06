@@ -17,6 +17,7 @@ export class FormTextComponent implements OnChanges {
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<string[]>();
     answers: string[] = [];
@@ -44,6 +45,10 @@ export class FormTextComponent implements OnChanges {
 
     onChange(): void {
         this.aUpdate.emit(this.answers);
+    }
+
+    move(index: number, direction: 1 | -1): void {
+        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
     }
 
 }

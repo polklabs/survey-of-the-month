@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
@@ -22,6 +23,7 @@ export class FormMultiComponent implements OnChanges {
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
     @Output() aOtherOptionAllow = new EventEmitter<void>();
+    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
 
     @Output() aUpdate = new EventEmitter<any[]>();
     answer: string | number | null = null;
@@ -58,6 +60,10 @@ export class FormMultiComponent implements OnChanges {
 
     triggerRadioButton(): void {
         this.answer = -1;
+    }
+
+    move(index: number, direction: 1 | -1): void {
+        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
     }
 
 }
