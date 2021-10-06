@@ -146,7 +146,7 @@
 	"houseType": ["house", "cottage", "mansion", "home", "hut", "tent", "yurt", "treehouse", "apartment", "log cabin"],
 	"houseLocation": ["sea", "mountains", "city", "forest", "desert", "lake", "delta", "prarie"],
 	"houseFeature": [ "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub" ],
-	"house": [ "#houseType.a.capitalize# ^$by:in$ the #houseLocation# with #houseFeature.a#" ],
+	"house": [ "#houseType.a.capitalize# ^$by:in$ the #houseLocation#^$: of #country#$ with #houseFeature.a#" ],
 	
 	"location": [ "on an island", "in an elevator", "at a beach house" ],
 	"receivedThing": [ "detention", "a ticket", "an award" ],
