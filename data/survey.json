@@ -23,7 +23,7 @@
         "[type:multi][key:allAnswers][count:-1]Are your intentions are pure (regarding what is up to your discretion)?",
         "[type:multi][key:yesNo][count:-1]Have you ever told someone you had a crush on them?",
 		"[type:text]Last ^$show:movie$ you watched?",
-		"[type:^$mult][key\\:language]:text]$If you could speak another language fluently, what language would you choose?",
+		"[type:^$multi][key\\:language]:text]$If you could speak another language fluently, what language would you choose?",
 		"[type:text]What is your favorite #favoriteCategory#?",
 		"[type:text]Would you rather have #houseFeature.a# or #houseFeature.a#?",
 		"[type:text]If you could travel to any #place# (all expense paid), where would you go?",
