@@ -9,8 +9,8 @@ const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for quest
 
 const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
 const regexString = /(#(?<key>([a-zA-Z0-9_]+|[*]))\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#, #*#
-const regexInlineChoiceGroup = /\^\$(?<choices>(?:[^\$\\]*(?:\\.)?)*)\$/gm; // ^$first:second$ -> first:second
-const regexInlineChoices = /(?<choice>(?:\\.|[^:\\]+)+)/gm; // first:second -> ["first", "second"]
+const regexInlineChoiceGroup = /\^\$(?<choices>.+?)(?<=[^\\])\$/gm; // ^$first:second$ -> first:second
+const regexInlineChoices = /(?<=[^\\]|^):/gm; // first:second -> ["first", "second"]
 
 const grammar: { [key: string]: string[] } = {};
 const grammarKeys: string[] = [];
@@ -176,19 +176,8 @@ export class Tracery {
             let choiceGroup: string = groups?.['choices'] ?? '';
             choiceGroup = choiceGroup.replace(/\\\$/g, '$'); // Fixed escaped $ character
 
-            const choices: string[] = [];
-
-            let m;
-            // Look for all groups in text a:b:c...
-            while ((m = regexInlineChoices.exec(choiceGroup)) !== null) {
-                if (m.index === regexInlineChoices.lastIndex) {
-                    regexInlineChoices.lastIndex++;
-                }
-
-                let choice = m.groups?.['choice'] ?? '';
-                choice = choice.replace(/\\:/g, ':'); // Fixed escaped : character
-                choices.push(choice);
-            }
+            let choices: string[] = choiceGroup.split(regexInlineChoices);
+            choices = choices.map(s => s.replace(/\\:/g, ':'));
 
             this.chance *= choices.length || 1;
             if (choices.length === 0) { return ''; }
