@@ -18,7 +18,7 @@
 		"Tell me something you really like about one other person taking this survey"
 	],
 	"question": [
-        "[type:text]The ^$most recent:strangest$ dream you can remember?",
+        "[type:text]The ^$most recent:strangest:scariest:happiest$ dream you can remember?",
         "[type:text]If you could train any animal ^$in the world:from #continent#$ to be your ^$pet:protector$, what would it be?",
         "[type:multi][key:allAnswers][count:-1]Are your intentions are pure (regarding what is up to your discretion)?",
         "[type:multi][key:yesNo][count:-1]Have you ever told someone you had a crush on them?",
@@ -32,7 +32,7 @@
 		"[type:multi][key:career_funny,career_serious,career]Choose a career for #person.capitalize#.",
 		"[type:multi][key:career_funny,career_serious,career]You were just fired, choose a new career.",
 		"[type:multi][key:expensiveThings]If #person.capitalize# wins the big lottery, they should buy you...",
-		"[type:multi][key:world]Choose a world to live in for #1_12.range# #timeRange#(s)",
+		"[type:multi][key:movie,tv,world]Choose a world to live in for #1_12.range# #timeRange#(s)",
 		"[type:text]If #person.capitalize# had a crush on you, how would you want them to tell you?",
         "[type:multi][key:bodyPart]#person.capitalize# has a crush on you, it's because of your?",
 		"[type:multi][key:character]Who would win in a #event#?",
@@ -62,7 +62,7 @@
         "[type:rank][key:bodyPart,characterClothes,character]Rank your attaction to the following.",
 		"[type:text]What's a ^$song:movie:TV show:book:podcast$ you think #person.capitalize# would like?",
 		"[type:text]What is your ideal #dayAspect# for a day in #month#?",
-		"[type:multi][key:generalThings]Save one and the rest will go:",
+		"[type:multi][key:generalThings,fastFood,animal,store,dessert,instrument,movie,tv,world]Save one and the rest will go:",
 		"[type:text][personA:#person#][jobA:#career#]You're writing a job reference for #personA.capitalize# to be accepted as a #jobA#. It asks: What is #personA#'s greatest area that needs improvement re #jobA#? What do you put?",
 		"[type:multi][key:podcast]You're starting a podcast, what is the topic?",
 		"[type:text]#person.capitalize# is starting a #genre_music# band, with them on #instrument#. They asked you to join, what do you play?",
@@ -75,7 +75,7 @@
         "[type:text]You find yourself in the country of #country# with only #object.a# and $#1_50.range#. How do you get home?",
         "[type:multi][key:object_descriptive]#state# is the nation's leader of?",
         "[type:multi][key:allAnswers][count:-1]Do #animal.s# #verb_transitive# #object.s#?",
-        "[type:text]You wake up to the #networth_group# knocking at your door #networth_action# ^$how:why$ you're net worth is $#1_1000_20.range# #numberMagnatude#. What do you tell them?",
+        "[type:text]You wake up to the #networth_group# knocking at your door #networth_action# ^$how:why$ you're net worth is ^$negative :$$#1_1000_20.range# #numberMagnatude#. What do you tell them?",
         "[type:text]What is the fastest way to get fired from your job as a #career#?",
         "[type:text][objectA:#object#]You have 5 minutes to hide a #objectA# in your home. A detective has #1_24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
         "[type:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
@@ -98,9 +98,10 @@
 		"[type:text]You can telepathically say one thing to #person.capitalize#. When and what do you tell them?",
         "[type:text]At #1_12.range#:#0_59.range# ^$AM:PM$ you can telepathically say one thing to everyone taking this survey. What do you tell them?",
 		"[type:text][objectA:#object#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for #2_7.range# days. Where do you hide the #objectA.a#?",
-        "[type:text]What is #_tm_prizeTask#^$?: that you own?$",
+        "[type:text]What is the #_tm_prizeTask#^$?: that you own?$",
         "[type:multi][key:generalReaction]Check out this meme:#memeBase#",
         "[type:text]Choose One:#chooseOneBase#",
+        "[type:text]Tag Yourself^$: and one other person taking this survey$:#tagYourselfBase#",
         "[type:text]Type the following into your phone and use predictive text to finish the sentence: \"#sentenceStarter#\"",
         "[type:multi][key:vine]Of the following, which is your favorite vine?",
         "[type:text]Create a new word for: \"#word_definition#\"",
@@ -110,7 +111,7 @@
 		"[type:text]You have the power of #superpower# but only for #1_60.range# minutes each day. What do you use it for?",
 		"[type:time]During what time of day are you most ^$#trait_good#:#trait_bad#:#adjective#$?",
 		"[type:check][key:dessert]How many of the following have you tried?",
-		"[type:scale][key:bodyPart,animal,object,dessert,month,dayOfWeek,season,state,world]Rate the following:",
+		"[type:scale][key:bodyPart,animal,object,dessert,month,dayOfWeek,season,state,movie,tv,world]Rate the following:",
 		"[type:text]Create a new law related to or involving: #generalThings#",
 		"[type:multi][count:-1]#group_choice#",
         "[type:date]What is the best day of the year?",
@@ -125,7 +126,11 @@
         "[type:multi][key:animal,mythical_creature]#person.capitalize# would most likely adopt a:",
         "[type:multi][key:person][count:-1]Who is most likely able to speak #language#?",
         "[type:text]Convince #person.capitalize# to buy #object.a#.",
-        "[type:text]If #person.capitalize# asked you to #verb_transitive# #generalThings.a#, how would you do it?"
+        "[type:text]If #person.capitalize# asked you to #verb_transitive# #generalThings.a#, how would you do it?",
+        "[type:text]Who would win in a fight between #person.capitalize# vs #animal#?",
+        "[type:check][key:character][count:6]Choose 2 to be in a thruple with.",
+        "[type:multi][key:trueFalse][count:-1]#person.capitalize# is ^$#traits#:#trait_good#:#trait_bad#:#adjective#$ person",
+        "[type:check][key:movie]How many of these movies have you seen?"
 	],
 
 	"adjective": [ "adorable", "adventurous", "aggressive", "agreeable", "alert", "alive", "amused", "angry", "annoyed", "annoying", "anxious", "arrogant", "ashamed", "attractive", "average", "awful", "bad", "beautiful", "better", "bewildered", "black", "bloody", "blue", "blue eyed", "blushing", "bored", "brainy", "brave", "breakable", "bright", "busy", "calm", "careful", "cautious", "charming", "cheerful", "clean", "clear", "clever", "cloudy", "clumsy", "colorful", "combative", "comfortable", "concerned", "condemned", "confused", "cooperative", "courageous", "crazy", "creepy", "crowded", "cruel", "curious", "cute", "dangerous", "dark", "dead", "defeated", "defiant", "delightful", "depressed", "determined", "different", "difficult", "disgusted", "distinct", "disturbed", "dizzy", "doubtful", "drab", "dull", "eager", "easy", "elated", "elegant", "embarrassed", "enchanting", "encouraging", "energetic", "enthusiastic", "envious", "evil", "excited", "expensive", "exuberant", "fair", "faithful", "famous", "fancy", "fantastic", "fierce", "filthy", "fine", "foolish", "fragile", "frail", "frantic", "friendly", "frightened", "funny", "gentle", "gifted", "glamorous", "gleaming", "glorious", "good", "gorgeous", "graceful", "grieving", "grotesque", "grumpy", "handsome", "happy", "healthy", "helpful", "helpless", "hilarious", "homeless", "homely", "horny", "horrible", "hungry", "hurt", "ill", "important", "impossible", "inexpensive", "innocent", "inquisitive", "itchy", "jealous", "jittery", "jolly", "joyous", "kind", "lazy", "light", "lively", "lonely", "long", "lovely", "lucky", "magnificent", "misty", "modern", "motionless", "muddy", "mushy", "mysterious", "nasty", "naughty", "nervous", "nice", "nutty", "obedient", "obnoxious", "odd", "old", "fashioned", "open", "outrageous", "outstanding", "panicky", "perfect", "plain", "pleasant", "poised", "poor", "powerful", "precious", "prickly", "proud", "putrid", "puzzled", "quaint", "real", "relieved", "repulsive", "rich", "scary", "selfish", "shiny", "shy", "silly", "sleepy", "smiling", "smoggy", "sore", "sparkling", "splendid", "spotless", "stormy", "strange", "stupid", "successful", "super", "talented", "tame", "tasty", "tender", "tense", "terrible", "thankful", "thoughtful", "thoughtless", "tired", "tough", "troubled", "ugliest", "ugly", "uninterested", "unsightly", "unusual", "upset", "uptight", "vast", "victorious", "vivacious", "wandering", "weary", "wicked", "wide eyed", "wild", "witty", "worried", "worrisome", "wrong", "zany", "zealous" ],
@@ -146,7 +151,7 @@
 	"houseType": ["house", "cottage", "mansion", "home", "hut", "tent", "yurt", "treehouse", "apartment", "log cabin"],
 	"houseLocation": ["sea", "mountains", "city", "forest", "desert", "lake", "delta", "prarie"],
 	"houseFeature": [ "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub" ],
-	"house": [ "#houseType.a.capitalize# ^$by:in$ the #houseLocation#^$: of #country#$ with #houseFeature.a#" ],
+	"house": [ "#houseType.a.capitalize# ^$by:in$ the #houseLocation#^$: in #country#$ with #houseFeature.a#" ],
 	
 	"location": [ "on an island", "in an elevator", "at a beach house" ],
 	"receivedThing": [ "detention", "a ticket", "an award" ],
@@ -195,8 +200,10 @@
     "1Percent": ["Owning ^$#animal.s#:#object.s#:#instrument.s#$", "Eating too much ^$#fastFood#:#dessert#$", "Being #adjective#", "Making others #trait_good#", "Making others #trait_bad#", "#instrument# players", "Being obsessed with #world#", "Watching way too many #genre_movie# movies", "Having too many #relation.s#", "Collecting ^$#character# figurines:#object.s#$"],
 	"olympicSport": [ "archery", "artistic swimming", "athletics", "badminton", "baseball", "basketball", "beach volleyball", "boxing", "breaking", "canoe slalom", "canoe sprint", "cycling BMX", "cycling mountain bike", "cycling road", "cycling track", "diving", "equestrian / dressage", "equestrian eventing", "equestrian jumping", "fencing", "field hockey", "golf", "gymnastics artistic", "gymnastics rhythmic", "handball", "judo", "karate", "marathon swimming", "modern pentathlon", "rowing", "rugby", "sailing", "shooting", "skateboarding", "soccer", "softball", "sport climbing", "surfing", "swimming", "table tennis", "taekwondo", "tennis", "trampoline", "triathlon", "volleyball", "water polo", "weightlifting", "wrestling freestyle", "wrestling greco-roman" ],
 	"photoDatingApp": ["bedroom", "car", "kitchen", "shoes", "how they have their ^$tea:coffee$", "bookshelf", "closet", "pantry", "fridge", "bathroom sink"],
-    "word_definition": ["The ^$desire:need$ to watch #world# on repeat.", "An overwhelming ^$#trait_good#:#trait_bad#$ feeling, and ^$#trait_good#:#trait_bad#$ at the same time.", "The sudden need to #verb_transitive#"],
+    "word_definition": ["The ^$desire:need$ to watch ^$#movie#:tv$ on repeat.", "An overwhelming ^$#trait_good#:#trait_bad#$ feeling, and ^$#trait_good#:#trait_bad#$ at the same time.", "The sudden need to #verb_transitive#"],
 	"rpg_theme": ["bounty hunter", "space", "cyberpunk", "steampunk", "ghost hunter", "gangster", "heist", "pirate", "high fantasy", "modern fantasy", "monster hunter", "noir", "post apocalyptic", "sci-fi", "space opera", "spy", "space western", "time travel", "zombie"],
 	"superpower": ["produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight" ],
-	"environmentType": ["clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"]
+	"environmentType": ["clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"],
+
+    "crush_reason": ["#bodypart#", "collection of #object#", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"]
 }

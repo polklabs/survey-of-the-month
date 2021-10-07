@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { HelperService } from 'src/app/core/services/helperService.service';
-import { AnswerType, Question } from '../../model/question.model';
+import { Question } from '../../model/question.model';
 
 @Component({
     selector: 'app-form-question',
     templateUrl: './form-question.component.html',
     styleUrls: ['./form-question.component.scss']
 })
-export class FormQuestionComponent implements OnInit {
+export class FormQuestionComponent implements OnInit, OnChanges {
 
     @ViewChild('formDefault', { static: true }) formDefault!: TemplateRef<any>;
     @ViewChild('formEmpty', {static: true}) formEmpty!: TemplateRef<any>;
@@ -53,6 +53,12 @@ export class FormQuestionComponent implements OnInit {
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
         console.log(this.question);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.question) {
+            this.clearAnswer();
+        }
     }
 
     getAnswerTemplate(): TemplateRef<any> {

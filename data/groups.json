@@ -4,11 +4,29 @@
         "[key:group_circus]What is your act in our circus?", 
         "[key:group_yearbook]What would you be voted as in our yearbook?",
         "[key:group_film]What is your role on a film set?",
-        "[key:group_spaceShip]What is your role on a space ship?"
+        "[key:group_spaceShip]What is your role on a space ship?",
+        "[key:group_revenge]Someone really screwed you over and called your #relation# a bad name. You deserve revenge. What should be done?",
+        "[key:color]What color Power Ranger are you?"
     ],
     "group_circus": ["Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"],
     "group_heist": ["Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"],
     "group_yearbook": ["best all-around", "class clown/funniest", "smartest", "life of the party", "most athletic", "most likely to succeed", "biggest flirt", "best hair"],
     "group_film": ["Director", "Writer", "Actor", "Camera Operator", "Sound Person", "Special Effects/Animation", "Costume Design", "Hair/Makeup", "Stunt Person"],
-    "group_spaceShip": ["Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"]
+    "group_spaceShip": ["Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"],
+    "group_revenge": [
+        "Hack into their computer and change their home screen to an image of them from behind",
+        "Sign them up for every source of spam mail",
+        "Pay for a billboard to be put up calling them out with a picture of their face",
+        "Befriend all of their friends and slowly turn them against the person",
+        "Release #animal.s# onto their yard",
+        "Classic car vandal (slash tires, scratch messages into, etc.)",
+        "Frame them for murder",
+        "Cyranwrap the persons car",
+        "Put wet ink on the inside door handle of their car.",
+        "Ship them tons of weird, cheap items from China. Aliexpress for the win!",
+        "Hide something foul smelling in their car.",
+        "Drip honey all over their stuff.",
+        "Leave rude notes under their windshield wipers.",
+        "Send them a glitter bomb."
+    ]
 }

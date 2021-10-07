@@ -108,7 +108,7 @@ export class Tracery {
                 }
             }
             if (this.question.answerCount === 1) {
-                this.question.answerCount = randomNext(3, 5, this.rng);
+                this.question.answerCount = randomNext(3, 8, this.rng);
             }
             this.question.answerKeys = this.question.answerKey.split(',');
             this.chance *= this.question.answerKeys.length;

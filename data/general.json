@@ -3,6 +3,10 @@
         "yes",
         "no"
     ],
+    "trueFalse": [
+        "true",
+        "false"
+    ],
     "answer": ["Answer"],
     "generalAnswers": [
         "yes",

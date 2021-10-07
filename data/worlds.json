@@ -1,5 +1,9 @@
 {
-    "world_pixar": [
+    "world": [
+        "#movie#",
+        "#tv#"
+    ],
+    "movie_pixar": [
         "Toy Story",
         "A Bug's Life",
         "Monsters, Inc",
@@ -18,7 +22,7 @@
         "Soul",
         "Luca"
     ],
-    "world_dreamworks": [
+    "movie_dreamworks": [
         "Shrek",
         "How To Train Your Dragon",
         "Kung Fu Panda",
@@ -29,27 +33,12 @@
         "Spirit",
         "Trolls"
     ],
-    "world_bluesky": [
+    "movie_bluesky": [
         "Ice Age",
         "Robots",
         "Horton Hears a Who!"
     ],
-    "world_sitcom": [
-        "The Office",
-        "Friends",
-        "Parks and Recreation",
-        "New Girl",
-        "It's Always Sunny In Philadelphia",
-        "Community",
-        "30 Rock",
-        "Scrubs",
-        "Brooklyn Nine-Nine",
-        "Schitt's Creek",
-        "How I Met Your Mother",
-        "Superstore",
-        "Seinfeld"
-    ],
-    "disney": [
+    "movie_disney": [
         "101 Dalmations",
         "Aladdin",
         "Aristocats",
@@ -77,9 +66,7 @@
         "Emperor's New Groove",
         "Zootopia"
     ],
-    "world_other": [
-        "Marvel",
-        "DC",
+    "movie_other": [
         "Star Wars",
         "Star Trek",
         "Harry Potter",
@@ -93,22 +80,60 @@
         "Studio Ghibli",
         "Transformers",
         "X-Men",
-        "Gravity Falls",
-        "Avatar The Last Airbender",
         "Avatar",
-        "Claymation",
-        "Demon Slayer",
         "High School Musical",
         "Spy Kids",
         "Coraline",
-        "Secret Life of Walter Mitty"
+        "Secret Life of Walter Mitty",
+        "Chicken Little",
+        "Narnia",
+        "Cloudy With A Chance Of Meatballs",
+        "Godzilla",
+        "High School Musical",
+        "Dune",
+        "Total Recall",
+        "Blade Runner",
+        "Pride & Prejudice"
     ],
-    "world": [
-        "#world_pixar#",
-        "#world_sitcom#",
-        "#world_dreamworks#",
-        "#world_bluesky#",
-        "#disney#",
-        "#world_other#"
+    "movie": [
+        "#movie_pixar#",
+        "#movie_sitcom#",
+        "#movie_dreamworks#",
+        "#movie_bluesky#",
+        "#movie_disney#",
+        "#movie_other#"
+    ],
+    "tv": [
+        "The Office",
+        "Friends",
+        "Parks and Recreation",
+        "New Girl",
+        "It's Always Sunny In Philadelphia",
+        "Community",
+        "30 Rock",
+        "Scrubs",
+        "Brooklyn Nine-Nine",
+        "Schitt's Creek",
+        "How I Met Your Mother",
+        "Superstore",
+        "Seinfeld",
+        "Gravity Falls",
+        "Avatar The Last Airbender",
+        "Demon Slayer",
+        "Star Trek",
+        "Stargate",
+        "Black Mirror",
+        "Buffy",
+        "Firefly",
+        "Game of Thrones",
+        "The Good Place",
+        "Killing Eve",
+        "Limitless",
+        "The Magicians",
+        "Psych",
+        "Sherlock",
+        "Ted Lasso",
+        "Twilight Zone",
+        "Westworld"
     ]
 }
