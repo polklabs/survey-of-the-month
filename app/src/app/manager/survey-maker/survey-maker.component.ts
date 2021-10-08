@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../core/services/data.service';
-import { AnswerType, Question } from '../shared/model/question.model';
-import { Survey } from '../shared/model/survey.model';
+import { DataService } from '../../core/services/data.service';
+import { AnswerType, Question } from '../../shared/model/question.model';
+import { Survey } from '../../shared/model/survey.model';
 import { v4 as guid } from 'uuid';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogService } from '../core/services/dialog.service';
-import { LocalStorageService } from '../core/services/local-storage.service';
-import { APIData } from '../shared/model/api-data.model';
-import { QuestionHolderService } from '../core/services/questionHolder.service';
+import { DialogService } from '../../core/services/dialog.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { APIData } from '../../shared/model/api-data.model';
+import { QuestionHolderService } from '../../core/services/questionHolder.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { animate, style, transition, trigger } from '@angular/animations';
 
@@ -332,7 +332,7 @@ export class SurveyMakerComponent implements OnInit {
                 this.key = data.key;
                 this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                 this.dirty = false;
-                this.router.navigateByUrl(`/manage-survey/${this.id}/${this.key}`);
+                this.router.navigateByUrl(`/manage/${this.id}/${this.key}`);
             } else if (!data.ok) {
                 this.dialogService.error(data.error);
             }

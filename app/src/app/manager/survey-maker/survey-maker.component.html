@@ -28,7 +28,7 @@
         <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="16px" style="margin-bottom: 32px; margin-top: 32px;">
             <mat-slide-toggle [(ngModel)]="editable" matTooltip="Preview how the survey will look">Edit/Preview Survey</mat-slide-toggle>
             <button mat-raised-button color="primary" [disabled]="loadingUnknown || !dirty" (click)="saveSurvey()">Save Survey</button>
-            <button mat-raised-button *ngIf="key !== ''"  [routerLink]="'/manage-survey/' + id + '/' + key">Manage Survey</button>
+            <button mat-raised-button *ngIf="key !== ''"  [routerLink]="'/manage/' + id + '/' + key">Manage Survey</button>
         </div>
 
         <div *ngIf="!editable">

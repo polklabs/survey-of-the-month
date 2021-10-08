@@ -116,7 +116,7 @@
             <mat-card-content fxLayout="column" fxLayoutGap="8px">
 
                 <button mat-raised-button color="primary" (click)="beginPresentation()">Begin Presentation</button>
-                <button mat-raised-button color="accent" [routerLink]="'/make-survey/' + id + '/' + key">Edit
+                <button mat-raised-button color="accent" [routerLink]="'/manage/make/' + id + '/' + key">Edit
                     Survey</button>
                 <a mat-raised-button download="{{exportFilename}}" [href]="exportData" _target="blank">Export Answers To .csv (Excel)</a>
 

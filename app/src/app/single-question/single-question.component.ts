@@ -135,7 +135,7 @@ export class SingleQuestionComponent implements OnInit {
 
     createSurvey(): void {
         this.questionHolderService.saveQuestion(this.question);
-        this.router.navigateByUrl('/make-survey/0/0');
+        this.router.navigateByUrl('/manage/make/0/0');
     }
 
 }

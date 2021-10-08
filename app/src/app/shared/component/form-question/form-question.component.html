@@ -5,7 +5,7 @@
         <mat-card-subtitle *ngIf="question.qChance > 1 && basicEdit">Question Probability: 1 in {{question.qChance | number}}</mat-card-subtitle>
 
         <!-- Allow choosing other answer keys if available -->
-        <div *ngIf="(editable || basicEdit) && question.answerKeys.length > 1" style="position: absolute; right: 4px; top: 4px;">
+        <div *ngIf="(editable || basicEdit) && (question.answerKeys?.length || 0) > 1" style="position: absolute; right: 4px; top: 4px;">
             <button mat-button fxHide.xs [matMenuTriggerFor]="keyMenu">
                 Answer Key: {{answerKeyString(question.answerKey)}}<mat-icon>arrow_drop_down</mat-icon>
             </button>
@@ -13,7 +13,7 @@
                 <mat-icon>settings_suggest</mat-icon>
             </button>
             <mat-menu #keyMenu="matMenu">
-                <button mat-menu-item *ngFor="let key of question.answerKeys.sort()" (click)="answerKeyChange(key)">{{answerKeyString(key)}}</button>
+                <button mat-menu-item *ngFor="let key of question.answerKeys.sort()" (click)="answerKeyChange(key)" [disabled]="question.answerKey === key">{{answerKeyString(key)}}</button>
             </mat-menu>
         </div>
     </mat-card-header>

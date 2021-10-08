@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CanDeactivateGuard } from './shared/guard/can-deactivate-guard.service';
-import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
-import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
-import { SurveyResultsComponent } from './survey-results/survey-results.component';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 
 const routes: Routes = [
@@ -16,16 +13,8 @@ const routes: Routes = [
         }
     },
     {
-        path: 'make-survey/:id/:key',
-        component: SurveyMakerComponent,
-        canDeactivate: [CanDeactivateGuard],
-        data: {
-            title: 'Survey OTM | New',
-        }
-    },
-    {
-        path: 'manage-survey/:id/:key',
-        component: SurveyManagerComponent,
+        path: 'manage',
+        loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
         data: {
             title: 'Survey OTM | Manage',
         }
@@ -40,20 +29,10 @@ const routes: Routes = [
     },
     {
         path: 'results/:id/:key',
-        component: SurveyResultsComponent,
+        loadChildren: () => import('./survey-results/survey-results.module').then(m => m.SurveyResultsModule),
         data: {
             title: 'Survey OTM | Results',
         }
-    },
-    {
-        path: 'make-survey',
-        redirectTo: 'make-survey/0/0',
-        pathMatch: 'full'
-    },
-    {
-        path: 'manage-survey',
-        redirectTo: 'manage-survey/0/0',
-        pathMatch: 'full'
     },
     {
         path: '',

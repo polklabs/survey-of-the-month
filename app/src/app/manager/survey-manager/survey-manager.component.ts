@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CsvExportService } from '../core/services/csvExport.service';
-import { DataService } from '../core/services/data.service';
-import { DialogService } from '../core/services/dialog.service';
-import { LocalStorageService } from '../core/services/local-storage.service';
-import { AnswerStatus } from '../shared/model/answer.model';
-import { APIData } from '../shared/model/api-data.model';
-import { AnswerType } from '../shared/model/question.model';
-import { SurveyContainer } from '../shared/model/survey-container.model';
-import { Survey } from '../shared/model/survey.model';
+import { CsvExportService } from '../../core/services/csvExport.service';
+import { DataService } from '../../core/services/data.service';
+import { DialogService } from '../../core/services/dialog.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { AnswerStatus } from '../../shared/model/answer.model';
+import { APIData } from '../../shared/model/api-data.model';
+import { AnswerType } from '../../shared/model/question.model';
+import { SurveyContainer } from '../../shared/model/survey-container.model';
+import { Survey } from '../../shared/model/survey.model';
 
 @Component({
     selector: 'app-survey-manager',

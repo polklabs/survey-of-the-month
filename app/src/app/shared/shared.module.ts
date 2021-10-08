@@ -38,7 +38,6 @@ import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.co
     ],
     imports: [
         CommonModule,
-        BrowserModule,
         CoreModule
     ],
     providers: [

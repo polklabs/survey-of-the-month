@@ -210,7 +210,7 @@ export function findSurveys(email: string, req: any, res: response): void {
         }
 
         data.docs.forEach(doc => {
-            var fullUrl = req.protocol + '://' + req.get('host') + '/manage-survey/' + doc._id + '/' + doc.key;
+            var fullUrl = req.protocol + '://' + req.get('host') + '/manage/' + doc._id + '/' + doc.key;
             text += doc.survey.name + '\n' + fullUrl + '\n\n';
         });
     

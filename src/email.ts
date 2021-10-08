@@ -38,7 +38,7 @@ export function SendSurveyEmail(req: any, id: string, key: string, survey?: Surv
         return;
     }
 
-    var fullUrl = req.protocol + '://' + req.get('host') + '/manage-survey/' + id + '/' + key;
+    var fullUrl = req.protocol + '://' + req.get('host') + '/manage/' + id + '/' + key;
 
     const subject = `Survey Of The Month - ${survey.name.replace(/[^\x00-\x7F]/g, '')}`;
     let text = `Thank you for creating a survey with Survey Of The Month!\n\nHere is your survey link to ${survey.name}.\n${fullUrl}\n\nAnyone with this link can edit and delete the survey so keep it safe!`;

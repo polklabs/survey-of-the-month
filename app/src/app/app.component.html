@@ -17,9 +17,9 @@
 
         <mat-menu #manageMenu="matMenu">
             <span *ngIf="availableSurveys.length > 0" class="grouping-item">Your Surveys</span>
-            <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage-survey/'+survey.id+'/'+survey.key">{{survey.name}}</button>
+            <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage/'+survey.id+'/'+survey.key">{{survey.name}}</button>
             <span *ngIf="availableSurveys.length > 0" class="grouping-item">Options</span>
-            <button mat-menu-item routerLink="/make-survey"><mat-icon>add</mat-icon>Create</button>
+            <button mat-menu-item routerLink="/manage/make"><mat-icon>add</mat-icon>Create</button>
             <button mat-menu-item (click)="lostLink()"><mat-icon>search</mat-icon>Lost Link</button>
         </mat-menu>
     </div>
