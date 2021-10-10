@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataService } from 'src/app/core/services/data.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { environment } from 'src/environments/environment';
 import { APIData } from '../../model/api-data.model';
+import { OkDialogComponent } from '../ok-dialog/ok-dialog.component';
 
 @Component({
     selector: 'app-feedback',
@@ -18,8 +20,8 @@ export class FeedbackComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<FeedbackComponent>,
-        private dialogService: DialogService,
         private dataService: DataService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -55,7 +57,14 @@ export class FeedbackComponent implements OnInit {
         const [result, _] = this.dataService.postData('feedback', this.feedback.value);
         result.subscribe((data: APIData) => {
             if (!data.ok) {
-                this.dialogService.error(data.error);
+                const DIALOG_DATA = {
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '800px',
+                    minWidth: '300px',
+                    autoFocus: false,
+                    data: {title: 'Error', content: `An error occurred: ${data.error?.body.error ?? 'Unknown'} - ${data.error?.body.reason ?? 'Unknown'}\n\nThings to try:\n\tCheck your internet connection\n\tCheck the URL\n\tRefresh the page (F5)\n\tTry a different device/broswer\n\nIf none of the above worked you can report this error <a href="${environment.githubIssues}" target="_blank">here</a>`}};
+                this.dialog.open(OkDialogComponent, DIALOG_DATA);
             } else {
                 this.dialogRef.close();
             }

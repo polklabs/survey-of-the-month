@@ -103,7 +103,6 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     answerKeyChange(newKey: string): void {
         this.question.answerKey = newKey;
-        console.log(this.question.answerKey);
         this.qRandomizeAnswers.emit();
     }
 
