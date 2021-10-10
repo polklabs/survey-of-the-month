@@ -25,7 +25,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     @Input() loading = false;
     @Input() editable = false; // For the survey creator
     @Input() basicEdit = false; // For the homepage
-    @Input() questionNumber?: string;
+    @Input() questionNumber = '0';
 
     @Output() qRandomize = new EventEmitter<void>();
     @Output() qRandomizeAnswers = new EventEmitter<void>();
@@ -52,7 +52,6 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
-        console.log(this.question);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

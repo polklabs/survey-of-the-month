@@ -409,19 +409,6 @@ export class SurveyMakerComponent implements OnInit {
         }
     }
 
-    setScroll(el?: HTMLElement): void {
-        this.scrollDelay = el;
-    }
-
-    scroll(): void {
-        if (this.scrollDelay) {
-            setTimeout(() => {
-                this.scrollDelay?.scrollIntoView();
-                this.scrollDelay = undefined;
-            }, 100);
-        }
-    }
-
     canMoveUp(i: number): boolean {
         return i !== 0;
     }
@@ -455,6 +442,15 @@ export class SurveyMakerComponent implements OnInit {
         const i = this.questionPos.findIndex(x => x === id);
         if (i === -1) { return -1; }
         return i;
+    }
+
+    scroll(): void {
+        setTimeout(() => {
+            const qElem = document.getElementById('question' + this.survey.questions.length);
+            if (qElem !== null) {
+                qElem.scrollIntoView();
+            }
+        }, 50);
     }
 
 }

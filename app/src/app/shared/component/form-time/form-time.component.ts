@@ -28,13 +28,13 @@ export class FormTimeComponent implements OnChanges {
         if (changes.clear) {
             this.answers = [];
             this.choices.forEach(() => {
-                this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
+                this.answers.push({ hour: '12', minute: '00', ampm: 'AM' });
             });
         }
     }
 
     addAnswer(): void {
-        this.answers.push({ hour: '00', minute: '00', ampm: 'AM' });
+        this.answers.push({ hour: '12', minute: '00', ampm: 'AM' });
         this.aAdd.emit();
     }
 
@@ -46,18 +46,12 @@ export class FormTimeComponent implements OnChanges {
     onChange(): void {
         this.answers.forEach(answ => {
             if (answ.hour) {
-                let hour = Number.parseInt(answ.hour, 10);
-                if (isNaN(hour)) { hour = 1; }
-                if (hour > 12) { hour = 12; }
-                if (hour < 1) { hour = 1; }
-                answ.hour = hour.toString();
+                if (answ.hour === '') { answ.hour = '12'; }
+                answ.hour = this.padNumber(answ.hour.toString(), 1);
             }
             if (answ.minute) {
-                let minute = Number.parseInt(answ.minute, 10);
-                if (isNaN(minute)) { minute = 0; }
-                if (minute > 59) { minute = 59; }
-                if (minute < 0) { minute = 0; }
-                answ.minute = minute.toString();
+                if (answ.minute === '') { answ.minute = '00'; }
+                answ.minute = this.padNumber(answ.minute.toString(), 2);
             }
         });
         this.aUpdate.emit(this.answers.map(x => `${this.padNumber(x.hour, 2)}:${this.padNumber(x.minute, 2)} ${x.ampm}`));

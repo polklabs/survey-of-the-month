@@ -2,6 +2,7 @@
     <div style="margin: auto; width: 800px; min-width: 250px;">
         <div>
             <p style="margin-top: 8px;">Who are these questions for? Enter the names of people "or character" that will be taking your suvey. Names entered here will be randomly insterted into generated question and answers"</p>
+            <div id="scrollTo"></div>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
@@ -21,10 +22,9 @@
 
         <app-form-question #singleQuestion [question]="question" [loading]="loading"
             [basicEdit]="true"
-            (qRandomize)="getQuestion(); setScroll(bottom)" (qSeed)="seedQuestion(); setScroll(bottom)"
-            (qRandomizeAnswers)="updateChoices(); setScroll(bottom)" (qShuffle)="updateQuestion(); setScroll(bottom)">
+            (qRandomize)="getQuestion()" (qSeed)="seedQuestion()"
+            (qRandomizeAnswers)="updateChoices()" (qShuffle)="updateQuestion()">
         </app-form-question>
 
     </div>
 </div>
-<div #bottom></div>

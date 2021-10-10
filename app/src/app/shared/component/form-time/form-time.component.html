@@ -4,13 +4,13 @@
             <td>
                 <span [innerHTML]="choice"></span>:&nbsp;
             </td>
-            <td style="width: 200px;">
-                <mat-form-field fxFlex="48px" appearance="outline">
-                    <input matInput [(ngModel)]="answers[i].hour" (keyup)="onChange()">
+            <td style="width: 230px;">
+                <mat-form-field fxFlex="64px" appearance="outline">
+                    <input matInput type="number" min="1" max="12" [(ngModel)]="answers[i].hour" (ngModelChange)="onChange()">
                 </mat-form-field>
                 <p>&nbsp;:&nbsp;</p>
-                <mat-form-field fxFlex="48px" appearance="outline">
-                    <input matInput [(ngModel)]="answers[i].minute" (keyup)="onChange()">
+                <mat-form-field fxFlex="64px" appearance="outline">
+                    <input matInput type="number" min="0" max="59" [(ngModel)]="answers[i].minute" (ngModelChange)="onChange()">
                 </mat-form-field>
                 <p>&nbsp;&nbsp;</p>
                 <mat-form-field fxFlex="74px" appearance="outline">
@@ -47,41 +47,6 @@
             </td>
         </tr>
     </table>
-    <!-- <div *ngFor="let choice of choices; let i = index;" fxLayout="row">
-
-        <p [innerHTML]="choice"></p>
-        <p>:&nbsp;</p>
-        <mat-form-field fxFlex="48px" appearance="outline">
-            <input matInput [(ngModel)]="answers[i].hour" (keyup)="onChange()">
-        </mat-form-field>
-        <p>&nbsp;:&nbsp;</p>
-        <mat-form-field fxFlex="48px" appearance="outline">
-            <input matInput [(ngModel)]="answers[i].minute" (keyup)="onChange()">
-        </mat-form-field>
-        <p>&nbsp;&nbsp;</p>
-        <mat-form-field fxFlex="64px" appearance="outline">
-            <mat-select [(ngModel)]="answers[i].ampm" (selectionChange)="onChange()">
-                <mat-option value="AM">AM</mat-option>
-                <mat-option value="PM">PM</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-
-        <button mat-icon-button *ngIf="editable" [disabled]="loading" [matMenuTriggerFor]="edit">
-            <mat-icon>edit</mat-icon>
-        </button>
-        <mat-menu #edit="matMenu">
-            <button mat-menu-item (click)="aEditText.emit(i)">
-                <mat-icon>edit</mat-icon>Edit Label
-            </button>
-            <button mat-menu-item (click)="aRandomize.emit(i)">
-                <mat-icon color="accent">casino</mat-icon>Randomize
-            </button>
-            <button mat-menu-item (click)="aDelete.emit(i)">
-                <mat-icon color="warn">delete</mat-icon>Delete
-            </button>
-        </mat-menu>
-    </div> -->
     <button mat-button *ngIf="editable" (click)="addAnswer()">
         <mat-icon>add</mat-icon> Add
     </button>

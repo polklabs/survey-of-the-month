@@ -27,8 +27,6 @@ export class SingleQuestionComponent implements OnInit {
     question: Question = new Question();
     users: string[] = [];
 
-    scrollDelay?: HTMLElement;
-
     debounceButton = false;
     loading = false;
 
@@ -90,7 +88,13 @@ export class SingleQuestionComponent implements OnInit {
                 }
                 this.loading = false;
                 if (this.questionComp) { this.questionComp.clearAnswer(); }
-                this.scroll();
+
+                setTimeout(() => {
+                    const qElem = document.getElementById('scrollTo');
+                    if (qElem !== null) {
+                        qElem.scrollIntoView();
+                    }
+                }, 50);
             });
         }, 500);
     }
@@ -118,19 +122,6 @@ export class SingleQuestionComponent implements OnInit {
             this.users.splice(index, 1);
         }
         this.localStorageService.setUsers(this.users);
-    }
-
-    setScroll(el?: HTMLElement): void {
-        this.scrollDelay = el;
-    }
-
-    scroll(): void {
-        if (this.scrollDelay) {
-            setTimeout(() => {
-                this.scrollDelay?.scrollIntoView();
-                this.scrollDelay = undefined;
-            }, 250);
-        }
     }
 
     createSurvey(): void {
