@@ -6,7 +6,10 @@
         "[key:group_film]What is your role on a film set?",
         "[key:group_spaceShip]What is your role on a space ship?",
         "[key:group_revenge]Someone really screwed you over and called your #relation# a bad name. You deserve revenge. What should be done?",
-        "[key:color]What color Power Ranger are you?"
+        "[key:color]What color Power Ranger are you?",
+        "[key:group_royal]Choose your role in our royal court.",
+        "[key:group_job]Where do you work in our small town?",
+        "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?"
     ],
     "group_circus": ["Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"],
     "group_heist": ["Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"],
@@ -28,5 +31,17 @@
         "Drip honey all over their stuff.",
         "Leave rude notes under their windshield wipers.",
         "Send them a glitter bomb."
-    ]
+    ],
+    "group_royal": [
+        "King/Queen",
+        "Jester",
+        "Advisor",
+        "Physician",
+        "Ward (body guard)",
+        "Prince/Princess",
+        "Chef",
+        "Court Magician"
+    ],
+    "group_job": ["Mayor", "Sheriff", "Mailman", "Bartender", "Mechanic", "Cafe Owner", "Teacher", "Farmer", "Drunk"],
+    "group_horror": ["The Killer/Entity", "The Harbinger", "The Pawn", "The Scholar", "The Hunter", "The Cop", "The Final Girl", "The Jock", "The Bad Girl", "The Old Person", "The Token", "The Skeptic", "The Sexy Couple", "The Hysteric"]
 }

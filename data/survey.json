@@ -79,7 +79,7 @@
         "[type:text]What is the fastest way to get fired from your job as a #career#?",
         "[type:text][objectA:#object#]You have 5 minutes to hide a #objectA# in your home. A detective has #1_24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
         "[type:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
-        "[type:multi][key:yesNo][count:-1]Reporters show up at your door telling you you've won an award for your #adjective# #bodyPart#. Do you accept it?",
+        "[type:multi][key:yesNo][count:-1]Reporters show up at your door telling you you've won an award for your #crush_reason#. Do you accept it?",
         "[type:text]You’ve been kidnapped. 30 mins later your kidnapper dumps you on the street because you won’t stop talking about what?",
         "[type:text]What fan theory do you 100% accept as true?",
         "[type:multi][key:1Percent]You are now the 1% of?",
@@ -127,7 +127,7 @@
         "[type:multi][key:person][count:-1]Who is most likely able to speak #language#?",
         "[type:text]Convince #person.capitalize# to buy #object.a#.",
         "[type:text]If #person.capitalize# asked you to #verb_transitive# #generalThings.a#, how would you do it?",
-        "[type:text]Who would win in a fight between #person.capitalize# vs #animal#?",
+        "[type:text]Who would win in a fight between #person.capitalize# vs #animal.a#?",
         "[type:check][key:character][count:6]Choose 2 to be in a thruple with.",
         "[type:multi][key:trueFalse][count:-1]#person.capitalize# is ^$#traits#:#trait_good#:#trait_bad#:#adjective#$ person",
         "[type:check][key:movie]How many of these movies have you seen?",
@@ -136,7 +136,11 @@
         "[type:text]The next time you see #person.capitalize# they speak only with #accent.a# accent. How do you react?",
         "[type:text]You arrive home to find #person.capitalize# and #person.capitalize# asking you to sit down for an intervention. What is it about?",
         "[type:multi][key:generalReaction]#person.capitalize# has just invested all their money into #generalThings.s#.",
-        "[type:text]#person.capitalize# just sent you the emoji #emoji_combo#. What does it mean?"
+        "[type:text]#person.capitalize# just sent you the emoji #emoji_combo#. What does it mean?",
+        "[type:multi][key:apocalypse_survival_time]How long do you think ^$you:#person.capitalize# could survive #apocalypse.a# apocalypse?",
+        "[type:text]What is your plan for surviving #apocalypse.a# apocalypse?",
+        "[type:check][key:character,person,animal]Pick two companions for #apocalypse.a# apocalypse?",
+        "[type:text]You can rename one thing, everyone except you will think is has always been called that. What do you rename?"
 	],
 
 	"adjective": [ "adorable", "adventurous", "aggressive", "agreeable", "alert", "alive", "amused", "angry", "annoyed", "annoying", "anxious", "arrogant", "ashamed", "attractive", "average", "awful", "bad", "beautiful", "better", "bewildered", "black", "bloody", "blue", "blue eyed", "blushing", "bored", "brainy", "brave", "breakable", "bright", "busy", "calm", "careful", "cautious", "charming", "cheerful", "clean", "clear", "clever", "cloudy", "clumsy", "colorful", "combative", "comfortable", "concerned", "condemned", "confused", "cooperative", "courageous", "crazy", "creepy", "crowded", "cruel", "curious", "cute", "dangerous", "dark", "dead", "defeated", "defiant", "delightful", "depressed", "determined", "different", "difficult", "disgusted", "distinct", "disturbed", "dizzy", "doubtful", "drab", "dull", "eager", "easy", "elated", "elegant", "embarrassed", "enchanting", "encouraging", "energetic", "enthusiastic", "envious", "evil", "excited", "expensive", "exuberant", "fair", "faithful", "famous", "fancy", "fantastic", "fierce", "filthy", "fine", "foolish", "fragile", "frail", "frantic", "friendly", "frightened", "funny", "gentle", "gifted", "glamorous", "gleaming", "glorious", "good", "gorgeous", "graceful", "grieving", "grotesque", "grumpy", "handsome", "happy", "healthy", "helpful", "helpless", "hilarious", "homeless", "homely", "horny", "horrible", "hungry", "hurt", "ill", "important", "impossible", "inexpensive", "innocent", "inquisitive", "itchy", "jealous", "jittery", "jolly", "joyous", "kind", "lazy", "light", "lively", "lonely", "long", "lovely", "lucky", "magnificent", "misty", "modern", "motionless", "muddy", "mushy", "mysterious", "nasty", "naughty", "nervous", "nice", "nutty", "obedient", "obnoxious", "odd", "old", "fashioned", "open", "outrageous", "outstanding", "panicky", "perfect", "plain", "pleasant", "poised", "poor", "powerful", "precious", "prickly", "proud", "putrid", "puzzled", "quaint", "real", "relieved", "repulsive", "rich", "scary", "selfish", "shiny", "shy", "silly", "sleepy", "smiling", "smoggy", "sore", "sparkling", "splendid", "spotless", "stormy", "strange", "stupid", "successful", "super", "talented", "tame", "tasty", "tender", "tense", "terrible", "thankful", "thoughtful", "thoughtless", "tired", "tough", "troubled", "ugliest", "ugly", "uninterested", "unsightly", "unusual", "upset", "uptight", "vast", "victorious", "vivacious", "wandering", "weary", "wicked", "wide eyed", "wild", "witty", "worried", "worrisome", "wrong", "zany", "zealous" ],
@@ -211,5 +215,8 @@
 	"superpower": ["produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight" ],
 	"environmentType": ["clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"],
 
-    "crush_reason": ["#bodypart#", "collection of #object#", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"]
+    "crush_reason": ["#bodypart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"],
+
+    "apocalypse": ["AI revolution", "zombie uprising", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"],
+    "apocalypse_survival_time": ["1 day", "1 week", "1 month", "1 year", "1 decade", "indefinitely"]
 }
