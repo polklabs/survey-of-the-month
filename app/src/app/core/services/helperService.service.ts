@@ -1,3 +1,4 @@
+import { AnswerType } from 'src/app/shared/model/question.model';
 import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 
 export class HelperService {
@@ -8,8 +9,12 @@ export class HelperService {
         return words.map(w => w[0].toUpperCase() + w.substr(1)).join(' ');
     }
 
-    public static getAnswerTypeText(surveyContainer: SurveyContainer, index: number): string {
-        switch (surveyContainer.survey.questions[index].answerType) {
+    public static getAnswerTypeTextByIndex(surveyContainer: SurveyContainer, index: number): string {
+        return this.getAnswerTypeText(surveyContainer.survey.questions[index].answerType);
+    }
+
+    public static getAnswerTypeText(answerType: AnswerType): string {
+        switch (answerType) {
             case 'multi':
                 return 'Multiple Choice';
             case 'text':

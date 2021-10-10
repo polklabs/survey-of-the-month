@@ -14,8 +14,9 @@ export class LocalStorageService {
 
     getUsers(): UserStorage[] {
         const usersString = localStorage.getItem(USERS);
-        if (usersString !== null) {
-            return JSON.parse(usersString);
+        const users = JSON.parse(usersString ?? '[]');
+        if (users.length > 0) {
+            return users;
         }
         return ['Bob', 'Alice'];
     }

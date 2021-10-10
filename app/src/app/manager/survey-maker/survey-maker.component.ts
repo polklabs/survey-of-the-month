@@ -320,6 +320,11 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     saveSurvey(): void {
+        if (this.survey.users.length === 0) {
+            this.dialogService.alert('Please add at least one person to your survey.');
+            return;
+        }
+
         this.survey.email = this.survey.email.trim().toLowerCase();
         this.loadingUnknown = true;
         const [result, _] = this.dataService.putData('survey', { survey: this.survey, id: this.id, key: this.key });
@@ -328,6 +333,7 @@ export class SurveyMakerComponent implements OnInit {
             if (data.ok && data.id && data.key) {
                 this.survey.emailSent = true;
                 this.localStorageService.addSurvey(this.survey.name, data.id, data.key);
+                this.cacheUsers();
                 this.id = data.id;
                 this.key = data.key;
                 this.snackBar.open('Saved!', 'OK', { duration: 3000 });
@@ -355,7 +361,6 @@ export class SurveyMakerComponent implements OnInit {
         if (input) {
             input.value = '';
         }
-        this.cacheUsers();
     }
 
     removeUser(user: { _id: string, name: string }): void {
@@ -365,7 +370,6 @@ export class SurveyMakerComponent implements OnInit {
         if (index >= 0) {
             this.survey.users.splice(index, 1);
         }
-        this.cacheUsers();
     }
 
     getUserNames(): string[] {

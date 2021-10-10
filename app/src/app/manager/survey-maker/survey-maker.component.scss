@@ -36,3 +36,12 @@ h1 {
     margin-bottom: 4px;
     font-family: 'Chalk', 'arial', sans-serif;
 }
+
+.customText mat-form-field:not(:first-child) {
+    margin-top: 48px;
+}
+
+fieldset {
+    border-color: orange;
+    border-radius: 6px;
+}

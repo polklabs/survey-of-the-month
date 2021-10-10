@@ -12,11 +12,73 @@
         </div>
 
         <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center" *ngIf="editable">
-            <mat-form-field appearance="outline">
-                <mat-label>Content</mat-label>
-                <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.subtitle" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
-                <mat-hint>This text will be displayed before users take the survey</mat-hint>
-            </mat-form-field>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Customize Survey Text
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        Click to overwrite different portions of the displayed survey text
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <p>Basic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.</p>
+
+                    <div fxLayout="column" fxLayoutAlign="center" class="customText">
+                        <!-- Custom Survey Text Areas -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>Pre Survey</mat-label>
+                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.preAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <mat-hint>This text will be displayed before users take the survey</mat-hint>
+                        </mat-form-field>
+                        <fieldset>
+                            <legend>Preview</legend>
+                            <div [innerHTML]="survey.preAnswer"></div>
+                        </fieldset>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Post Survey</mat-label>
+                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.postAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <mat-hint>This text will be displayed after users take the survey</mat-hint>
+                        </mat-form-field>
+                        <fieldset>
+                            <legend>Preview</legend>
+                            <div [innerHTML]="survey.postAnswer"></div>
+                        </fieldset>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentation Intro</mat-label>
+                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsIntro" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <mat-hint>This text will be displayed at the beginning of the presentation </mat-hint>
+                        </mat-form-field>
+                        <fieldset>
+                            <legend>Preview</legend>
+                            <div [innerHTML]="survey.resultsIntro"></div>
+                        </fieldset>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentation People</mat-label>
+                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsPeople" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <mat-hint>This text will be displayed before the list of people/participants in the presentation</mat-hint>
+                        </mat-form-field>
+                        <fieldset>
+                            <legend>Preview</legend>
+                            <div [innerHTML]="survey.resultsPeople"></div>
+                        </fieldset>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Presentation End</mat-label>
+                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsEnd" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <mat-hint>This text will be displayed at the end of the survey presentation</mat-hint>
+                        </mat-form-field>
+                        <fieldset>
+                            <legend>Preview</legend>
+                            <div [innerHTML]="survey.resultsEnd"></div>
+                        </fieldset>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
 
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
@@ -126,7 +188,7 @@
     </div>
 </div>
 
-<div style="margin: 32px;" fxLayout="column" fxLayoutAlign="center center">
+<div style="margin: 32px;" fxLayout="column" fxLayoutAlign="center center" *ngIf="editable">
     <h3>Any and all feedback is appreciated!</h3>
     <button mat-raised-button (click)="openFeedback()" color="primary">Feedback</button>
 </div>

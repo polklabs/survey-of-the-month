@@ -7,7 +7,8 @@
 
         <ng-container *ngIf="!answer.userId">
 
-            <p *ngIf="survey.subtitle" [innerHTML]="survey.subtitle"></p>
+            <p *ngIf="survey.preAnswer && !submitted" [innerHTML]="survey.preAnswer"></p>
+            <p *ngIf="survey.postAnswer && submitted" [innerHTML]="survey.postAnswer"></p>
 
             <mat-card *ngIf="answerStatus" class="answ-status-container">
                 <mat-card-header>

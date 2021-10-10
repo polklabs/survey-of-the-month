@@ -5,11 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
+import { CanDeactivateGuard } from '../shared/guard/can-deactivate-guard.service';
 
 const routes: Routes = [
     {
       path: 'make/:id/:key',
-      component: SurveyMakerComponent
+      component: SurveyMakerComponent,
+      canDeactivate: [CanDeactivateGuard],
     },
     {
         path: ':id/:key',

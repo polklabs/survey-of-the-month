@@ -170,14 +170,20 @@ export class SurveyResultsComponent implements OnInit {
         this.slide = [];
         if (this.slideNum === -1) {
             this.shuffle(this.surveyContainer.survey.users);
-            this.slide.push(new Slide({ text: [`<h2 class="center">Welcome to the survey results!</h2>`] }));
-            this.slide.push(new Slide({ text: [`<h3 class="center">Let's meet the participants</h3>`] }));
+            if (this.surveyContainer.survey.resultsIntro) {
+                this.slide.push(new Slide({ text: [this.surveyContainer.survey.resultsIntro] }));
+            }
+            if (this.surveyContainer.survey.resultsPeople) {
+                this.slide.push(new Slide({ text: [this.surveyContainer.survey.resultsPeople] }));
+            }
             this.slide.push(new Slide({ text: this.surveyContainer.survey.users.map(x => `<p class="center">${x.name}</p>`) }));
             this.postLoadSlide();
             return;
         }
         if (this.slideNum + 2 === this.slideCount) {
-            this.slide.push(new Slide({ text: [`<h2>The End!</h2>`], visible: true, alwaysVisible: true }));
+            if (this.surveyContainer.survey.resultsEnd) {
+                this.slide.push(new Slide({ text: [this.surveyContainer.survey.resultsEnd], visible: true, alwaysVisible: true }));
+            }
             this.postLoadSlide();
             return;
         }
@@ -269,7 +275,7 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     getAnswerTypeText(index: number): string {
-        return HelperService.getAnswerTypeText(this.surveyContainer, index);
+        return HelperService.getAnswerTypeTextByIndex(this.surveyContainer, index);
     }
 
     private answerToString(q: Question, answer: (null | string | number)[]): string[] {

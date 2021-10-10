@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HelperService } from 'src/app/core/services/helperService.service';
 import { CsvExportService } from '../../core/services/csvExport.service';
 import { DataService } from '../../core/services/data.service';
 import { DialogService } from '../../core/services/dialog.service';
@@ -210,22 +211,7 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     answerTypeToString(answerType: AnswerType): string {
-        switch (answerType) {
-            case 'multi':
-                return 'Multiple Choice';
-            case 'text':
-                return 'Free Answer';
-            case 'check':
-                return 'Check Boxes';
-            case 'rank':
-                return 'Rank the Following';
-            case 'date':
-                return 'Date Picker';
-            case 'time':
-                return 'Time Picker';
-            case 'scale':
-                return 'Rate the Following';
-        }
+        return HelperService.getAnswerTypeText(answerType);
     }
 
     getQuestionSubstring(text: string): string {
