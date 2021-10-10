@@ -1,69 +1,85 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { animate, keyframes, query, stagger, state, style, transition, trigger } from '@angular/animations';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
+import { HelperService } from '../core/services/helperService.service';
 import { APIData } from '../shared/model/api-data.model';
-import { Question } from '../shared/model/question.model';
+import { AnswerType, Question } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 
-type Slide = {
-    itemType: 'text' | 'answer' | 'question',
-    text: string,
-    name?: string,
-    nameVisible?: boolean,
-    visible: boolean,
-    alwaysVisible: boolean,
-}[];
+// type Slide = {
+//     itemType: 'basicText' | AnswerType | 'question',
+//     text: string[],
+//     name?: string,
+//     nameVisible?: boolean,
+//     visible: boolean,
+//     alwaysVisible: boolean,
+// }[];
+
+class Slide {
+    itemType: 'basicText' | AnswerType | 'question' = 'basicText';
+    labels: string[] = [];
+    text: string[] = [];
+    name?: string;
+    nameVisible = false;
+    visible = false;
+    alwaysVisible = false;
+
+    constructor(cfg?: Partial<Slide>) {
+        Object.assign(this, cfg);
+    }
+}
+
+const enterTime = '400ms';
+const leaveTime = '200ms';
 
 @Component({
     selector: 'app-survey-results',
     templateUrl: './survey-results.component.html',
     styleUrls: ['./survey-results.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     animations: [
         trigger('slideDownInOut', [
             transition(':enter', [
                 style({ transform: 'translateY(-300%)', opacity: 0 }),
-                animate('400ms ease-in', style({ transform: 'translateY(0%)', opacity: 1 }))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({ transform: 'translateY(-300%)', opacity: 0 }))
+                animate(enterTime + ' ease-in', style({ transform: 'translateY(0%)', opacity: 1 }))
             ])
         ]),
         trigger('slideUpInOut', [
             transition(':enter', [
                 style({ transform: 'translateY(300%)', opacity: 0 }),
-                animate('400ms ease-in', style({ transform: 'translateY(0%)', opacity: 1 }))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({ transform: 'translateY(300%)', opacity: 0 }))
+                animate(enterTime + ' ease-in', style({ transform: 'translateY(0%)', opacity: 1 }))
             ])
         ]),
         trigger('slideRightInOut', [
             transition(':enter', [
                 style({ transform: 'translateX(-200%)', opacity: 0 }),
-                animate('400ms ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({ transform: 'translateX(-200%)', opacity: 0 }))
+                animate(enterTime + ' ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
             ])
         ]),
         trigger('slideLeftInOut', [
             transition(':enter', [
                 style({ transform: 'translateX(200%)', opacity: 0 }),
-                animate('400ms ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({ transform: 'translateX(200%)', opacity: 0 }))
+                animate(enterTime + ' ease-in', style({ transform: 'translateX(0%)', opacity: 1 }))
             ])
         ]),
         trigger('fadeInOut', [
             transition(':enter', [
                 style({ opacity: 0 }),
-                animate('200ms ease-in', style({ opacity: 1 }))
-            ]),
-            transition(':leave', [
-                animate('200ms ease-in', style({ opacity: 0 }))
+                animate(leaveTime + ' ease-in', style({ opacity: 1 }))
+            ])
+        ]),
+        trigger('listAnimation', [
+            transition('* => *', [
+                query(':enter', style({ opacity: 0}), {optional: true}),
+                query(':enter', stagger(leaveTime, [
+                    animate(enterTime + ' ease-in', keyframes([
+                        style({opacity: 0, transform: 'translateY(-75%)', offset: 0}),
+                        style({opacity: .5, transform: 'translateY(35px)',  offset: 0.3}),
+                        style({opacity: 1, transform: 'translateY(0)',     offset: 1.0}),
+                    ]))
+                ]), {optional: true})
             ])
         ])
     ]
@@ -71,9 +87,9 @@ type Slide = {
 export class SurveyResultsComponent implements OnInit {
 
     @ViewChild('emptyForm', { static: true }) emptyForm!: TemplateRef<any>;
-    @ViewChild('textForm', { static: true }) textForm!: TemplateRef<any>;
-    @ViewChild('answerForm', { static: true }) answerForm!: TemplateRef<any>;
+    @ViewChild('textForm', { static: true }) basicTextForm!: TemplateRef<any>;
     @ViewChild('questionForm', { static: true }) questionForm!: TemplateRef<any>;
+    @ViewChild('answerForm', { static: true }) answerForm!: TemplateRef<any>;
 
     id = '';
     key = '';
@@ -82,7 +98,7 @@ export class SurveyResultsComponent implements OnInit {
     slideNum = -1;
     slideCount = 0;
 
-    slide: Slide = [];
+    slide: Slide[] = [];
 
     constructor(
         private dataService: DataService,
@@ -129,7 +145,7 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     prev(): void {
-        const data: Slide = Object.assign([], this.slide).reverse();
+        const data: Slide[] = Object.assign([], this.slide).reverse();
         for (const item of data.filter(x => !x.alwaysVisible)) {
             if (item.visible) {
                 item.visible = false;
@@ -153,35 +169,35 @@ export class SurveyResultsComponent implements OnInit {
     loadSlide(): void {
         this.slide = [];
         if (this.slideNum === -1) {
-            this.slide.push({ itemType: 'text', text: `<h2>Welcome to the survey results!</h2>`, visible: false, alwaysVisible: false });
-            this.slide.push({ itemType: 'text', text: `<h2>Let's meet the contenders</h2>`, visible: false, alwaysVisible: false });
-            this.slide.push({ itemType: 'text', text: `<ul><li>${this.surveyContainer.survey.users.map(x => x.name).join('</li><li>')}</li></ul>`, visible: false, alwaysVisible: false });
+            this.shuffle(this.surveyContainer.survey.users);
+            this.slide.push(new Slide({ text: [`<h2 class="center">Welcome to the survey results!</h2>`] }));
+            this.slide.push(new Slide({ text: [`<h3 class="center">Let's meet the participants</h3>`] }));
+            this.slide.push(new Slide({ text: this.surveyContainer.survey.users.map(x => `<p class="center">${x.name}</p>`) }));
             this.postLoadSlide();
             return;
         }
         if (this.slideNum + 2 === this.slideCount) {
-            this.slide.push({ itemType: 'text', text: `<h2>The End!</h2>`, visible: true, alwaysVisible: true });
+            this.slide.push(new Slide({ text: [`<h2>The End!</h2>`], visible: true, alwaysVisible: true }));
             this.postLoadSlide();
             return;
         }
 
         const question = this.surveyContainer.survey.questions[this.slideNum];
 
-        this.slide.push({ itemType: 'question', text: question.text, visible: false, alwaysVisible: false });
+        this.slide.push(new Slide({ text: [`<h2 class="center">Question ${this.slideNum + 1}</h2>`], visible: true, alwaysVisible: true }));
+        this.slide.push(new Slide({ itemType: 'question', text: [question.text] }));
         this.shuffle(this.surveyContainer.answers);
         this.surveyContainer.answers.forEach(answ => {
             const user = this.surveyContainer.survey.users.find(x => x._id === answ.userId);
             if (user) {
                 const qAnsw = answ.answers.find(x => x.questionId === question.questionId);
                 if (qAnsw) {
-                    this.slide.push({
-                        itemType: 'answer',
+                    this.slide.push(new Slide({
+                        itemType: question.answerType,
+                        labels: this.choicesToString(question),
                         text: this.answerToString(question, qAnsw.value),
-                        name: user.name,
-                        nameVisible: false,
-                        visible: false,
-                        alwaysVisible: false
-                    });
+                        name: user.name
+                    }));
                 }
             }
         });
@@ -221,7 +237,9 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     getTemplate(type: string): TemplateRef<any> {
-        return this[type + 'Form'];
+        const form = this[type + 'Form'];
+        if (form === undefined) { return this.answerForm; }
+        return form;
     }
 
     toggleVisible(index: number): void {
@@ -250,29 +268,54 @@ export class SurveyResultsComponent implements OnInit {
         return array;
     }
 
-    private answerToString(q: Question, answer: (null | string | number)[]): string {
+    getAnswerTypeText(index: number): string {
+        return HelperService.getAnswerTypeText(this.surveyContainer, index);
+    }
+
+    private answerToString(q: Question, answer: (null | string | number)[]): string[] {
         switch (q.answerType) {
             case 'multi':
                 const a = answer[0];
-                if (a === null) { return ''; }
+                if (a === null) { return ['']; }
                 if (typeof a === 'string') {
-                    return `<u>${a}</u>`;
+                    return [`<u>${a}</u>`];
                 }
-                return q.choices[a];
+                return [q.choices[a]];
             case 'text':
-                return answer.join('<br>');
+                return answer.map(x => x?.toString() ?? '');
             case 'check':
-                return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x).join('<br>');
+                return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x);
             case 'rank':
                 const a2: number[] = answer as number[];
-                return `<ol><li>${a2.map((x: number) => q.choices[x]).join('</li><li>')}</li></ol>`;
+                return a2.map((x: number) => q.choices[x]);
             case 'date':
-                return answer.join('<br>');
+                return answer.map(x => x?.toString() ?? '').filter(x => x);
             case 'time':
-                return answer.join('<br>');
+                return answer.map(x => x?.toString() ?? '').filter(x => x);
             case 'scale':
-                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').filter(x => x).join('<br>');
+                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}: ${q.scaleValues[a3]}` : '').filter(x => x);
         }
+    }
+
+    private choicesToString(q: Question): string[] {
+        switch (q.answerType) {
+            case 'multi':
+            case 'check':
+            case 'scale':
+                return [];
+            case 'rank':
+                return q.choices.map((x, i) => (i + 1).toString() + ': ');
+            default:
+                if (q.choices.length === 1 && q.choices[0] === 'Answer') {
+                    return [];
+                }
+                return q.choices.map(x => x + ': ');
+        }
+    }
+
+    public getChoiceText(label: string[], index: number): string {
+        if (index >= label.length) { return ''; }
+        return label[index];
     }
 
 }

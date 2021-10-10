@@ -26,28 +26,45 @@
     <mat-progress-bar></mat-progress-bar>
 </ng-template>
 
-<ng-template #textForm let-index="index">
-    <div *ngIf="slide[index].visible" [@fadeInOut] [innerHTML]="slide[index].text"></div>
+<ng-template #nameTag let-index="index">
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button (click)="toggleVisible(index)"><mat-icon>visibility</mat-icon></button>
+        <span *ngIf="slide[index].nameVisible" [@fadeInOut] class="name-tag">{{slide[index].name}}</span> 
+        <span *ngIf="!slide[index].nameVisible" [@slideLeftInOut] class="name-tag">[Reveal]</span> 
+    </div>
 </ng-template>
 
-<ng-template #answerForm let-index="index">
-    <div *ngIf="slide[index].visible" [@slideLeftInOut]>
-        <mat-card>
-            <div [innerHTML]="slide[index].text"></div>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button (click)="toggleVisible(index)"><mat-icon>visibility</mat-icon></button>
-                <span *ngIf="slide[index].nameVisible" [@fadeInOut] style="position: absolute; left: 56px;">{{slide[index].name}}</span> 
-                <span *ngIf="!slide[index].nameVisible" [@fadeInOut] style="position: absolute; left: 56px;">[Hidden]</span> 
-            </div>
-        </mat-card>
+<ng-template #textForm let-index="index">
+    <div *ngIf="slide[index].visible" [@listAnimation]="slide[index].text.length">
+        <div *ngFor="let text of slide[index].text" [innerHTML]="text">
+        </div>
     </div>
 </ng-template>
 
 <ng-template #questionForm let-index="index">
     <div *ngIf="slide[index].visible" [@slideDownInOut]>
         <mat-card>
-            <mat-card-subtitle>Question: {{index+1}}</mat-card-subtitle>
+            <mat-card-subtitle>{{getAnswerTypeText(slideNum)}}</mat-card-subtitle>
             <div [innerHTML]="slide[index].text"></div>
+        </mat-card>
+    </div>
+</ng-template>
+
+<!-- Answer Forms --------------------------------------------------------------------------------- -->
+<ng-template #answerForm let-index="index">
+    <div *ngIf="slide[index].visible" [@slideLeftInOut]>
+        <mat-card>
+            <div style="margin: auto; width: max-content;">
+                <div style="font-size: x-large;">
+                    <table>
+                        <tr *ngFor="let text of slide[index].text; let i = index;">
+                            <td>{{getChoiceText(slide[index].labels, i)}}</td>
+                            <td><span [innerHTML]="text"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <ng-container *ngTemplateOutlet="nameTag; context: {index: index}"></ng-container>
         </mat-card>
     </div>
 </ng-template>
