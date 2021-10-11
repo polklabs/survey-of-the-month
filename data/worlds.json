@@ -1,7 +1,7 @@
 {
     "world": [
-        "#movie#",
-        "#tv#"
+        "[tag:movies]#movie#",
+        "[tag:tv]#tv#"
     ],
     "movie_pixar": [
         "Toy Story",
@@ -89,17 +89,16 @@
         "Narnia",
         "Cloudy With A Chance Of Meatballs",
         "Godzilla",
-        "High School Musical",
         "Dune",
         "Total Recall",
         "Blade Runner",
         "Pride & Prejudice"
     ],
     "movie": [
-        "#movie_pixar#",
-        "#movie_dreamworks#",
-        "#movie_bluesky#",
-        "#movie_disney#",
+        "[tag:movies_pixar]#movie_pixar#",
+        "[tag:movies_dreamWorks]#movie_dreamworks#",
+        "[tag:movies_blueSky]#movie_bluesky#",
+        "[tag:movies_disney]#movie_disney#",
         "#movie_other#"
     ],
     "tv": [

@@ -5,16 +5,16 @@
         "#mythical_creature#"
     ],
     "character": [
-        "[tag:tv_theOffice]#character_theOffice# (The Office)",
-        "[tag:tv_parksAndRec]#character_parksRec# (Parks & Rec)",
-        "[tag:movies_lotr]#character_lotr# (LotR)",
+        "[tag:tv_theOffice]#character_theOffice#",
+        "[tag:tv_parksAndRec]#character_parksRec#",
+        "[tag:movies_lotr]#character_lotr#",
         "[tag:movies_pixar]#character_pixar#",
         "[tag:movies_harryPotter]#character_harryPotter#",
         "[tag:movies_marvel]#character_marvel#^$: pre powers$",
-        "[tag:tv_friends]#character_friends# (Friends)",
-        "[tag:music]#character_singer# (Musician)",
+        "[tag:tv_friends]#character_friends#",
+        "[tag:music]#character_singer#",
         "[tag:movies_dc]#character_dc#",
-        "[tag:actor]#character_actor# (Actor)",
+        "[tag:actor]#character_actor#",
         "[tag:movies]#character_movie_other#"
     ],
     "character_movie_other": [
@@ -250,11 +250,11 @@
         "#character#, #character#, and #character#"
     ],
     "characterClothes": [
-        "#character# wearing #clothing.a#",
-        "#character# wearing #color.a# #clothing#",
-        "#character# wearing #color.a# #clothing# and #color.a# #clothing#",
-        "#character# wearing only #clothing.a#",
-        "#character# wearing only #clothing.a# and #clothing.a#"
+        "[tag:nsfw]#character# wearing #clothing.a#",
+        "[tag:nsfw]#character# wearing #color.a# #clothing#",
+        "[tag:nsfw]#character# wearing #color.a# #clothing# and #color.a# #clothing#",
+        "[tag:nsfw]#character# wearing only #clothing.a#",
+        "[tag:nsfw]#character# wearing only #clothing.a# and #clothing.a#"
     ],
     "character_actor": [
         "Robert De Niro",
@@ -689,7 +689,38 @@
         "Adam Driver",
         "Aubrey Plaza"
     ],
-    "mythical_creature": [ "Golem", "Oni", "Cyclops", "Ogre", "Leprechaun", "Gnome", "Goblin", "Fairy", "Gorgon", "Mermaid", "Aqrabuamelu", "Minotaur", "Centaur", "Faun", "Werewolf", "Loch Ness Monster", "Griffin", "Phoenix", "Basilisk", "Unicorn", "Dragon", "Bigfoot", "Chimera", "Hydra", "Zombie", "Pontianak", "Banshee", "Dybbuk", "Vampire", "Bogeyman" ],
+    "mythical_creature": [
+        "Golem",
+        "Oni",
+        "Cyclops",
+        "Ogre",
+        "Leprechaun",
+        "Gnome",
+        "Goblin",
+        "Fairy",
+        "Gorgon",
+        "Mermaid",
+        "Aqrabuamelu",
+        "Minotaur",
+        "Centaur",
+        "Faun",
+        "Werewolf",
+        "Loch Ness Monster",
+        "Griffin",
+        "Phoenix",
+        "Basilisk",
+        "Unicorn",
+        "Dragon",
+        "Bigfoot",
+        "Chimera",
+        "Hydra",
+        "Zombie",
+        "Pontianak",
+        "Banshee",
+        "Dybbuk",
+        "Vampire",
+        "Bogeyman"
+    ],
     "animal": [
         "aardvark",
         "alligator",

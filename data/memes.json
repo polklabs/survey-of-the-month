@@ -3,7 +3,11 @@
         "<br><img src=\"#meme#\" alt=\"meme\">"
     ],
     "meme": [
-        "#meme_lotr#"
+        "[tag:movies_lotr]#meme_lotr#",
+        "[tag:movies_harryPotter]#meme_harryPotter#"
+    ],
+    "meme_harryPotter": [
+        "https://i.imgur.com/T9k5cpf.jpeg"
     ],
     "meme_lotr": [
         "https://i.imgur.com/yqLBocW.jpg",
