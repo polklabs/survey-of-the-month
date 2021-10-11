@@ -6,6 +6,7 @@ import { FeedbackComponent } from 'src/app/shared/modal/feedback/feedback.compon
 import { OkDialogComponent } from 'src/app/shared/modal/ok-dialog/ok-dialog.component';
 import { TextBoxComponent } from 'src/app/shared/modal/text-box/text-box.component';
 import { APIError } from 'src/app/shared/model/api-data.model';
+import { Question } from 'src/app/shared/model/question.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -75,6 +76,21 @@ export class DialogService {
         }
     }
 
+    feedbackQuestion(question: Question, type: string): void {
+        const modalData = {
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '800px',
+            minWidth: '300px',
+            autoFocus: false,
+            data: {
+                subject: `[Report]: ${type}`,
+                body: `Enter any additional information here...\n\nQuestion:\n${JSON.stringify(question)}`,
+                type: 'problem'
+            }
+        };
+        this.dialog.open(FeedbackComponent, modalData);
+    }
     feedback(): void {
         const modalData = {
             width: 'auto',

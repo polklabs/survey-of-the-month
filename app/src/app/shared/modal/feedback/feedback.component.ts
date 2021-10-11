@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from 'src/app/core/services/data.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { environment } from 'src/environments/environment';
@@ -21,7 +21,8 @@ export class FeedbackComponent implements OnInit {
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<FeedbackComponent>,
         private dataService: DataService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data?: { subject: string, body: string, type: string }
     ) { }
 
     ngOnInit(): void {
@@ -31,6 +32,9 @@ export class FeedbackComponent implements OnInit {
             body: ['', Validators.required.bind(this)],
             returnAddress: ''
         });
+        if (this.data) {
+            this.feedback.patchValue(this.data);
+        }
     }
 
     onNoClick(): void {

@@ -188,8 +188,10 @@ export class TagsComponent implements OnInit {
 
         const tags = this.localStorageService.getTags();
         this.treeControl.dataNodes.forEach(node => {
-            if (!tags.includes(node.item)) {
-                this.tagItemSelectionToggle(node, true);
+            if (node.item !== 'All') {
+                if (!tags.includes(node.item)) {
+                    this.tagItemSelectionToggle(node, true);
+                }
             }
         });
         this.dataLoaded = true;

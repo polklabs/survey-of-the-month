@@ -64,6 +64,14 @@
             <mat-menu #moreMenu="matMenu">
                 <button mat-menu-item (click)="qShuffle.emit()" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
                 <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
+                <button mat-menu-item *ngIf="!question.custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>
+            </mat-menu>
+            <mat-menu #reportMenu="matMenu">
+                <button mat-menu-item (click)="questionFeedback('Missing Tag')">Missing Tag</button>
+                <button mat-menu-item (click)="questionFeedback('Broken Link')">Broken Link</button>
+                <button mat-menu-item (click)="questionFeedback('Incorrect Text')">Incorrect Text</button>
+                <button mat-menu-item (click)="questionFeedback('Grammar')">Grammar</button>
+                <button mat-menu-item (click)="questionFeedback('Other')">Other</button>
             </mat-menu>
 
         </mat-card-actions>

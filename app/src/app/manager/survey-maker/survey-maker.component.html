@@ -144,6 +144,7 @@
                     <button mat-menu-item (click)="seedQuestion(i)"><mat-icon>search</mat-icon>Seed</button>
                     <button mat-menu-item (click)="getQuestion(i, true)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
                     <button mat-menu-item (click)="deleteQuestion(i)"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
+                    <button mat-menu-item [disabled]="survey.questions[i].custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>
                 </mat-menu>
                 <mat-menu #questionType="matMenu">
                     <button mat-menu-item (click)="editQuestionType(i, 'text')" [disabled]="question.answerType==='text'"><mat-icon>create</mat-icon>Text</button>
@@ -153,6 +154,13 @@
                     <button mat-menu-item (click)="editQuestionType(i, 'scale')" [disabled]="question.answerType==='scale'"><mat-icon>star_half</mat-icon>Rate</button>
                     <button mat-menu-item (click)="editQuestionType(i, 'date')" [disabled]="question.answerType==='date'"><mat-icon>today</mat-icon>Date</button>
                     <button mat-menu-item (click)="editQuestionType(i, 'time')" [disabled]="question.answerType==='time'"><mat-icon>schedule</mat-icon>Time</button>
+                </mat-menu>
+                <mat-menu #reportMenu="matMenu">
+                    <button mat-menu-item (click)="questionFeedback(i, 'Missing Tag')">Missing Tag</button>
+                    <button mat-menu-item (click)="questionFeedback(i, 'Broken Link')">Broken Link</button>
+                    <button mat-menu-item (click)="questionFeedback(i, 'Incorrect Text')">Incorrect Text</button>
+                    <button mat-menu-item (click)="questionFeedback(i, 'Grammar')">Grammar</button>
+                    <button mat-menu-item (click)="questionFeedback(i, 'Other')">Other</button>
                 </mat-menu>
             </div>
         </div>

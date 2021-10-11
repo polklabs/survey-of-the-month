@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { DialogService } from 'src/app/core/services/dialog.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { Question } from '../../model/question.model';
 
@@ -47,6 +48,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     clearVar = 0; // Increment this to clear answers from question form;
 
     constructor(
+        private dialogService: DialogService,
         private cd: ChangeDetectorRef
     ) { }
 
@@ -108,6 +110,10 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     answerKeyString(key: string): string {
         return HelperService.answerKeyToString(key);
+    }
+
+    questionFeedback(type: string): void {
+        this.dialogService.feedbackQuestion(this.question, type);
     }
 
 }

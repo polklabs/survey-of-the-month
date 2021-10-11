@@ -473,4 +473,8 @@ export class SurveyMakerComponent implements OnInit {
         }
     }
 
+    questionFeedback(index: number, type: string): void {
+        this.dialogService.feedbackQuestion(this.survey.questions[index], type);
+    }
+
 }
