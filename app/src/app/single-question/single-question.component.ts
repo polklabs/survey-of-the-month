@@ -26,6 +26,7 @@ export class SingleQuestionComponent implements OnInit {
 
     question: Question = new Question();
     users: string[] = [];
+    filterTags?: string[];
 
     debounceButton = false;
     loading = false;
@@ -40,23 +41,24 @@ export class SingleQuestionComponent implements OnInit {
 
     ngOnInit(): void {
         this.users = this.localStorageService.getUsers();
+        this.updateFilters();
         this.getQuestion();
     }
 
     getQuestion(): void {
-        this.callApi('question', { users: this.users });
+        this.callApi('question', { users: this.users, filterTags: this.filterTags });
     }
 
     updateChoice(index: number): void {
-        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: index });
+        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: index, filterTags: this.filterTags });
     }
 
     updateChoices(): void {
-        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1 });
+        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1, filterTags: this.filterTags });
     }
 
     updateQuestion(): void {
-        this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin });
+        this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin, filterTags: this.filterTags });
     }
 
     seedQuestion(): void {
@@ -127,6 +129,18 @@ export class SingleQuestionComponent implements OnInit {
     createSurvey(): void {
         this.questionHolderService.saveQuestion(this.question);
         this.router.navigateByUrl('/manage/make/0/0');
+    }
+
+    updateFilters(filters?: string[]): void {
+        if (filters) {
+            if (filters.length === 0) {
+                this.filterTags = undefined;
+            } else {
+                this.filterTags = filters;
+            }
+        } else {
+            this.filterTags = this.localStorageService.getTags();
+        }
     }
 
 }

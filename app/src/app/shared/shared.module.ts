@@ -15,6 +15,7 @@ import { FeedbackComponent } from './modal/feedback/feedback.component';
 import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
 import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
 import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.component';
+import { TagsComponent } from './component/tags/tags.component';
 
 @NgModule({
     declarations: [
@@ -30,11 +31,13 @@ import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.co
         FeedbackComponent,
         OkDialogComponent,
         ConfirmDialogComponent,
+        TagsComponent,
     ],
     exports: [
         FormTextComponent,
         TextBoxComponent,
         FormQuestionComponent,
+        TagsComponent
     ],
     imports: [
         CommonModule,

@@ -32,4 +32,12 @@ export class HelperService {
         }
     }
 
+    public static tagToString(tag: string): string {
+        let value = tag.split('_').pop();
+        if (!value) { return '{Unknown}'; }
+        value = value.replace(/(?<!^)((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/gm, ' $1').trim();
+        value = value.substr(0, 1).toUpperCase() + value.substr(1);
+        return value;
+    }
+
 }

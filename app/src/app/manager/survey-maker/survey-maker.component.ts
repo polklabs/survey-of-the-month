@@ -45,6 +45,8 @@ export class SurveyMakerComponent implements OnInit {
     survey: Survey = new Survey();
     editable = true;
 
+    filterTags?: string[];
+
     debounceButton = false;
     loading: boolean[] = [];
     loadingUnknown = false;
@@ -69,6 +71,7 @@ export class SurveyMakerComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCachedUsers();
+        this.updateFilters();
         this.activatedroute.paramMap.subscribe(params => {
             const id = params.get('id');
             const key = params.get('key');
@@ -107,7 +110,8 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false, typeFilter?: AnswerType, origin?: string): void {
-        const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined, typeFilter, origin };
+        const questionData: any = { users: this.getUserNames(), seed, questionOrigin: undefined, typeFilter,
+            origin, filterTags: this.filterTags };
 
         if (reset) {
             // Reset a basic template question
@@ -215,7 +219,7 @@ export class SurveyMakerComponent implements OnInit {
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
         this.callApi(
             'choice',
-            { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex },
+            { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex, filterTags: this.filterTags },
             questionIndex)?.subscribe(
                 data => {
                     if (data !== null) {
@@ -455,6 +459,18 @@ export class SurveyMakerComponent implements OnInit {
                 qElem.scrollIntoView();
             }
         }, 50);
+    }
+
+    updateFilters(filters?: string[]): void {
+        if (filters) {
+            if (filters.length === 0) {
+                this.filterTags = undefined;
+            } else {
+                this.filterTags = filters;
+            }
+        } else {
+            this.filterTags = this.localStorageService.getTags();
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import { SurveysStorage, UserStorage } from 'src/app/shared/model/local-storage.
 
 const USERS = 'users';
 const SURVEYS = 'Surveys';
+const TAGS = 'tags';
 
 @Injectable({
     providedIn: 'root'
@@ -61,6 +62,18 @@ export class LocalStorageService {
     setSurveys(surveys: SurveysStorage[]): void {
         localStorage.setItem(SURVEYS, JSON.stringify(surveys));
         this.surveyBS.next(surveys);
+    }
+
+    setTags(tags: string[]): void {
+        localStorage.setItem(TAGS, JSON.stringify(tags));
+    }
+
+    getTags(): string[] {
+        const data = localStorage.getItem(TAGS);
+        if (data !== null) {
+            return JSON.parse(data);
+        }
+        return [];
     }
 
 }

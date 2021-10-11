@@ -1,4 +1,4 @@
-import { Tracery } from './src/tracery';
+import { getTags, Tracery } from './src/tracery';
 import { AnswerType, Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
@@ -55,20 +55,26 @@ app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: respo
 });
 
 // Generate a completely new question
-app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, origin?: string } }, res: response) => {
-    let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter);
+app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
+    let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter, req.body.filterTags);
     tracery.start(req.body.origin);
     res.json({ok: true, data: tracery.getQuestion() });
 });
 
 // Regenerate answers for a specific choice or all
 // choiceIndex = -1 for all
-app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number } }, res: response) => {
-    let tracery = new Tracery(req.body.users, req.body.seed);
+app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number, filterTags?: string[] } }, res: response) => {
+    let tracery = new Tracery(req.body.users, req.body.seed, -1, undefined, req.body.filterTags);
     tracery.setQuestion(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
     res.json({ok: true, data: tracery.getQuestion() });
 });
+
+app.get('/api/info', speedLimiter, (_, res: any) => {
+    res.json({ok: true, data: {
+        tags: getTags()
+    }});
+})
 
 // Surveys ------------------------------------------------------------------------------------------
 

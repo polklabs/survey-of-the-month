@@ -14,7 +14,7 @@ const regexInlineChoices = /(?<=[^\\]|^):/gm; // first:second -> ["first", "seco
 
 const grammar: { [key: string]: string[] } = {};
 const grammarKeys: string[] = [];
-const tags: Set<string> = new Set();
+let tags: string[] = [];
 
 const loadedfiles: string[] = [];
 loadGrammar('survey.json');
@@ -28,12 +28,14 @@ export class Tracery {
     seen: { [key: string]: Set<string> } = {};
     shuffleQuestion = false;
     typeFilter?: AnswerType;
+    filterTags?: string[]; // Do not include any item with tags in this list
     rng: any;
     chance = 1;
+    foundTags: Set<string> = new Set();
 
     question: Question = new Question();
 
-    constructor(people: string[] = [], customSeed = '', questionOrigin = -1, typeFilter?: AnswerType) {
+    constructor(people: string[] = [], customSeed = '', questionOrigin = -1, typeFilter?: AnswerType, filterTags?: string[]) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
         this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
 
@@ -50,6 +52,7 @@ export class Tracery {
         }
 
         this.typeFilter = typeFilter;
+        this.filterTags = filterTags;
     }
 
     start(origin = 'question') {
@@ -87,6 +90,8 @@ export class Tracery {
     generateQuestion(origin: string) {
         this.chance = 1;
         this.question.text = this.ParseKey(origin, true);
+
+        delete this.question.vars['tag'];
 
         if (this.question.vars['type'] !== undefined) {
             this.question.answerType = this.question.vars['type'];
@@ -146,16 +151,44 @@ export class Tracery {
         if (!dict[key] || dict[key].length === 0) return key;
 
         let value = 0;
-        if (this.typeFilter && isOrigin) {
-            const temp = dict[key].filter((x: string) => x.includes(`[type:${this.typeFilter}]`));
-            this.chance *= temp.length || 1;
-            value = randomNext(0, temp.length, this.rng);
-            value = dict[key].findIndex((x: string) => x === temp[value]);
-            if (value === -1) { value = 0; }
-        } else {
-            this.chance *= dict[key].length || 1;
-            value = randomNext(0, dict[key].length, this.rng);
-        }
+
+        // Filtering -------------------------------------------------------
+        const filteredList = dict[key].filter(str => {
+            let toReturn = true;
+            let m;
+            while ((m = regexVariable.exec(str)) !== null) {
+                // This is necessary to avoid infinite loops with zero-width matches
+                if (m.index === regexVariable.lastIndex) {
+                    regexVariable.lastIndex++;
+                }
+
+                const filterKey: string = m.groups['key'] ?? '';
+                const filterValue: string = m.groups['value'] ?? '';
+
+                // Filter out tags
+                if (filterKey === 'tag') {
+                    const tags = filterValue.split(',');
+                    tags.forEach(f =>  {
+                        if (this.filterTags?.includes(f)??false) {
+                            toReturn = false;
+                        }
+                    });
+                }
+
+                // Filter out specific question types
+                if (isOrigin && this.typeFilter) {
+                    if (filterKey === 'type' && filterValue !== this.typeFilter) {
+                        toReturn = false;
+                    }
+                }
+            }
+            return toReturn;
+        });
+
+        this.chance *= filteredList.length || 1;
+        value = randomNext(0, filteredList.length, this.rng);
+        value = dict[key].findIndex((x: string) => x === filteredList[value]);
+        // ----------------------------------------------------------------
 
         // Overwrite or use origin to regenerate the same question
         if (isOrigin && this.question.questionOrigin !== -1) {
@@ -165,7 +198,7 @@ export class Tracery {
             this.question.questionOrigin = value;
         }
 
-        return dict[key][value];
+        return value === -1 ? key : dict[key][value];
     }
 
     // Theres probably a better way to do this while allowing $ and : in the text
@@ -240,7 +273,9 @@ export class Tracery {
 
         // Only try again if we havent seen all the keys in the list
         if (this.seen[key].size < dict[key].length) {
-            while (this.seen[key].has(value)) {
+            let tries = 0 // Prevent infinite loops
+            while (this.seen[key].has(value) && tries < dict[key].length*2) {
+                tries++;
                 value = this.ParseString(this.GetRandom(key, isOrigin));
             }
             this.seen[key].add(value);
@@ -307,10 +342,32 @@ function checkGrammar() {
             console.error(`Cannot use reserved key: "${key}":[...]`);
         }
     });
+
+    ['question', 'intro_question', 'close_question'].forEach(key => {
+        grammar[key].forEach((value: string, index: number) => {
+            let foundType = false;
+            let m;
+            while ((m = regexVariable.exec(value)) !== null) {
+                // This is necessary to avoid infinite loops with zero-width matches
+                if (m.index === regexVariable.lastIndex) {
+                    regexVariable.lastIndex++;
+                }
+                const filterKey: string = m.groups['key'] ?? '';
+                // Filter out tags
+                if (filterKey === 'type') {
+                    foundType = true;
+                }
+            }
+            if (!foundType) {
+                console.error(`${key}:${index} does not specify type.`);
+            }
+        });
+    });
 }
 
 function checkTags() {
     const keys: string[] = Object.keys(grammar);
+    const tmpTags: Set<string> = new Set();
 
     keys.forEach(key => {
         grammar[key].forEach((str: string, index: number) => {
@@ -325,12 +382,16 @@ function checkTags() {
                 const key = m.groups?.['key'] ?? '';
                 if (key === 'tag') {
                     const value = m.groups?.['value'] ?? '';
-                    value.split(',').forEach((x: string) => tags.add(x));
+                    value.split(',').forEach((x: string) => tmpTags.add(x));
                 }
             }
 
         });
     });
 
-    console.log(tags);
+    tags = Array.from(tmpTags);
+}
+
+export function getTags(): string[] {
+    return tags;
 }
