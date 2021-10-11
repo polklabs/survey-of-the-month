@@ -41,7 +41,7 @@ export function ModString(value: string, mod: string, rng: any): string {
                 if (step) {
                     value = roundUp(randomNext(start, end, rng), step).toString();
                 } else {
-                    value = randomNext(start, end+1, rng).toString();
+                    value = randomNext(start, end + 1, rng).toString();
                 }
                 if (pad) {
                     value = value.padStart(pad, '0');
@@ -50,7 +50,7 @@ export function ModString(value: string, mod: string, rng: any): string {
             case 'ord':
                 const num = parseInt(value, 10);
                 if (isNaN(num)) { break; }
-                if (num >= 4 && num <= 20) { 
+                if (num >= 4 && num <= 20) {
                     value += 'th';
                 } else {
                     const ones = Math.floor(num % 10);

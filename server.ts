@@ -58,7 +58,7 @@ app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: respo
 app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
     let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter, req.body.filterTags);
     tracery.start(req.body.origin);
-    res.json({ok: true, data: tracery.getQuestion() });
+    res.json({ ok: true, data: tracery.getQuestion() });
 });
 
 // Regenerate answers for a specific choice or all
@@ -67,13 +67,15 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
     let tracery = new Tracery(req.body.users, req.body.seed, -1, undefined, req.body.filterTags);
     tracery.setQuestion(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
-    res.json({ok: true, data: tracery.getQuestion() });
+    res.json({ ok: true, data: tracery.getQuestion() });
 });
 
 app.get('/api/info', speedLimiter, (_, res: any) => {
-    res.json({ok: true, data: {
-        tags: getTags()
-    }});
+    res.json({
+        ok: true, data: {
+            tags: getTags()
+        }
+    });
 })
 
 // Surveys ------------------------------------------------------------------------------------------

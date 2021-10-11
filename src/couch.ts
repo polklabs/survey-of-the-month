@@ -131,11 +131,11 @@ export function answerStatus(id: string, res: response): void {
         data.survey.users.forEach(u => {
             const a = data.answers.find(x => x.userId === u._id);
             answerStatus.push({
-                userId: u._id, 
-                name: u.name, 
-                count: a?.answers.length??0, 
-                lastModifiedDate: a?.lastModifiedDate, 
-                answered: a?.answers.map(x => {return {questionId: x.questionId, lastModifiedDate: x.lastModifiedDate}})??[] 
+                userId: u._id,
+                name: u.name,
+                count: a?.answers.length ?? 0,
+                lastModifiedDate: a?.lastModifiedDate,
+                answered: a?.answers.map(x => { return { questionId: x.questionId, lastModifiedDate: x.lastModifiedDate } }) ?? []
             });
         });
         res.json({ ok: true, data: answerStatus });
@@ -169,7 +169,7 @@ export function submitAnswers(id: string, answer: Answer, res: response): void {
             answer.answers.forEach(a => {
                 const i = data.answers[index].answers.findIndex(x => x.questionId === a.questionId);
                 if (i === -1) {
-                    data.answers[index].answers.push(a);    
+                    data.answers[index].answers.push(a);
                 } else {
                     data.answers[index].answers[i] = a;
                 }
@@ -199,13 +199,13 @@ export function findSurveys(email: string, req: any, res: response): void {
         ]
     };
 
-    couch.mango('survey', query, {}).then(({data}) => {
-        
+    couch.mango('survey', query, {}).then(({ data }) => {
+
         const subject = `Survey Of The Month - Link Retrieval`;
         let text = `Here are the survey link I could find matching your email\n\n`;
 
         if (data.docs.length <= 0) {
-            res.json({ok: false, error: {code: 'EMPTYDOC', body: {error: '', reason: 'No surveys found.'}}})
+            res.json({ ok: false, error: { code: 'EMPTYDOC', body: { error: '', reason: 'No surveys found.' } } })
             return;
         }
 
@@ -213,7 +213,7 @@ export function findSurveys(email: string, req: any, res: response): void {
             var fullUrl = req.protocol + '://' + req.get('host') + '/manage/' + doc._id + '/' + doc.key;
             text += doc.survey.name + '\n' + fullUrl + '\n\n';
         });
-    
+
         const r = SendEmail(subject, text, 'andrew@polklabs.com', email, 'andrew@polklabs.com', (error, info) => {
             if (error) {
                 res.json({ ok: false, error });

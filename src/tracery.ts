@@ -168,8 +168,8 @@ export class Tracery {
                 // Filter out tags
                 if (filterKey === 'tag') {
                     const tags = filterValue.split(',');
-                    tags.forEach(f =>  {
-                        if (this.filterTags?.includes(f)??false) {
+                    tags.forEach(f => {
+                        if (this.filterTags?.includes(f) ?? false) {
                             toReturn = false;
                         }
                     });
@@ -274,7 +274,7 @@ export class Tracery {
         // Only try again if we havent seen all the keys in the list
         if (this.seen[key].size < dict[key].length) {
             let tries = 0 // Prevent infinite loops
-            while (this.seen[key].has(value) && tries < dict[key].length*2) {
+            while (this.seen[key].has(value) && tries < dict[key].length * 2) {
                 tries++;
                 value = this.ParseString(this.GetRandom(key, isOrigin));
             }
