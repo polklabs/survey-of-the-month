@@ -30,6 +30,7 @@ export class SingleQuestionComponent implements OnInit {
 
     debounceButton = false;
     loading = false;
+    firstCall = true;
 
     constructor(
         private dialogService: DialogService,
@@ -91,12 +92,15 @@ export class SingleQuestionComponent implements OnInit {
                 this.loading = false;
                 if (this.questionComp) { this.questionComp.clearAnswer(); }
 
-                setTimeout(() => {
-                    const qElem = document.getElementById('scrollTo');
-                    if (qElem !== null) {
-                        qElem.scrollIntoView();
-                    }
-                }, 50);
+                if (!this.firstCall) {
+                    setTimeout(() => {
+                        const qElem = document.getElementById('scrollTo');
+                        if (qElem !== null) {
+                            qElem.scrollIntoView();
+                        }
+                    }, 50);
+                }
+                this.firstCall = false;
             });
         }, 500);
     }

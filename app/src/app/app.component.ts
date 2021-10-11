@@ -37,6 +37,13 @@ export class AppComponent implements OnInit {
                 this.availableSurveys = s;
             }
         );
+
+        setTimeout(() => {
+            if (!this.localStorageService.getVisited()) {
+                this.dialogService.alert('Thank you for visiting Survey Of The Month!\n\nThe site is still a work in progress. I you experience any issues please submit feedback at the top of the page.', 'Welcome!');
+                this.localStorageService.setVisited();
+            }
+        }, 1);
     }
 
     openFeedback(): void {

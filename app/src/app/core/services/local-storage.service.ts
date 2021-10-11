@@ -5,6 +5,7 @@ import { SurveysStorage, UserStorage } from 'src/app/shared/model/local-storage.
 const USERS = 'users';
 const SURVEYS = 'Surveys';
 const TAGS = 'tags';
+const VISITED = 'visited';
 
 @Injectable({
     providedIn: 'root'
@@ -74,6 +75,14 @@ export class LocalStorageService {
             return JSON.parse(data);
         }
         return ['nsfw'];
+    }
+
+    getVisited(): boolean {
+        return localStorage.getItem(VISITED) !== null;
+    }
+
+    setVisited(): void {
+        localStorage.setItem(VISITED, 'true');
     }
 
 }
