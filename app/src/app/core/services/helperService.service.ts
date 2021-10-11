@@ -4,7 +4,7 @@ import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 export class HelperService {
 
     public static answerKeyToString(key: string): string {
-        const phrase = key.replace(/(_|(?<=[a-z])(?=[A-Z]))/gm, ' ');
+        const phrase = key.replace(/_|[a-z]()(?=[A-Z])/gm, ' ');
         const words = phrase.split(' ').filter(x => x.length > 0);
         return words.map(w => w[0].toUpperCase() + w.substr(1)).join(' ');
     }
@@ -35,7 +35,7 @@ export class HelperService {
     public static tagToString(tag: string): string {
         let value = tag.split('_').pop();
         if (!value) { return '{Unknown}'; }
-        value = value.replace(/(?<!^)((?<=[a-z])[A-Z]|[A-Z](?=[a-z]))/gm, ' $1').trim();
+        value = value.replace(/([a-z0-9])([A-Z])/gm, '$1 $2').trim();
         value = value.substr(0, 1).toUpperCase() + value.substr(1);
         return value;
     }
