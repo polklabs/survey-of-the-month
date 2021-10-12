@@ -1927,8 +1927,8 @@
         "text you got from #person#"
     ],
     "lifeAspect": [
-        "sex life",
-        "love life",
+        "[tag:nsfw]sex life",
+        "[tag:nsfw]love life",
         "career",
         "family",
         "BF/GF",
