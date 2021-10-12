@@ -11,11 +11,21 @@
         "[key:group_job]Where do you work in our small town?",
         "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?"
     ],
-    "group_circus": ["Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"],
-    "group_heist": ["Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"],
-    "group_yearbook": ["best all-around", "class clown/funniest", "smartest", "life of the party", "most athletic", "most likely to succeed", "biggest flirt", "best hair"],
-    "group_film": ["Director", "Writer", "Actor", "Camera Operator", "Sound Person", "Special Effects/Animation", "Costume Design", "Hair/Makeup", "Stunt Person"],
-    "group_spaceShip": ["Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"],
+    "group_circus": [
+        "Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"
+    ],
+    "group_heist": [
+        "Mastermind/Brains", "Driver/Transport", "Techie/Hacker/Gadget Guy", "Muscle/Weapons Specialist", "Thief/Burglar", "Distraction", "Backer/Client", "Other"
+    ],
+    "group_yearbook": [
+        "best all-around", "class clown/funniest", "smartest", "life of the party", "most athletic", "most likely to succeed", "biggest flirt", "best hair"
+    ],
+    "group_film": [
+        "Director", "Writer", "Actor", "Camera Operator", "Sound Person", "Special Effects/Animation", "Costume Design", "Hair/Makeup", "Stunt Person"
+    ],
+    "group_spaceShip": [
+        "Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"
+    ],
     "group_revenge": [
         "Hack into their computer and change their home screen to an image of them from behind",
         "Sign them up for every source of spam mail",
@@ -42,6 +52,10 @@
         "Chef",
         "Court Magician"
     ],
-    "group_job": ["Mayor", "Sheriff", "Mailman", "Bartender", "Mechanic", "Cafe Owner", "Teacher", "Farmer", "Drunk"],
-    "group_horror": ["The Killer/Entity", "The Harbinger", "The Pawn", "The Scholar", "The Hunter", "The Cop", "The Final Girl", "The Jock", "The Bad Girl", "The Old Person", "The Token", "The Skeptic", "The Sexy Couple", "The Hysteric"]
+    "group_job": [
+        "Mayor", "Sheriff", "Mailman", "Bartender", "Mechanic", "Cafe Owner", "Teacher", "Farmer", "Drunk"
+    ],
+    "group_horror": [
+        "The Killer/Entity", "The Harbinger", "The Pawn", "The Scholar", "The Hunter", "The Cop", "The Final Girl", "The Jock", "The Bad Girl", "The Old Person", "The Token", "The Skeptic", "The Sexy Couple", "The Hysteric"
+    ]
 }
