@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiPort: '3080',
-  githubIssues: 'https://github.com/polklabs/survey-of-the-month/issues'
+  githubIssues: 'https://github.com/polklabs/survey-of-the-month/issues',
+  github: 'https://github.com/polklabs/survey-of-the-month'
 };
 
 /*

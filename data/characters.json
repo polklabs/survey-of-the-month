@@ -15,7 +15,8 @@
         "[tag:music]#character_singer#",
         "[tag:movies_dc]#character_dc#",
         "[tag:actor]#character_actor#",
-        "[tag:movies]#character_movie_other#"
+        "[tag:movies]#character_movie_other#",
+        "[tag:tv_seinfeld]#character_seinfeld#"
     ],
     "character_movie_other": [
         "All five Bennet sisters",

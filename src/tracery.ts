@@ -3,16 +3,17 @@ import { ModString } from './tracery.mod';
 import { AnswerType, Question } from '../app/src/app/shared/model/question.model';
 
 import fs from 'fs';
+import { generateGrammarHTML } from './data.html';
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
+export const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
 
-const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
-const regexString = /(#(?<key>([a-zA-Z0-9_]+|[*]))\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#, #*#
-const regexInlineChoiceGroup = /\^\$(?<choices>.+?)(?<=[^\\])\$/gm; // ^$first:second$ -> first:second
-const regexInlineChoices = /(?<=[^\\]|^):/gm; // first:second -> ["first", "second"]
+export const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
+export const regexString = /(#(?<key>([a-zA-Z0-9_]+|[*]))\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#, #*#
+export const regexInlineChoiceGroup = /\^\$(?<choices>.+?)(?<=[^\\])\$/gm; // ^$first:second$ -> first:second
+export const regexInlineChoices = /(?<=[^\\]|^):/gm; // first:second -> ["first", "second"]
 
-const grammar: { [key: string]: string[] } = {};
+export const grammar: { [key: string]: string[] } = {};
 const grammarKeys: string[] = [];
 let tags: string[] = [];
 
@@ -21,6 +22,7 @@ loadGrammar('survey.json');
 
 checkGrammar();
 checkTags();
+generateGrammarHTML();
 
 export class Tracery {
 

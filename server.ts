@@ -9,6 +9,7 @@ import rateLimit from 'express-rate-limit';
 import express from 'express';
 import cors from 'cors';
 import { Answer } from './app/src/app/shared/model/answer.model';
+import { grammarHTML } from './src/data.html';
 
 export type response = { json: (res: APIData) => any };
 
@@ -40,19 +41,7 @@ const feedbackLimiter = rateLimit({
         "Too many feedbacks sent from this IP, please try again after an hour"
 });
 
-// API Endpoints -----------------------------------------------------
-app.get('/api/home', speedLimiter, (_, res: any) => {
-    let tracery = new Tracery();
-    const subtitle = tracery.simpleStart('home_page_subtitle');
-    const text = tracery.simpleStart('home_page_text');
-    res.json({ subtitle, text });
-});
-
-app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: response) => {
-    let tracery = new Tracery();
-    const text = tracery.simpleStart(req.query.id);
-    res.json({ ok: true, data: text });
-});
+// Question --------------------------------------------------------------------------------------
 
 // Generate a completely new question
 app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
@@ -69,14 +58,6 @@ app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: s
     tracery.generateAnswer(req.body.choiceIndex);
     res.json({ ok: true, data: tracery.getQuestion() });
 });
-
-app.get('/api/info', speedLimiter, (_, res: any) => {
-    res.json({
-        ok: true, data: {
-            tags: getTags()
-        }
-    });
-})
 
 // Surveys ------------------------------------------------------------------------------------------
 
@@ -98,6 +79,8 @@ app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string
     deleteSurvey(req.query.id, req.query.key, res);
 });
 
+// Answers --------------------------------------------------------------------------------------------
+
 app.get('/api/answer-status', speedLimiter, (req: { query: { id: string } }, res: response) => {
     answerStatus(req.query.id, res);
 });
@@ -106,6 +89,8 @@ app.get('/api/answer-status', speedLimiter, (req: { query: { id: string } }, res
 app.put('/api/answer', speedLimiter, (req: { body: { id: string, answers: Answer } }, res: response) => {
     submitAnswers(req.body.id, req.body.answers, res);
 });
+
+// Other -------------------------------------------------------------------------------------------------
 
 // Submit Feedback
 app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body: string, type: string, returnAddress: string } }, res: response) => {
@@ -128,6 +113,33 @@ app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body
 
 app.get('/api/find', feedbackLimiter, (req: { query: { email: string } }, res: response) => {
     findSurveys(req.query.email, req, res);
+});
+
+app.get('/api/info', speedLimiter, (_, res: any) => {
+    res.json({
+        ok: true, data: {
+            tags: getTags()
+        }
+    });
+});
+
+app.get('/api/home', speedLimiter, (_, res: any) => {
+    let tracery = new Tracery();
+    const subtitle = tracery.simpleStart('home_page_subtitle');
+    const text = tracery.simpleStart('home_page_text');
+    res.json({ subtitle, text });
+});
+
+app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: response) => {
+    let tracery = new Tracery();
+    const text = tracery.simpleStart(req.query.id);
+    res.json({ ok: true, data: text });
+});
+
+app.get('/api/grammar', speedLimiter, (_, res: any) => {
+    res.json({
+        ok: true, data: grammarHTML
+    });
 });
 
 // Get the angular app files

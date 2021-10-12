@@ -6,7 +6,14 @@
 
 <p style="max-width: 850px;">{{text}}</p>
 
-<h2 style="margin-top: 64px; margin-bottom: 8px;">Try It Out</h2>
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <button mat-raised-button style="height: 45px; margin: 8px" color="primary" routerLink="/manage/make">Create A Survey <mat-icon>add</mat-icon></button>
+    <button mat-raised-button style="height: 45px; margin: 8px" (click)="openGithub()">Source Code (Github) <mat-icon svgIcon="github"></mat-icon></button>
+    <button mat-raised-button style="height: 45px; margin: 8px" routerLink="/grammar">Question Grammar <mat-icon>code</mat-icon></button>
+    <button mat-raised-button style="height: 45px; margin: 8px" (click)="openFeedback()">Feedback <mat-icon>feedback</mat-icon></button>
+</div>
+
+<h2 style="margin-top: 48px; margin-bottom: 8px;">Try It Out Below</h2>
 
 <app-single-question></app-single-question>
 

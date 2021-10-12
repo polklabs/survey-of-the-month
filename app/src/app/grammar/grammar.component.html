@@ -1,0 +1,42 @@
+<h2>Legend:</h2>
+<table class="grammar-table" [cellSpacing]="0">
+    <tr>
+        <td>Inline Choice</td>
+        <td>
+            <i style="color: deeppink">^$</i>
+            <span style="background-color: darkred">Option A</span><i style="color: deeppink">:</i><span
+                style="background-color: darkred">Option B</span><i style="color: deeppink">$</i>
+        </td>
+    </tr>
+    <tr>
+        <td>Variable</td>
+        <td><em>[<span style="color: lawngreen">name</span>:<span style="color: violet">value</span>]</em></td>
+    </tr>
+    <tr>
+        <td>Key</td>
+        <td><span style="color: darkorange !important">#key<span style="color: deepskyblue">.modifiers</span>#</span>
+        </td>
+    </tr>
+</table>
+
+<h2>Reserved Variables:</h2>
+<table class="grammar-table" [cellSpacing]="0">
+    <tr>
+        <td>type</td><td>Answer Type (default: 'text')</td>
+    </tr>
+    <tr>
+        <td>key</td><td>Key used to generate answers</td>
+    </tr>
+    <tr>
+        <td>count</td><td>Number of answer choices (default: random 3-8, -1 returns all options)</td>
+    </tr>
+    <tr>
+        <td>other</td><td>If multiple choice has "other" option</td>
+    </tr>
+    <tr>
+        <td>tag</td><td>Option tagged for later filtering</td>
+    </tr>
+</table>
+
+<h2>Grammar:</h2>
+<div class="grammar-container" [innerHTML]="html"></div>

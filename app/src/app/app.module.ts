@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
+import { GrammarComponent } from './grammar/grammar.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
     SingleQuestionComponent,
     HomeComponent,
     SurveyTakerComponent,
+    GrammarComponent,
   ],
   imports: [
     BrowserModule,
