@@ -60,7 +60,7 @@
         "[type:text][tag:movies]Choose a movie to be made into #movieGenre.a# genre.",
         "[type:text]What do you think #person.capitalize# will be doing #1_12.range# #timeRange.s# from now?",
         "[type:text]What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
-        "[type:text][key:character][count:3]F**k, marry, kill",
+        "[type:text][key:character][count:3][tag:nsfw]F**k, marry, kill",
         "[type:text]You're transported #1_100.range# #timeRange.s# into the #pastFuture#. What do you do?",
         "[type:text]What's something you'd find in #person.capitalize.possessive# search history?",
         "[type:text]What's something you'd find in #character.possessive# search history?",
