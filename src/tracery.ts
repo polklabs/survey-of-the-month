@@ -19,7 +19,7 @@ const grammarKeys: string[] = [];
 let tags: string[] = [];
 
 const loadedfiles: string[] = [];
-loadGrammar('survey.json');
+loadGrammar('survey.jsonc');
 
 checkGrammar();
 checkTags();

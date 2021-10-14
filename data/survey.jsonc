@@ -4,15 +4,15 @@
 
     // File names for other json grammar files
     "require!": [
-        "characters.json",
-        "general.json",
-        "worlds.json",
-        "things.json",
-        "homePage.json",
-        "taskmaster.json",
-        "memes.json",
-        "groups.json",
-        "emoji.json"
+        "characters.jsonc",
+        "general.jsonc",
+        "worlds.jsonc",
+        "things.jsonc",
+        "homePage.jsonc",
+        "taskmaster.jsonc",
+        "memes.jsonc",
+        "groups.jsonc",
+        "emoji.jsonc"
     ],
 
     // Simple question for beginning for survey
