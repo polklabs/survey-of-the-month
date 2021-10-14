@@ -1,0 +1,42 @@
+{
+    "world": [
+        "[tag:movies]#movie#", "[tag:tv]#tv#"
+    ],
+    "movieGenre": [
+        "#genre_movie#", "#genre_movie#/#genre_movie#"
+    ],
+    "genre_movie": [
+        "action", "adventure", "animation", "biography", "comedy", "crime", "documentary", "drama", "family", "fantasy", "film noir", "history", "horror", "music", "musical", "mystery", "romance", "sci-Fi", "short film", "sport", "superhero", "thriller", "war", "western"
+    ],
+
+    /* Movies ************************************************************************************************************************** */
+    "movie": [
+        "[tag:movies_pixar]#movie_pixar#",
+        "[tag:movies_dreamWorks]#movie_dreamworks#",
+        "[tag:movies_blueSky]#movie_bluesky#",
+        "[tag:movies_disney]#movie_disney#",
+        "#movie_other#"
+    ],
+    "movie_pixar": [
+        "Toy Story", "A Bug's Life", "Monsters, Inc", "Finding Nemo", "The Incredibles", "Cars", "Ratatouille", "WALL-E", "Up", "Brave", "Inside Out", "The Good Dinosaur", "Finding Dory", "Coco", "Onward", "Soul", "Luca"
+    ],
+    "movie_dreamworks": [
+        "Shrek", "How To Train Your Dragon", "Kung Fu Panda", "Madagascar", "Megamind", "El Dorado", "Shark Tale", "Spirit", "Trolls"
+    ],
+    "movie_bluesky": [
+        "Ice Age", "Robots", "Horton Hears a Who!"
+    ],
+    "movie_disney": [
+        "101 Dalmations", "Aladdin", "Aristocats", "Beauty and the Beast", "Big Hero 6", "Brave", "Chicken Little", "Cinderella", "Dumbo", "Fox and the Hound", "Frozen", "Hunchback of Notre Dame", "Jungle Book", "Lady and the Tramp", "Lilo & Stitch", "Lion King", "Little Mermaid", "Mary Poppins", "Meet the Robinsons", "Moana", "Mulan", "Princess and the Frog", "Sleeping Beauty", "Robin Hood", "Emperor's New Groove", "Zootopia"
+    ],
+    "movie_other": [
+        "Star Wars", "Star Trek", "Harry Potter", "The Lord of the Rings", "Terminator", "Pirates of the Caribbean", "Chronicles of Narnia", "Ghostbusters", "Hunger Games", "Indiana Jones", "Studio Ghibli", "Transformers", "X-Men", "Avatar", "High School Musical", "Spy Kids", "Coraline", "Secret Life of Walter Mitty", "Chicken Little", "Narnia", "Cloudy With A Chance Of Meatballs", "Godzilla", "Dune", "Total Recall", "Blade Runner", "Pride & Prejudice"
+    ],
+    /* ******************************************************************************************************************************** */
+
+    /* TV ***************************************************************************************************************************** */
+    "tv": [
+        "The Office", "Friends", "Parks and Recreation", "New Girl", "It's Always Sunny In Philadelphia", "Community", "30 Rock", "Scrubs", "Brooklyn Nine-Nine", "Schitt's Creek", "How I Met Your Mother", "Superstore", "Seinfeld", "Gravity Falls", "Avatar The Last Airbender", "Demon Slayer", "Star Trek", "Stargate", "Black Mirror", "Buffy", "Firefly", "Game of Thrones", "The Good Place", "Killing Eve", "Limitless", "The Magicians", "Psych", "Sherlock", "Ted Lasso", "Twilight Zone", "Westworld", "The Great British Bake Off", "A Series of Unfortunate Events"
+    ]
+    /* ******************************************************************************************************************************** */
+}

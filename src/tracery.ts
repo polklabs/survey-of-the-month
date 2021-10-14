@@ -3,6 +3,7 @@ import { ModString } from './tracery.mod';
 import { AnswerType, Question } from '../app/src/app/shared/model/question.model';
 
 import fs from 'fs';
+import json_minify from 'node-json-minify';
 import { generateGrammarHTML } from './data.html';
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -294,8 +295,8 @@ export class Tracery {
 function loadGrammar(filename: string) {
     loadedfiles.push(filename);
 
-    const grammarTemp = JSON.parse(fs.readFileSync(`./data/${filename}`,
-        { encoding: 'utf8', flag: 'r' }));
+    const grammarTemp = JSON.parse(json_minify(fs.readFileSync(`./data/${filename}`,
+        { encoding: 'utf8', flag: 'r' })));
 
     Object.keys(grammarTemp).forEach(key => {
         if (grammar[key] === undefined) {
@@ -334,6 +335,10 @@ function checkGrammar() {
             const dupIndex = grammar[key].findIndex((x: string) => x === value);
             if (dupIndex < index && dupIndex >= 0) {
                 console.warn(`Duplicate value: "${key}"": "${value}" (${index})`);
+            }
+
+            if (value.includes(' a #')) {
+                console.warn(`Use modified instead for a/an: ${key}:${index} (${value.substr(0, 20)})`);
             }
         });
     });

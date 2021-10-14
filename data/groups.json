@@ -27,30 +27,10 @@
         "Captain", "First Officer", "Security", "Pilot", "Engineer", "Weapons", "Navigation"
     ],
     "group_revenge": [
-        "Hack into their computer and change their home screen to an image of them from behind",
-        "Sign them up for every source of spam mail",
-        "Pay for a billboard to be put up calling them out with a picture of their face",
-        "Befriend all of their friends and slowly turn them against the person",
-        "Release #animal.s# onto their yard",
-        "Classic car vandal (slash tires, scratch messages into, etc.)",
-        "Frame them for murder",
-        "Cyranwrap the persons car",
-        "Put wet ink on the inside door handle of their car.",
-        "Ship them tons of weird, cheap items from China. Aliexpress for the win!",
-        "Hide something foul smelling in their car.",
-        "Drip honey all over their stuff.",
-        "Leave rude notes under their windshield wipers.",
-        "Send them a glitter bomb."
+        "Hack into their computer and change their home screen to an image of them from behind", "Sign them up for every source of spam mail", "Pay for a billboard to be put up calling them out with a picture of their face", "Befriend all of their friends and slowly turn them against the person", "Release #animal.s# onto their yard", "Classic car vandal (slash tires, scratch messages into, etc.)", "Frame them for murder", "Cyranwrap the persons car", "Put wet ink on the inside door handle of their car.", "Ship them tons of weird, cheap items from China. Aliexpress for the win!", "Hide something foul smelling in their car.", "Drip honey all over their stuff.", "Leave rude notes under their windshield wipers.", "Send them a glitter bomb."
     ],
     "group_royal": [
-        "King/Queen",
-        "Jester",
-        "Advisor",
-        "Physician",
-        "Ward (body guard)",
-        "Prince/Princess",
-        "Chef",
-        "Court Magician"
+        "King/Queen", "Jester", "Advisor", "Physician", "Ward (body guard)", "Prince/Princess", "Chef", "Court Magician"
     ],
     "group_job": [
         "Mayor", "Sheriff", "Mailman", "Bartender", "Mechanic", "Cafe Owner", "Teacher", "Farmer", "Drunk"

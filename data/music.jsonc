@@ -1,0 +1,8 @@
+{
+    "instrument": [
+        "accordion", "bagpipe", "banjo", "bass drum", "bass guitar", "bell", "bongo drum", "bugle", "castanets", "cello", "clarinet", "concertina", "conga", "cornet", "cymbal", "double bass", "drums", "electric guitar", "flute", "french horn", "glockenspiel", "gong", "grand piano", "guitar", "harmonica", "harp", "keyboard", "mandolin", "maracas", "marimba", "microphone", "oboe", "organ", "pan flute", "piano", "recorder", "saxophone", "sitar", "snare drum", "tambourine", "timpani", "triangle", "trombone", "trumpet", "tuba", "ukulele", "vibraphone", "violin", "xylophone", "zither"
+    ],
+    "genre_music": [
+        "pop", "disco", "trance", "house", "techno", "funk", "new wave", "blues", "rock-and-roll", "rock", "hard rock", "pop rock", "folk rock", "punk rock", "psychedelic rock", "heavy metal", "trash", "rap"
+    ]
+}
