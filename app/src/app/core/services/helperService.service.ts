@@ -82,7 +82,8 @@ export class HelperService {
             case 'time':
                 return answer.map(x => x?.toString() ?? '').filter(x => filterDown ? x : true);
             case 'scale':
-                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}: ${q.scaleValues[a3]}` : '').filter(x => filterDown ? x : true);
+                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}: ${q.scaleValues[a3]}` : '')
+                    .filter(x => filterDown ? x : true);
             default:
                 return [];
         }
