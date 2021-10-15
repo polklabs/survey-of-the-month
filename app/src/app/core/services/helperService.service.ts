@@ -1,4 +1,4 @@
-import { AnswerType } from 'src/app/shared/model/question.model';
+import { AnswerType, Question } from 'src/app/shared/model/question.model';
 import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 
 export class HelperService {
@@ -30,6 +30,8 @@ export class HelperService {
                 return 'Time Picker';
             case 'scale':
                 return 'Rate the Following';
+            default:
+                return '';
         }
     }
 
@@ -39,6 +41,51 @@ export class HelperService {
         value = value.replace(/([a-z0-9])([A-Z])/gm, '$1 $2').trim();
         value = value.substr(0, 1).toUpperCase() + value.substr(1);
         return value;
+    }
+
+    public static formatAnswer(q: Question, answer: (null | string | number)[]): string {
+        const formattedAnswers = this.answerToString(q, answer, false);
+        const format = q.answerFormat.replace(new RegExp(/{(?<num>[0-9]+)}/gm), (...match: string[]) => {
+            const groups = match.pop();
+            // tslint:disable-next-line: no-string-literal
+            const num = +(groups?.['num'] ?? '0');
+
+            let replacement = '___';
+            if (!isNaN(num)) {
+                if (formattedAnswers.length  > num && formattedAnswers[num]) {
+                    replacement = formattedAnswers[num];
+                }
+            }
+            return replacement;
+        });
+        return format;
+    }
+
+    public static answerToString(q: Question, answer: (null | string | number)[], filterDown = true): string[] {
+        switch (q.answerType) {
+            case 'multi':
+                const a = answer[0];
+                if (a === null) { return ['']; }
+                if (typeof a === 'string') {
+                    return [`<u>${a}</u>`];
+                }
+                return [q.choices[a]];
+            case 'text':
+                return answer.map(x => x?.toString() ?? '');
+            case 'check':
+                return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x);
+            case 'rank':
+                const a2: number[] = answer as number[];
+                return a2.map((x: number) => q.choices[x]);
+            case 'date':
+                return answer.map(x => x?.toString() ?? '').filter(x => filterDown ? x : true);
+            case 'time':
+                return answer.map(x => x?.toString() ?? '').filter(x => filterDown ? x : true);
+            case 'scale':
+                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}: ${q.scaleValues[a3]}` : '').filter(x => filterDown ? x : true);
+            default:
+                return [];
+        }
     }
 
 }

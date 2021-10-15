@@ -126,7 +126,7 @@
             <app-form-question fxFlex [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
                 (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)" (qShuffle)="getQuestion(i, false, '', true)" 
                 (aOrder)="orderAnswer(i, $event)" (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
-                (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)">
+                (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)" (aFormatEdit)="editAnswerFormat(i)">
             </app-form-question>
 
             <!-- Question Actions -->
@@ -183,6 +183,7 @@
                 <button mat-menu-item (click)="getQuestionWithFilter('scale')"><mat-icon>star_half</mat-icon>Rate</button>
                 <button mat-menu-item (click)="getQuestionWithFilter('date')"><mat-icon>today</mat-icon>Date</button>
                 <button mat-menu-item (click)="getQuestionWithFilter('time')"><mat-icon>schedule</mat-icon>Time</button>
+                <button mat-menu-item (click)="getQuestionWithFilter('madlib')"><mat-icon>chat</mat-icon>Mad Lib</button>
             </mat-menu>
 
             <button mat-raised-button color="accent" [disabled]="loadingUnknown" [mat-menu-trigger-for]="questionType"><mat-icon>view_carousel</mat-icon> Blank Template</button>

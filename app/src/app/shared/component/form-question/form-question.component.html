@@ -21,18 +21,23 @@
     <mat-card-content>
         <p [innerHTML]="question.text"></p>
         
-        <!-- <div fxLayout="column" *ngIf="editable">
-            <mat-slide-toggle #extraTextToggle>Extra Text For Presentation</mat-slide-toggle>
-            <mat-form-field fxFlex appearance="outline" *ngIf="extraTextToggle.checked">
-                <mat-label>Text</mat-label>
-                <textarea matInput [matTextareaAutosize]="true" placeholder="Type Something..."></textarea>
-                <mat-hint>This text will only be shown during the result presentation.</mat-hint>
-            </mat-form-field>
-        </div> -->
-
-        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
+        <mat-slide-toggle *ngIf="editable" [(ngModel)]="question.useAnswerFormat">Format Answer</mat-slide-toggle>
+        <fieldset *ngIf="(editable || basicEdit) && question.answerFormat && question.useAnswerFormat" style="border-radius: 4px; border-color: orangered;">
+            <legend>Answer Format</legend>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <p *ngIf="showFormatted" [innerHTML]="formatAnswer()"></p>
+                <p *ngIf="!showFormatted">******************</p>
+                <div>
+                    <button mat-icon-button (click)="showFormatted = !showFormatted"><mat-icon>{{showFormatted ? 'visibility_off' : 'visibility'}}</mat-icon></button>
+                    <button mat-icon-button *ngIf="editable" (click)="aFormatEdit.emit()"><mat-icon>edit</mat-icon></button>
+                </div>
+            </div>
+            <p style="font-size: smaller; color: orangered">In a real survey, this will be hidden until final presentation/results (Like a secret Mad Lib)</p>
+        </fieldset>
 
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
+
+        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
     </mat-card-content>
 
     <ng-container *ngIf="(!editable && !basicEdit) || dirty">

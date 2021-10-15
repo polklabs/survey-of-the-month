@@ -1,0 +1,62 @@
+{
+    /* Text Input Based Mad Libs ********************************************************************** */
+    "madlibText": [
+        "[type:text][format:#madLibText_1#][count:-1]Enter a word for each of the following"
+    ],
+    "madLibText_1": [
+        "[key:madLibText_Answer_1]{0} was home alone and scared out of their {1}. They could hear the wind {2}, and off in the distance a/an {3} was howling. {0} crossed the room, locked the {4}, and climbed into bed, pulling the {5} over their {6}. Then it happened. They could hear a/an {7} {8} up the stairs. Their {9} started to chatter and their knees began {10}. The {11} was thrust open and there was a huge {12} with hair all over his {13}. It was their father. \"Hi, we're home,\" he said {14}. \"Hope you weren't afraid of staying home alone.\", \"No\", {0} said, lying through their {15}", "[key:madLibText_Answer_2]Oh my god! My #relation# turned into a/an {0}, {1} grab the {2} so we can turn them back!", 
+        "[key:madLibText_Answer_3]Umm, I ordered these waffles without {0}, tell {0} to make them again and correctly this time.", 
+        "[key:madLibText_Answer_4]As an incentive, the Army recruiter offered me {0} if I enlist, and #1_10.range# {1} if I enlist today, but i'm too {2} to join!", 
+        "[key:madLibText_Answer_5]While anyone can {0} to themselves they were {1}, the true test is admission to someone else.", 
+        "[key:madLibText_Answer_6]Faults are {0} where {1} is thin.", 
+        "[key:madLibText_Answer_7]The only real way to look {0} is not to be {1} so soon.", 
+        "[key:madLibText_Answer_8]Always try to do things in chronological {0}; it`s less {1} that way.",
+        "[key:madLibText_Answer_9]I really wanted to name my cat {0}, too bad that name's already taken by my {1} #relation#"
+    ],
+    "madLibText_Answer_1": [
+        "proper noun", "Plural Noun", "Verb ending in 'ing'", "noun", "noun", "plural noun", "part of the body", "noun", "verb ending in 'ing'", "part of the body (plural)", "verb ending in 'ing'", "noun", "noun", "part of the body", "adverb", "part of the body (plural)"
+    ],
+    "madLibText_Answer_2": [
+        "noun", "adverb", "object"
+    ],
+    "madLibText_Answer_3": [
+        "food/sauce/side", "proper noun"
+    ],
+    "madLibText_Answer_4": [
+        "noun", "noun plural", "adjective"
+    ],
+    "madLibText_Answer_5": [
+        "verb", "adjective"
+    ],
+    "madLibText_Answer_6": [
+        "adjective", "noun"
+    ],
+    "madLibText_Answer_7": [
+        "adjective", "verb ending in 'ed'"
+    ],
+    "madLibText_Answer_8": [
+        "noun", "verb ending in 'ing'"
+    ],
+    "madLibText_Answer_9": [
+        "name for a cat", "adjective"
+    ],
+    /* ************************************************************************************************ */
+
+    /* Multiple Choice: choose 1 ********************************************************************** */
+    "madlibMulti": [
+        "[type:multi][format:#madLibMulti_1#][other:false]Pick One Of the Following"
+    ],
+    "madLibMulti_1": [
+        "[key:verb]#person.capitalize# just needs to {0} sometimes", "[key:adjective]I'm serious, I really think #animal.s# are {0}", "[key:trait]#person.capitalize# may be #trait# but at least they're not {0}", "[key:animal]I think #person.capitalize# could totally take on #1_10.range# {0}(s) in a fight.", "[key:adjective]I'm serious, I really think ^$#character#:#person#$ is {0}"
+    ],
+    /* ************************************************************************************************ */
+
+    /* Rank based Mad Libs **************************************************************************** */
+    "madlibRank": [
+        "[type:rank][format:#madLibRank_1#]Rank the following by the criteria of your choosing:"
+    ],
+    "madLibRank_1": [
+        "[key:animal]I just think a/an {0} is a better pet for #person.capitalize# than a/an{2}<br>- #person.capitalize#", "[key:bodyPart]Just on the basis of #character.possessive# {0}, they are totally #person.capitalize.possessive# type.", "[key:object]Oh No! My {0} broke, guess i'll have to use {1} instead."
+    ]
+    /* ************************************************************************************************ */
+}

@@ -77,6 +77,8 @@ export class CsvExportService {
                 return answer.join(',');
             case 'scale':
                 return answer.map((a3, i) => a3 ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').join(',');
+            default:
+                return '';
         }
     }
 }

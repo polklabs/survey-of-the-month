@@ -1,10 +1,12 @@
-export type AnswerType = 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale';
+export type AnswerType = 'text' | 'multi' | 'check' | 'rank' | 'date' | 'time' | 'scale' | 'madlib';
 import { v4 as guid } from 'uuid';
 
 export class Question {
     questionId = guid();
     questionOrigin = -1;
     text = '';
+    useAnswerFormat = false;
+    answerFormat = '{0}'; // How to format the answer. Useful for mad-lib style questions
     seed = '';
     custom = true;
     vars: any = {};

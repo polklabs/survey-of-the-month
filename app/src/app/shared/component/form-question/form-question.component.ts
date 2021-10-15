@@ -40,8 +40,13 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     @Output() aOtherOptionAllow = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
     @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
+    @Output() aFormatEdit = new EventEmitter<void>();
 
     @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
+
+    // Only stored for editable questions
+    tempAnswers: (string | number | null)[] = [];
+    showFormatted = false;
 
     currentAnswerType = '';
     dirty = false;
@@ -54,6 +59,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
+        this.showFormatted = this.editable;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -90,12 +96,17 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     public clearAnswer(): void {
         this.aUpdate.emit(null);
         this.clearVar++;
+        this.tempAnswers = [];
         this.cd.detectChanges();
         this.dirty = false;
+        this.showFormatted = false;
     }
 
     answerUpdate($event: (string | number | null)[] | null): void {
         this.dirty = true;
+        if (this.editable || this.basicEdit) {
+            this.tempAnswers = $event ?? [];
+        }
         this.aUpdate.emit($event);
     }
 
@@ -118,6 +129,10 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     buttonsHelp(): void {
         this.dialogService.helpButtons();
+    }
+
+    formatAnswer(): string {
+        return HelperService.formatAnswer(this.question, this.tempAnswers);
     }
 
 }

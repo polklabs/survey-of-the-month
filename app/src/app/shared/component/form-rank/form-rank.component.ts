@@ -41,6 +41,7 @@ export class FormRankComponent implements OnChanges {
     drop(event: CdkDragDrop<string[]>): void {
         if (this.editable) {
             this.aOrder.emit(event);
+            this.onChange();
         } else {
             moveItemInArray(this.answers, event.previousIndex, event.currentIndex);
             this.onChange();

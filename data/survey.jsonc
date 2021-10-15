@@ -12,7 +12,8 @@
         "taskmaster.jsonc",
         "memes.jsonc",
         "groups.jsonc",
-        "emoji.jsonc"
+        "emoji.jsonc",
+        "madlib.jsonc"
     ],
 
     // Simple question for beginning for survey
@@ -157,7 +158,10 @@
         "[type:check][key:character,person,animal]Pick two companions for #apocalypse.a# apocalypse?",
         "[type:text]You can rename one thing, everyone except you will think is has always been called that. What do you rename?",
         "[type:text][tag:movies,tv,books,videoGames]Explain a ^$movie:tv show:book:video game$ poorly and the people taking this survey will try and guess it.",
-        "[type:text]Submit an obscure quote and the people taking this survey will try and guess the context"
+        "[type:text]Submit an obscure quote and the people taking this survey will try and guess the context",
+        "[type:madlib]#madlibText#",
+        "[type:madlib]#madlibMulti#",
+        "[type:madlib]#madlibRank#"
     ],
 
     /* Words ************************************************************************************************************************** */

@@ -7,7 +7,7 @@ import json_minify from 'node-json-minify';
 import { generateGrammarHTML } from './data.html';
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-export const reservedKeys = ['type', 'key', 'count', 'other', 'tag']; // Used for question formatting, do not use as keys in grammar - #key#
+export const reservedKeys = ['type', 'key', 'count', 'other', 'tag', 'format']; // Used for question formatting, do not use as keys in grammar - #key#
 
 export const regexVariable = /\[(?<key>[a-zA-Z0-9_]+):(?<value>.+?)\]/gm; // [key:value] -> key, value
 export const regexString = /(#(?<key>([a-zA-Z0-9_]+|[*]))\.?(?<mod>[a-zA-Z0-9_.]*?)#)/gm; // #key#, #key.s#, #*#
@@ -94,16 +94,30 @@ export class Tracery {
         this.chance = 1;
         this.question.text = this.ParseKey(origin, true);
 
+        // We don't need to save this
         delete this.question.vars['tag'];
 
+        // Get the question type
         if (this.question.vars['type'] !== undefined) {
-            this.question.answerType = this.question.vars['type'];
+            const answType = this.question.vars['type']
+            this.question.answerType = answType === 'madlib' ? 'text' : answType;
             delete this.question.vars['type'];
         }
+
+        // Get answer format for madlib style questions
+        if (this.question.vars['format'] !== undefined) {
+            this.question.answerFormat = this.question.vars['format'];
+            this.question.useAnswerFormat = true;
+            delete this.question.vars['format'];
+        }
+
+        // Get if other options are allowed
         if (this.question.vars['other'] !== undefined) {
-            this.question.otherOptionAllow = this.question.vars['other'];
+            this.question.otherOptionAllow = this.question.vars['other'].toLowerCase() === 'true';
             delete this.question.vars['other'];
         }
+
+        // Get the answer key choices
         if (this.question.vars['key'] !== undefined) {
             this.question.answerKey = this.question.vars['key'];
             delete this.question.vars['key'];
@@ -122,6 +136,8 @@ export class Tracery {
             this.chance *= this.question.answerKeys.length;
             this.question.answerKey = this.question.answerKeys[randomNext(0, this.question.answerKeys.length, this.rng)];
         }
+
+        // Get final calculated question probability
         this.question.qChance = this.chance;
     }
 

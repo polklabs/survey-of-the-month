@@ -200,7 +200,7 @@ export class SurveyResultsComponent implements OnInit {
                 if (qAnsw) {
                     this.slide.push(new Slide({
                         itemType: question.answerType,
-                        labels: this.choicesToString(question),
+                        labels: question.useAnswerFormat ? [''] : this.choicesToString(question),
                         text: this.answerToString(question, qAnsw.value),
                         name: user.name
                     }));
@@ -279,28 +279,10 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     private answerToString(q: Question, answer: (null | string | number)[]): string[] {
-        switch (q.answerType) {
-            case 'multi':
-                const a = answer[0];
-                if (a === null) { return ['']; }
-                if (typeof a === 'string') {
-                    return [`<u>${a}</u>`];
-                }
-                return [q.choices[a]];
-            case 'text':
-                return answer.map(x => x?.toString() ?? '');
-            case 'check':
-                return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x);
-            case 'rank':
-                const a2: number[] = answer as number[];
-                return a2.map((x: number) => q.choices[x]);
-            case 'date':
-                return answer.map(x => x?.toString() ?? '').filter(x => x);
-            case 'time':
-                return answer.map(x => x?.toString() ?? '').filter(x => x);
-            case 'scale':
-                return answer.map((a3, i) => (a3 !== null) ? `${q.choices[i]}: ${q.scaleValues[a3]}` : '').filter(x => x);
+        if (q.useAnswerFormat) {
+            return [HelperService.formatAnswer(q, answer)];
         }
+        return HelperService.answerToString(q, answer);
     }
 
     private choicesToString(q: Question): string[] {
