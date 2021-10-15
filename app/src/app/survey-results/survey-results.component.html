@@ -11,7 +11,7 @@
 
             <div fxLayout="column" fxLayoutGap="16px">
                 <ng-container *ngFor="let item of slide; let i = index">
-                    <ng-template [ngTemplateOutlet]="getTemplate(item.itemType)" [ngTemplateOutletContext]="{index:i}">
+                    <ng-template id="item_{{i}}" [ngTemplateOutlet]="getTemplate(item.itemType)" [ngTemplateOutletContext]="{index:i}">
                     </ng-template>    
                 </ng-container>
             </div>
@@ -54,7 +54,7 @@
 <ng-template #answerForm let-index="index">
     <div *ngIf="slide[index].visible" [@slideLeftInOut]>
         <mat-card>
-            <div style="margin: auto; width: max-content;">
+            <div style="margin: auto; width: max-content; max-width: 100%;">
                 <div style="font-size: x-large;">
                     <table>
                         <tr *ngFor="let text of slide[index].text; let i = index;">
