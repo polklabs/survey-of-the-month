@@ -13,7 +13,8 @@
         "memes.jsonc",
         "groups.jsonc",
         "emoji.jsonc",
-        "madlib.jsonc"
+        "madlib.jsonc",
+        "music.jsonc"
     ],
 
     // Simple question for beginning for survey
