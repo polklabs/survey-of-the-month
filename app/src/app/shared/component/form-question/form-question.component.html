@@ -53,7 +53,7 @@
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
 
         <mat-card-actions fxLayoutGap="8px" fxLayout="row" fxHide.gt-sm>
-            <button mat-raised-button color="primary" [disabled]="loading" (click)="qRandomize.emit()" matTooltip="Randomize Question"><mat-icon>sync</mat-icon> New Question</button>
+            <button mat-raised-button color="primary" [disabled]="loading" (click)="qRandomize.emit()" matTooltip="Randomize Question"><mat-icon>sync</mat-icon> Question</button>
             <button mat-icon-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon></button>
             <button mat-icon-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon></button>
             <button mat-icon-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon></button>

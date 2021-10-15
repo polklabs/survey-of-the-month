@@ -56,7 +56,7 @@
         "[type:rank][format:#madLibRank_1#]Rank the following by the criteria of your choosing:"
     ],
     "madLibRank_1": [
-        "[key:animal]I just think a/an {0} is a better pet for #person.capitalize# than a/an{2}<br>- #person.capitalize#", "[key:bodyPart]Just on the basis of #character.possessive# {0}, they are totally #person.capitalize.possessive# type.", "[key:object]Oh No! My {0} broke, guess i'll have to use {1} instead."
+        "[key:animal]I just think a/an {0} is a better pet for #person.capitalize# than a/an {2}<br>- #person.capitalize#", "[key:bodyPart]Just on the basis of #character.possessive# {0}, they are totally #person.capitalize.possessive# type.", "[key:object]Oh No! My {0} broke, guess i'll have to use {1} instead."
     ]
     /* ************************************************************************************************ */
 }
