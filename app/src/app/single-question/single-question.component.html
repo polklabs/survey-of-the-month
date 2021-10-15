@@ -1,7 +1,7 @@
 <div fxLayoutAlign="center center" class="root">
     <div style="margin: auto; width: 800px; min-width: 250px;">
         <div>
-            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be randomly insterted into generated question and answers</p>
+            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be insterted into randomly generated question and answers</p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
@@ -17,11 +17,12 @@
             </mat-form-field>
         </div>
 
-        <app-tags (filterList)="updateFilters($event)"></app-tags>
+        <app-tags id="tags" [hidden]="hideTags" (filterList)="updateFilters($event)"></app-tags>
 
         <div id="scrollTo"></div>
 
-        <button mat-raised-button color="primary" (click)="createSurvey()">Create a new survey with this question</button>
+        <button mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
+        <button mat-raised-button (click)="hideTags = !hideTags; scroll('tags')" [color]="hideTags ? '' : 'accent'">Tags <mat-icon>label</mat-icon></button>
 
         <app-form-question #singleQuestion [question]="question" [loading]="loading"
             [basicEdit]="true"

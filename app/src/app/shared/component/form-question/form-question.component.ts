@@ -116,4 +116,8 @@ export class FormQuestionComponent implements OnInit, OnChanges {
         this.dialogService.feedbackQuestion(this.question, type);
     }
 
+    buttonsHelp(): void {
+        this.dialogService.helpButtons();
+    }
+
 }

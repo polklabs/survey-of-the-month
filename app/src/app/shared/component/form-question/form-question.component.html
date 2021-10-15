@@ -35,7 +35,7 @@
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
     </mat-card-content>
 
-    <ng-container *ngIf="(!editable && !basicEdit)">
+    <ng-container *ngIf="(!editable && !basicEdit) || dirty">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
         <mat-card-actions fxLayoutGap="8px" fxLayout="row">
             <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty">
@@ -47,33 +47,24 @@
     <ng-container *ngIf="editable || basicEdit">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
 
-        <mat-card-actions fxLayoutGap="8px" fxLayout="row">
-            <button mat-flat-button color="primary" [disabled]="loading" (click)="qRandomize.emit()">
-                <mat-icon>casino</mat-icon> Question
-            </button>
-            <button mat-flat-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()">
-                <mat-icon>casino</mat-icon> Answers
-            </button>
-            <button mat-flat-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" fxHide.lt-sm>
-                <mat-icon>shuffle</mat-icon>Shuffle Question
-            </button>
-            <button mat-flat-button color="warn" (click)="clearAnswer()" *ngIf="dirty">
-                Clear
-            </button>
-            <button mat-icon-button [mat-menu-trigger-for]="moreMenu" *ngIf="basicEdit"><mat-icon>more_vert</mat-icon></button>
-            <mat-menu #moreMenu="matMenu">
-                <button mat-menu-item (click)="qShuffle.emit()" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
-                <button mat-menu-item (click)="qSeed.emit()"><mat-icon>search</mat-icon>Seed</button>
-                <button mat-menu-item *ngIf="!question.custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>
-            </mat-menu>
-            <mat-menu #reportMenu="matMenu">
-                <button mat-menu-item (click)="questionFeedback('Missing Tag')">Missing Tag</button>
-                <button mat-menu-item (click)="questionFeedback('Broken Link')">Broken Link</button>
-                <button mat-menu-item (click)="questionFeedback('Incorrect Text')">Incorrect Text</button>
-                <button mat-menu-item (click)="questionFeedback('Grammar')">Grammar</button>
-                <button mat-menu-item (click)="questionFeedback('Other')">Other</button>
-            </mat-menu>
+        <mat-card-actions fxLayoutGap="8px" fxLayout="row" fxHide.gt-sm>
+            <button mat-raised-button color="primary" [disabled]="loading" (click)="qRandomize.emit()" matTooltip="Randomize Question"><mat-icon>sync</mat-icon> New Question</button>
+            <button mat-icon-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon></button>
+            <button mat-icon-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon></button>
+            <button mat-icon-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon></button>
+            <button mat-icon-button *ngIf="!question.custom && basicEdit" [mat-menu-trigger-for]="reportMenu" matTooltip="Report Question"><mat-icon>report</mat-icon></button>
+            <div fxFlex></div>
+            <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()"><mat-icon>help</mat-icon></button>
+        </mat-card-actions>
 
+        <mat-card-actions fxLayoutGap="8px" fxLayout="row" fxHide.lt-md>
+            <button mat-raised-button color="primary" [disabled]="loading" (click)="qRandomize.emit()" matTooltip="Randomize Question"><mat-icon>sync</mat-icon> New Question</button>
+            <button mat-raised-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon> Question Variation</button>
+            <button mat-raised-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon> New Answers</button>
+            <button mat-raised-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon> Seed</button>
+            <button mat-raised-button *ngIf="!question.custom && basicEdit" [mat-menu-trigger-for]="reportMenu" matTooltip="Report Question"><mat-icon>report</mat-icon> Report</button>
+            <div fxFlex></div>
+            <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()"><mat-icon>help</mat-icon></button>
         </mat-card-actions>
     </ng-container>
 
@@ -82,6 +73,13 @@
     </mat-card-footer>
 </mat-card>
 
+<mat-menu #reportMenu="matMenu">
+    <button mat-menu-item (click)="questionFeedback('Missing Tag')">Missing Tag</button>
+    <button mat-menu-item (click)="questionFeedback('Broken Link')">Broken Link</button>
+    <button mat-menu-item (click)="questionFeedback('Incorrect Text')">Incorrect Text</button>
+    <button mat-menu-item (click)="questionFeedback('Grammar')">Grammar</button>
+    <button mat-menu-item (click)="questionFeedback('Other')">Other</button>
+</mat-menu>
 
 <!-- Answer Templates -->
 <ng-template #formDefault>

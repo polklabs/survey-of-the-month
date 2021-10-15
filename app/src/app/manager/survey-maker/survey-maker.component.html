@@ -99,7 +99,7 @@
 
         <div *ngIf="editable">
             <!-- People Chooser -->
-            <p style="margin-bottom: 4px;">Who are these questions for? Names entered here will be randomly insterted into generated question and answers</p>
+            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be insterted into randomly generated question and answers</p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
@@ -141,7 +141,6 @@
                 <button mat-icon-button *ngIf="editable" [disabled]="loading[i]" [matMenuTriggerFor]="questionOptions" matTooltip="More Options"><mat-icon>more_vert</mat-icon></button>
                 <mat-menu #questionOptions="matMenu">
                     <button mat-menu-item (click)="getQuestion(i, false, '', true)" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
-                    <button mat-menu-item (click)="seedQuestion(i)"><mat-icon>search</mat-icon>Seed</button>
                     <button mat-menu-item (click)="getQuestion(i, true)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
                     <button mat-menu-item (click)="deleteQuestion(i)"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
                     <button mat-menu-item [disabled]="survey.questions[i].custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>

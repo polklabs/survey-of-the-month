@@ -8,9 +8,10 @@
 
 <div fxLayout="row wrap" fxLayoutAlign="center center">
     <button mat-raised-button style="height: 45px; margin: 8px" color="primary" routerLink="/manage/make">Create A Survey <mat-icon>add</mat-icon></button>
-    <button mat-raised-button style="height: 45px; margin: 8px" (click)="openGithub()">Source Code (Github) <mat-icon svgIcon="github"></mat-icon></button>
-    <button mat-raised-button style="height: 45px; margin: 8px" routerLink="/grammar">Question Grammar <mat-icon>code</mat-icon></button>
-    <button mat-raised-button style="height: 45px; margin: 8px" (click)="openFeedback()">Feedback <mat-icon>feedback</mat-icon></button>
+    <button *ngIf="availableSurveys.length > 0" mat-raised-button style="height: 45px; margin: 8px" [mat-menu-trigger-for]="manageMenu">Edit A Survey <mat-icon>arrow_drop_down</mat-icon></button>
+    <mat-menu #manageMenu="matMenu">
+        <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage/'+survey.id+'/'+survey.key">{{survey.name}}</button>
+    </mat-menu>
 </div>
 
 <h2 style="margin-top: 48px; margin-bottom: 8px;">Try It Out Below</h2>

@@ -16,6 +16,7 @@ import { OkDialogComponent } from './modal/ok-dialog/ok-dialog.component';
 import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
 import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.component';
 import { TagsComponent } from './component/tags/tags.component';
+import { HelpButtonsComponent } from './modal/help-buttons/help-buttons.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { TagsComponent } from './component/tags/tags.component';
         OkDialogComponent,
         ConfirmDialogComponent,
         TagsComponent,
+        HelpButtonsComponent,
     ],
     exports: [
         FormTextComponent,

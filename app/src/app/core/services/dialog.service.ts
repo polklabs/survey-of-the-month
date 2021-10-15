@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/shared/modal/confirm-dialog/confirm-dialog.component';
 import { FeedbackComponent } from 'src/app/shared/modal/feedback/feedback.component';
+import { HelpButtonsComponent } from 'src/app/shared/modal/help-buttons/help-buttons.component';
 import { OkDialogComponent } from 'src/app/shared/modal/ok-dialog/ok-dialog.component';
 import { TextBoxComponent } from 'src/app/shared/modal/text-box/text-box.component';
 import { APIError } from 'src/app/shared/model/api-data.model';
@@ -112,5 +113,16 @@ export class DialogService {
             data: { title, inputLabel, value, showPreview }
         });
         return dialogRef.afterClosed();
+    }
+
+    helpButtons(): void {
+        const modalData = {
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '800px',
+            minWidth: '300px',
+            autoFocus: false
+        };
+        this.dialog.open(HelpButtonsComponent, modalData);
     }
 }

@@ -27,6 +27,7 @@ export class SingleQuestionComponent implements OnInit {
     question: Question = new Question();
     users: string[] = [];
     filterTags?: string[];
+    hideTags = true;
 
     debounceButton = false;
     loading = false;
@@ -94,10 +95,7 @@ export class SingleQuestionComponent implements OnInit {
 
                 if (!this.firstCall) {
                     setTimeout(() => {
-                        const qElem = document.getElementById('scrollTo');
-                        if (qElem !== null) {
-                            qElem.scrollIntoView();
-                        }
+                        this.scroll('scrollTo');
                     }, 50);
                 }
                 this.firstCall = false;
@@ -144,6 +142,13 @@ export class SingleQuestionComponent implements OnInit {
             }
         } else {
             this.filterTags = this.localStorageService.getTags();
+        }
+    }
+
+    scroll(id: string): void {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView();
         }
     }
 

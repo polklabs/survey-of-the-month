@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
+import { LocalStorageService } from '../core/services/local-storage.service';
 import { APIData } from '../shared/model/api-data.model';
+import { SurveysStorage } from '../shared/model/local-storage.model';
 
 @Component({
     selector: 'app-home',
@@ -16,12 +18,15 @@ export class HomeComponent implements OnInit {
     subtitle = 'hello';
     text = 'This is a survey maker/taker/generator app';
 
+    availableSurveys: SurveysStorage[] = [];
+
     timeout = 10000;
     progress = 0;
 
     constructor(
         private dataService: DataService,
-        private dialogService: DialogService) { }
+        private dialogService: DialogService,
+        private localStorageService: LocalStorageService) { }
 
     ngOnInit(): void {
         const [result, _] = this.dataService.getData('home');
@@ -40,6 +45,13 @@ export class HomeComponent implements OnInit {
                 }
             });
         }
+
+        this.localStorageService.getSurveysWatch().subscribe(
+            s => {
+                this.availableSurveys = s;
+                this.availableSurveys.sort((a, b) => a.name.localeCompare(b.name));
+            }
+        );
     }
 
     updateSubtitle(): void {

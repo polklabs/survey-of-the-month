@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
         this.localStorageService.getSurveysWatch().subscribe(
             s => {
                 this.availableSurveys = s;
+                this.availableSurveys.sort((a, b) => a.name.localeCompare(b.name));
             }
         );
 

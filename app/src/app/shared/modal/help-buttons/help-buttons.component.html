@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Help</h2>
+<mat-dialog-content class="mat-typography">
+    <p><mat-icon color="primary">sync</mat-icon> New Question: Will generate a completely new question and answer</p>
+    <p><mat-icon color="accent">sync_lock</mat-icon> Question Variation: Will generate a variation of the current question, replacing some words. Generates new answers too.</p>
+    <p><mat-icon color="accent">casino</mat-icon> New Answers: Will generate a completely new answers and does not change the question</p>
+    <p><mat-icon>search</mat-icon> Seed: Allows entering a value to seed the random generator that creates the questions</p>
+    <p><mat-icon>report</mat-icon> Report: If there is an issue with a specific question you can report it here</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
+</mat-dialog-actions>
