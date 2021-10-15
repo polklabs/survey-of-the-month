@@ -4,7 +4,8 @@ import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 export class HelperService {
 
     public static answerKeyToString(key: string): string {
-        const phrase = key.replace(/_|[a-z]()(?=[A-Z])/gm, ' ');
+        let phrase = key.replace(/([a-z0-9])([A-Z])/gm, '$1 $2').trim();
+        phrase = phrase.replace(/\_/gm, ' ').trim();
         const words = phrase.split(' ').filter(x => x.length > 0);
         return words.map(w => w[0].toUpperCase() + w.substr(1)).join(' ');
     }

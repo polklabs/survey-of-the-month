@@ -6,7 +6,7 @@
 
         <!-- Allow choosing other answer keys if available -->
         <div *ngIf="(editable || basicEdit) && (question.answerKeys?.length || 0) > 1" style="position: absolute; right: 4px; top: 4px;">
-            <button mat-button fxHide.xs [matMenuTriggerFor]="keyMenu">
+            <button mat-stroked-button fxHide.xs [matMenuTriggerFor]="keyMenu">
                 Answer Key: {{answerKeyString(question.answerKey)}}<mat-icon>arrow_drop_down</mat-icon>
             </button>
             <button mat-icon-button fxHide.gt-xs [matMenuTriggerFor]="keyMenu" matTooltip="Answer Key">
