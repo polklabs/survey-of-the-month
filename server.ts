@@ -1,4 +1,4 @@
-import { getTags, Tracery } from './src/tracery';
+import { Tracery } from './src/tracery';
 import { AnswerType, Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
@@ -10,6 +10,7 @@ import express from 'express';
 import cors from 'cors';
 import { Answer } from './app/src/app/shared/model/answer.model';
 import { grammarHTML } from './src/data.html';
+import { getTags } from './src/tracery.load';
 
 export type response = { json: (res: APIData) => any };
 
