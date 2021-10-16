@@ -4,7 +4,7 @@
         "[type:text][format:#madLibText_1#][count:-1]Enter a word for each of the following"
     ],
     "madLibText_1": [
-        "[key:madLibText_Answer_1]{0} was home alone and scared out of their {1}. They could hear the wind {2}, and off in the distance a/an {3} was howling. {0} crossed the room, locked the {4}, and climbed into bed, pulling the {5} over their {6}. Then it happened. They could hear a/an {7} {8} up the stairs. Their {9} started to chatter and their knees began {10}. The {11} was thrust open and there was a huge {12} with hair all over his {13}. It was their father. \"Hi, we're home,\" he said {14}. \"Hope you weren't afraid of staying home alone.\", \"No\", {0} said, lying through their {15}", "[key:madLibText_Answer_2]Oh my god! My #relation# turned into a/an {0}, {1} grab the {2} so we can turn them back!", 
+        "[key:_madLibText_Answer_1]{0} was home alone and scared out of their {1}. They could hear the wind {2}, and off in the distance a/an {3} was howling. {0} crossed the room, locked the {4}, and climbed into bed, pulling the {5} over their {6}. Then it happened. They could hear a/an {7} {8} up the stairs. Their {9} started to chatter and their knees began {10}. The {11} was thrust open and there was a huge {12} with hair all over his {13}. It was their father. \"Hi, we're home,\" he said {14}. \"Hope you weren't afraid of staying home alone.\", \"No\", {0} said, lying through their {15}", "[key:madLibText_Answer_2]Oh my god! My #relation# turned into a/an {0}, {1} grab the {2} so we can turn them back!", 
         "[key:madLibText_Answer_3]Umm, I ordered these waffles without {0}, tell {0} to make them again and correctly this time.", 
         "[key:madLibText_Answer_4]As an incentive, the Army recruiter offered me {0} if I enlist, and #1_10.range# {1} if I enlist today, but i'm too {2} to join!", 
         "[key:madLibText_Answer_5]While anyone can {0} to themselves they were {1}, the true test is admission to someone else.", 
@@ -13,7 +13,7 @@
         "[key:madLibText_Answer_8]Always try to do things in chronological {0}; it`s less {1} that way.",
         "[key:madLibText_Answer_9]I really wanted to name my cat {0}, too bad that name's already taken by my {1} #relation#"
     ],
-    "madLibText_Answer_1": [
+    "_madLibText_Answer_1": [
         "proper noun", "Plural Noun", "Verb ending in 'ing'", "noun", "noun", "plural noun", "part of the body", "noun", "verb ending in 'ing'", "part of the body (plural)", "verb ending in 'ing'", "noun", "noun", "part of the body", "adverb", "part of the body (plural)"
     ],
     "madLibText_Answer_2": [
