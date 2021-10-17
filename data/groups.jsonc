@@ -9,7 +9,8 @@
         "[key:color]What color Power Ranger are you?",
         "[key:group_royal]Choose your role in our royal court.",
         "[key:group_job]Where do you work in our small town?",
-        "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?"
+        "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?",
+        "[key:group_band]We're starting a band! What's your role?"
     ],
     "group_circus": [
         "Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"
@@ -37,5 +38,8 @@
     ],
     "group_horror": [
         "The Killer/Entity", "The Harbinger", "The Pawn", "The Scholar", "The Hunter", "The Cop", "The Final Girl", "The Jock", "The Bad Girl", "The Old Person", "The Token", "The Skeptic", "The Sexy Couple", "The Hysteric"
+    ],
+    "group_band": [
+        "Vocalist", "Lead Guitarist", "Rhythm Guitarist", "Bassist", "Drummer", "Keyboardist", "Tamborine", "Manager", "Crew (Handle Equipment)", "Groupie", "Tour Bus Driver"
     ]
 }

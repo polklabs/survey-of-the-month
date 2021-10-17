@@ -13,7 +13,8 @@
         "memes.jsonc",
         "groups.jsonc",
         "emoji.jsonc",
-        "madlib.jsonc"
+        "madlib.jsonc",
+        "music.jsonc"
     ],
 
     // Simple question for beginning for survey
@@ -153,7 +154,7 @@
         "[type:text]You arrive home to find #person.capitalize# and #person.capitalize# asking you to sit down for an intervention. What is it about?",
         "[type:multi][key:generalReaction]#person.capitalize# has just invested all their money into #generalThings.s#.",
         "[type:text]#person.capitalize# just sent you the emoji #emoji_combo#. What does it mean?",
-        "[type:multi][key:apocalypse_survival_time]How long do you think ^$you:#person.capitalize# could survive #apocalypse.a# apocalypse?",
+        "[type:multi][key:apocalypse_survival_time]How long do you think ^$you:#person.capitalize#$ could survive #apocalypse.a# apocalypse?",
         "[type:text]What is your plan for surviving #apocalypse.a# apocalypse?",
         "[type:check][key:character,person,animal]Pick two companions for #apocalypse.a# apocalypse?",
         "[type:text]You can rename one thing, everyone except you will think is has always been called that. What do you rename?",

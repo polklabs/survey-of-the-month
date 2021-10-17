@@ -74,7 +74,7 @@ export class LocalStorageService {
         if (data !== null) {
             return JSON.parse(data);
         }
-        return ['nsfw'];
+        return [];
     }
 
     getVisited(): boolean {

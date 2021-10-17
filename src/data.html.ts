@@ -1,4 +1,5 @@
-import { grammar, regexInlineChoiceGroup, regexInlineChoices, regexString, regexVariable, reservedKeys } from "./tracery";
+import { regexInlineChoiceGroup, regexInlineChoices, regexString, regexVariable, reservedKeys } from "./tracery.const";
+import { grammar } from "./tracery.load";
 
 export let grammarHTML = '';
 
