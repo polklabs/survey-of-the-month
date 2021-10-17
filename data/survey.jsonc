@@ -37,7 +37,7 @@
     "question": [
         "[type:text]The ^$most recent:strangest:scariest:happiest$ dream you can remember?",
         "[type:multi][key:allAnswers][count:-1]Are your intentions are pure (regarding what is up to your discretion)?",
-        "[type:text][tag:movies,tv]Last ^$show:movie$ you watched?",
+        "[type:text][tag:movies,tv]Last ^$show you watched:movie you watched:book you read:thing you googled$?",
         "[type:text]What is your one rule?",
         "[type:multi][key:yesNo][count:-1]Have you ever told someone you had a crush on them?",
         "[type:text]Give #person.capitalize# #adjective.a# nickname.",
@@ -86,7 +86,8 @@
         "[type:text]#person.capitalize# is starting #genre_music.a# band, with them on #instrument#. They asked you to join, what do you play?",
         "[type:text][personA:#person#][personB:#person#]#personA.capitalize# is starting a band with #personB.capitalize#, #personA.capitalize# is on #instrument# and #personB.capitalize# is on #instrument#. What is their band name?",
         "[type:text]You're on a first date with #character#, where do you take them?",
-        "^$[type\\:text]:[type\\:multi][key\\:character_actor]$They're remaking #world#, who should play the lead role?",
+        "[type:multi][key:character_actor]They're remaking #world#, who should play the lead role?",
+        "[type:text]They're remaking #world#, who should play the lead role?",
         "[type:multi][key:characterGroup]Pick which group you'd like to be #location# with.",
         "[type:text]You find $#20_500_20.range#, what do you do next?",
         "[type:text]You wake up to find the sky #color#. What happened?",
@@ -146,11 +147,11 @@
         "[type:text]If #person.capitalize# asked you to #verb_transitive# #generalThings.a#, how would you do it?",
         "[type:text]Who would win in a fight between #person.capitalize# and #animal.a#?",
         "[type:check][key:character][count:6][tag:nsfw]Choose 2 to be in a thruple with.",
-        "[type:multi][key:trueFalse][count:-1]#person.capitalize# is ^$#traits#:#trait_good#:#trait_bad#:#adjective#$ person",
+        "[type:multi][key:trueFalse][count:-1]#person.capitalize# is ^$#traits.a#:#trait_good.a#:#trait_bad.a#:#adjective.a#$ person",
         "[type:check][key:movie][tag:movies]How many of these movies have you seen?",
         "[type:multi][key:character,person]Who is ^$your:#person.capitalize.possessive#$ new best friend?",
         "[type:multi][key:accent]Which accent do you use 24/7 for the next #1_10.range# #timeRange.s#?",
-        "[type:text]The next time you see #person.capitalize# they speak only with #accent.a# accent. How do you react?",
+        "[type:text]The next time you see #person.capitalize# they're speaking with #accent.a# accent. How do you react?",
         "[type:text]You arrive home to find #person.capitalize# and #person.capitalize# asking you to sit down for an intervention. What is it about?",
         "[type:multi][key:generalReaction]#person.capitalize# has just invested all their money into #generalThings.s#.",
         "[type:text]#person.capitalize# just sent you the emoji #emoji_combo#. What does it mean?",
@@ -160,9 +161,14 @@
         "[type:text]You can rename one thing, everyone except you will think is has always been called that. What do you rename?",
         "[type:text][tag:movies,tv,books,videoGames]Explain a ^$movie:tv show:book:video game$ poorly and the people taking this survey will try and guess it.",
         "[type:text]Submit an obscure quote and the people taking this survey will try and guess the context",
+        "[type:text]Winston Churchill once said, 'Guys, for realsies, stop misquoting me', what other famous quotes do you know?",
+        "[type:multi][key:yesNo][count:-1]#person.capitalize# is directing #genre_movie.a# movie and wants you to star alongside #character_actor#. Do you accept the role?",
         "[type:madlib]#madlibText#",
         "[type:madlib]#madlibMulti#",
-        "[type:madlib]#madlibRank#"
+        "[type:madlib]#madlibRank#",
+        "[type:madlib]#madLibQuote#",
+        "[type:multi][key:superpower]What would be the best superpower to have in #apocalypse.a# apocalypse?",
+        "[type:multi][key:game_show]Which game show do you think ^$you:#person.capitalize#$ could last the longest on?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -341,9 +347,12 @@
         "#bodypart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"
     ],
     "apocalypse": [
-        "AI revolution", "zombie uprising", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"
+        "AI revolution", "zombie", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"
     ],
     "apocalypse_survival_time": [
         "1 day", "1 week", "1 month", "1 year", "1 decade", "indefinitely"
+    ],
+    "game_show": [
+        "Jeopardy!", "Wheel of Fortune", "Family Feud", "Who Wants to Be a Millionaire", "Press Your Luck", "The Price Is Right", "Cash Cab", "Deal Or No Deal", "Are You Smarter Than A 5th Grader", "Survivor", "The Amazing Race", "Wipeout", "Fear Factor", "The Voice", "American Idol", "Master Chef", "The Great British Bake Off", "Taskmaster", "Hell's Kitchen", "RuPaul's Drag Race"
     ]
 }

@@ -11,7 +11,9 @@
         "[key:madLibText_Answer_6]Faults are {0} where {1} is thin.", 
         "[key:madLibText_Answer_7]The only real way to look {0} is not to be {1} so soon.", 
         "[key:madLibText_Answer_8]Always try to do things in chronological {0}; it`s less {1} that way.",
-        "[key:madLibText_Answer_9]I really wanted to name my cat {0}, too bad that name's already taken by my {1} #relation#"
+        "[key:madLibText_Answer_9]I really wanted to name my cat {0}, too bad that name's already taken by my {1} #relation#",
+        "[key:_madLibText_Answer_10]Pizza was invented by a/an {0} {1} chef named {2}. To make a pizza, you need to take a lump of {3}, and make a thin, round {4} {5}. Then you cover it with {6} sauce, {7} cheese, and fresh chopped {8}. Next you have to bake it in a very hot {9}. When it is done, cut it into {10} {11}. Some kids like {12} pizza the best, but my favorite is the  {13} pizza.",
+        "[key:_madLibText_Answer_11]I had a {0} dream where I was {1} in {2}. I then saw {3} trying to {4} a {5} {6} with their {7}. I wanted to {8} to them but couldn't seem to move.The last thing I remember before waking up is {9} a {10}"
     ],
     "_madLibText_Answer_1": [
         "proper noun", "Plural Noun", "Verb ending in 'ing'", "noun", "noun", "plural noun", "part of the body", "noun", "verb ending in 'ing'", "part of the body (plural)", "verb ending in 'ing'", "noun", "noun", "part of the body", "adverb", "part of the body (plural)"
@@ -40,6 +42,12 @@
     "madLibText_Answer_9": [
         "name for a cat", "adjective"
     ],
+    "_madLibText_Answer_10": [
+        "adjective", "nationality", "person", "noun", "adjective", "noun", "adjective", "adjective", "plural noun", "noun", "number", "shapes", "food", "food"
+    ],
+    "_madLibText_Answer_11": [
+        "adjective", "verb ending in 'ing'", "place", "person", "verb", "adjective", "noun", "body part", "verb", "verb ending in 'ing'", "noun"
+    ],
     /* ************************************************************************************************ */
 
     /* Multiple Choice: choose 1 ********************************************************************** */
@@ -57,6 +65,52 @@
     ],
     "madLibRank_1": [
         "[key:animal]I just think a/an {0} is a better pet for #person.capitalize# than a/an {2}<br>- #person.capitalize#", "[key:bodyPart]Just on the basis of #character.possessive# {0}, they are totally #person.capitalize.possessive# type.", "[key:object]Oh No! My {0} broke, guess i'll have to use {1} instead."
-    ]
+    ],
     /* ************************************************************************************************ */
+
+    "madLibQuote": [
+        "[type:text][format:#madLibQuote_1#][count:-1]Enter a word for each of the following"
+    ],
+    "madLibQuote_1": [
+        "[key:_madLibQuote_Answer_1]The {0} and most {1} things in the world cannot be {2} or even {3} — they must be felt with the {4}. -Helen Keller",
+        "[key:_madLibQuote_Answer_2]It is during our {0} moments that we must {1} to see the {2}. -Aristotle",
+        "[key:_madLibQuote_Answer_3]Do not {0} where the {1} may lead, {0} instead where there is no {1} and leave a {2}. -Ralph Waldo Emerson",
+        "[key:_madLibQuote_Answer_4]Your {0} is limited, so don't waste it {1} someone else's {2}. Don't be {3} by dogma — which is {1} with the {4}s of other people's {5}. -Steve Jobs",
+        "[key:_madLibQuote_Answer_5]Great minds discuss {0}; average minds discuss {1}; small minds discuss {2}. -Eleanor Roosevelt",
+        "[key:_madLibQuote_Answer_6]That’s one small {0} for a man, one giant {1} for mankind. -Neil Armstrong",
+        "[key:_madLibQuote_Answer_7]My {0} always said, 'Life is like a {1} of {2}, you never know what you’re gonna get.' -Forrest Gump",
+        "[key:_madLibQuote_Answer_8]I don't know who you are. I don't know what you want. If you're looking for {0}, I can tell you I don't have {1}... but what I do have are a very {2} set of {3}. {3} I have acquired over a very {4} {5}. {3} that make me a {6} for people like you. -Taken (200)",
+        "[key:_madLibQuote_Answer_9]So avoid using the word '{0}' because it's lazy. A man is not {0} tired, he is {1}. Don't use {0} sad, use {2}. Language was invented for one reason, boys - to {3} women - and, in that endeavour, laziness will not do. -Dead Poets Society (1989)",
+        "[key:_madLibQuote_Answer_10]Life is {0}, Highness. Anyone who {1} differently is {2} something. -Princess Bride (1987)"
+    ],
+    "_madLibQuote_Answer_1": [
+        "adjective", "adjective", "verb past tense", "verb past tense", "body part"
+    ],
+    "_madLibQuote_Answer_2": [
+        "adjective", "verb", "noun"
+    ],
+    "_madLibQuote_Answer_3": [
+        "verb", "noun", "noun"
+    ],
+    "_madLibQuote_Answer_4": [
+        "noun", "verb ending in 'ing'", "noun", "verb ending in 'ed'", "noun", "verb ending in 'ing'"
+    ],
+    "_madLibQuote_Answer_5": [
+        "noun plural", "noun plural", "noun plural"
+    ],
+    "_madLibQuote_Answer_6": [
+        "verb", "verb"
+    ],
+    "_madLibQuote_Answer_7": [
+        "person", "container", "noun"
+    ],
+    "_madLibQuote_Answer_8": [
+        "noun", "noun", "adjective", "noun plural", "adjective", "noun", "noun"
+    ],
+    "_madLibQuote_Answer_9": [
+        "adverb", "adjective", "adjective", "verb"
+    ],
+    "_madLibQuote_Answer_10": [
+        "noun", "verb plural", "verb ending in 'ing'"
+    ]
 }

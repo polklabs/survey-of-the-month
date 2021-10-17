@@ -10,7 +10,8 @@
         "[key:group_royal]Choose your role in our royal court.",
         "[key:group_job]Where do you work in our small town?",
         "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?",
-        "[key:group_band]We're starting a band! What's your role?"
+        "[key:group_band]We're starting a band! What's your role?",
+        "[key:group_apocalypse] Uh-Oh, it's the #apocalypse# apocalypse. We've got to stick together, what's your role?"
     ],
     "group_circus": [
         "Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"
@@ -41,5 +42,8 @@
     ],
     "group_band": [
         "Vocalist", "Lead Guitarist", "Rhythm Guitarist", "Bassist", "Drummer", "Keyboardist", "Tamborine", "Manager", "Crew (Handle Equipment)", "Groupie", "Tour Bus Driver"
+    ],
+    "group_apocalypse": [
+        "Leader", "Guard/Soldier", "Hunter", "Transportation", "Medic", "Scout/Scavenger", "Blacksmith", "Engineer/Mechanic", "Cook", "Agricultural Expert", "Priest", "Historian"
     ]
 }
