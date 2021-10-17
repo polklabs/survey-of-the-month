@@ -85,7 +85,7 @@
         "[type:text]#person.capitalize# is starting #genre_music.a# band, with them on #instrument#. They asked you to join, what do you play?",
         "[type:text][personA:#person#][personB:#person#]#personA.capitalize# is starting a band with #personB.capitalize#, #personA.capitalize# is on #instrument# and #personB.capitalize# is on #instrument#. What is their band name?",
         "[type:text]You're on a first date with #character#, where do you take them?",
-        "[type:text]They're remaking #world#, who should play the lead role?",
+        "^$[type\\:text]:[type\\:multi][key\\:character_actor]$They're remaking #world#, who should play the lead role?",
         "[type:multi][key:characterGroup]Pick which group you'd like to be #location# with.",
         "[type:text]You find $#20_500_20.range#, what do you do next?",
         "[type:text]You wake up to find the sky #color#. What happened?",
