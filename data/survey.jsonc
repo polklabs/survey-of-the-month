@@ -187,7 +187,7 @@
     /* ******************************************************************************************************************************** */
 
     "sentenceStarter": [
-        "The only", "I think", "What will", "I really", "Please don't", "You are", "We should", "#person.capitalize# is", "I think #person.capitalize#", "#*#"
+        "The only", "I think", "What will", "I really", "Please don't", "You are", "We should", "#person.capitalize# is", "I think #person.capitalize#", "you are my", "#*#"
     ],
 
     /* Traits ************************************************************************************************************************* */
