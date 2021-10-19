@@ -55,7 +55,7 @@
         "[type:multi][format:#madLibMulti_1#][other:false]Pick One Of the Following"
     ],
     "madLibMulti_1": [
-        "[key:verb]#person.capitalize# just needs to {0} sometimes", "[key:adjective]I'm serious, I really think #animal.s# are {0}", "[key:trait]#person.capitalize# may be #trait# but at least they're not {0}", "[key:animal]I think #person.capitalize# could totally take on #1_10.range# {0}(s) in a fight.", "[key:adjective]I'm serious, I really think ^$#character#:#person#$ is {0}"
+        "[key:verb]#person.capitalize# just needs to {0} sometimes", "[key:adjective]I'm serious, I really think #animal.s# are {0}", "[key:trait]#person.capitalize# may be #trait# but at least they're not {0}", "[key:animal]I think #person.capitalize# could totally take on #1_10.range# {0}(s) in a fight.", "[key:adjective]I'm serious, I really think ^$#character#:#person#$ is too {0}"
     ],
     /* ************************************************************************************************ */
 

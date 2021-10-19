@@ -158,7 +158,7 @@
         "[type:multi][key:apocalypse_survival_time]How long do you think ^$you:#person.capitalize#$ could survive #apocalypse.a# apocalypse?",
         "[type:text]What is your plan for surviving #apocalypse.a# apocalypse?",
         "[type:check][key:character,person,animal]Pick two companions for #apocalypse.a# apocalypse?",
-        "[type:text]You can rename one thing, everyone except you will think is has always been called that. What do you rename?",
+        "[type:text]You can rename one thing, everyone except the people taking this survey will think is has always been called that. What do you rename?",
         "[type:text][tag:movies,tv,books,videoGames]Explain a ^$movie:tv show:book:video game$ poorly and the people taking this survey will try and guess it.",
         "[type:text]Submit an obscure quote and the people taking this survey will try and guess the context",
         "[type:text]Winston Churchill once said, 'Guys, for realsies, stop misquoting me', what other famous quotes do you know?",
