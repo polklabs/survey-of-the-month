@@ -9,6 +9,7 @@ import { APIData } from '../shared/model/api-data.model';
 import { DialogService } from '../core/services/dialog.service';
 import { QuestionHolderService } from '../core/services/questionHolder.service';
 import { Router } from '@angular/router';
+import { AnalyticsService } from '../core/services/analytics.service';
 
 @Component({
     selector: 'app-single-question',
@@ -38,7 +39,8 @@ export class SingleQuestionComponent implements OnInit {
         private dataService: DataService,
         private localStorageService: LocalStorageService,
         private questionHolderService: QuestionHolderService,
-        private router: Router
+        private router: Router,
+        private analytics: AnalyticsService
     ) { }
 
     ngOnInit(): void {
@@ -48,22 +50,22 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     getQuestion(): void {
+        this.analytics.triggerEvent('SingleQ', 'NewQuestion', 'New Question Button');
         this.callApi('question', { users: this.users, filterTags: this.filterTags });
     }
 
-    updateChoice(index: number): void {
-        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: index, filterTags: this.filterTags });
-    }
-
     updateChoices(): void {
+        this.analytics.triggerEvent('SingleQ', 'NewAnswers', 'New Answers Button');
         this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1, filterTags: this.filterTags });
     }
 
     updateQuestion(): void {
+        this.analytics.triggerEvent('SingleQ', 'QuestionVariation', 'Question Variation Button');
         this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin, filterTags: this.filterTags });
     }
 
     seedQuestion(): void {
+        this.analytics.triggerEvent('SingleQ', 'Seed', 'Seed Button');
         this.dialogService.textInput(
             'Enter the question # or a random value',
             'Seed',

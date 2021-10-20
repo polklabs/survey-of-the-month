@@ -14,6 +14,7 @@ import { APIData } from '../../shared/model/api-data.model';
 import { QuestionHolderService } from '../../core/services/questionHolder.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { AnalyticsService } from 'src/app/core/services/analytics.service';
 
 const animationTime = 400;
 
@@ -66,7 +67,8 @@ export class SurveyMakerComponent implements OnInit {
         private dialogService: DialogService,
         private localStorageService: LocalStorageService,
         private router: Router,
-        private questionHolderService: QuestionHolderService
+        private questionHolderService: QuestionHolderService,
+        private analytics: AnalyticsService
     ) { }
 
     ngOnInit(): void {
@@ -102,11 +104,28 @@ export class SurveyMakerComponent implements OnInit {
     // Question --------------------------------------------------------------------------------------
 
     getQuestionWithFilter(typeFilter: AnswerType): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionWFilter', 'New Question Of Type');
         this.getQuestion(undefined, undefined, undefined, undefined, typeFilter);
     }
 
     getQuestionWithOrigin(origin: string): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionWOrigin', 'New Intro/End/Main Question');
         this.getQuestion(undefined, undefined, undefined, undefined, undefined, origin);
+    }
+
+    getQuestionRandom(questionIndex = -1): void {
+        this.analytics.triggerEvent('MakerQ', 'NewQuestion', 'New Question Button');
+        this.getQuestion(questionIndex);
+    }
+
+    getQuestionShuffle(questionIndex: number): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionVariation', 'Question Variation Button');
+        this.getQuestion(questionIndex, false, '', true);
+    }
+
+    getQuestionReset(questionIndex: number): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionReset', 'Question Reset Button');
+        this.getQuestion(questionIndex, true);
     }
 
     getQuestion(questionIndex = -1, reset = false, seed = '', shuffle = false, typeFilter?: AnswerType, origin?: string): void {
@@ -149,6 +168,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     addQuestion(type: AnswerType, questionIndex = -1): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionAdd', 'Question Template Button');
         this.dirty = true;
         const question = new Question();
         question.answerType = type;
@@ -168,6 +188,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     deleteQuestion(questionIndex: number): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionDelete', 'Question Delete Button');
         this.dialogService.yesNo('Are you sure?', 'Delete').subscribe(
             ok => {
                 if (ok) {
@@ -181,6 +202,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     seedQuestion(questionIndex = -1): void {
+        this.analytics.triggerEvent('MakerQ', 'Seed', 'Seed Button');
         this.dialogService.textInput(
             'Enter the question # or a random value',
             'Seed',
@@ -225,6 +247,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     editQuestionType(questionIndex: number, answerType: AnswerType): void {
+        this.analytics.triggerEvent('MakerQ', 'QuestionType', 'Changed Question Type');
         this.survey.questions[questionIndex].answerType = answerType;
         this.dirty = true;
     }
@@ -232,6 +255,11 @@ export class SurveyMakerComponent implements OnInit {
     // Answer -------------------------------------------------------------------------------------
 
     getAnswer(questionIndex = -1, choiceIndex = -1): void {
+        if (choiceIndex === -1) {
+            this.analytics.triggerEvent('MakerQ', 'NewAnswers', 'New Answers Button');
+        } else {
+            this.analytics.triggerEvent('MakerQ', 'NewAnswer', 'New Answer Button');
+        }
         this.callApi(
             'choice',
             { question: this.survey.questions[questionIndex], users: this.getUserNames(), choiceIndex, filterTags: this.filterTags },
@@ -252,12 +280,14 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     addAnswer(questionIndex: number): void {
+        this.analytics.triggerEvent('MakerQ', 'AddAnswer', 'Add Answer Button');
         this.survey.questions[questionIndex].choices.push('New Answer...');
         this.survey.questions[questionIndex].answerCount++;
         this.dirty = true;
     }
 
     deleteAnswer(questionIndex: number, choiceIndex: number): void {
+        this.analytics.triggerEvent('MakerQ', 'DeleteAnswer', 'Delete Answer Button');
         this.dialogService.yesNo('Are you sure?', 'Delete').subscribe(
             ok => {
                 if (ok) {
@@ -339,6 +369,7 @@ export class SurveyMakerComponent implements OnInit {
     }
 
     saveSurvey(): void {
+        this.analytics.triggerEvent('MakerQ', 'SurveySave', 'Save Survey Button');
         if (this.survey.users.length === 0) {
             this.dialogService.alert('Please add at least one person to your survey.');
             return;

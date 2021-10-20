@@ -124,7 +124,7 @@
         <div *ngFor="let question of survey.questions; let i = index;" 
             [@slideUpDown]="getQuestionPos(question.questionId)" style="margin-bottom: 32px;" fxLayout="row">
             <app-form-question fxFlex [question]="question" [loading]="loading[i]" [editable]="editable" [questionNumber]="(i+1).toString()"
-                (qRandomize)="getQuestion(i)" (qRandomizeAnswers)="getAnswer(i, -1)" (qShuffle)="getQuestion(i, false, '', true)" 
+                (qRandomize)="getQuestionRandom(i)" (qRandomizeAnswers)="getAnswer(i, -1)" (qShuffle)="getQuestionShuffle(i)" (qSeed)="seedQuestion(i)"
                 (aOrder)="orderAnswer(i, $event)" (aAdd)="addAnswer(i)" (aDelete)="deleteAnswer(i, $event)" (aRandomize)="getAnswer(i, $event)"
                 (aEditText)="editAnswer(i, $event)" (aOtherOptionAllow)="otherOptionAllow(i)" (aEditScale)="editScaleValues(i)" (aFormatEdit)="editAnswerFormat(i)">
             </app-form-question>
@@ -140,8 +140,8 @@
                 
                 <button mat-icon-button *ngIf="editable" [disabled]="loading[i]" [matMenuTriggerFor]="questionOptions" matTooltip="More Options"><mat-icon>more_vert</mat-icon></button>
                 <mat-menu #questionOptions="matMenu">
-                    <button mat-menu-item (click)="getQuestion(i, false, '', true)" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
-                    <button mat-menu-item (click)="getQuestion(i, true)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
+                    <button mat-menu-item (click)="getQuestionShuffle(i)" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
+                    <button mat-menu-item (click)="getQuestionReset(i)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
                     <button mat-menu-item (click)="deleteQuestion(i)"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
                     <button mat-menu-item [disabled]="survey.questions[i].custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>
                 </mat-menu>

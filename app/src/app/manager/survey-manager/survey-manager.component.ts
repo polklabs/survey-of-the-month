@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { CsvExportService } from '../../core/services/csvExport.service';
 import { DataService } from '../../core/services/data.service';
@@ -42,7 +43,8 @@ export class SurveyManagerComponent implements OnInit {
         private router: Router,
         private localStorageService: LocalStorageService,
         private dialogService: DialogService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private analytics: AnalyticsService
     ) { }
 
     ngOnInit(): void {
@@ -121,6 +123,7 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     deleteButton(): void {
+        this.analytics.triggerEvent('MakerQ', 'SurveyDelete', 'Delete Survey Button');
         this.dialogService.confirm('Are you sure you want to delete this survey? This cannot be undone.').subscribe(
             del => {
                 if (del) {
@@ -142,6 +145,7 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     copyLink(link: string, managerLink: boolean): void {
+        this.analytics.triggerEvent('MakerQ', 'SurveyShare', 'Copy Share Link Button');
         if (managerLink) {
             this.dialogService.alert('This is the management link. If you share it with other\'s they will have the ability to edit and delete this survey.');
         }

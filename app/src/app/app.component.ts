@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private dataService: DataService,
         private snackBar: MatSnackBar,
-        private dialogService: DialogService,
+        private dialogService: DialogService
     ) {
         iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/github-circle-white-transparent.svg'));
     }
