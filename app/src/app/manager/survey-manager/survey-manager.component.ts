@@ -190,12 +190,20 @@ export class SurveyManagerComponent implements OnInit {
             ).subscribe(
                 result => {
                     if (result) {
-                        this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
+                        if (this.surveyContainer?.resultsRequireKey ?? true) {
+                            this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
+                        } else {
+                            this.router.navigateByUrl(`/results/${this.id}`);
+                        }
                     }
                 }
             );
         } else {
-            this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
+            if (this.surveyContainer?.resultsRequireKey ?? true) {
+                this.router.navigateByUrl(`/results/${this.id}/${this.key}`);
+            } else {
+                this.router.navigateByUrl(`/results/${this.id}`);
+            }
         }
     }
 

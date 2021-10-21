@@ -8,7 +8,10 @@
         <ng-container *ngIf="!answer.userId">
 
             <div style="margin: auto; width: max-content;">
-                <button mat-raised-button *ngIf="isReleased" color="primary" (click)="beginPresentation()">Begin Answer Presentation</button>
+                <button mat-raised-button [disabled]="!isReleased" [matTooltipDisabled]="isReleased" 
+                    matTooltip="Survey Manager Has Not Released The Answers" color="primary" (click)="beginPresentation()">
+                        Begin Answer Presentation
+                </button>
             </div>
 
             <p *ngIf="survey.preAnswer && !submitted" [innerHTML]="survey.preAnswer"></p>
