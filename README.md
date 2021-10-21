@@ -1,5 +1,9 @@
 # Survey of the Month
 
+## Try It Out
+
+[Survey of the Month](https://survey.polklabs.com/home)
+
 ## Tracery
 
 This app is build around a scratch build version of [Tracery](http://www.tracery.io/), with some custom modifications.
@@ -107,7 +111,10 @@ Run `npm run dev`
 
 ### Building Server.js
 Run `webpack`
+
 Run `node server.bundle.js`
 
 ### Building/Packaging App
+Run `npm install -g gulp`
+
 Run `gulp` for building server and client 
