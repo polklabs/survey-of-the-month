@@ -111,8 +111,10 @@ Run `npm run dev`
 
 ### Building Server.js
 Run `webpack`
+
 Run `node server.bundle.js`
 
 ### Building/Packaging App
 Run `npm install -g gulp`
+
 Run `gulp` for building server and client 
