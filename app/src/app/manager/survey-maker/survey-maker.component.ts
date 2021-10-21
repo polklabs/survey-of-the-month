@@ -15,6 +15,7 @@ import { QuestionHolderService } from '../../core/services/questionHolder.servic
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
+import { SEOService } from 'src/app/core/services/seo.service';
 
 const animationTime = 400;
 
@@ -68,10 +69,12 @@ export class SurveyMakerComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private router: Router,
         private questionHolderService: QuestionHolderService,
-        private analytics: AnalyticsService
+        private analytics: AnalyticsService,
+        private seoService: SEOService
     ) { }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Manager - Survey OTM');
         this.getCachedUsers();
         this.updateFilters();
         this.activatedroute.paramMap.subscribe(params => {
@@ -360,6 +363,7 @@ export class SurveyMakerComponent implements OnInit {
                     return;
                 }
                 this.survey = data.data?.survey;
+                this.seoService.updateTitle(`${this.survey.name} - Survey OTM`);
                 this.calculateQuestionPos();
             } else {
                 this.dialogService.error(data.error);

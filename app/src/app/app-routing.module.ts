@@ -9,38 +9,23 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
-        data: {
-            title: 'Survey OTM | Home',
-        }
     },
     {
         path: 'manage',
         loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
-        data: {
-            title: 'Survey OTM | Manage',
-        }
     },
     {
         path: 'survey/:id',
         component: SurveyTakerComponent,
         canDeactivate: [CanDeactivateGuard],
-        data: {
-            title: 'Survey OTM',
-        }
     },
     ...['results/:id/:key', 'results/:id'].map(path => ({
         path,
         loadChildren: () => import('./survey-results/survey-results.module').then(m => m.SurveyResultsModule),
-        data: {
-            title: 'Survey OTM | Results',
-        }
     })),
     {
         path: 'grammar',
         component: GrammarComponent,
-        data: {
-            title: 'Grammar',
-        }
     },
     {
         path: '',

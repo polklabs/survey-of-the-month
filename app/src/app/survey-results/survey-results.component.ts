@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { HelperService } from '../core/services/helperService.service';
+import { SEOService } from '../core/services/seo.service';
 import { APIData } from '../shared/model/api-data.model';
 import { AnswerType, Question } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
@@ -95,7 +96,8 @@ export class SurveyResultsComponent implements OnInit {
         private dataService: DataService,
         private dialogService: DialogService,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private seoService: SEOService
     ) { }
 
     @HostListener('window:keyup', ['$event'])
@@ -110,6 +112,7 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Results - Survey OTM');
         this.activatedRoute.paramMap.subscribe(params => {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
@@ -220,6 +223,7 @@ export class SurveyResultsComponent implements OnInit {
             if (data.ok) {
                 if (data.data) {
                     this.surveyContainer = data.data;
+                    this.seoService.updateTitle(`${this.surveyContainer.survey.name} - Survey OTM`);
                     if (!this.surveyContainer) {
                         this.dialogService.alert('Survey is undefined', 'Error').subscribe(
                             () => this.router.navigateByUrl('/home')

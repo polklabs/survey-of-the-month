@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
                     const email = result.trim().toLowerCase();
                     const [msg, _] = this.dataService.getData('find?email=' + email);
                     msg.subscribe(
-                    (data: APIData) => {
+                        (data: APIData) => {
                             if (data.ok) {
                                 this.snackBar.open('Email Sent to ' + email, 'OK', { duration: 3000 });
                             } else {

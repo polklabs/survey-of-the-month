@@ -7,6 +7,7 @@ import { Survey } from '../shared/model/survey.model';
 import { Answer, AnswerStatus } from '../shared/model/answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { APIData } from '../shared/model/api-data.model';
+import { SEOService } from '../core/services/seo.service';
 
 @Component({
     selector: 'app-survey-taker',
@@ -34,10 +35,12 @@ export class SurveyTakerComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private dataService: DataService,
         private snackBar: MatSnackBar,
-        private router: Router
+        private router: Router,
+        private seoService: SEOService,
     ) { }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Survey - Survey OTM');
         this.activatedRoute.paramMap.subscribe(params => {
             const id = params.get('id');
             if (id && id !== '0') {
@@ -63,6 +66,7 @@ export class SurveyTakerComponent implements OnInit {
             if (data.ok) {
                 if (!data.data) { throw Error('Data is null'); }
                 this.survey = data.data;
+                this.seoService.updateTitle(`${this.survey?.name ?? 'Survey'} - Survey OTM`);
                 this.getAnswerStatus();
                 this.getReleaseStatus();
             } else {

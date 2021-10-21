@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
+import { SEOService } from 'src/app/core/services/seo.service';
 import { CsvExportService } from '../../core/services/csvExport.service';
 import { DataService } from '../../core/services/data.service';
 import { DialogService } from '../../core/services/dialog.service';
@@ -44,10 +45,12 @@ export class SurveyManagerComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private dialogService: DialogService,
         private sanitizer: DomSanitizer,
-        private analytics: AnalyticsService
+        private analytics: AnalyticsService,
+        private seoService: SEOService,
     ) { }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Manager - Survey OTM');
         this.activatedRoute.paramMap.subscribe(params => {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
@@ -84,6 +87,7 @@ export class SurveyManagerComponent implements OnInit {
 
                     this.localStorageService.addSurvey(this.surveyContainer.survey.name, this.id, this.key);
                     this.hasData = true;
+                    this.seoService.updateTitle(`${this.surveyContainer.survey.name} - Survey OTM`);
                 }
             } else {
                 if (data.error!.code === 'EDOCMISSING') {

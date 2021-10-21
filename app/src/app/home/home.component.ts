@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
+import { SEOService } from '../core/services/seo.service';
 import { APIData } from '../shared/model/api-data.model';
 import { SurveysStorage } from '../shared/model/local-storage.model';
 
@@ -26,9 +27,12 @@ export class HomeComponent implements OnInit {
     constructor(
         private dataService: DataService,
         private dialogService: DialogService,
-        private localStorageService: LocalStorageService) { }
+        private localStorageService: LocalStorageService,
+        private seoService: SEOService
+    ) { }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Home - Survey OTM');
         const [result, _] = this.dataService.getData('home');
         result.subscribe((data: { subtitle: string, text: string }) => {
             this.subtitle = data.subtitle;

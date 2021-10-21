@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
+import { SEOService } from '../core/services/seo.service';
 import { APIData } from '../shared/model/api-data.model';
 
 @Component({
@@ -17,10 +18,13 @@ export class GrammarComponent implements OnInit {
     constructor(
         private dataService: DataService,
         private dialogService: DialogService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private seoService: SEOService
     ) { }
 
     ngOnInit(): void {
+        this.seoService.updateTitle('Grammar - Survey OTM');
+
         const [result, _] = this.dataService.getData('grammar');
         result.subscribe((data: APIData) => {
             if (data.ok) {
