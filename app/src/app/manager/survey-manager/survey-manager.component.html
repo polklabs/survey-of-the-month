@@ -115,12 +115,20 @@
             </mat-card-header>
             <mat-card-content fxLayout="column" fxLayoutGap="8px">
 
-                <button mat-raised-button color="primary" (click)="beginPresentation()">Begin Presentation</button>
                 <button mat-raised-button color="accent" [routerLink]="'/manage/make/' + id + '/' + key">Edit
                     Survey</button>
+                
+                <mat-divider class="action-divider" [inset]="true"></mat-divider>
+
+                <button mat-raised-button color="primary" (click)="beginPresentation()">Begin Presentation</button>
+                <div fxLayout="row" fxLayoutGap="8px">
+                    <button fxFlex mat-raised-button *ngIf="resultsRequireKey()" (click)="startResultsRequireKey(false)">Release Presentation To All</button>
+                    <button fxFlex mat-raised-button *ngIf="!resultsRequireKey()" (click)="saveResultsRequireKey(true)">Unrelease Presentation</button>
+                    <mat-icon color="accent" class="help-icon" matTooltip="You can release the survey results to anyone with a sharable link. Allowing them to view the results of their own accord without you needing to share/expose a management link">help</mat-icon>
+                </div>
                 <a mat-raised-button download="{{exportFilename}}" [href]="exportData" _target="blank">Export Answers To .csv (Excel)</a>
 
-                <mat-divider [inset]="true"></mat-divider>
+                <mat-divider class="action-divider" [inset]="true"></mat-divider>
 
                 <button mat-raised-button color="warn" (click)="deleteButton()">Delete Survey</button>
 

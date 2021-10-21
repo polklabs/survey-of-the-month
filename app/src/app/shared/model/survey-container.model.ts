@@ -9,6 +9,7 @@ export class SurveyContainer {
     key!: string;
     createdDate: string = new Date().toISOString();
     lastModifiedDate: string = new Date().toISOString();
+    resultsRequireKey = true;
 
     survey!: Survey;
     answers: Answer[] = [];

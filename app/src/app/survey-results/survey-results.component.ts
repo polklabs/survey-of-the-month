@@ -8,15 +8,6 @@ import { APIData } from '../shared/model/api-data.model';
 import { AnswerType, Question } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 
-// type Slide = {
-//     itemType: 'basicText' | AnswerType | 'question',
-//     text: string[],
-//     name?: string,
-//     nameVisible?: boolean,
-//     visible: boolean,
-//     alwaysVisible: boolean,
-// }[];
-
 class Slide {
     itemType: 'basicText' | AnswerType | 'question' = 'basicText';
     labels: string[] = [];
@@ -122,7 +113,7 @@ export class SurveyResultsComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(params => {
             this.id = params.get('id') ?? '';
             this.key = params.get('key') ?? '';
-            if (this.id && this.key) {
+            if (this.id) {
                 this.getSurvey();
             } else {
                 this.router.navigateByUrl('/home');
@@ -193,6 +184,7 @@ export class SurveyResultsComponent implements OnInit {
         this.slide.push(new Slide({ text: [`<h2 class="center">Question ${this.slideNum + 1}</h2>`], visible: true, alwaysVisible: true }));
         this.slide.push(new Slide({ itemType: 'question', text: [question.text] }));
         this.shuffle(this.surveyContainer.answers);
+        let hasAnswers = false;
         this.surveyContainer.answers.forEach(answ => {
             const user = this.surveyContainer.survey.users.find(x => x._id === answ.userId);
             if (user) {
@@ -204,9 +196,13 @@ export class SurveyResultsComponent implements OnInit {
                         text: this.answerToString(question, qAnsw.value),
                         name: user.name
                     }));
+                    hasAnswers = true;
                 }
             }
         });
+        if (!hasAnswers) {
+            this.slide.push(new Slide({ text: [`<h2 class="center">No One Answered This Question</h2>`] }));
+        }
         this.postLoadSlide();
     }
 
@@ -219,7 +215,7 @@ export class SurveyResultsComponent implements OnInit {
     }
 
     getSurvey(): void {
-        const [result, _] = this.dataService.getData(`survey-edit?id=${this.id}&key=${this.key}`);
+        const [result, _] = this.dataService.getData(`survey-results?id=${this.id}&key=${this.key}`);
         result.subscribe((data: APIData) => {
             if (data.ok) {
                 if (data.data) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DataService } from '../core/services/data.service';
 import { DialogService } from '../core/services/dialog.service';
@@ -20,6 +20,7 @@ export class SurveyTakerComponent implements OnInit {
     survey?: Survey;
     answer = new Answer();
     answerStatus?: AnswerStatus[];
+    isReleased = false;
 
     displayedColumns: string[] = ['name', 'lastModifiedDate', 'status', 'start'];
 
@@ -33,6 +34,7 @@ export class SurveyTakerComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private dataService: DataService,
         private snackBar: MatSnackBar,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -62,6 +64,7 @@ export class SurveyTakerComponent implements OnInit {
                 if (!data.data) { throw Error('Data is null'); }
                 this.survey = data.data;
                 this.getAnswerStatus();
+                this.getReleaseStatus();
             } else {
                 this.dialogService.error(data.error);
             }
@@ -75,6 +78,17 @@ export class SurveyTakerComponent implements OnInit {
             if (data.ok) {
                 this.answerStatus = data.data ?? [];
                 this.answerStatus?.sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                this.dialogService.error(data.error);
+            }
+        });
+    }
+
+    getReleaseStatus(): void {
+        const [result, _] = this.dataService.getData(`is-released?id=${this.id}`);
+        result.subscribe((data: APIData) => {
+            if (data.ok) {
+                this.isReleased = data.data ?? false;
             } else {
                 this.dialogService.error(data.error);
             }
@@ -204,5 +218,9 @@ export class SurveyTakerComponent implements OnInit {
 
     openFeedback(): void {
         this.dialogService.feedback();
+    }
+
+    beginPresentation(): void {
+        this.router.navigateByUrl(`/results/${this.id}`);
     }
 }

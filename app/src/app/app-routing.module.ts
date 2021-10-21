@@ -28,13 +28,13 @@ const routes: Routes = [
             title: 'Survey OTM',
         }
     },
-    {
-        path: 'results/:id/:key',
+    ...['results/:id/:key', 'results/:id'].map(path => ({
+        path,
         loadChildren: () => import('./survey-results/survey-results.module').then(m => m.SurveyResultsModule),
         data: {
             title: 'Survey OTM | Results',
         }
-    },
+    })),
     {
         path: 'grammar',
         component: GrammarComponent,

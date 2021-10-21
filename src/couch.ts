@@ -7,12 +7,15 @@ import { Answer, AnswerStatus } from '../app/src/app/shared/model/answer.model';
 import { response } from '../server';
 import { SendEmail, SendSurveyEmail } from './email';
 
-// TODO: Make into await/synchronous functions
-
 // Initialize connection to counchDB ----------------------------------
 const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
     { encoding: 'utf8', flag: 'r' }));
 export const couch = new NodeCouchDb(couchDbSettings);
+// setInterval(() => {
+//     console.log('Deleting Old Surveys');
+//     deleteOldSurveys();
+// }, 24 * 60 * 60 * 1000)
+
 
 export function upsertSurvey(survey: Survey, id: string, key: string, req: any, res: response): void {
 
@@ -106,6 +109,53 @@ export function getEditSurvey(id: string, key: string, res: response): void {
         res.json({ ok: false, error: err });
     });
 }
+
+export function getResultsSurvey(id: string, key: string, res: response): void {
+    couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
+        if (data.resultsRequireKey ?? true) {
+            if (key === data.key) {
+                res.json({ ok: true, data })
+            } else {
+                res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
+            }
+        } else {
+            res.json({ ok: true, data })
+        }
+    }, (err: any) => {
+        res.json({ ok: false, error: err });
+    });
+}
+
+export function putReleaseStatus(requireKey: boolean, id: string, key: string, res: response): void {
+    couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
+        // Document Exists
+        if (key === data.key) {
+            
+            data.resultsRequireKey = requireKey;
+            data.lastModifiedDate = new Date().toISOString();
+
+            couch.update('survey', data).then(({ data }) => {
+                res.json({ ...data });
+            }, (error: any) => {
+                res.json({ ok: false, error });
+            });
+
+        } else {
+            res.json({ ok: false, error: { code: 'KEY', body: { error: 'Invalid Key', reason: '' } } });
+        }
+    }, (err: any) => {
+        res.json({ ok: false, error: err });
+    });
+}
+
+export function getReleaseStatus(id: string, res: response): void {
+    couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
+        const requireKey = data.resultsRequireKey ?? true;
+        res.json({ok: true, data: !requireKey});
+    }, (err: any) => {
+        res.json({ ok: false, error: err });
+    });
+} 
 
 export function deleteSurvey(id: string, key: string, res: response): void {
     couch.get('survey', id).then(({ data }: { data: SurveyContainer }) => {
@@ -230,3 +280,32 @@ export function findSurveys(email: string, req: any, res: response): void {
         res.json({ ok: false, error });
     });
 }
+
+// Survey's will only be kept for a year after their last modified date.
+// export function deleteOldSurveys(): void {
+//     const deleteCutoff = new Date();
+//     deleteCutoff.setFullYear(deleteCutoff.getFullYear()-1);
+//     const query = {
+//         "selector": {
+//             "lastModifiedDate": {
+//                 "$lt": deleteCutoff.toISOString()
+//             }
+//         }
+//     };
+
+//     couch.mango('survey', query, {}).then(({ data }) => {
+
+//         if (data.docs.length <= 0) { return; }
+
+//         data.docs.forEach(doc => {
+//             couch.del('survey', doc._id, data._rev).then(() => {
+//                 console.log(`Deleted: ${doc._id}`);
+//             }, (error: any) => {
+//                 console.error(error);
+//             });
+//         });
+
+//     }, (error: any) => {
+//         console.error(error);
+//     });
+// }

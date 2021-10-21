@@ -114,6 +114,30 @@ export class SurveyManagerComponent implements OnInit {
         });
     }
 
+    startResultsRequireKey(requireKey: boolean): void {
+        this.dialogService.confirm('Anyone with a Sharable Link will be able to view all results/answers. You can reverse this decision later if you choose. Release?', 'Are you sure?').subscribe(
+            ok => {
+                if (ok) {
+                    this.saveResultsRequireKey(requireKey);
+                }
+            }
+        );
+    }
+    saveResultsRequireKey(requireKey: boolean): void {
+        this.analytics.triggerEvent('ManagerQ', 'Release Answers', 'Allow All Users To View Answers');
+        const [result, _] = this.dataService.putData('release', { requireKey, id: this.id, key: this.key });
+        result.subscribe((data: { ok: boolean, id?: string, key?: string, error?: any }) => {
+            if (data.ok) {
+                this.surveyContainer!.resultsRequireKey = requireKey;
+            } else if (!data.ok) {
+                this.dialogService.error(data.error);
+            }
+        });
+    }
+    resultsRequireKey(): boolean {
+        return this.surveyContainer?.resultsRequireKey ?? true;
+    }
+
     getAnswerStatus(): void {
         const [result, _] = this.dataService.getData(`answer-status?id=${this.id}`);
         result.subscribe((data: APIData) => {

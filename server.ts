@@ -3,7 +3,7 @@ import { AnswerType, Question } from './app/src/app/shared/model/question.model'
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
 import { SendEmail } from './src/email';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys, getResultsSurvey, putReleaseStatus, getReleaseStatus } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
@@ -76,8 +76,21 @@ app.get('/api/survey-edit', speedLimiter, (req: { query: { id: string, key: stri
     getEditSurvey(req.query.id, req.query.key, res);
 });
 
+app.get('/api/survey-results', speedLimiter, (req: { query: { id: string, key: string } }, res: response) => {
+    getResultsSurvey(req.query.id, req.query.key, res);
+});
+
 app.delete('/api/survey', speedLimiter, (req: { query: { id: string, key: string } }, res: response) => {
     deleteSurvey(req.query.id, req.query.key, res);
+});
+
+app.put('/api/release', speedLimiter, (req: { body: { requireKey: boolean, id: string, key: string } }, res: response) => {
+    putReleaseStatus(req.body.requireKey, req.body.id, req.body.key, res);
+});
+
+// Will return true if results are viewable without secret key
+app.get('/api/is-released', speedLimiter, (req: { query: { id: string } }, res: response) => {
+    getReleaseStatus(req.query.id, res);
 });
 
 // Answers --------------------------------------------------------------------------------------------
