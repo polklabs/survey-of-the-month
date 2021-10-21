@@ -69,7 +69,7 @@
             <button mat-raised-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon> Seed</button>
             <button mat-raised-button *ngIf="!question.custom && basicEdit" [mat-menu-trigger-for]="reportMenu" matTooltip="Report Question"><mat-icon>report</mat-icon> Report</button>
             <div fxFlex></div>
-            <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()"><mat-icon>help</mat-icon></button>
+            <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()" aria-label="Question Help"><mat-icon>help</mat-icon></button>
         </mat-card-actions>
     </ng-container>
 
