@@ -59,7 +59,7 @@ mat-tooltip-component > .mat-tooltip {
     max-width: 800px !important;
 }
 
-a {
+a:not(.mat-button, .mat-icon-button) {
     color: darkturquoise !important;
     &:visited {
         color: fuchsia !important;
