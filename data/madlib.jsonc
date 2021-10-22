@@ -13,7 +13,8 @@
         "[key:madLibText_Answer_8]Always try to do things in chronological {0}; it`s less {1} that way.",
         "[key:madLibText_Answer_9]I really wanted to name my cat {0}, too bad that name's already taken by my {1} #relation#",
         "[key:_madLibText_Answer_10]Pizza was invented by a/an {0} {1} chef named {2}. To make a pizza, you need to take a lump of {3}, and make a thin, round {4} {5}. Then you cover it with {6} sauce, {7} cheese, and fresh chopped {8}. Next you have to bake it in a very hot {9}. When it is done, cut it into {10} {11}. Some kids like {12} pizza the best, but my favorite is the  {13} pizza.",
-        "[key:_madLibText_Answer_11]I had a {0} dream where I was {1} in {2}. I then saw {3} trying to {4} a {5} {6} with their {7}. I wanted to {8} to them but couldn't seem to move.The last thing I remember before waking up is {9} a {10}"
+        "[key:_madLibText_Answer_11]I had a {0} dream where I was {1} in {2}. I then saw {3} trying to {4} a {5} {6} with their {7}. I wanted to {8} to them but couldn't seem to move.The last thing I remember before waking up is {9} a {10}",
+        "[tag:nsfw][key:_madLibText_Answer_12]You know what, fuck you. *un{0}s your {1}*"
     ],
     "_madLibText_Answer_1": [
         "proper noun", "Plural Noun", "Verb ending in 'ing'", "noun", "noun", "plural noun", "part of the body", "noun", "verb ending in 'ing'", "part of the body (plural)", "verb ending in 'ing'", "noun", "noun", "part of the body", "adverb", "part of the body (plural)"
@@ -47,6 +48,9 @@
     ],
     "_madLibText_Answer_11": [
         "adjective", "verb ending in 'ing'", "place", "person", "verb", "adjective", "noun", "body part", "verb", "verb ending in 'ing'", "noun"
+    ],
+    "_madLibText_Answer_12": [
+        "verb", "noun"
     ],
     /* ************************************************************************************************ */
 
