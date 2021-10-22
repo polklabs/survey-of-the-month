@@ -1,5 +1,10 @@
 # Survey of the Month
 
+Survey Of The Month is a website built around the idea of pseudorandom question generator. Expanding on that, users can also create full surveys, share them with their friends, or take a survey. And then view everyone's answers in a presentation.
+
+## Disclaimer
+This is a fun side project, any feature updates or bug fixes are not guaranteed.
+
 ## Try It Out
 
 [Survey of the Month](https://survey.polklabs.com/home)
