@@ -309,3 +309,5 @@ Thumbs.db
 
 /prod-build
 email.json
+server.bundle.js
+server.bundle.js.LICENSE.txt
