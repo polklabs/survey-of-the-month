@@ -1,5 +1,10 @@
 # Survey of the Month
 
+Survey Of The Month is a website built around the idea of pseudorandom question generator. Expanding on that, users can also create full surveys, share them with their friends, or take a survey. And then view everyone's answers in a presentation.
+
+## Disclaimer
+This is a fun side project, any feature updates or bug fixes are not guaranteed.
+
 ## Try It Out
 
 [Survey of the Month](https://survey.polklabs.com/home)
@@ -20,59 +25,6 @@ The basic idea is you load a dictionary with each entry having an array of strin
     ]
 }
 ```
-
-## Logic
-### #key#
- - Denotes a new string that sould be inserted randomly from an array of strings
- - Keys incluce
-    - #animal# -> dog
-    - #character# -> batman
-    - #*# -> `a random key` -> ???
-### #key.mod#
- - Modifiers are added after keys and will perform further changes to the inserted string
-    - #person.capitalize# -> alice -> Alice
- - You can string multiple modifiers together and they will be performed in order
-    - #object.a.s# -> oven -> an ovens
- - Available mods
-    - `capitalize` - Make the first letter uppercase
-    - `a` - Add 'a' or 'an' before a word
-    - `ed` - Add 'ed' to the end of a word
-    - `s` -  Add 's'/'es'/'ies' to the end of a word
-    - `possessive` - Add 's to a word
-    - `range` - Converts the a key in the format #start_end_step_pad.range# into a number
-        - #1_10.range# -> 5
-        - #20_500_20.range# -> 140
-        - #1_10_1_2.range# -> 05
-    - `html_i` - Italics
-    - `html_b` - Bold
-    - `html_em` - Emphasize
-    - `html_s` - Strikethrough
-    - `html_sub` - Subscript
-    - `html_sup` - Superscript
-    - `html_u` - Underline
-
-### Temporary Values
- - Keys can also be handled without inserting them into text and using them later
- - A string starting with [keyName:#value#] will be can later be accessed by #keyName#
- - This is useful for using the same value multiple times or saving a separate value for context
- - Values will be calculated on key parsing, you can also save static values
-    - [key:#color#] or [key:blue]
- - Values stored this way are global, once they are stored can be accessed from anywhere in the grammar.
-    - ```
-        "origin": ["You're off to fight #fighter# but can't find your #fighter_weapon#!],
-        "fighter": ["[fighter_weapon:sword]Dragon", "[fighter_weapon:slingshot]Goliath"]
-        ```
-    - Origin is parsed, then fighter, then fighter_weapon is saved, then fighter_weapon is parsed
-### Inline Choices
- - Sometimes you only have a small number of options and don't want to create a whole new key and string array. That's where inline choices come in.
- - Formatted as `^$optionA:optionB$`. Examples:
-    - `"Last ^$show:movie$ you watched?"` -> "Last show you watched?" OR "Last movie you watched"
-    - `"Could you fight ^$#animal.a#:#character#$?"` -> "Could you figh a duck" OR "Could you fight Dwight K. Schrute"
-    - `Hello^$:, How are you$?` -> "Hello?" OR "Hello, How are you?"
-    - `^$I have \\$100:I'm broke$` -> "I have $100" OR "I'm broke"
-    - `^$Testing\\:1:Done$` -> "Testin:1" OR "Done"
- - Choices are applied before everything else.
-    - `[type:mulit][key:^$character:animal:singer$]Choose your protector.` becomes `[type:multi][key:animal]Choose your protector.` before we start to parse temporary values
 
 ### Duplicate Prevention
  - In order to stop the same values appearing multiple times in the same result we check to see if we've already seen the given value.

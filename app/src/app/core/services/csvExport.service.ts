@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Question } from 'src/app/shared/model/question.model';
 import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
+import { HelperService } from './helperService.service';
 
 @Injectable({
     providedIn: 'root'
@@ -46,39 +47,12 @@ export class CsvExportService {
         container.survey.questions.forEach(q => {
             const a = answers?.answers.find(x => x.questionId === q.questionId);
             if (a) {
-                toReturn.push(this.answerToString(q, a.value));
+                toReturn.push(HelperService.answerToString(q, a.value).join(','));
             } else {
                 toReturn.push('');
             }
         });
 
         return toReturn.map(x => JSON.stringify(x)).join(',');
-    }
-
-    private answerToString(q: Question, answer: (null | string | number)[]): string {
-        switch (q.answerType) {
-            case 'multi':
-                const a = answer[0];
-                if (a === null) { return ''; }
-                if (typeof a === 'string') {
-                    return a.toString();
-                }
-                return q.choices[a];
-            case 'text':
-                return answer.join(',');
-            case 'check':
-                return q.choices.map((x, index) => answer[index] === 'true' ? x : '').filter(x => x).join(',');
-            case 'rank':
-                const a2: number[] = answer as number[];
-                return a2.map((x: number) => q.choices[x]).join(',');
-            case 'date':
-                return answer.join(',');
-            case 'time':
-                return answer.join(',');
-            case 'scale':
-                return answer.map((a3, i) => a3 ? `${q.choices[i]}:${q.scaleValues[a3]}` : '').join(',');
-            default:
-                return '';
-        }
     }
 }
