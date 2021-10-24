@@ -3,6 +3,10 @@ import { DialogService } from 'src/app/core/services/dialog.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { Question } from '../../model/question.model';
 
+const rarityValues = [1 * (10 ** 3), 1 * (10 ** 6), 1 * (10 ** 9), 1 * (10 ** 12), 1 * (10 ** 15), 1 * (10 ** 18)];
+const rarities = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Galactic'];
+const rarityColors = ['white', 'forestgreen', 'dodgerblue', 'blueviolet', 'orange', 'aqua'];
+
 @Component({
     selector: 'app-form-question',
     templateUrl: './form-question.component.html',
@@ -52,6 +56,9 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     dirty = false;
     clearVar = 0; // Increment this to clear answers from question form;
 
+    rarityText = '';
+    rarityColor = '';
+
     constructor(
         private dialogService: DialogService,
         private cd: ChangeDetectorRef
@@ -60,11 +67,13 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
         this.showFormatted = this.editable;
+        this.getRarity();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.question) {
             this.clearAnswer();
+            this.getRarity();
         }
     }
 
@@ -133,6 +142,32 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     formatAnswer(): string {
         return HelperService.formatAnswer(this.question, this.tempAnswers);
+    }
+
+    getRarity(): void {
+        for (let i = 0; i < rarityValues.length; i++) {
+            if (this.question.qChance < rarityValues[i]) {
+                this.rarityText = rarities[i];
+                this.rarityColor = rarityColors[i];
+                return;
+            }
+        }
+        this.rarityText = 'Universal';
+        this.rarityColor = 'gray';
+    }
+
+    clickRarity(): void {
+        this.dialogService.alert(
+            `This specific question had a 1 in ${this.question.qChance.toLocaleString('en-US')} chance of occuring!<br><br><p>Rarities Are:</p><ol>${rarities.map(x => `<li>${x}</li>`).join('')}</ol>`,
+            this.rarityText + ' Question'
+        );
+    }
+
+    getBorderStyle(): any {
+        if (this.question.qChance > 1 && this.basicEdit) {
+            return {border: 'solid 2px ' + this.rarityColor};
+        }
+        return {};
     }
 
 }
