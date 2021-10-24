@@ -20,7 +20,8 @@
     // Simple question for beginning for survey
     "intro_question": [
         "[type:text]How are you doing this fine day of #monthNow#?",
-        "[type:multi][key:allAnswers][count:-1]Are you excited to take this survey?"
+        "[type:multi][key:allAnswers][count:-1]Are you excited to take this survey?",
+        "[type:text]How is #yearNow# treating you so far?"
     ],
 
     // Simple question for end of survey
