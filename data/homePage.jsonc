@@ -1,6 +1,6 @@
 /* This is only to generate text for the home page and should not be used for question gen */
 {
-    "home_page_subtitle": ["Do #animal.s# #verb_transitive# #object.s#?", "#greeting#", "How are you doing this fine day of #monthNow#?", "Are you excited to take this survey?", "Anything ~#hp_scandalous#~ to share?"],
+    "home_page_subtitle": ["Do #animal.s# #verb_transitive# #object.s#?", "#greeting#", "How are you doing this fine day of #monthNow#?", "Are you excited to take this survey?", "Anything ~#hp_scandalous#~ to share?", "You seem very #trait#", "I could go for some good #food# right now.", "#animal.a.capitalize# once bit my #relation#.", "#generalReaction#"],
     "home_page_text": ["#home_page_intoSentence# #home_page_2ndSentence# #home_page_3rdSentence# #home_page_endSentence#"],    
 
     "home_page_intoSentence": ["[adj1:#adjective#]Have you ever wanted to make your #hp_relation# take a \"#adj1#\" survey but struggled to think of \"#adj1#\" questions?"],
