@@ -28,6 +28,9 @@
     "food_general": [
         "shephard's pie", "pot pie", "meatloaf", "pork chop", "fish", "kabob", "sloppy joe", "hot dog", "burger", "steak", "baked ham", "grilled chicken breast", "roasted ^$chicken:turkey$", "ribs", "taco", "tostada", "fajita", "nachos", "enchilada", "burrito", "taquito", "taco soup", "stuffed pepper", "quesadilla", "spaghetti and meatballs", "lasagna", "tortellini", "mac and cheese", "pizza", "fettuccini alfredo", "stroganoff", "chicken noodle soup", "tomato soup", "carrot soup", "sweet potato soup", "chili", "minestrone soup", "corn chowder", "clam chowder", "stew", "split pea soup", "BLT", "pasta", "ramen", "^$:cobb:ceaser$ salad", "pancake", "^$scrambled:hard boiled:poached:sunny side up$ egg", "cornbread", "sushi", "baked beans", "popcorn", "peanut butter and jelly sandwich", "cheeseburger", "philly cheese steak", "philly cheese steak", "bagel", "tuna sandwich", "yogurt"
     ],
+    "topping": [
+        "mustard", "ketchup", "sprinkles", "chocolate sauce", "barbecue sauce", "lemon juice", "A1 steak sauce", "parmesan cheese", "salad dressing", "syrup", "olives"
+    ],
     "food": [
         "#dessert#", "#drink#", "#fruit_vegetable#", "#food_general#"
     ],

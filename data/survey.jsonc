@@ -169,7 +169,8 @@
         "[type:madlib]#madlibRank#",
         "[type:madlib]#madLibQuote#",
         "[type:multi][key:superpower]What would be the best superpower to have in #apocalypse.a# apocalypse?",
-        "[type:multi][key:game_show]Which game show do you think ^$you:#person.capitalize#$ could last the longest on?"
+        "[type:multi][key:game_show]Which game show do you think ^$you:#person.capitalize#$ could last the longest on?",
+        "[type:multi][key:topping]What is the best topping for #food#?"
     ],
 
     /* Words ************************************************************************************************************************** */
