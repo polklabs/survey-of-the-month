@@ -196,7 +196,7 @@ export class SurveyResultsComponent implements OnInit {
                     this.slide.push(new Slide({
                         itemType: question.answerType,
                         labels: question.useAnswerFormat ? [''] : this.choicesToString(question),
-                        text: this.answerToString(question, qAnsw.value),
+                        text: this.answerToString(question, qAnsw.value, user.name),
                         name: user.name
                     }));
                     hasAnswers = true;
@@ -278,9 +278,9 @@ export class SurveyResultsComponent implements OnInit {
         return HelperService.getAnswerTypeTextByIndex(this.surveyContainer, index);
     }
 
-    private answerToString(q: Question, answer: (null | string | number)[]): string[] {
+    private answerToString(q: Question, answer: (null | string | number)[], username: string): string[] {
         if (q.useAnswerFormat) {
-            return [HelperService.formatAnswer(q, answer)];
+            return [HelperService.formatAnswer(q, answer, username)];
         }
         return HelperService.answerToString(q, answer);
     }

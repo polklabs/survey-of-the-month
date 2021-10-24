@@ -237,7 +237,7 @@ export class SurveyMakerComponent implements OnInit {
     editAnswerFormat(questionIndex: number): void {
         const question = this.survey.questions[questionIndex];
         this.dialogService.textInput(
-            'Enter the formatting to be shown during the answer presentation.\n\nUse a number between curly braces to be replaced with a user\'s answer.\ne.g. "The answer is {0}" will become "The answer is rabbits".\nThe number between brackets referring to an answer option 0,1,2,3,...*\n\n*Question Type Caveats\nMiltiple Choice Questions: only support {0} and no other numbers.\nCheck Questions: Can vary on how many {0,1,2} it supports based on the number of boxes the user checks\nOther: If a user doesn\'t answer an option it will show up as {0} or {Choice Name} in the final presentation\n\nBasic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
+            'Use a number between curly braces to be replaced with a user\'s answer.\ne.g. "The answer is {0}" will become "The answer is rabbits".\nThe number between brackets referring to an answer option 0,1,2,3,...*\nText may not format properly if question is not fully answered.\n\n"{person}" will format to the name of the person who answered the question.\n\n*Question Type Caveats\nMiltiple Choice Questions: only support {0} and no other numbers.\nCheck Questions: Can vary on how many {0,1,2} it supports based on the number of boxes the user checks\n\nBasic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
             'Text',
             question.answerFormat,
             true

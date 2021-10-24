@@ -141,7 +141,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     }
 
     formatAnswer(): string {
-        return HelperService.formatAnswer(this.question, this.tempAnswers);
+        return HelperService.formatAnswer(this.question, this.tempAnswers, '___');
     }
 
     getRarity(): void {

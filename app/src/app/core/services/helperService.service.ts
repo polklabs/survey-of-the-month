@@ -43,9 +43,9 @@ export class HelperService {
         return value;
     }
 
-    public static formatAnswer(q: Question, answer: (null | string | number)[]): string {
+    public static formatAnswer(q: Question, answer: (null | string | number)[], username: string): string {
         const formattedAnswers = this.answerToString(q, answer, false);
-        const format = q.answerFormat.replace(new RegExp(/{(?<num>[0-9]+)}/gm), (...match: string[]) => {
+        let format = q.answerFormat.replace(new RegExp(/{(?<num>[0-9]+)}/gm), (...match: string[]) => {
             const groups = match.pop();
             // tslint:disable-next-line: no-string-literal
             const num = +(groups?.['num'] ?? '0');
@@ -58,6 +58,9 @@ export class HelperService {
             }
             return replacement;
         });
+
+        format = format.replace(/{person}/gm, username);
+
         return format;
     }
 
