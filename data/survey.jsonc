@@ -103,7 +103,7 @@
         "[type:text]What fan theory do you 100% accept as true?",
         "[type:multi][key:1Percent]You are now the 1% of?",
         "[type:text]You've been transformed into #animal.a#, how do you convince #person.capitalize# you're you?",
-        "[type:text][personA:#person.capitalize.possessive#][tag:nsfw]#personA# SO tells you they're only with them for #personA# ^$#bodyPart#:money:fame:pet$. How do you react?",
+        "[type:text][personA:#person.capitalize.possessive#][tag:nsfw]#personA# SO tells you they're only with them for #personA# ^$#bodyPart#:money:fame:pet #animal#$. How do you react?",
         "[type:text]You have to spend $#1_100.range# #numberMagnatude# as fast as possible, what do you buy?",
         "[type:text]You're given #^$animal:mythical_creature$.a# as a pet. What do you name them?",
         "[type:multi][key:olympicSport][tag:sports]You must participate in an Olympic Sport.",
