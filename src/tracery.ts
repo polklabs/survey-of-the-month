@@ -19,7 +19,7 @@ export class Tracery {
 
     constructor(people: string[] = [], customSeed = '', questionOrigin = -1, typeFilter?: AnswerType, filterTags?: string[]) {
         this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
-        this.customDict['yearNow'] = [months[(new Date()).getFullYear()]];
+        this.customDict['yearNow'] = [(new Date()).getFullYear().toString()];
 
         this.seen = {};
         this.question.questionOrigin = questionOrigin;
