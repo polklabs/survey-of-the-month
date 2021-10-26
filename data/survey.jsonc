@@ -172,7 +172,9 @@
         "[type:multi][key:superpower]What would be the best superpower to have in #apocalypse.a# apocalypse?",
         "[type:multi][key:game_show]Which game show do you think ^$you:#person.capitalize#$ could last the longest on?",
         "[type:multi][key:topping]What is the best topping for #food#?",
-        "[type:text]#promptStart#"
+        "[type:text]#promptStart#",
+        "[type:multi][key:person]Who is most likely to give this excuse: \"#excuse#\"",
+        "[type:multi][key:excuse]#person.capitalize# can't make it, what excuse do they give?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -358,5 +360,19 @@
     ],
     "game_show": [
         "Jeopardy!", "Wheel of Fortune", "Family Feud", "Who Wants to Be a Millionaire", "Press Your Luck", "The Price Is Right", "Cash Cab", "Deal Or No Deal", "Are You Smarter Than A 5th Grader", "Survivor", "The Amazing Race", "Wipeout", "Fear Factor", "The Voice", "American Idol", "Master Chef", "The Great British Bake Off", "Taskmaster", "Hell's Kitchen", "RuPaul's Drag Race"
+    ],
+    
+    // Excuse Generator
+    "excuse": [
+        "#excuse_intro# #excuse_scapegoat# #excuse_delay#"
+    ]
+    "excuse_intro": [
+        "Sorry I can't come", "Please forgive my absence", "This is going to sound crazy but", "Get this:", "I can't go because", "I know you're going to hate me but", "I was minding my own business and boom!", "I feel terrible but", "I regretfully cannot attend,", "This is going to sound like an excuse but"
+    ],
+    "excuse_scapegoat": [
+        "my #relationship#", "the ghost of hitler", "the Pope", "my ex", "a high school marching band", "#character_actor#", "a sad clown", "the kid from #movie#", "a professional #olympicSport# team", "my tinder date"
+    ],
+    "excuse_delay": [
+        "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me syphilis", "poured #drink# in my gas tank", "stabbed me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on Instagram"
     ]
 }
