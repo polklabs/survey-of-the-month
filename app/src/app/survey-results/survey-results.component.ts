@@ -191,12 +191,15 @@ export class SurveyResultsComponent implements OnInit {
         this.surveyContainer.answers.forEach(answ => {
             const user = this.surveyContainer.survey.users.find(x => x._id === answ.userId);
             if (user) {
-                const qAnsw = answ.answers.find(x => x.questionId === question.questionId);
-                if (qAnsw) {
+                let answerValue = answ.answers.find(x => x.questionId === question.questionId)?.value;
+                if (question.answerType === 'rank') {
+                    answerValue ??= question.choices.map((x, i) => i);
+                }
+                if (answerValue) {
                     this.slide.push(new Slide({
                         itemType: question.answerType,
                         labels: question.useAnswerFormat ? [''] : this.choicesToString(question),
-                        text: this.answerToString(question, qAnsw.value, user.name),
+                        text: this.answerToString(question, answerValue, user.name),
                         name: user.name
                     }));
                     hasAnswers = true;

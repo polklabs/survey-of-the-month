@@ -45,7 +45,10 @@ export class CsvExportService {
         const answers = container.answers.find(x => x.userId === user._id);
 
         container.survey.questions.forEach(q => {
-            const a = answers?.answers.find(x => x.questionId === q.questionId);
+            let a = answers?.answers.find(x => x.questionId === q.questionId)?.value;
+            if (q.answerType === 'rank') {
+                a ??= q.choices.map((x, i) => i);
+            }
             if (a) {
                 toReturn.push(HelperService.answerToString(q, a.value).join(','));
             } else {
