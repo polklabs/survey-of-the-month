@@ -365,7 +365,7 @@
     // Excuse Generator
     "excuse": [
         "#excuse_intro# #excuse_scapegoat# #excuse_delay#"
-    ]
+    ],
     "excuse_intro": [
         "Sorry I can't come", "Please forgive my absence", "This is going to sound crazy but", "Get this:", "I can't go because", "I know you're going to hate me but", "I was minding my own business and boom!", "I feel terrible but", "I regretfully cannot attend,", "This is going to sound like an excuse but"
     ],
