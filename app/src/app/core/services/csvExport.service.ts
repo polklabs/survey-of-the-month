@@ -50,7 +50,7 @@ export class CsvExportService {
                 a ??= q.choices.map((x, i) => i);
             }
             if (a) {
-                toReturn.push(HelperService.answerToString(q, a.value).join(','));
+                toReturn.push(HelperService.answerToString(q, a).join(','));
             } else {
                 toReturn.push('');
             }
