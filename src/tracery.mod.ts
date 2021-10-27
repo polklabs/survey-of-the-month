@@ -69,6 +69,10 @@ export function ModString(value: string, mod: string, rng: any): string {
                     }
                 }
                 break;
+            case 'num':
+                const num1 = +value;
+                value = num1.toLocaleString('en-US');
+                break;
 
             // HTML Mods
             case 'html_i':
