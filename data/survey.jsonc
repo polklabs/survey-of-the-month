@@ -344,7 +344,7 @@
         "clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"
     ],
     "crush_reason": [
-        "#bodypart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"
+        "#bodyPart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodyPart#", "^$#trait_good#:#trait_bad#$ personality"
     ],
     "apocalypse": [
         "AI revolution", "zombie", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"
