@@ -1,0 +1,11 @@
+{
+    "promptStart": [
+        "[locationA:^$abandoned #promptLocation#:#promptLocation#$]You ^$wake up:find yourself$^$ alone: next to #person.capitalize#: next to #character#:$ in #locationA.a#. You're covered in #promptCover# and there seems to be a strange #color# mark on your #bodyPart#. You're wearing #clothing.a# and #clothing# and you find #adjective.a# #objectSmall# in your pocket.^$ Nearby is #objectLarge.a#.:$ What happened to you, how did you get here?"
+    ],
+    "promptLocation": [
+        "ditch", "park", "amusement park", "hunting cabin", "water park", "bowling alley", "factory", "#store#", "#houseType#"
+    ],
+    "promptCover": [
+        "blood", "dirt", "mud", "#topping#"
+    ]
+}

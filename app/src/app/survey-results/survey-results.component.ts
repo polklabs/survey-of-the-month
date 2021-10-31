@@ -191,12 +191,15 @@ export class SurveyResultsComponent implements OnInit {
         this.surveyContainer.answers.forEach(answ => {
             const user = this.surveyContainer.survey.users.find(x => x._id === answ.userId);
             if (user) {
-                const qAnsw = answ.answers.find(x => x.questionId === question.questionId);
-                if (qAnsw) {
+                let answerValue = answ.answers.find(x => x.questionId === question.questionId)?.value;
+                if (question.answerType === 'rank') {
+                    answerValue ??= question.choices.map((x, i) => i);
+                }
+                if (answerValue) {
                     this.slide.push(new Slide({
                         itemType: question.answerType,
                         labels: question.useAnswerFormat ? [''] : this.choicesToString(question),
-                        text: this.answerToString(question, qAnsw.value),
+                        text: this.answerToString(question, answerValue, user.name),
                         name: user.name
                     }));
                     hasAnswers = true;
@@ -278,9 +281,9 @@ export class SurveyResultsComponent implements OnInit {
         return HelperService.getAnswerTypeTextByIndex(this.surveyContainer, index);
     }
 
-    private answerToString(q: Question, answer: (null | string | number)[]): string[] {
+    private answerToString(q: Question, answer: (null | string | number)[], username: string): string[] {
         if (q.useAnswerFormat) {
-            return [HelperService.formatAnswer(q, answer)];
+            return [HelperService.formatAnswer(q, answer, username)];
         }
         return HelperService.answerToString(q, answer);
     }

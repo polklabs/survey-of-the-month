@@ -16,7 +16,7 @@
         "#answer_yes#", "#answer_mostlyYes#", "#answer_neutral#", "#answer_mostlyNo#", "#answer_no#"
     ],
     "answer_yes": [
-        "yes", "yeah", "yup", "yeppers", "ya", "definitely", "totally", "completely", "for sure"
+        "yes", "yeah", "yup", "yeppers", "ya", "definitely", "totally", "completely", "for sure", "[tag:nsfw]fuck yeah!"
     ],
     "answer_no": [
         "no", "nope", "nah", "definitely not", "never", "what kind of question is that"

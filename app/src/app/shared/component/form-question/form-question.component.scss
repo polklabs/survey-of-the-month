@@ -13,3 +13,12 @@ mat-card-content > p {
     width: 100%;
     height: auto;
 }
+
+.rarity-chip {
+    &:hover {
+        cursor: pointer;
+    }
+    color: black;
+    font-size: x-small;
+    padding: 2px 8px;
+}
