@@ -175,7 +175,7 @@
         "[type:text]#promptStart#",
         "[type:multi][key:person]Who is most likely to give this excuse: \"#excuse#\"",
         "[type:multi][key:excuse]#person.capitalize# can't make it, what excuse do they give?",
-        "[type:mulit][key:breedDog]What is the best type of dog^$: for #person.capitalize#$?",
+        "[type:multi][key:breedDog]What is the best type of dog^$: for #person.capitalize#$?",
         "[type:text]You have the power to turn one minor offense into a federal crime. What is it?",
         "[type:multi][key:character]Who would you not be suprised to find out was a serial killer?",
         "[type:text]If you could combine any two animals into a hybrid, what's the ^$scariest:funniest:weirdest:most alien:coolest$ combo you can think of?",
