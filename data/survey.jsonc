@@ -186,7 +186,8 @@
         "[type:text]What would you name your ^$boat:country:fortune 500 company:planet:religion:secret society:cult:son:daughter:reality tv show$ if you had one?",
         "[type:text]You can have $#1_10000000_100.range.num#, but your worst enemy gets $#1_10000000_100.range.num#. Would you accept it? Why? Why not?",
         "[type:text][tag:nsfw]Why are you single?",
-        "[type:text]What's your dog/cat doin?"
+        "[type:text]What's your dog/cat doin?",
+        "[type:text]Pick a song that everyone ^$on earth:taking this survey:in #country#:in #continent#:in #state#$ must listen to"
     ],
 
     /* Words ************************************************************************************************************************** */
