@@ -175,7 +175,7 @@
         "[type:text]#promptStart#",
         "[type:multi][key:person]Who is most likely to give this excuse: \"#excuse#\"",
         "[type:multi][key:excuse]#person.capitalize# can't make it, what excuse do they give?",
-        "[type:mulit][key:breedDog]What is the best type of dog^$: for #person.capitalize#$?",
+        "[type:multi][key:breedDog]What is the best type of dog^$: for #person.capitalize#$?",
         "[type:text]You have the power to turn one minor offense into a federal crime. What is it?",
         "[type:multi][key:character]Who would you not be suprised to find out was a serial killer?",
         "[type:text]If you could combine any two animals into a hybrid, what's the ^$scariest:funniest:weirdest:most alien:coolest$ combo you can think of?",
@@ -351,19 +351,19 @@
         "bedroom", "car", "kitchen", "shoes", "how they have their ^$tea:coffee$", "bookshelf", "closet", "pantry", "fridge", "bathroom sink"
     ],
     "word_definition": [
-        "The ^$desire:need$ to watch ^$#movie#:tv$ on repeat.", "An overwhelming ^$#trait_good#:#trait_bad#$ feeling, and ^$#trait_good#:#trait_bad#$ at the same time.", "The sudden need to #verb_transitive#"
+        "The ^$desire:need$ to watch ^$#movie#:#tv#$ on repeat.", "An overwhelming #trait# feeling, and #trait# at the same time.", "The sudden need to #verb_transitive#"
     ],
     "rpg_theme": [
         "bounty hunter", "space", "cyberpunk", "steampunk", "ghost hunter", "gangster", "heist", "pirate", "high fantasy", "modern fantasy", "monster hunter", "noir", "post apocalyptic", "sci-fi", "space opera", "spy", "space western", "time travel", "zombie"
     ],
     "superpower": [
-        "produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight"
+        "super #trait#", "produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight"
     ],
     "environmentType": [
         "clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"
     ],
     "crush_reason": [
-        "#bodypart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodypart#", "^$#trait_good#:#trait_bad#$ personality"
+        "#bodyPart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodyPart#", "^$#trait_good#:#trait_bad#$ personality"
     ],
     "apocalypse": [
         "AI revolution", "zombie", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"
