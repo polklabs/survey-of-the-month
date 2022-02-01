@@ -167,6 +167,7 @@ export class SurveyTakerComponent implements OnInit {
                 this.answer.answers[aIndex].value = $event;
             }
         }
+        this.dirty = true;
     }
 
     getAnswerLastModified(qId: string): string {
@@ -209,6 +210,7 @@ export class SurveyTakerComponent implements OnInit {
                             this.snackBar.open('Saved!', 'OK', { duration: 3000 });
                             this.answer = new Answer();
                             this.getAnswerStatus();
+                            this.dirty = false;
                         } else if (!data.ok) {
                             this.dialogService.error(data.error);
                         }
