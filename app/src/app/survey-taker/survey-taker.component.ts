@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DataService } from '../core/services/data.service';
@@ -8,13 +8,14 @@ import { Answer, AnswerStatus } from '../shared/model/answer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { APIData } from '../shared/model/api-data.model';
 import { SEOService } from '../core/services/seo.service';
+import { CanComponentDeactivate } from '../shared/guard/can-deactivate-guard.service';
 
 @Component({
     selector: 'app-survey-taker',
     templateUrl: './survey-taker.component.html',
     styleUrls: ['./survey-taker.component.scss']
 })
-export class SurveyTakerComponent implements OnInit {
+export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
 
     id = '';
     name = '';
@@ -39,6 +40,15 @@ export class SurveyTakerComponent implements OnInit {
         private seoService: SEOService,
     ) { }
 
+    @HostListener('window:beforeunload')
+    canDeactivate(internalNavigation: true | undefined): Observable<boolean> | boolean {
+        if (this.dirty) {
+            if (internalNavigation === undefined) { return false; }
+            return this.dialogService.confirm('Discard changes for Survey?');
+        }
+        return true;
+    }
+
     ngOnInit(): void {
         this.seoService.updateTitle('Survey - Survey OTM');
         this.activatedRoute.paramMap.subscribe(params => {
@@ -50,13 +60,6 @@ export class SurveyTakerComponent implements OnInit {
                 window.alert('No Survey!');
             }
         });
-    }
-
-    canDeactivate(): Observable<boolean> | boolean {
-        if (this.dirty) {
-            return this.dialogService.confirm('Discard changes for Survey?');
-        }
-        return true;
     }
 
     getSurvey(): void {

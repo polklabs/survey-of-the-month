@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import { AnswerType, Question } from '../../shared/model/question.model';
 import { Survey } from '../../shared/model/survey.model';
@@ -97,8 +97,10 @@ export class SurveyMakerComponent implements OnInit {
         });
     }
 
-    canDeactivate(): Observable<boolean> | boolean {
+    @HostListener('window:beforeunload')
+    canDeactivate(internalNavigation: true | undefined): Observable<boolean> | boolean {
         if (this.dirty) {
+            if (internalNavigation === undefined) { return false; }
             return this.dialogService.confirm('Discard changes to this Survey?');
         }
         return true;
