@@ -36,7 +36,7 @@
 
 <ng-template #textForm let-index="index">
     <div *ngIf="slide[index].visible" [@listAnimation]="slide[index].text.length">
-        <div *ngFor="let text of slide[index].text" [innerHTML]="text">
+        <div style="white-space: pre-wrap;" *ngFor="let text of slide[index].text" [innerHTML]="text">
         </div>
     </div>
 </ng-template>
@@ -45,7 +45,7 @@
     <div *ngIf="slide[index].visible" [@slideDownInOut]>
         <mat-card>
             <mat-card-subtitle>{{getAnswerTypeText(slideNum)}}</mat-card-subtitle>
-            <div [innerHTML]="slide[index].text"></div>
+            <div style="white-space: pre-wrap;" [innerHTML]="slide[index].text"></div>
         </mat-card>
     </div>
 </ng-template>
@@ -59,7 +59,7 @@
                     <table>
                         <tr *ngFor="let text of slide[index].text; let i = index;">
                             <td>{{getChoiceText(slide[index].labels, i)}}</td>
-                            <td><span [innerHTML]="text"></span></td>
+                            <td style="white-space: pre-wrap;"><span [innerHTML]="text"></span></td>
                         </tr>
                     </table>
                 </div>
