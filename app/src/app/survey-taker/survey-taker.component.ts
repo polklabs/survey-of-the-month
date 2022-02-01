@@ -175,10 +175,10 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
 
     getAnswerLastModified(qId: string): string {
         const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
-        if (!a) { return 'Not Answered'; }
+        if (!a) { return 'Not Yet Answered'; }
 
         const aStatus = a.answered.find(x => x.questionId === qId);
-        if (!aStatus) { return 'Not Answered'; }
+        if (!aStatus) { return 'Not Yet Answered'; }
 
         const date = new Date(aStatus.lastModifiedDate);
 
