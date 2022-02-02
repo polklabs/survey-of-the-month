@@ -135,6 +135,17 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
         return 'Update';
     }
 
+    getStartButtonTextColor(count: number): string {
+        const total = this.survey?.questions.length ?? 0;
+        if (count === 0) {
+            return 'primary';
+        }
+        if (count < total) {
+            return 'accent';
+        }
+        return '';
+    }
+
     selectUser(userId: string, name: string): void {
         this.dialogService.yesNo(`Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nAre you "${name}"?`).subscribe(
             ok => {
