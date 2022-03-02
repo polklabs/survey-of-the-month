@@ -185,6 +185,11 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     getAnswerLastModified(qId: string): string {
+
+        if (this.answer.answers.find(x => x.questionId === qId)) {
+            return 'Pending Submit';
+        }
+
         const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
         if (!a) { return 'Not Yet Answered'; }
 
@@ -242,5 +247,24 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
 
     beginPresentation(): void {
         this.router.navigateByUrl(`/results/${this.id}`);
+    }
+
+    getQColor(qId: string): string {
+
+        if (this.answer.answers.find(x => x.questionId === qId)) {
+            return 'aqua';
+        }
+
+        const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
+        if (a && a.count === 0) {
+            return 'grey';
+        }
+
+        if (!a) { return 'orange'; }
+
+        const aStatus = a.answered.find(x => x.questionId === qId);
+        if (!aStatus) { return 'orange'; }
+
+        return 'forestgreen';
     }
 }
