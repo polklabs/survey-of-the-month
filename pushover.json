@@ -1,0 +1,7 @@
+{
+    "token": "",
+    "user": "",
+    "onNewSurvey": false,
+    "onAnswerSubmit": false,
+    "onSurveyDelete": false
+}

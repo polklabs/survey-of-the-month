@@ -6,6 +6,7 @@ import { SurveyContainer } from '../app/src/app/shared/model/survey-container.mo
 import { Answer, AnswerStatus } from '../app/src/app/shared/model/answer.model';
 import { response } from '../server';
 import { SendEmail, SendSurveyEmail } from './email';
+import { sendAnswerSubmitMsg, sendNewSurveyMsg, sendSurveyDeleteMsg } from './pushover';
 
 // Initialize connection to counchDB ----------------------------------
 const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
@@ -85,6 +86,7 @@ function insertSurvey(survey: Survey, req: any, res: response): void {
 
     couch.insert('survey', container).then(({ data }) => {
         res.json({ ...data, key: container.key });
+        sendNewSurveyMsg(survey.name);
     }, (error: any) => {
         res.json({ ok: false, error });
     });
@@ -163,6 +165,7 @@ export function deleteSurvey(id: string, key: string, res: response): void {
 
             couch.del('survey', id, data._rev).then(() => {
                 res.json({ ok: true });
+                sendSurveyDeleteMsg(data.survey.name);
             }, (error: any) => {
                 res.json({ ok: false, error });
             });
@@ -226,8 +229,12 @@ export function submitAnswers(id: string, answer: Answer, res: response): void {
             });
         }
 
+        const surveyName = data.survey.name;
+        const person = data.survey.users.find(x => x._id === answer.userId)?.name ?? 'Unknown';
+
         couch.update('survey', data).then(({ data }) => {
             res.json(data);
+            sendAnswerSubmitMsg(person, surveyName);
         }, (error: any) => {
             res.json({ ok: false, error });
         });
