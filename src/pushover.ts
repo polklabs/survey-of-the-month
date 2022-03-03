@@ -4,11 +4,11 @@ import request from 'request';
 LoadSettings();
 
 var pushoverURL = 'https://api.pushover.net/1/messages.json';
-var token = '';
-var user = '';
-var onNewSurvey = false;
-var onAnswerSubmit = false;
-var onSurveyDelete = false;
+var token: string;
+var user: string;
+var onNewSurvey: boolean;
+var onAnswerSubmit: boolean;
+var onSurveyDelete: boolean;
 
 function LoadSettings(): void {
     const pushoverSettings = JSON.parse(fs.readFileSync(`./pushover.json`,
@@ -21,19 +21,19 @@ function LoadSettings(): void {
 }
 
 export function sendNewSurveyMsg(surveyTitle: string) {
-    if (onNewSurvey) {
+    if (onNewSurvey === true) {
         sendMsg(`Survey '${surveyTitle}' was created`, `New Survey Created`);
     }
 }
 
 export function sendAnswerSubmitMsg(person: string, survey: string) {
-    if (onAnswerSubmit) {
-        sendMsg(`${person} has submitted answers for ${survey}`, `New Answers Submitted`);
+    if (onAnswerSubmit === true) {
+        sendMsg(`'${person}' has submitted answers for '${survey}'`, `New Answers Submitted`);
     }
 }
 
 export function sendSurveyDeleteMsg(surveyTitle: string) {
-    if (onSurveyDelete) {
+    if (onSurveyDelete === true) {
         sendMsg(`Survey '${surveyTitle}' was deleted`, `Survey Deleted`);
     }
 }
