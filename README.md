@@ -70,3 +70,6 @@ Run `node server.bundle.js`
 Run `npm install -g gulp`
 
 Run `gulp` for building server and client 
+
+### Git
+`git update-index --assume-unchanged FILE.EXT`
