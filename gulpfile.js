@@ -17,6 +17,7 @@ const paths = {
     tracery_dist: 'prod-build/data',
     email_json: 'email.json',
     couchDb_json: 'couchDB.json',
+    pushover_json: 'pushover.json'
 };
 
 function clean() {
@@ -75,6 +76,12 @@ function copyCouchDbConfig() {
         .pipe(dest(`${paths.prod_build}`));
 }
 
+function copyPushoverConfig() {
+    log('copying pushover config')
+    return src(`${paths.pushover_json}`)
+        .pipe(dest(`${paths.prod_build}`));
+}
+
 function zippingTask() {
     log('zipping the code ')
     return src(`${paths.prod_build}/**`)
@@ -87,6 +94,6 @@ exports.default = series(
     clean,
     createProdBuildFolder,
     buildAngularCodeTask,
-    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask, copyEmailConfig, copyCouchDbConfig),
+    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask, copyEmailConfig, copyCouchDbConfig, copyPushoverConfig),
     // zippingTask
 );
