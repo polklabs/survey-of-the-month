@@ -53,3 +53,18 @@ mat-card {
 .action-divider {
     margin: 8px 0 16px !important;
 }
+
+a.manage-link:visited, a.manage-link {
+    color: white !important;
+    &:hover {
+        color: #ffd740 !important;
+    }
+}
+
+.manager-link {
+    filter: blur(3px);
+    transition: filter 0.5s;
+    &:hover {
+        filter: blur(0px);
+    }
+}

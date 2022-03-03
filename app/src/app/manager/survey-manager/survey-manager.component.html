@@ -49,8 +49,8 @@
 
                 <p style="height: 34px;">This is the link to managing your survey and retreiving answers. Do <span
                         style="color:crimson">NOT</span> lose it or share it.</p>
-                <div fxLayout="row" class="link-box" fxLayout="center center">
-                    <p fxFlex>{{managerLink}}</p>
+                <div fxLayout="row" class="link-box manager-link" fxLayout="center center">
+                    <a fxFlex class="manage-link" [href]="managerLink" target="_blank">{{managerLink}}</a>
                     <button mat-icon-button (click)="copyLink(managerLink, true)" matTooltip="Copy">
                         <mat-icon>content_copy</mat-icon>
                     </button>
@@ -68,7 +68,7 @@
 
                 <p style="height: 34px;">Share this link with others so they can take your survey.</p>
                 <div fxLayout="row" class="link-box" fxLayout="center center">
-                    <p fxFlex>{{shareLink}}</p>
+                    <a fxFlex class="manage-link" [href]="shareLink" target="_blank">{{shareLink}}</a>
                     <button mat-icon-button (click)="copyLink(shareLink, false)" matTooltip="Copy">
                         <mat-icon>content_copy</mat-icon>
                     </button>
