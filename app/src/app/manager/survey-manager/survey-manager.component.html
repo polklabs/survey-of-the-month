@@ -126,7 +126,7 @@
                     <button fxFlex mat-raised-button *ngIf="!resultsRequireKey()" (click)="saveResultsRequireKey(true)">Unrelease Presentation</button>
                     <mat-icon color="accent" class="help-icon" matTooltip="You can release the survey results to anyone with a sharable link. Allowing them to view the results of their own accord without you needing to share/expose a management link">help</mat-icon>
                 </div>
-                <a mat-raised-button download="{{exportFilename}}" [href]="exportData" _target="blank">Export Answers To .csv (Excel)</a>
+                <button mat-raised-button (click)="openExportDialog()">Export Answers To .csv (Excel)</button>
 
                 <mat-divider class="action-divider" [inset]="true"></mat-divider>
 

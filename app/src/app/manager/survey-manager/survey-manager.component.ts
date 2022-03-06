@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { SEOService } from 'src/app/core/services/seo.service';
-import { CsvExportService } from '../../core/services/csvExport.service';
 import { DataService } from '../../core/services/data.service';
 import { DialogService } from '../../core/services/dialog.service';
 import { LocalStorageService } from '../../core/services/local-storage.service';
@@ -14,6 +13,7 @@ import { APIData } from '../../shared/model/api-data.model';
 import { AnswerType } from '../../shared/model/question.model';
 import { SurveyContainer } from '../../shared/model/survey-container.model';
 import { Survey } from '../../shared/model/survey.model';
+import { ExportSurveyComponent } from '../export-survey/export-survey.component';
 
 @Component({
     selector: 'app-survey-manager',
@@ -33,20 +33,16 @@ export class SurveyManagerComponent implements OnInit {
     managerLink = '';
     shareLink = '';
 
-    exportData: SafeResourceUrl = '';
-    exportFilename = '';
-
     constructor(
-        private csvExport: CsvExportService,
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
         private router: Router,
         private localStorageService: LocalStorageService,
         private dialogService: DialogService,
-        private sanitizer: DomSanitizer,
         private analytics: AnalyticsService,
         private seoService: SEOService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -82,9 +78,6 @@ export class SurveyManagerComponent implements OnInit {
                     if (!this.surveyContainer) { throw Error('Survey is undefined'); }
                     this.getAnswerStatus();
 
-                    this.exportData = this.sanitizer.bypassSecurityTrustUrl(this.csvExport.export(this.surveyContainer));
-                    this.exportFilename = this.csvExport.exportName(this.surveyContainer);
-
                     this.localStorageService.addSurvey(this.surveyContainer.survey.name, this.id, this.key);
                     this.hasData = true;
                     this.seoService.updateTitle(`${this.surveyContainer.survey.name} - Survey OTM`);
@@ -92,7 +85,7 @@ export class SurveyManagerComponent implements OnInit {
             } else {
                 if (data.error!.code === 'EDOCMISSING') {
                     this.dialogService.confirm(`Could not find survey: ${data.error!.body.reason}\n\nDo you want to remove this survey from the survey dropdown?`).subscribe(
-                        ok =>  {
+                        ok => {
                             if (ok) {
                                 this.localStorageService.delSurvey(this.id);
                             }
@@ -101,7 +94,7 @@ export class SurveyManagerComponent implements OnInit {
                     );
                 } else if (data.error!.code === 'KEY') {
                     this.dialogService.confirm(`The url you entered is Incorrect\n\nDo you want to remove this survey from the survey dropdown?`).subscribe(
-                        ok =>  {
+                        ok => {
                             if (ok) {
                                 this.localStorageService.delSurvey(this.id);
                             }
@@ -183,6 +176,14 @@ export class SurveyManagerComponent implements OnInit {
 
     getSurveyName(): string {
         return this.surveyContainer?.survey.name ?? '{Unknown}';
+    }
+
+    openExportDialog(): void {
+        this.dialog.open(ExportSurveyComponent, {
+            width: '350px',
+            height: 'auto',
+            data: { container: this.surveyContainer },
+        });
     }
 
     // Survey Presentation -----------------------------------------------------

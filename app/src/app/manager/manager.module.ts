@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SurveyMakerComponent } from './survey-maker/survey-maker.component';
 import { SurveyManagerComponent } from './survey-manager/survey-manager.component';
 import { CanDeactivateGuard } from '../shared/guard/can-deactivate-guard.service';
+import { ExportLinkDialogComponent, ExportSurveyComponent } from './export-survey/export-survey.component';
 
 const routes: Routes = [
     {
@@ -32,7 +33,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     SurveyMakerComponent,
-    SurveyManagerComponent
+    SurveyManagerComponent,
+    ExportSurveyComponent,
+    ExportLinkDialogComponent
   ],
   imports: [
     CommonModule,

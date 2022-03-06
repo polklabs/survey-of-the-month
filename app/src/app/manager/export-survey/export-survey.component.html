@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Export Answers To .csv (Excel)</h1>
+<div mat-dialog-content fxLayout="column" fxLayoutGap="16px">
+    <mat-divider></mat-divider>
+    <mat-checkbox [(ngModel)]="showUsers">Show Users</mat-checkbox>
+    <mat-divider></mat-divider>
+    <mat-checkbox *ngFor="let q of qList; let i = index" [(ngModel)]="q.include">{{i+1}}. {{q.text}}</mat-checkbox>
+    <mat-divider></mat-divider>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end">
+    <button mat-button (click)="onClose()">Cancel</button>
+    <button mat-button (click)="export()">Export</button>
+</div>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Question } from 'src/app/shared/model/question.model';
 import { SurveyContainer } from 'src/app/shared/model/survey-container.model';
 import { HelperService } from './helperService.service';
 
@@ -8,20 +7,24 @@ import { HelperService } from './helperService.service';
 })
 export class CsvExportService {
 
-    export(container: SurveyContainer): string {
+    export(container: SurveyContainer, showUsers = true, includeQIds: string[] = []): string {
 
         const contentsArray: string[] = [];
-        contentsArray.push(this.generateHeader(container));
+        contentsArray.push(this.generateHeader(container, includeQIds));
 
-        container.survey.users.sort((a, b) => a.name.localeCompare(b.name));
+        if (showUsers) {
+            container.survey.users.sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+            HelperService.SHUFFLE(container.survey.users);
+        }
         container.survey.users.forEach(u => {
-            contentsArray.push(this.generateRow(container, u));
+            contentsArray.push(this.generateRow(container, u, showUsers, includeQIds));
         });
 
         const fileContents = contentsArray.join('\n');
 
         const filetype = 'text/csv;charset=utf-8;';
-        const data = new Blob([fileContents], {type: filetype});
+        const data = new Blob([fileContents], { type: filetype });
         const textFile = window.URL.createObjectURL(data);
         return textFile;
     }
@@ -30,21 +33,28 @@ export class CsvExportService {
         return `survey_${container.survey.name.replace(/[^\x00-\x7F]/g, '')}.csv`;
     }
 
-    private generateHeader(container: SurveyContainer): string {
+    private generateHeader(container: SurveyContainer, includeQIds: string[]): string {
         const toReturn: string[] = ['name'];
 
-        container.survey.questions.forEach((_, index) => {
+        container.survey.questions.forEach((q, index) => {
+            if (!includeQIds.includes(q.questionId)) {
+                return;
+            }
             toReturn.push(`Question ${index + 1}`);
         });
 
         return toReturn.join(',');
     }
 
-    private generateRow(container: SurveyContainer, user: { name: string, _id: string }): string {
-        const toReturn: string[] = [user.name];
+    private generateRow(container: SurveyContainer, user: { name: string, _id: string },
+                        showUsers: boolean, includeQIds: string[]): string {
+        const toReturn: string[] = showUsers ? [user.name] : ['Unknown'];
         const answers = container.answers.find(x => x.userId === user._id);
 
         container.survey.questions.forEach(q => {
+            if (!includeQIds.includes(q.questionId)) {
+                return;
+            }
             let a = answers?.answers.find(x => x.questionId === q.questionId)?.value;
             if (q.answerType === 'rank') {
                 a ??= q.choices.map((x, i) => i);
