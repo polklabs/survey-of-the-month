@@ -43,10 +43,10 @@
         <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
     </mat-card-content>
 
-    <ng-container *ngIf="(!editable && !basicEdit) || dirty">
+    <ng-container *ngIf="(!editable && !basicEdit && (question.answerCount > 0)) || dirty">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
         <mat-card-actions fxLayoutGap="8px" fxLayout="row">
-            <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty">
+            <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty" tabindex="-1">
                 Clear
             </button>
         </mat-card-actions>

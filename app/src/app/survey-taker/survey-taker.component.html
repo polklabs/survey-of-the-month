@@ -61,7 +61,7 @@
             
             <!-- Questions -->
             <div *ngFor="let question of survey.questions; let i = index" style="margin-bottom: 32px;">
-                <div [ngStyle]="{color: getQColor(question.questionId)}">{{getAnswerLastModified(question.questionId)}}</div>
+                <div *ngIf="question.answerCount > 0" [ngStyle]="{color: getQColor(question.questionId)}">{{getAnswerLastModified(question.questionId)}}</div>
                 <app-form-question [question]="question" [editable]="false" [questionNumber]="(i+1).toString()"
                     (aUpdate)="updateAnswer(i, $event)" [ngStyle]="{border: 'solid 2px ' + getQColor(question.questionId)}" style="display: block; border-radius: 4px;">
                 </app-form-question>

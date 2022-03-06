@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { APIData } from '../shared/model/api-data.model';
 import { SEOService } from '../core/services/seo.service';
 import { CanComponentDeactivate } from '../shared/guard/can-deactivate-guard.service';
+import { Question } from '../shared/model/question.model';
 
 @Component({
     selector: 'app-survey-taker',
@@ -30,6 +31,8 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     dirty = false;
 
     submitted = false;
+
+    totalQuestions = 0;
 
     constructor(
         private dialogService: DialogService,
@@ -72,6 +75,7 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
                 this.seoService.updateTitle(`${this.survey?.name ?? 'Survey'} - Survey OTM`);
                 this.getAnswerStatus();
                 this.getReleaseStatus();
+                this.totalQuestions = this.survey?.questions.filter(q => q.answerCount > 0).length ?? 0;
             } else {
                 this.dialogService.error(data.error);
             }
@@ -103,44 +107,40 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     getStatus(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
         if (count === 0) {
             return 'Not Started';
         }
-        if (count < total) {
-            return `${Math.round((count / total) * 100)}%`;
+        if (count < this.totalQuestions) {
+            return `${Math.round((count / this.totalQuestions) * 100)}%`;
         }
         return 'Completed';
     }
 
     getStatusColor(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
         if (count === 0) {
             return 'lightcoral';
         }
-        if (count < total) {
+        if (count < this.totalQuestions) {
             return `orange`;
         }
         return 'lime';
     }
 
     getStartButtonText(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
         if (count === 0) {
             return 'Start';
         }
-        if (count < total) {
+        if (count < this.totalQuestions) {
             return 'Continue';
         }
         return 'Update';
     }
 
     getStartButtonTextColor(count: number): string {
-        const total = this.survey?.questions.length ?? 0;
         if (count === 0) {
             return 'primary';
         }
-        if (count < total) {
+        if (count < this.totalQuestions) {
             return 'accent';
         }
         return '';

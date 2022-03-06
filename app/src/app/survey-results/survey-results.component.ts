@@ -207,7 +207,9 @@ export class SurveyResultsComponent implements OnInit {
             }
         });
         if (!hasAnswers) {
-            this.slide.push(new Slide({ text: [`<h2 class="center">No One Answered This Question</h2>`] }));
+            if (question.answerCount > 0) {
+                this.slide.push(new Slide({ text: [`<h2 class="center">No One Answered This Question</h2>`] }));
+            }
         }
         this.postLoadSlide();
     }

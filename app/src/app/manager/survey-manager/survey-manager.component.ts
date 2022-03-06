@@ -33,6 +33,8 @@ export class SurveyManagerComponent implements OnInit {
     managerLink = '';
     shareLink = '';
 
+    totalQuestions = 0;
+
     constructor(
         private dataService: DataService,
         private activatedRoute: ActivatedRoute,
@@ -76,6 +78,7 @@ export class SurveyManagerComponent implements OnInit {
                 if (data.data) {
                     this.surveyContainer = data.data;
                     if (!this.surveyContainer) { throw Error('Survey is undefined'); }
+                    this.totalQuestions = this.surveyContainer.survey.questions.filter(q => q.answerCount > 0).length ?? 0;
                     this.getAnswerStatus();
 
                     this.localStorageService.addSurvey(this.surveyContainer.survey.name, this.id, this.key);
@@ -230,22 +233,20 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     getStatus(count: number): string {
-        const total = this.surveyContainer?.survey.questions.length ?? 0;
         if (count === 0) {
             return 'Not Started';
         }
-        if (count < total) {
-            return `${Math.round((count / total) * 100)}%`;
+        if (count < this.totalQuestions) {
+            return `${Math.round((count / this.totalQuestions) * 100)}%`;
         }
         return 'Completed';
     }
 
     getStatusColor(count: number): string {
-        const total = this.surveyContainer?.survey.questions.length ?? 0;
         if (count === 0) {
             return 'lightcoral';
         }
-        if (count < total) {
+        if (count < this.totalQuestions) {
             return `orange`;
         }
         return 'lime';
