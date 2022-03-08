@@ -32,6 +32,9 @@
     "movie_other": [
         "Star Wars", "Star Trek", "Harry Potter", "The Lord of the Rings", "Terminator", "Pirates of the Caribbean", "Chronicles of Narnia", "Ghostbusters", "Hunger Games", "Indiana Jones", "Studio Ghibli", "Transformers", "X-Men", "Avatar", "High School Musical", "Spy Kids", "Coraline", "Secret Life of Walter Mitty", "Chicken Little", "Narnia", "Cloudy With A Chance Of Meatballs", "Godzilla", "Dune", "Total Recall", "Blade Runner", "Pride & Prejudice"
     ],
+    "movie_addition": [
+        "dinosaurs", "robots", "aliens", "cowboys", "musical numbers", "cell phones", "magic", "guns", "ghosts", "time travel"
+    ],
     /* ******************************************************************************************************************************** */
 
     /* TV ***************************************************************************************************************************** */

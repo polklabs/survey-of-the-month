@@ -22,7 +22,8 @@
     "intro_question": [
         "[type:text]How are you doing this fine day of #monthNow#?",
         "[type:multi][key:allAnswers][count:-1]Are you excited to take this survey?",
-        "[type:text]How is #yearNow# treating you so far?"
+        "[type:text]How is #yearNow# treating you so far?",
+        "[type:text]What the most exciting thing that happened to you this #timeRange#?"
     ],
 
     // Simple question for end of survey
@@ -32,7 +33,8 @@
         "[type:text]Anything ~scandalous~ to share?",
         "[type:multi][key:allAnswers][count:-1]Did you enjoy this survey?",
         "[type:text]If you have a question you want on the next survey, you may write it below",
-        "[type:text]Tell me something you really like about one other person taking this survey"
+        "[type:text]Tell me something you really like about one other person taking this survey",
+        "[type:text]What is something you're looking forward to next #timeRange#?"
     ],
 
     // Base Questions ---------------------------------------------------------------------------------------------------------
@@ -140,6 +142,7 @@
         "[type:text]You got #objectSmall.a# in your hand, what do you do with it?",
         "[type:multi][key:generalReaction]Didn't you hear!? They're remaking #world# and getting #character_actor# to play the lead!",
         "[type:multi][key:person][count:-1]Who would send you the following text: #emoji_combo#",
+        "[type:text]What is your favorite emoji?",
         "[type:multi][key:emoji_combo]Choose one to send to #person.capitalize#",
         "[type:multi][key:emoji_combo]How are you feeling right now?",
         "[type:text]#^$animal:mythical_creature:living_thing$.a.capitalize# is running toward you at full speed, all you have is #objectSmall.a#. What do you do?",
@@ -187,7 +190,14 @@
         "[type:text]You can have $#1_10000000_100.range.num#, but your worst enemy gets $#1_10000000_100.range.num#. Would you accept it? Why? Why not?",
         "[type:text][tag:nsfw]Why are you single?",
         "[type:text]What's your dog/cat doin?",
-        "[type:text]Pick a song that everyone ^$on earth:taking this survey:in #country#:in #continent#:in #state#$ must listen to"
+        "[type:text]Pick a song that everyone ^$on earth:taking this survey:in #country#:in #continent#:in #state#$ must listen to",
+        "[type:text]What movie would be 10x better with the addition of #trait# #movie_addition#?",
+        "[type:multi][answ0001:Ghostbusters][key:answ0001][count:1]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, spector, or ghost? Who you gonna call?",
+        "[type:text]If you could build a monument, what and where would you build?",
+        "[type:text]In #5_60_5.range# minutes, you^$: and everything you're holding$ will be teleported to the middle of nowhere in ^$#country#:#continent#:#state#$. How will you prepare?",
+        "[type:text]What ^$video game:movie:book:tv show$ would you like to make?",
+        "[type:text]What's your favorite ^$pick-up line:joke$?",
+        "[type:text]What company would you start if you had $50,000?"
     ],
 
     /* Words ************************************************************************************************************************** */
