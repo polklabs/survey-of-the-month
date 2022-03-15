@@ -259,7 +259,7 @@ export function findSurveys(email: string, req: any, res: response): void {
     couch.mango('survey', query, {}).then(({ data }) => {
 
         const subject = `Survey Of The Month - Link Retrieval`;
-        let text = `Here are the survey link I could find matching your email\n\n`;
+        let text = `Here are the survey links I could find matching your email\n\n`;
 
         if (data.docs.length <= 0) {
             res.json({ ok: false, error: { code: 'EMPTYDOC', body: { error: '', reason: 'No surveys found.' } } })
