@@ -1,34 +1,44 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-
-declare var gtag: any;
+import { BehaviorSubject } from 'rxjs';
+import { APIData } from 'src/app/shared/model/api-data.model';
+import { Stats } from 'src/app/shared/model/stats.model';
+import { DataService } from './data.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AnalyticsService {
 
-    constructor(
-        router: Router
-    ) {
-        router.events.subscribe((e: any) => {
-            if (e instanceof NavigationEnd) {
-                if (environment.production) {
-                    gtag('config', 'G-K9T7TYVBP7', {page_path: e.urlAfterRedirects});
-                }
+    stats?: Stats;
+    stats$ = new BehaviorSubject<Stats | undefined>(undefined);
+
+    constructor(private dataService: DataService) {
+        this.getStats();
+        setInterval(() => {
+            this.getStats();
+        }, 10000);
+    }
+
+    getStats(): void {
+        const [result, _] = this.dataService.getData('stats');
+        result.subscribe((data: APIData) => {
+            if (data.ok) {
+                if (!data.data) { throw Error('Data is null'); }
+                this.stats = data.data;
+                this.stats$.next(this.stats);
             }
         });
     }
 
-    public triggerEvent(category: string, action: string, label = '', value = 1): void {
-        if (environment.production) {
-            gtag('event', 'click', {
-                eventCategory: category,
-                eventAction: action,
-                eventLabel: label,
-                eventValue: value});
-        }
+    updateStats(unique: boolean): void {
+        const [result, _] = this.dataService.getData(`visitor?unique=${unique}`);
+        result.subscribe((data: APIData) => {
+            if (data.ok) {
+                if (!data.data) { throw Error('Data is null'); }
+                this.stats = data.data;
+                this.stats$.next(this.stats);
+            }
+        });
     }
 
 }

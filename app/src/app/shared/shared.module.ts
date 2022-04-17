@@ -17,6 +17,7 @@ import { CanDeactivateGuard } from './guard/can-deactivate-guard.service';
 import { ConfirmDialogComponent } from './modal/confirm-dialog/confirm-dialog.component';
 import { TagsComponent } from './component/tags/tags.component';
 import { HelpButtonsComponent } from './modal/help-buttons/help-buttons.component';
+import { VarDirective } from './directive/var.directive';
 
 @NgModule({
     declarations: [
@@ -34,12 +35,14 @@ import { HelpButtonsComponent } from './modal/help-buttons/help-buttons.componen
         ConfirmDialogComponent,
         TagsComponent,
         HelpButtonsComponent,
+        VarDirective,
     ],
     exports: [
         FormTextComponent,
         TextBoxComponent,
         FormQuestionComponent,
-        TagsComponent
+        TagsComponent,
+        VarDirective
     ],
     imports: [
         CommonModule,

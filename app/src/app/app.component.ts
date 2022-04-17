@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AnalyticsService } from './core/services/analytics.service';
 import { DataService } from './core/services/data.service';
 import { DialogService } from './core/services/dialog.service';
 import { LocalStorageService } from './core/services/local-storage.service';
@@ -20,13 +21,16 @@ export class AppComponent implements OnInit {
 
     availableSurveys: SurveysStorage[] = [];
 
+    stats$ = this.analytics.stats$;
+
     constructor(
         iconRegistry: MatIconRegistry,
         sanitizer: DomSanitizer,
         private localStorageService: LocalStorageService,
         private dataService: DataService,
         private snackBar: MatSnackBar,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private analytics: AnalyticsService,
     ) {
         iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/github-circle-white-transparent.svg'));
     }
@@ -38,6 +42,8 @@ export class AppComponent implements OnInit {
                 this.availableSurveys.sort((a, b) => a.name.localeCompare(b.name));
             }
         );
+
+        this.analytics.updateStats(!this.localStorageService.getVisited());
 
         setTimeout(() => {
             if (!this.localStorageService.getVisited()) {

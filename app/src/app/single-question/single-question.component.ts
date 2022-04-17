@@ -50,22 +50,18 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     getQuestion(): void {
-        this.analytics.triggerEvent('SingleQ', 'NewQuestion', 'New Question Button');
         this.callApi('question', { users: this.users, filterTags: this.filterTags });
     }
 
     updateChoices(): void {
-        this.analytics.triggerEvent('SingleQ', 'NewAnswers', 'New Answers Button');
         this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1, filterTags: this.filterTags });
     }
 
     updateQuestion(): void {
-        this.analytics.triggerEvent('SingleQ', 'QuestionVariation', 'Question Variation Button');
         this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin, filterTags: this.filterTags });
     }
 
     seedQuestion(): void {
-        this.analytics.triggerEvent('SingleQ', 'Seed', 'Seed Button');
         this.dialogService.textInput(
             'Enter the question # or a random value',
             'Seed',

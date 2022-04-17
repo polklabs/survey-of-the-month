@@ -1,50 +1,71 @@
-<mat-toolbar color="primary">
-    <div class="header-title">
-        <div fxHide.lt-sm>
-            <button mat-button routerLink="/home" style="margin-right: 16px;"><mat-icon>poll</mat-icon> Survey Of The Month</button>
-            <button mat-button routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
-            <button mat-button [mat-menu-trigger-for]="manageMenu">Create/Manage <mat-icon>arrow_drop_down</mat-icon></button>
-            <button mat-button (click)="openFeedback()">Feedback</button>
-        </div>
-        <div fxHide.gt-xs>
-            <button mat-button [mat-menu-trigger-for]="menu"><mat-icon>poll</mat-icon> Survey Of The Month <mat-icon>arrow_drop_down</mat-icon></button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
-                <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
-                <button mat-menu-item (click)="openFeedback()">Feedback</button>
+<div fxLayout="column">
+    <mat-toolbar color="primary">
+        <div class="header-title">
+            <div fxHide.lt-sm>
+                <button mat-button routerLink="/home" style="margin-right: 16px;"><mat-icon>poll</mat-icon> Survey Of The Month</button>
+                <button mat-button routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
+                <button mat-button [mat-menu-trigger-for]="manageMenu">Create/Manage <mat-icon>arrow_drop_down</mat-icon></button>
+                <button mat-button (click)="openFeedback()">Feedback</button>
+            </div>
+            <div fxHide.gt-xs>
+                <button mat-button [mat-menu-trigger-for]="menu"><mat-icon>poll</mat-icon> Survey Of The Month <mat-icon>arrow_drop_down</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
+                    <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
+                    <button mat-menu-item (click)="openFeedback()">Feedback</button>
+                </mat-menu>
+            </div>
+
+            <mat-menu #manageMenu="matMenu">
+                <span *ngIf="availableSurveys.length > 0" class="grouping-item">Your Surveys</span>
+                <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage/'+survey.id+'/'+survey.key">{{survey.name}}</button>
+                <span *ngIf="availableSurveys.length > 0" class="grouping-item">Options</span>
+                <button mat-menu-item routerLink="/manage/make"><mat-icon>add</mat-icon>Create</button>
+                <button mat-menu-item (click)="lostLink()"><mat-icon>search</mat-icon>Lost Link</button>
             </mat-menu>
         </div>
 
-        <mat-menu #manageMenu="matMenu">
-            <span *ngIf="availableSurveys.length > 0" class="grouping-item">Your Surveys</span>
-            <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage/'+survey.id+'/'+survey.key">{{survey.name}}</button>
-            <span *ngIf="availableSurveys.length > 0" class="grouping-item">Options</span>
-            <button mat-menu-item routerLink="/manage/make"><mat-icon>add</mat-icon>Create</button>
-            <button mat-menu-item (click)="lostLink()"><mat-icon>search</mat-icon>Lost Link</button>
-        </mat-menu>
+        <span class="header-spacer"></span>
+
+        <a mat-icon-button href="https://github.com/polklabs/survey-of-the-month/wiki" target="_blank" rel="noreferrer"
+            aria-label="Wiki" aria-disabled="false" matTooltip="Wiki">
+            <mat-icon>help_center</mat-icon>
+        </a>
+        <a mat-icon-button href="https://github.com/polklabs/survey-of-the-month" target="_blank" rel="noreferrer" aria-label="GitHub Repository"
+            aria-disabled="false" matTooltip="GitHub Repository">
+            <mat-icon svgIcon="github"></mat-icon>
+        </a>
+
+    </mat-toolbar>
+
+    <div class="base-survey-container">
+        <router-outlet></router-outlet>
     </div>
 
-    <span class="header-spacer"></span>
-
-    <a mat-icon-button href="https://github.com/polklabs/survey-of-the-month/wiki" target="_blank" rel="noreferrer"
-        aria-label="Wiki" aria-disabled="false" matTooltip="Wiki">
-        <mat-icon>help_center</mat-icon>
-    </a>
-    <a mat-icon-button routerLink="/grammar" aria-label="Question Grammar"
-        aria-disabled="false" matTooltip="Question Grammar">
-        <mat-icon>code</mat-icon>
-    </a>
-    <a mat-icon-button href="https://github.com/polklabs/survey-of-the-month" target="_blank" rel="noreferrer" aria-label="GitHub Repository"
-        aria-disabled="false" matTooltip="GitHub Repository">
-        <mat-icon svgIcon="github"></mat-icon>
-    </a>
-
-</mat-toolbar>
-
-<div style="height: calc(100% - 48px - 24px); overflow: auto;" class="base-survey-container">
-    <router-outlet></router-outlet>
-</div>
-
-<div class="footer">
-    <a href="https://www.polklabs.com" target="_blank" rel="noopener" class="copyright-color">© {{year}} Andrew Polk</a>
+    <div class="footer">
+        <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
+            <div fxLayout="row wrap" fxLayoutGap="64px">
+                <div fxLayout="column">
+                    <h2>Website Stats</h2>
+                    <div *ngVar="(stats$ | async)  as stats">
+                        <div *ngIf="stats" class="footer-stats" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
+                            <div>Visitors: {{stats.visitors | number}}</div>
+                            <div>Unique Visitors: {{stats.unique_visitors | number}}</div>
+                            <div>Questions Generated: {{stats.questions_generated | number}}</div>
+                            <div>Surveys Created: {{stats.surveys_created | number}}</div>
+                            <div>Questions Answered: {{stats.questions_answered | number}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="column">
+                    <h2 style="margin-left: 16px;">Links</h2>
+                    <a mat-button routerLink="/grammar">Question Grammer</a>
+                    <a mat-button href="https://github.com/polklabs" target="_blank" rel="noreferrer">Github</a>
+                    <a mat-button href="https://www.polklabs.com" target="_blank" rel="noreferrer">Polklabs.Com</a>
+                    <a mat-button href="https://polk.media" target="_blank" rel="noreferrer">Polk.Media</a>
+                </div>
+            </div>
+            <div><a href="https://www.polklabs.com" target="_blank" rel="noopener" class="copyright-color">© {{year}} Andrew Polk, Polklabs</a></div>
+        </div>
+    </div>
 </div>

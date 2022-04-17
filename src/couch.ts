@@ -3,6 +3,7 @@ import fs from 'fs';
 import crypto from 'crypto';
 import { Survey } from '../app/src/app/shared/model/survey.model';
 import { SurveyContainer } from '../app/src/app/shared/model/survey-container.model';
+import { Stats } from '../app/src/app/shared/model/stats.model';
 import { Answer, AnswerStatus } from '../app/src/app/shared/model/answer.model';
 import { response } from '../server';
 import { SendEmail, SendSurveyEmail } from './email';
@@ -29,6 +30,7 @@ export function upsertSurvey(survey: Survey, id: string, key: string, req: any, 
         }
     }, () => {
         // Document Doesn't exist
+        updateStat('surveys_created', 1);
         insertSurvey(survey, req, res);
     });
 
@@ -286,6 +288,33 @@ export function findSurveys(email: string, req: any, res: response): void {
     }, (error: any) => {
         res.json({ ok: false, error });
     });
+}
+
+export function getStats(res: response): void {
+    couch.get('survey_stats', '739653a5460c667e9001768cbc0021ba').then(({ data }: { data: Stats }) => {
+        res.json({ ok: true, data });
+    }, () => {
+        res.json({ ok: false, error: { code: 'DOCUMENT', body: { error: 'Document does not exist', reason: '' } } });
+    });
+}
+
+export function updateStat(key: string, value: number): void {
+    couch.get('survey_stats', '739653a5460c667e9001768cbc0021ba').then(({ data }: { data: Stats }) => {
+
+        data[key] += value;
+        
+        couch.update('survey_stats', data).then(
+            ({ data1 }) => {}, (error: any) => {}
+        );
+    }, () => {});
+}
+
+export function updateVisitorStat(res: response, uniqueVisitor: boolean): void {
+    updateStat('visitors', 1);
+    if (uniqueVisitor === true) {
+        updateStat('unique_visitors', 1);
+    }
+    getStats(res);
 }
 
 // Survey's will only be kept for a year after their last modified date.

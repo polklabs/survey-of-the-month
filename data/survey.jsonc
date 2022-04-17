@@ -197,7 +197,8 @@
         "[type:text]In #5_60_5.range# minutes, you^$: and everything you're holding$ will be teleported to the middle of nowhere in ^$#country#:#continent#:#state#$. How will you prepare?",
         "[type:text]What ^$video game:movie:book:tv show$ would you like to make?",
         "[type:text]What's your favorite ^$pick-up line:joke$?",
-        "[type:text]What company would you start if you had $50,000?"
+        "[type:text]What company would you start if you had $50,000?",
+        "[type:text]You have to eat the closest #color# thing. What are you eating?"
     ],
 
     /* Words ************************************************************************************************************************** */

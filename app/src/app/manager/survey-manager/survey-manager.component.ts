@@ -124,7 +124,6 @@ export class SurveyManagerComponent implements OnInit {
         );
     }
     saveResultsRequireKey(requireKey: boolean): void {
-        this.analytics.triggerEvent('ManagerQ', 'Release Answers', 'Allow All Users To View Answers');
         const [result, _] = this.dataService.putData('release', { requireKey, id: this.id, key: this.key });
         result.subscribe((data: { ok: boolean, id?: string, key?: string, error?: any }) => {
             if (data.ok) {
@@ -147,7 +146,6 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     deleteButton(): void {
-        this.analytics.triggerEvent('MakerQ', 'SurveyDelete', 'Delete Survey Button');
         this.dialogService.confirm('Are you sure you want to delete this survey? This cannot be undone.').subscribe(
             del => {
                 if (del) {
@@ -169,7 +167,6 @@ export class SurveyManagerComponent implements OnInit {
     }
 
     copyLink(link: string, managerLink: boolean): void {
-        this.analytics.triggerEvent('MakerQ', 'SurveyShare', 'Copy Share Link Button');
         if (managerLink) {
             this.dialogService.alert('This is the management link. If you share it with other\'s they will have the ability to edit and delete this survey.');
         }
