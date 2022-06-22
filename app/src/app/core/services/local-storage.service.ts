@@ -7,6 +7,14 @@ const SURVEYS = 'Surveys';
 const TAGS = 'tags';
 const VISITED = 'visited';
 
+const randomPeople = [
+    ['Bob', 'Alice'],
+    ['Jess', 'Nick', 'Schmidt', 'Cece', 'Winston'],
+    ['Jim', 'Pam', 'Dwight', 'Michael'],
+    ['Leslie', 'Ron', 'Ben', 'Anne', 'Andy', 'Donna', 'Tom'],
+    ['Ted', 'Roy', 'Beard', 'Jamie', 'Rebecca']
+];
+
 @Injectable({
     providedIn: 'root'
 })
@@ -20,7 +28,7 @@ export class LocalStorageService {
         if (users.length > 0) {
             return users;
         }
-        return ['Bob', 'Alice'];
+        return randomPeople[Math.round(Math.random() * (randomPeople.length-1))];
     }
 
     setUsers(users: UserStorage[]): void {

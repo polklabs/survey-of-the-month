@@ -30,7 +30,7 @@ export function upsertSurvey(survey: Survey, id: string, key: string, req: any, 
         }
     }, () => {
         // Document Doesn't exist
-        updateStat('surveys_created', 1);
+        updateStat(null, {surveys_created: 1});
         insertSurvey(survey, req, res);
     });
 
@@ -298,23 +298,26 @@ export function getStats(res: response): void {
     });
 }
 
-export function updateStat(key: string, value: number): void {
+export function updateStat(res: response | null, newData: {[key: string]: number}): void {
     couch.get('survey_stats', '739653a5460c667e9001768cbc0021ba').then(({ data }: { data: Stats }) => {
 
-        data[key] += value;
+        Object.keys(newData).forEach(key => {
+            data[key] += newData[key];
+        })
+        
         
         couch.update('survey_stats', data).then(
             ({ data1 }) => {}, (error: any) => {}
         );
+
+        if (res !== null) {
+            res.json({ ok: true, data });
+        }
     }, () => {});
 }
 
-export function updateVisitorStat(res: response, uniqueVisitor: boolean): void {
-    updateStat('visitors', 1);
-    if (uniqueVisitor === true) {
-        updateStat('unique_visitors', 1);
-    }
-    getStats(res);
+export function updateVisitorStat(res: response, uniqueVisitor: string): void {
+    updateStat(res, {visitors: 1, unique_visitors: (uniqueVisitor.toLowerCase() === 'true' ? 1 : 0) });
 }
 
 // Survey's will only be kept for a year after their last modified date.

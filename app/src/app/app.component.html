@@ -44,7 +44,11 @@
 
     <div class="footer">
         <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
-            <div fxLayout="row wrap" fxLayoutGap="64px">
+            <div fxLayout="row wrap" fxLayoutGap="64px" style="padding: 0 16px;">
+                <div fxFlex="0 1 500px" fxLayout="column">
+                    <h2>Survey Of The Month</h2>
+                    <p>This website is a project I made for fun to allow my friends and I to have fun while keeping in touch. I may not be updated in the future, but I hope to keep it online as long as I can.<br><br>Please don't abuse this site or I'll have to make it private.</p>
+                </div>
                 <div fxLayout="column">
                     <h2>Website Stats</h2>
                     <div *ngVar="(stats$ | async)  as stats">
@@ -58,11 +62,11 @@
                     </div>
                 </div>
                 <div fxLayout="column">
-                    <h2 style="margin-left: 16px;">Links</h2>
-                    <a mat-button routerLink="/grammar">Question Grammer</a>
-                    <a mat-button href="https://github.com/polklabs" target="_blank" rel="noreferrer">Github</a>
-                    <a mat-button href="https://www.polklabs.com" target="_blank" rel="noreferrer">Polklabs.Com</a>
-                    <a mat-button href="https://polk.media" target="_blank" rel="noreferrer">Polk.Media</a>
+                    <h2>Links</h2>
+                    <a routerLink="/grammar">Question Grammer</a>
+                    <a href="https://github.com/polklabs" target="_blank" rel="noreferrer">Github</a>
+                    <a href="https://www.polklabs.com" target="_blank" rel="noreferrer">Polklabs.Com</a>
+                    <a href="https://polk.media" target="_blank" rel="noreferrer">Polk.Media</a>
                 </div>
             </div>
             <div><a href="https://www.polklabs.com" target="_blank" rel="noopener" class="copyright-color">© {{year}} Andrew Polk, Polklabs</a></div>

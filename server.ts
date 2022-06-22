@@ -46,7 +46,7 @@ const feedbackLimiter = rateLimit({
 
 // Generate a completely new question
 app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
-    updateStat('questions_generated', 1);
+    updateStat(null, {questions_generated: 1});
     let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter, req.body.filterTags);
     tracery.start(req.body.origin);
     res.json({ ok: true, data: tracery.getQuestion() });
@@ -55,7 +55,7 @@ app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?:
 // Regenerate answers for a specific choice or all
 // choiceIndex = -1 for all
 app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number, filterTags?: string[] } }, res: response) => {
-    updateStat('questions_generated', 1);
+    updateStat(null, {questions_generated: 1});
     let tracery = new Tracery(req.body.users, req.body.seed, -1, undefined, req.body.filterTags);
     tracery.setQuestion(req.body.question);
     tracery.generateAnswer(req.body.choiceIndex);
@@ -103,7 +103,7 @@ app.get('/api/answer-status', speedLimiter, (req: { query: { id: string } }, res
 
 // Submit answers
 app.put('/api/answer', speedLimiter, (req: { body: { id: string, answers: Answer } }, res: response) => {
-    updateStat('questions_answered', req.body.answers.answers.length);
+    updateStat(null, {questions_answered: req.body.answers.answers.length});
     submitAnswers(req.body.id, req.body.answers, res);
 });
 
@@ -163,7 +163,7 @@ app.get('/api/stats', speedLimiter, (_, res: any) => {
     getStats(res);
 });
 
-app.get('/api/visitor', (req: { query: { unique: boolean } }, res: any) => {
+app.get('/api/visitor', (req: { query: { unique: string } }, res: any) => {
     updateVisitorStat(res, req.query.unique);
 });
 
