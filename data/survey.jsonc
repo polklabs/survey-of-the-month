@@ -199,7 +199,7 @@
         "[type:text]What's your favorite ^$pick-up line:joke$?",
         "[type:text]What company would you start if you had $50,000?",
         "[type:text]You have to eat the closest #color# thing. What are you eating?",
-        "[type:text]Add #expressive_emojis# to a ^$quote:quote from #world#$ to change the meaning.",
+        "[type:text]Add #context_change# to a ^$quote:quote from #world#$ to change the ^$context:meaning$.",
         "[type:multi][key:nickname_full]What is a good ^$nickname:insult:compliment$ for ^$yourself:#person.capitalize#$",
         "[type:multi][key:nickname_full]What is ^$a good:an insulting:a bad:an accurate$ nickname for ^$yourself:#person.capitalize#$",
         "[type:text]#person.capitalize# just broke your favorite #object#. What do you say to them?",
@@ -409,5 +409,9 @@
     ],
     "excuse_delay": [
         "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me ^$syphilis:a cold:herpes:mono:a concussion$", "poured #drink# in my gas tank", "^$stabbed:mugged:shot:killed:kidnapped$ me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on ^$Instagram:Facebook:LinkedIn:YouTube:Pornhub:the internet$"
+    ],
+        
+    "context_change": [
+        "lol", "rip", "#expressive_emojis#"    
     ]
 }
