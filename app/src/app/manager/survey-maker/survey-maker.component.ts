@@ -16,6 +16,7 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { SEOService } from 'src/app/core/services/seo.service';
+import { QuestionCacheService } from 'src/app/core/services/question-cache.service';
 
 const animationTime = 400;
 
@@ -70,7 +71,8 @@ export class SurveyMakerComponent implements OnInit {
         private router: Router,
         private questionHolderService: QuestionHolderService,
         private analytics: AnalyticsService,
-        private seoService: SEOService
+        private seoService: SEOService,
+        private questionCache: QuestionCacheService
     ) { }
 
     ngOnInit(): void {
@@ -154,8 +156,10 @@ export class SurveyMakerComponent implements OnInit {
                         this.loading.push(false);
                         this.scroll();
                         this.calculateQuestionPos();
+                        this.questionCache.addQuestion(data.data, `${this.survey.questions.length - 1}`);
                     } else {
                         this.survey.questions[questionIndex] = data.data;
+                        this.questionCache.addQuestion(data.data, `${questionIndex}`);
                     }
                     this.dirty = true;
                 } else {
@@ -181,8 +185,10 @@ export class SurveyMakerComponent implements OnInit {
             this.loading.push(false);
             this.scroll();
             this.calculateQuestionPos();
+            this.questionCache.addQuestion(question, `${this.survey.questions.length - 1}`);
         } else {
             this.survey.questions[questionIndex] = question;
+            this.questionCache.addQuestion(question, `${questionIndex}`);
         }
     }
 
@@ -510,6 +516,22 @@ export class SurveyMakerComponent implements OnInit {
 
     questionFeedback(index: number, type: string): void {
         this.dialogService.feedbackQuestion(this.survey.questions[index], type);
+    }
+
+    undo(key: number): void {
+        this.survey.questions[key] = this.questionCache.undo(key.toString()) ?? this.survey.questions[key];
+    }
+
+    canUndo(key: number): boolean {
+        return this.questionCache.canUndo(key.toString());
+    }
+
+    redo(key: number): void {
+        this.survey.questions[key] = this.questionCache.redo(key.toString()) ?? this.survey.questions[key];
+    }
+
+    canRedo(key: number): boolean {
+        return this.questionCache.canRedo(key.toString());
     }
 
 }

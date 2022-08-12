@@ -2,7 +2,7 @@
   <p [innerHTML]="data.title"></p>
   <mat-form-field appearance="outline" style="width: 100%;">
     <mat-label>{{data.inputLabel}}</mat-label>
-    <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="data.value" maxlength="1000"></textarea>
+    <textarea matInput cdkTextareaAutosize [(ngModel)]="data.value" maxlength="1000"></textarea>
   </mat-form-field>
 
   <ng-container *ngIf="data.showPreview">

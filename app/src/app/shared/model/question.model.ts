@@ -6,7 +6,7 @@ export class Question {
     questionOrigin = -1;
     text = '';
     useAnswerFormat = false;
-    answerFormat = '{0}'; // How to format the answer. Useful for mad-lib style questions
+    answerFormat = 'I entered: {0}'; // How to format the answer. Useful for mad-lib style questions
     seed = '';
     custom = true;
     vars: any = {};

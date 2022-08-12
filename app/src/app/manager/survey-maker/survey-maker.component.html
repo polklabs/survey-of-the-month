@@ -29,7 +29,7 @@
                         <!-- Custom Survey Text Areas -->
                         <mat-form-field appearance="outline">
                             <mat-label>Pre Survey</mat-label>
-                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.preAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <textarea matInput cdkTextareaAutosize [(ngModel)]="survey.preAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                             <mat-hint>This text will be displayed before users take the survey</mat-hint>
                         </mat-form-field>
                         <fieldset>
@@ -39,7 +39,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Post Survey</mat-label>
-                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.postAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <textarea matInput cdkTextareaAutosize [(ngModel)]="survey.postAnswer" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                             <mat-hint>This text will be displayed after users take the survey</mat-hint>
                         </mat-form-field>
                         <fieldset>
@@ -49,7 +49,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Presentation Intro</mat-label>
-                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsIntro" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <textarea matInput cdkTextareaAutosize [(ngModel)]="survey.resultsIntro" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                             <mat-hint>This text will be displayed at the beginning of the presentation </mat-hint>
                         </mat-form-field>
                         <fieldset>
@@ -59,7 +59,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Presentation People</mat-label>
-                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsPeople" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <textarea matInput cdkTextareaAutosize [(ngModel)]="survey.resultsPeople" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                             <mat-hint>This text will be displayed before the list of people/participants in the presentation</mat-hint>
                         </mat-form-field>
                         <fieldset>
@@ -69,7 +69,7 @@
 
                         <mat-form-field appearance="outline">
                             <mat-label>Presentation End</mat-label>
-                            <textarea matInput [matTextareaAutosize]="true" [(ngModel)]="survey.resultsEnd" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
+                            <textarea matInput cdkTextareaAutosize [(ngModel)]="survey.resultsEnd" (keyup)="dirty = true" placeholder="Type Something..." maxlength="2000"></textarea>
                             <mat-hint>This text will be displayed at the end of the survey presentation</mat-hint>
                         </mat-form-field>
                         <fieldset>
@@ -154,6 +154,8 @@
                     <button mat-menu-item (click)="editQuestionType(i, 'date')" [disabled]="question.answerType==='date'"><mat-icon>today</mat-icon>Date</button>
                     <button mat-menu-item (click)="editQuestionType(i, 'time')" [disabled]="question.answerType==='time'"><mat-icon>schedule</mat-icon>Time</button>
                 </mat-menu>
+                <button mat-icon-button (click)="undo(i)" [disabled]="canUndo(i) === false" matTooltip="Undo"><mat-icon>undo</mat-icon></button>
+                <button mat-icon-button (click)="redo(i)" [disabled]="canRedo(i) === false" matTooltip="Redo"><mat-icon>redo</mat-icon></button>
                 <mat-menu #reportMenu="matMenu">
                     <button mat-menu-item (click)="questionFeedback(i, 'Missing Tag')">Missing Tag</button>
                     <button mat-menu-item (click)="questionFeedback(i, 'Broken Link')">Broken Link</button>

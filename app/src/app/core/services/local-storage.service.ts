@@ -9,10 +9,15 @@ const VISITED = 'visited';
 
 const randomPeople = [
     ['Bob', 'Alice'],
-    ['Jess', 'Nick', 'Schmidt', 'Cece', 'Winston'],
-    ['Jim', 'Pam', 'Dwight', 'Michael'],
+    ['Jess', 'Nick', 'Schmidt', 'Cece', 'Winston', 'Coach'],
+    ['Jim', 'Pam', 'Dwight', 'Michael', 'Andy', 'Creed', 'Angela', 'Oscar', 'Kevin'],
     ['Leslie', 'Ron', 'Ben', 'Anne', 'Andy', 'Donna', 'Tom'],
-    ['Ted', 'Roy', 'Beard', 'Jamie', 'Rebecca']
+    ['Ted', 'Roy', 'Beard', 'Jamie', 'Rebecca'],
+    ['Rachel', 'Monica', 'Phoebe', 'Joey', 'Chandler', 'Ross'],
+    ['Shawn', 'Gus', 'Carlton', 'Juliet'],
+    ['Jake', 'Amy', 'Terry', 'Charles', 'Rosa', 'Raymond', 'Gina'],
+    ['Jeff', 'Britta', 'Abed', 'Annie', 'Shirley', 'Dean', 'Troy', 'Pierce'],
+    ['Ted', 'Barney', 'Marshall', 'Lily', 'Robin']
 ];
 
 @Injectable({

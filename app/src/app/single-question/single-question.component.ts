@@ -10,6 +10,7 @@ import { DialogService } from '../core/services/dialog.service';
 import { QuestionHolderService } from '../core/services/questionHolder.service';
 import { Router } from '@angular/router';
 import { AnalyticsService } from '../core/services/analytics.service';
+import { QuestionCacheService } from '../core/services/question-cache.service';
 
 @Component({
     selector: 'app-single-question',
@@ -40,7 +41,8 @@ export class SingleQuestionComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private questionHolderService: QuestionHolderService,
         private router: Router,
-        private analytics: AnalyticsService
+        private analytics: AnalyticsService,
+        private questionCache: QuestionCacheService
     ) { }
 
     ngOnInit(): void {
@@ -51,6 +53,22 @@ export class SingleQuestionComponent implements OnInit {
 
     getQuestion(): void {
         this.callApi('question', { users: this.users, filterTags: this.filterTags });
+    }
+
+    undo(): void {
+        this.question = this.questionCache.undo() ?? this.question;
+    }
+
+    redo(): void {
+        this.question = this.questionCache.redo() ?? this.question;
+    }
+
+    canUndo(): boolean {
+        return this.questionCache.canUndo();
+    }
+
+    canRedo(): boolean {
+        return this.questionCache.canRedo();
     }
 
     updateChoices(): void {
@@ -85,6 +103,7 @@ export class SingleQuestionComponent implements OnInit {
             result.subscribe((resultData: APIData) => {
                 if (resultData.ok) {
                     this.question = resultData.data;
+                    this.questionCache.addQuestion(this.question);
                 } else {
                     this.dialogService.error(data.error);
                 }
