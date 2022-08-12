@@ -184,7 +184,7 @@
         "[type:text]If you could combine any two animals into a hybrid, what's the ^$scariest:funniest:weirdest:most alien:coolest$ combo you can think of?",
         "[type:text]What probably won't exist in #1_100.range# #timeRange.s#?",
         "[type:text]Poof a magic genie has appeared, what do you wish for?",
-        "[type:text]What screams \"I am #1_100.range# years old\"?",
+        "[type:text]What screams \"I am ^$#1_100.range# years old:#trait#$\"?",
         "[type:text]You unexpectedly time travel back to the year #1_2000_10.range#. The only way back is the long way back but you're immortal during that time. How do you spend the years?",
         "[type:text]What would you name your ^$boat:country:fortune 500 company:planet:religion:secret society:cult:son:daughter:reality tv show$ if you had one?",
         "[type:text]You can have $#1_10000000_100.range.num#, but your worst enemy gets $#1_10000000_100.range.num#. Would you accept it? Why? Why not?",
