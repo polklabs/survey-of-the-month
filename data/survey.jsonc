@@ -103,7 +103,7 @@
         "[type:text][objectA:#objectSmall#]You have 5 minutes to hide #objectA.a# in your home. A detective has #1_24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
         "[type:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
         "[type:multi][key:yesNo][count:-1]Reporters show up at your door telling you you've won an award for your #crush_reason#. Do you accept it?",
-        "[type:text]You’ve been kidnapped. 30 mins later your kidnapper dumps you on the street because you won’t stop talking about what?",
+        "[type:text]You've been kidnapped. 30 mins later your kidnapper dumps you on the street because you won’t stop talking about what?",
         "[type:text]What fan theory do you 100% accept as true?",
         "[type:multi][key:1Percent]You are now the 1% of?",
         "[type:text]You've been transformed into #animal.a#, how do you convince #person.capitalize# you're you?",
@@ -198,7 +198,12 @@
         "[type:text]What ^$video game:movie:book:tv show$ would you like to make?",
         "[type:text]What's your favorite ^$pick-up line:joke$?",
         "[type:text]What company would you start if you had $50,000?",
-        "[type:text]You have to eat the closest #color# thing. What are you eating?"
+        "[type:text]You have to eat the closest #color# thing. What are you eating?",
+        "[type:text]Add #expressive_emojis# to a ^$quote:quote from #world#$ to change the meaning.",
+        "[type:multi][key:nickname_full]What is a good ^$nickname:insult:compliment$ for ^$yourself:#person.capitalize#$",
+        "[type:multi][key:nickname_full]What is ^$a good:an insulting:a bad:an accurate$ nickname for ^$yourself:#person.capitalize#$",
+        "[type:text]#person.capitalize# just broke your favorite #object#. What do you say to them?",
+        "[type:text]Send someone the following message and write their response here. \"^$#greeting# #nickname_full#:I #verb_transitive# your #object_descriptive#$\""
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -274,6 +279,12 @@
     "event": [
         "fight", "dance battle"
     ],
+    "nickname": [
+        "lineshooter", "wild boar", "window face", "fox", "pizza face", "thrombo", "dum dum", "baby-bugga-boo", "monkey buns", "noodlehead", "danger duck", "parrotnose", "friendo", "screwball", "mister ed", "noobling", "nooblet", "cutie pie", "panda", "sloppynuts", "chicken", "hollow head", "over-thinker", "smooshie", "meager", "goggs", "mattressback", "pothole", "duckie", "pissy missy", "sir mule", "dunce", "stalker", "mud puppy", "minion", "prude", "cheeky monkey", "android", "cauldron", "cupcake face", "smellfeast", "sippy cup", "gandalf", "jackwagon", "monkey brain", "diamondback", "captain america", "smiley", "voldemort", "ironman", "dexter fakester", "copycat", "all that jazz", "ted cruz", "ritzy", "bagel", "mediocrement", "blowhard", "grease", "ninnyhammer", "thiefy", "narrow", "pestilence", "flippers", "butters", "catch 22", "thor", "fanny fishcake", "merciless", "chauncy", "big stinky pete", "doofus", "harry potter", "bambi", "ziggy", "railbird", "dipstick", "feeble", "teeny", "fuzzkins", "chainlink", "camel", "vice wise", "conductor", "the public enemy", "lickspittle", "greedy", "snorty", "wheezy", "cinnamon", "catalyst", "shawty", "bill o' reily", "dementor", "jim loser", "viejo", "the guy", "the mask", "duracell", "green giant", "parrot-nose", "woman ears", "gerbil", "bon-bon", "punk", "pink panther", "thunderhead", "oompa loompa", "peacock", "screensaver", "whispy headed", "creeper", "class clown", "wangster", "freddy flintstone", "wanker", "peaches", "jelly belly", "beanpole", "moon calf", "messy tessy", "noise machine", "friday the 13th", "dork", "sordo", "witchy", "vulgar", "crackpot", "scruffy", "bug", "death eater", "shoeshine", "lord snooty", "muscles", "pipsie", "shorty", "granite", "fire guy", "cutsie wootsie", "scrutator", "ball cheese", "silly billy", "creep", "snookums", "maddy", "cheeky chimp", "dead skunk", "douchebag", "proud lady", "cox comb", "antenna", "giganotosaurus", "drum major", "oxygen thief", "slow death", "sears tower", "grasshopper", "straight-a", "peanut", "fosforo", "dragon", "dawg", "dillhole", "dumbledore", "lone ranger", "alan harper", "ray charles", "knucklehead", "shine stein", "tofu pofu", "pathetic parasite", "chubbly", "hilary clinton", "metal mouth", "bandera pirata", "pip-squeek", "ding dong", "big head", "rattlesnake", "smooshie.", "tranposo", "buttercup", "penny-pinching", "flop", "kokomo", "kittycat", "mcstink", "snollygoster", "trash bin", "egg head", "mooch", "bridge", "pettifogger", "nob jokie", "tarzan", "itsy bitsy", "snotface", "monkey but", "drizzlebrain", "shell down cooper", "nonsense!", "smellfungus", "mumpsimus", "maestro", "princess caraboo", "dummie", "boromir", "bully pulpit", "hobbledehoy", "dishwasher", "moron", "slob", "flower child", "digger", "saltimbanco"
+    ],
+    "nickname_full": [
+        "^$You:The:Mr.:Mrs.$ #adjective# #trait# #nickname#"
+    ],
 
     /* Careers ************************************************************************************************************************ */
     "career_serious": [
@@ -289,7 +300,7 @@
 
     /* Quest ****************************************************************************************************************************** */
     "quest": [
-        "quest", "mission", "journey"
+        "quest", "mission", "journey", "adventure"
     ],
     "quest_objective": [
         "kill", "save", "rescue", "catch", "eradicate", "find", "free", "trap", "destroy", "hunt"
