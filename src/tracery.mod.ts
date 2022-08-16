@@ -19,6 +19,22 @@ export function ModString(value: string, mod: string, rng: any): string {
                 else
                     value = `${value}ed`;
                 break;
+            case 'ing':
+                if (value.endsWith("ie"))
+                    value = `${value.substring(0, value.length - 2)}ying`;
+                else if (value.endsWith("ee") || value.endsWith("ye") || value.endsWith("oe"))
+                    value = `${value}ing`;
+                else if (value.endsWith("e"))
+                    value = `${value.substring(0, value.length - 1)}ing`;
+                else if (value.endsWith("c"))
+                    value = `${value}king`;
+                else if (value.endsWith('w') || value.endsWith('y') || value.endsWith('x'))
+                    value = `${value}ing`;
+                else if (consonants.indexOf(value[value.length - 1]) >= 0 && vowels.indexOf(value[value.length - 2]) >= 0)
+                    value = `${value}${value[value.length - 1]}ing`;
+                else
+                    value = `${value}ing`;
+                break;
             case 's':
                 if (value.endsWith("es"))
                     value = value;
