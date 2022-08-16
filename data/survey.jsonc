@@ -205,7 +205,7 @@
         "[type:text]#person.capitalize# just broke your favorite #object#. What do you say to them?",
         "[type:text]Send someone the following message and write their response here. \"^$#greeting# #nickname_full#:I #verb_transitive# your #object_descriptive#$\"",
         "[type:text]Your sugar daddy/momma gives you a ^$sailboat:dog:cat:plane$. What do you name it?",
-        "[type:text]How tall do you think #person.capitalized# is in terms of #unit_of_measurement#?"
+        "[type:text]How tall do you think #person.capitalize# is in terms of #unit_of_measurement#?"
     ],
 
     /* Words ************************************************************************************************************************** */
