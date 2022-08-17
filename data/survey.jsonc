@@ -206,7 +206,7 @@
         "[type:text]Send someone the following message and write their response here. \"^$#greeting# #nickname_full#:I #verb_transitive# your #object_descriptive#$\"",
         "[type:text]Your sugar daddy/momma gives you a ^$sailboat:dog:cat:plane$. What do you name it?",
         "[type:text]How tall do you think #person.capitalize# is in terms of #unit_of_measurement#?",
-        "[type:text]Write a short poem about ^$#person.capitalize#:#world#:#genre_movie# movies:#favoriteCategory.s#:being #trait#:#verb_transitive.ing#$
+        "[type:text]Write a short poem about ^$#person.capitalize#:#world#:#genre_movie# movies:#favoriteCategory.s#:being #trait#:#verb_transitive.ing#$"
     ],
 
     /* Words ************************************************************************************************************************** */
