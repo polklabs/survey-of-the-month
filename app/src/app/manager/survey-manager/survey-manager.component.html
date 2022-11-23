@@ -43,11 +43,11 @@
 
         <mat-card class="answ-status-container" *ngIf="hasData">
             <mat-card-header>
-                <mat-card-title>Mangement Link</mat-card-title>
+                <mat-card-title>Management Link</mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="column" fxLayoutGap="8px">
 
-                <p style="height: 34px;">This is the link to managing your survey and retreiving answers. Do <span
+                <p style="height: 34px;">This is the link to managing your survey and retrieving answers. Do <span
                         style="color:crimson">NOT</span> lose it or share it.</p>
                 <div fxLayout="row" class="link-box manager-link" fxLayout="center center">
                     <a fxFlex class="manage-link" [href]="managerLink" target="_blank">{{managerLink}}</a>
@@ -123,7 +123,7 @@
                 <button mat-raised-button color="primary" (click)="beginPresentation()">Begin Presentation</button>
                 <div fxLayout="row" fxLayoutGap="8px">
                     <button fxFlex mat-raised-button *ngIf="resultsRequireKey()" (click)="startResultsRequireKey(false)">Release Presentation To All</button>
-                    <button fxFlex mat-raised-button *ngIf="!resultsRequireKey()" (click)="saveResultsRequireKey(true)">Unrelease Presentation</button>
+                    <button fxFlex mat-raised-button *ngIf="!resultsRequireKey()" (click)="saveResultsRequireKey(true)">Revoke Presentation Access</button>
                     <mat-icon color="accent" class="help-icon" matTooltip="You can release the survey results to anyone with a sharable link. Allowing them to view the results of their own accord without you needing to share/expose a management link">help</mat-icon>
                 </div>
                 <button mat-raised-button (click)="openExportDialog()">Export Answers To .csv (Excel)</button>

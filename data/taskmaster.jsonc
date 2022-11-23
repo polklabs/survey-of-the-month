@@ -1,4 +1,4 @@
-/* Generates the intro questions for tastmaster (British TV Show) */
+/* Generates the intro questions for taskmaster (British TV Show) */
 {
     "_tm_prizeTask": [
         "#_tm_mostBlankItem#", "#_tm_blankThing#", "#_tm_clothingAdj# item of clothing", "#_tm_bestThingMod# #_tm_bestThing#", "coolest #color# item", "#_tm_sizedThing#", "^$#_tm_mostBlankItem#:#_tm_blankThing#$ beginning with #alphabetLetter#"
@@ -13,7 +13,7 @@
         "^$#_tm_mostBlankItem#:#_tm_blankThing#$ that can fit in #_tm_itemContainer.a#", "^$#_tm_mostBlankItem#:#_tm_blankThing#$ that's the same size as #_tm_itemSizeSmall.a#", "^$#_tm_mostBlankItem#:#_tm_blankThing#$ that's bigger at the top than the bottom", "^$#_tm_mostBlankItem#:#_tm_blankThing#$ that's bigger than #_tm_itemSizeSmall.a#, but smaller than #_tm_itemSizeLarge.a#"
     ],
     "_tm_itemAdj": [
-        "unusual", "impressive", "meaningful", "beautiful", "valuable", "satifying", "flamboyant", "battery-operated", "[tm_item:document]important", "[tm_item:relative]handsome", "boastful", "sheep-related", "[tm_item:noise]excellent", "[tm_item:souvenir]extraordinary", "high octane", "surprisingly expensive", "embarrassing", "thought-provoking", "pleasing", "confusing", "exciting", "surprisingly beautiful", "magnificent", "[tm_item:smell]powerful", "burstable", "see-through", "slippery", "stressful", "defunct", "desirable smooth", "narcissistic", "shocking", "annoying", "satisfying wobbly"
+        "unusual", "impressive", "meaningful", "beautiful", "valuable", "satisfying", "flamboyant", "battery-operated", "[tm_item:document]important", "[tm_item:relative]handsome", "boastful", "sheep-related", "[tm_item:noise]excellent", "[tm_item:souvenir]extraordinary", "high octane", "surprisingly expensive", "embarrassing", "thought-provoking", "pleasing", "confusing", "exciting", "surprisingly beautiful", "magnificent", "[tm_item:smell]powerful", "burstable", "see-through", "slippery", "stressful", "defunct", "desirable smooth", "narcissistic", "shocking", "annoying", "satisfying wobbly"
     ],
     "_tm_itemAdj2": [
         "shiniest", "cutest", "proudest", "sturdiest", "heaviest", "boldest", "creepiest", "nicest", "cheekiest", "craziest"
@@ -28,7 +28,7 @@
         "dinner party guest", "piece of memorabilia", "membership/subscription", "chair", "homemade item", "thing", "liquid", "hairy thing which isn't alive", "invention", "thing from the 90's", "gift from a named relative", "key", "pair of things", "present for a doctor", "face", "form of protection", "thing that will change your life for the better", "bag", "wooden thing", "thing they've taken from someone else's house", "thing that is very long and thin", "thing to put in your mouth", "thing with loads of holes in it", "thing that probably has a spring in its mechanism", "pointy thing", "thing with wings", "bedding", "collection", "thing to bring to a party", "thing you can carry, but only just", "drinking vessel", "thing you can operate with your hand", "thing to hang on a wall that you wouldn't normally hang on a wall"
     ],
     "_tm_itemContainer": [
-        "shoebox", "microwave", "oven", "bathtub", "backpack", "soapdish", "altiods tin"
+        "shoebox", "microwave", "oven", "bathtub", "backpack", "soap dish", "Altoids tin"
     ],
     "_tm_itemSizeSmall": [
         "cat", "rat", "book", "cellphone"

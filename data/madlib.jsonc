@@ -15,7 +15,7 @@
         "[key:_madLibText_Answer_10]Pizza was invented by a/an {0} {1} chef named {2}. To make a pizza, you need to take a lump of {3}, and make a thin, round {4} {5}. Then you cover it with {6} sauce, {7} cheese, and fresh chopped {8}. Next you have to bake it in a very hot {9}. When it is done, cut it into {10} {11}. Some kids like {12} pizza the best, but my favorite is the  {13} pizza.",
         "[key:_madLibText_Answer_11]I had a {0} dream where I was {1} in {2}. I then saw {3} trying to {4} a {5} {6} with their {7}. I wanted to {8} to them but couldn't seem to move.The last thing I remember before waking up is {9} a {10}",
         "[tag:nsfw][key:_madLibText_Answer_12]You know what, fuck you. *un{0}s your {1}*",
-        "[key:_madLibText_Answer_13]^$Long ago:Once upon a time:The not too distance future$ in {0}, there lived a {1} {2}. They loved to {3} with their {4}. But one day the {5} {6} came and {7} their {8}. The {2} deciced they would have to {9} the {5} {6} in order to restore {10}. Their plan worked and everyone in {0} lived happily ever after."
+        "[key:_madLibText_Answer_13]^$Long ago:Once upon a time:The not too distance future$ in {0}, there lived a {1} {2}. They loved to {3} with their {4}. But one day the {5} {6} came and {7} their {8}. The {2} decided they would have to {9} the {5} {6} in order to restore {10}. Their plan worked and everyone in {0} lived happily ever after."
     ],
     "_madLibText_Answer_1": [
         "proper noun", "Plural Noun", "Verb ending in 'ing'", "noun", "noun", "plural noun", "part of the body", "noun", "verb ending in 'ing'", "part of the body (plural)", "verb ending in 'ing'", "noun", "noun", "part of the body", "adverb", "part of the body (plural)"

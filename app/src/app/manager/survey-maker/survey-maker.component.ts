@@ -64,7 +64,7 @@ export class SurveyMakerComponent implements OnInit {
 
     constructor(
         private dataService: DataService,
-        private activatedroute: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private snackBar: MatSnackBar,
         private dialogService: DialogService,
         private localStorageService: LocalStorageService,
@@ -79,7 +79,7 @@ export class SurveyMakerComponent implements OnInit {
         this.seoService.updateTitle('Manager - Survey OTM');
         this.getCachedUsers();
         this.updateFilters();
-        this.activatedroute.paramMap.subscribe(params => {
+        this.activatedRoute.paramMap.subscribe(params => {
             const id = params.get('id');
             const key = params.get('key');
             if (id && id !== '0' && key && key !== '0') {
@@ -237,7 +237,7 @@ export class SurveyMakerComponent implements OnInit {
     editAnswerFormat(questionIndex: number): void {
         const question = this.survey.questions[questionIndex];
         this.dialogService.textInput(
-            'Use a number between curly braces to be replaced with a user\'s answer.\ne.g. "The answer is {0}" will become "The answer is rabbits".\nThe number between brackets referring to an answer option 0,1,2,3,...*\nText may not format properly if question is not fully answered.\n\n"{person}" will format to the name of the person who answered the question.\n\n*Question Type Caveats\nMiltiple Choice Questions: only support {0} and no other numbers.\nCheck Questions: Can vary on how many {0,1,2} it supports based on the number of boxes the user checks\n\nBasic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
+            'Use a number between curly braces to be replaced with a user\'s answer.\ne.g. "The answer is {0}" will become "The answer is rabbits".\nThe number between brackets referring to an answer option 0,1,2,3,...*\nText may not format properly if question is not fully answered.\n\n"{person}" will format to the name of the person who answered the question.\n\n*Question Type Caveats\nMultiple Choice Questions: only support {0} and no other numbers.\nCheck Questions: Can vary on how many {0,1,2} it supports based on the number of boxes the user checks\n\nBasic <a href="https://www.simplehtmlguide.com/cheatsheet.php" target="_blank">HTML formatting</a> is allowed.',
             'Text',
             question.answerFormat,
             true
