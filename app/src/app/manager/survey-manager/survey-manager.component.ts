@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { SEOService } from 'src/app/core/services/seo.service';
+import { environment } from 'src/environments/environment';
 import { DataService } from '../../core/services/data.service';
 import { DialogService } from '../../core/services/dialog.service';
 import { LocalStorageService } from '../../core/services/local-storage.service';
@@ -34,6 +35,8 @@ export class SurveyManagerComponent implements OnInit {
     shareLink = '';
 
     totalQuestions = 0;
+
+    githubIssues = environment.githubIssues;
 
     constructor(
         private dataService: DataService,
@@ -257,10 +260,6 @@ export class SurveyManagerComponent implements OnInit {
         if (!text) { return ''; }
         if (text.length <= 25) { return text; }
         return text.substr(0, 24) + '…';
-    }
-
-    openFeedback(): void {
-        this.dialogService.feedback();
     }
 
 }

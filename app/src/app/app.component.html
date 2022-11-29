@@ -5,14 +5,14 @@
                 <button mat-button routerLink="/home" style="margin-right: 16px;"><mat-icon>poll</mat-icon> Survey Of The Month</button>
                 <button mat-button routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
                 <button mat-button [mat-menu-trigger-for]="manageMenu">Create/Manage <mat-icon>arrow_drop_down</mat-icon></button>
-                <button mat-button (click)="openFeedback()">Feedback</button>
+                <a mat-button [href]="githubIssues" target="_blank">Feedback</a>
             </div>
             <div fxHide.gt-xs>
                 <button mat-button [mat-menu-trigger-for]="menu"><mat-icon>poll</mat-icon> Survey Of The Month <mat-icon>arrow_drop_down</mat-icon></button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item routerLink="/home" [routerLinkActive]="'linkActive'">Home</button>
                     <button mat-menu-item [mat-menu-trigger-for]="manageMenu">Create/Manage</button>
-                    <button mat-menu-item (click)="openFeedback()">Feedback</button>
+                    <a mat-menu-item [href]="githubIssues" target="_blank">Feedback</a>
                 </mat-menu>
             </div>
 
@@ -47,7 +47,8 @@
             <div fxLayout="row wrap" fxLayoutGap="64px" style="padding: 0 16px;">
                 <div fxFlex="0 1 500px" fxLayout="column">
                     <h2>Survey Of The Month</h2>
-                    <p>This website is a project I made for fun to allow my friends and I to have fun while keeping in touch. I may not be updated in the future, but I hope to keep it online as long as I can.<br><br>Please don't abuse this site or I'll have to make it private.</p>
+                    <p>This website is a project I made for fun to allow my friends and I to have fun while keeping in touch. I may not be updated in the future, but I hope to keep it online as long as I can.</p>
+                    <a href="https://www.buymeacoffee.com/Polklabs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
                 </div>
                 <div fxLayout="column">
                     <h2>Website Stats</h2>

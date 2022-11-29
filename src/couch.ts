@@ -13,6 +13,7 @@ import { sendAnswerSubmitMsg, sendNewSurveyMsg, sendSurveyDeleteMsg } from './pu
 const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
     { encoding: 'utf8', flag: 'r' }));
 export const couch = new NodeCouchDb(couchDbSettings);
+console.log("Connected to couchdb");
 // setInterval(() => {
 //     console.log('Deleting Old Surveys');
 //     deleteOldSurveys();
@@ -293,8 +294,8 @@ export function findSurveys(email: string, req: any, res: response): void {
 export function getStats(res: response): void {
     couch.get('survey_stats', '739653a5460c667e9001768cbc0021ba').then(({ data }: { data: Stats }) => {
         res.json({ ok: true, data });
-    }, () => {
-        res.json({ ok: false, error: { code: 'DOCUMENT', body: { error: 'Document does not exist', reason: '' } } });
+    }, (err) => {
+        res.json({ ok: false, error: { code: 'DOCUMENT', body: { error: 'Document does not exist', reason: err } } });
     });
 }
 

@@ -2,7 +2,6 @@ import { Tracery } from './src/tracery';
 import { AnswerType, Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
-import { SendEmail } from './src/email';
 import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys, getResultsSurvey, putReleaseStatus, getReleaseStatus, getStats, updateStat, updateVisitorStat } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
@@ -11,6 +10,7 @@ import cors from 'cors';
 import { Answer } from './app/src/app/shared/model/answer.model';
 import { grammarHTML } from './src/data.html';
 import { getTags } from './src/tracery.load';
+import { nextHoliday } from './src/tracery.custom';
 
 export type response = { json: (res: APIData) => any };
 
@@ -109,25 +109,6 @@ app.put('/api/answer', speedLimiter, (req: { body: { id: string, answers: Answer
 
 // Other -------------------------------------------------------------------------------------------------
 
-// Submit Feedback
-app.post('/api/feedback', feedbackLimiter, (req: { body: { subject: string, body: string, type: string, returnAddress: string } }, res: response) => {
-
-    let replyTo = req.body.returnAddress;
-    const subject = `Survey Of The Month - [${req.body.type}]`;
-    let text = req.body.subject + '\n\n' + req.body.body;
-
-    const r = SendEmail(subject, text, 'andrew@polklabs.com', 'andrew@polklabs.com', replyTo, (error, info) => {
-        if (error) {
-            res.json({ ok: false, error });
-        } else {
-            res.json({ ok: true });
-        }
-    });
-    if (r) {
-        res.json({ ok: false, error: { code: 'EMAILERROR', body: { error: r, reason: '' } } });
-    }
-});
-
 app.get('/api/find', feedbackLimiter, (req: { query: { email: string } }, res: response) => {
     findSurveys(req.query.email, req, res);
 });
@@ -163,7 +144,7 @@ app.get('/api/stats', speedLimiter, (_, res: any) => {
     getStats(res);
 });
 
-app.get('/api/visitor', (req: { query: { unique: string } }, res: any) => {
+app.get('/api/visitor', speedLimiter, (req: { query: { unique: string } }, res: any) => {
     updateVisitorStat(res, req.query.unique);
 });
 

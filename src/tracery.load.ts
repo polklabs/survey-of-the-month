@@ -7,7 +7,7 @@ export const grammar: { [key: string]: string[] } = {};
 export const grammarKeys: string[] = [];
 let tags: string[] = [];
 
-const loadedfiles: string[] = [];
+const loadedFiles: string[] = [];
 
 loadGrammar('survey.jsonc');
 checkGrammar();
@@ -17,7 +17,7 @@ generateGrammarHTML();
 
 // Load multiple grammar files and merge them
 function loadGrammar(filename: string) {
-    loadedfiles.push(filename);
+    loadedFiles.push(filename);
 
     const grammarTemp = JSON.parse(json_minify(fs.readFileSync(`./data/${filename}`,
         { encoding: 'utf8', flag: 'r' })));
@@ -34,7 +34,7 @@ function loadGrammar(filename: string) {
 
     if (grammarTemp['require!'] !== undefined) {
         grammarTemp['require!'].forEach((file: string) => {
-            if (loadedfiles.findIndex(x => x === file) === -1) {
+            if (loadedFiles.findIndex(x => x === file) === -1) {
                 loadGrammar(file);
             }
         })

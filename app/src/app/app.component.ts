@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 import { AnalyticsService } from './core/services/analytics.service';
 import { DataService } from './core/services/data.service';
 import { DialogService } from './core/services/dialog.service';
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
     availableSurveys: SurveysStorage[] = [];
 
     stats$ = this.analytics.stats$;
+
+    githubIssues = environment.githubIssues;
 
     constructor(
         iconRegistry: MatIconRegistry,
@@ -51,10 +54,6 @@ export class AppComponent implements OnInit {
                 this.localStorageService.setVisited();
             }
         }, 1);
-    }
-
-    openFeedback(): void {
-        this.dialogService.feedback();
     }
 
     lostLink(): void {

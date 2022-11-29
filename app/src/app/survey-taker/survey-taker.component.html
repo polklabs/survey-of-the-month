@@ -80,5 +80,5 @@
 
 <div *ngIf="submitted" style="margin: 32px;" fxLayout="column" fxLayoutAlign="center center">
     <h3>Any and all feedback is appreciated!</h3>
-    <button mat-raised-button (click)="openFeedback()" color="primary">Feedback</button>
+    <a mat-raised-button [href]="githubIssues" target="_blank" color="primary">Feedback</a>
 </div>

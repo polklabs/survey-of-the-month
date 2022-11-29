@@ -99,7 +99,7 @@
 
         <div *ngIf="editable">
             <!-- People Chooser -->
-            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be insterted into randomly generated question and answers. Enter your friends names or fictional characters</p>
+            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be inserted into randomly generated question and answers. Enter your friends names or fictional characters</p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
@@ -143,7 +143,7 @@
                     <button mat-menu-item (click)="getQuestionShuffle(i)" fxHide.gt-xs [disabled]="question.custom"><mat-icon color="accent">shuffle</mat-icon>Shuffle Question</button>
                     <button mat-menu-item (click)="getQuestionReset(i)" matTooltip="There is a large possibility this won't work, but maybe it will. Use at your own risk."><mat-icon color="accent">restart_alt</mat-icon>Reset Question <mat-icon>warning_amber</mat-icon></button>
                     <button mat-menu-item (click)="deleteQuestion(i)"><mat-icon color="warn">delete</mat-icon>Delete Question</button>
-                    <button mat-menu-item [disabled]="survey.questions[i].custom" [mat-menu-trigger-for]="reportMenu"><mat-icon>report</mat-icon>Report</button>
+                    <a mat-menu-item [disabled]="survey.questions[i].custom" [href]="githubIssues" target="_blank" matTooltip="Please Report: Missing Tags, Broken Links, Incorrect Text, Grammar, Other Issues"><mat-icon>report</mat-icon>Report</a>
                 </mat-menu>
                 <mat-menu #questionType="matMenu">
                     <button mat-menu-item (click)="editQuestionType(i, 'text')" [disabled]="question.answerType==='text'"><mat-icon>create</mat-icon>Text</button>
@@ -156,13 +156,6 @@
                 </mat-menu>
                 <button mat-icon-button (click)="undo(i)" [disabled]="canUndo(i) === false" matTooltip="Undo"><mat-icon>undo</mat-icon></button>
                 <button mat-icon-button (click)="redo(i)" [disabled]="canRedo(i) === false" matTooltip="Redo"><mat-icon>redo</mat-icon></button>
-                <mat-menu #reportMenu="matMenu">
-                    <button mat-menu-item (click)="questionFeedback(i, 'Missing Tag')">Missing Tag</button>
-                    <button mat-menu-item (click)="questionFeedback(i, 'Broken Link')">Broken Link</button>
-                    <button mat-menu-item (click)="questionFeedback(i, 'Incorrect Text')">Incorrect Text</button>
-                    <button mat-menu-item (click)="questionFeedback(i, 'Grammar')">Grammar</button>
-                    <button mat-menu-item (click)="questionFeedback(i, 'Other')">Other</button>
-                </mat-menu>
             </div>
         </div>
 
@@ -205,5 +198,5 @@
 
 <div style="margin: 32px;" fxLayout="column" fxLayoutAlign="center center" *ngIf="editable">
     <h3>Any and all feedback is appreciated!</h3>
-    <button mat-raised-button (click)="openFeedback()" color="primary">Feedback</button>
+    <a mat-raised-button [href]="githubIssues" target="_blank">Feedback</a>
 </div>

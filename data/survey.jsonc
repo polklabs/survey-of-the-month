@@ -23,7 +23,8 @@
         "[type:text]How are you doing this fine day of #monthNow#?",
         "[type:multi][key:allAnswers][count:-1]Are you excited to take this survey?",
         "[type:text]How is #yearNow# treating you so far?",
-        "[type:text]What the most exciting thing that happened to you this #timeRange#?"
+        "[type:text]What the most exciting thing that happened to you this #timeRange#?",
+        "[type:text]Are you excited for #nextHoliday#?"
     ],
 
     // Simple question for end of survey
@@ -75,7 +76,7 @@
         "[type:text]You're transported #1_100.range# #timeRange.s# into the #pastFuture#. What do you do?",
         "[type:text]What's something you'd find in #person.capitalize.possessive# search history?",
         "[type:text]What's something you'd find in #character.possessive# search history?",
-        "[type:multi][key:mythical_creature,animal,living_thing]Oh whoah you were bitten by a creature and can now turn into its kind at will. What bit you?",
+        "[type:multi][key:mythical_creature,animal,living_thing]Oh whoa you were bitten by a creature and can now turn into its kind at will. What bit you?",
         "[type:multi][key:enchantedItem]You're on #quest.a# to #quest_objective# #quest_entity.a# and #quest_objective# #quest_entity.a#. Which item do you choose?",
         "[type:multi][key:traits]You have two new character traits, what are they?",
         "[type:text]What's #favoriteCategory.a# you're weirdly obsessed with?",
@@ -103,7 +104,7 @@
         "[type:text][objectA:#objectSmall#]You have 5 minutes to hide #objectA.a# in your home. A detective has #1_24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
         "[type:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
         "[type:multi][key:yesNo][count:-1]Reporters show up at your door telling you you've won an award for your #crush_reason#. Do you accept it?",
-        "[type:text]You've been kidnapped. 30 mins later your kidnapper dumps you on the street because you won’t stop talking about what?",
+        "[type:text]You've been kidnapped. 30 mins later your kidnapper dumps you on the street because you won't stop talking about what?",
         "[type:text]What fan theory do you 100% accept as true?",
         "[type:multi][key:1Percent]You are now the 1% of?",
         "[type:text]You've been transformed into #animal.a#, how do you convince #person.capitalize# you're you?",
@@ -141,10 +142,10 @@
         "[type:text]Who would win in a fight between #animal.a# and #animal.a#?",
         "[type:text]You got #objectSmall.a# in your hand, what do you do with it?",
         "[type:multi][key:generalReaction]Didn't you hear!? They're remaking #world# and getting #character_actor# to play the lead!",
-        "[type:multi][key:person][count:-1]Who would send you the following text: #emoji_combo#",
+        "[type:multi][key:person][count:-1]Who would send you the following text: #emoji_combo_large#",
         "[type:text]What is your favorite emoji?",
-        "[type:multi][key:emoji_combo]Choose one to send to #person.capitalize#",
-        "[type:multi][key:emoji_combo]How are you feeling right now?",
+        "[type:multi][key:emoji_combo_large]Choose one to send to #person.capitalize#",
+        "[type:multi][key:emoji_combo_large]How are you feeling right now?",
         "[type:text]#^$animal:mythical_creature:living_thing$.a.capitalize# is running toward you at full speed, all you have is #objectSmall.a#. What do you do?",
         "[type:multi][key:animal,mythical_creature]#person.capitalize# would most likely adopt a:",
         "[type:multi][key:person][count:-1]Who is most likely able to speak #language#?",
@@ -159,7 +160,7 @@
         "[type:text]The next time you see #person.capitalize# they're speaking with #accent.a# accent. How do you react?",
         "[type:text]You arrive home to find #person.capitalize# and #person.capitalize# asking you to sit down for an intervention. What is it about?",
         "[type:multi][key:generalReaction]#person.capitalize# has just invested all their money into #generalThings.s#.",
-        "[type:text]#person.capitalize# just sent you the emoji #emoji_combo#. What does it mean?",
+        "[type:text]#person.capitalize# just sent you the emoji #emoji_combo_large#. What does it mean?",
         "[type:multi][key:apocalypse_survival_time][count:-1]How long do you think ^$you:#person.capitalize#$ could survive #apocalypse.a# apocalypse?",
         "[type:text]What is your plan for surviving #apocalypse.a# apocalypse?",
         "[type:check][key:character,person,animal,living_thing,character_full]Pick two companions for #apocalypse.a# apocalypse?",
@@ -206,8 +207,11 @@
         "[type:text]Send someone the following message and write their response here. \"^$#greeting# #nickname_full#:I #verb_transitive# your #object_descriptive#$\"",
         "[type:text]Your sugar daddy/momma gives you a ^$sailboat:dog:cat:plane$. What do you name it?",
         "[type:text]How tall do you think #person.capitalize# is in terms of #unit_of_measurement#?",
-        "[type:text]Write a short poem about ^$#person.capitalize#:#world#:#genre_movie# movies:#favoriteCategory.s#:being #trait#:#verb_transitive.ing#$",
-        "[type:text]Pick one item you own to show to ^$an alien:#character_famous#$"
+        "[type:text]Write a short poem about ^$#person.capitalize#:#world#:#genre_movie.a# movie:#favoriteCategory.s#:being #trait#:#verb_transitive.ing#$",
+        "[type:text]Pick one item you own to show to ^$an alien:#character_famous#$",
+        "[type:text]What are your plans for #holiday#?",
+        "[type:text]What traditional thing do you do on #holiday#?",
+        "[type:multi][key:holiday]Which is your favorite holiday?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -231,7 +235,7 @@
 
     /* Traits ************************************************************************************************************************* */
     "trait_good": [
-        "adaptable", "accountable", "active", "adventurous", "affable", "affectionate", "agreeable", "alert", "ambitious", "analytical", "appropriate", "articulate", "artistic", "aspiring", "assertive", "attentive", "[tag:nsfw]attractive", "balanced", "brainy", "brave", "bright", "brilliant", "bubbly", "calm", "captivating", "careful", "caring", "charming", "cheerful", "clever", "commanding", "committed", "compassionate", "competitive", "concise", "confident", "conscious", "considerate", "cooperative", "coordinated", "courageous", "courteous", "creative", "curious", "decisive", "dedicated", "dependable", "determined", "devoted", "direct", "disciplined", "driven", "dynamic", "eager", "educated", "efficient", "egalitarian", "elegant", "eloquent", "empathetic", "encouraging", "energetic", "engaged", "enterprising", "enthusiastic", "entrepreneurial", "evenhanded", "expressive", "fair", "faithful", "flexible", "fluent", "focused", "forgiving", "friendly", "fun", "funny", "generous", "genius", "gentle", "giving", "glowing", "good", "graceful", "grateful", "gregarious", "handsome", "happy", "hardworking", "hardy", "healthy", "hearty", "helpful", "honest", "humble", "imaginative", "independent", "industrious", "influential", "informed", "innovative", "insightful", "inspiring", "intelligent", "interested", "intuitive", "involved", "joyful", "judicious", "just", "keen", "kind", "knowledgeable", "likable", "logical", "lovely", "loving", "loyal", "lucky", "magnificent", "mannered", "mature", "methodical", "mindful", "moderate", "modest", "motivated", "mystical", "natty", "neat", "neutral", "nice", "noble", "nurturing", "obedient", "objective", "observant", "open", "optimistic", "orderly", "organized", "original", "outgoing", "passionate", "patient", "perceptive", "poised", "polite", "positive", "practical", "precise", "productive", "professional", "proper", "punctual", "qualified", "questioning", "quick", "rational", "realistic", "receptive", "relaxed", "reliable", "resourceful", "respected", "responsible", "romantic", "secure", "selfless", "sensitive", "[tag:nsfw]sexy", "simple", "sincere", "skilled", "sociable", "spiritual", "steady", "striving", "strong", "sweet", "talented", "tenacious", "thorough", "tolerant", "trusting", "trustworthy", "understanding", "unique", "unpretentious", "unselfish", "unstoppable", "uprising", "versatile", "vigorous", "visionary", "warm", "wise", "wonderful", "xenodochial", "xenophilic", "young", "youthful", "zaftig", "zappy", "zazzy", "zealous", "zesty", "zippy"
+        "adaptable", "accountable", "active", "adventurous", "affable", "affectionate", "agreeable", "alert", "ambitious", "analytical", "appropriate", "articulate", "artistic", "aspiring", "assertive", "attentive", "[tag:nsfw]attractive", "balanced", "brainy", "brave", "bright", "brilliant", "bubbly", "calm", "captivating", "careful", "caring", "charming", "cheerful", "clever", "commanding", "committed", "compassionate", "competitive", "concise", "confident", "conscious", "considerate", "cooperative", "coordinated", "courageous", "courteous", "creative", "curious", "decisive", "dedicated", "dependable", "determined", "devoted", "direct", "disciplined", "driven", "dynamic", "eager", "educated", "efficient", "egalitarian", "elegant", "eloquent", "empathetic", "encouraging", "energetic", "engaged", "enterprising", "enthusiastic", "entrepreneurial", "evenhanded", "expressive", "fair", "faithful", "flexible", "fluent", "focused", "forgiving", "friendly", "fun", "funny", "generous", "genius", "gentle", "giving", "glowing", "good", "graceful", "grateful", "gregarious", "handsome", "happy", "hardworking", "hardy", "healthy", "hearty", "helpful", "honest", "humble", "imaginative", "independent", "industrious", "influential", "informed", "innovative", "insightful", "inspiring", "intelligent", "interested", "intuitive", "involved", "joyful", "judicious", "just", "keen", "kind", "knowledgeable", "likable", "logical", "lovely", "loving", "loyal", "lucky", "magnificent", "mannered", "mature", "methodical", "mindful", "moderate", "modest", "motivated", "mystical", "natty", "neat", "neutral", "nice", "noble", "nurturing", "obedient", "objective", "observant", "open", "optimistic", "orderly", "organized", "original", "outgoing", "passionate", "patient", "perceptive", "poised", "polite", "positive", "practical", "precise", "productive", "professional", "proper", "punctual", "qualified", "questioning", "quick", "rational", "realistic", "receptive", "relaxed", "reliable", "resourceful", "respected", "responsible", "romantic", "secure", "selfless", "sensitive", "[tag:nsfw]sexy", "simple", "sincere", "skilled", "sociable", "spiritual", "steady", "striving", "strong", "sweet", "talented", "tenacious", "thorough", "tolerant", "trusting", "trustworthy", "understanding", "unique", "unpretentious", "unselfish", "unstoppable", "uprising", "versatile", "vigorous", "visionary", "warm", "wise", "wonderful", "young", "youthful", "zaftig", "zappy", "zazzy", "zealous", "zesty", "zippy"
     ],
     "trait_bad": [
         "afraid", "aggressive", "aloof", "angry", "apathetic", "arrogant", "bad-tempered", "biased", "boastful", "bombastic", "boring", "bossy", "calculating", "callous", "careless", "caustic", "cheerless", "childish", "closed", "cold", "combative", "complacent", "conceited", "conniving", "constricting", "controlling", "cowardly", "cowering", "cruel", "curt", "dangerous", "deceiving", "dependent", "dishonest", "disrespectful", "distant", "emotional", "egocentric", "envious", "evil", "exacting", "exaggerated", "fearful", "finicky", "flaky", "fleeting", "foolish", "frisky", "gloomy", "glutton", "greedy", "grumpy", "guarded", "gullible", "harsh", "hateful", "haughty", "hesitant", "hostile", "hypercritical", "ignorant", "immature", "impatient", "impolite", "impractical", "incompetent", "inconsiderate", "indecisive", "indifferent", "inflexible", "insensitive", "intolerant", "jealous", "judgmental", "juvenile", "killjoy", "knavish", "know-it-all", "lax", "lazy", "liar", "lifeless", "loafer", "lonely", "loud", "malicious", "materialistic", "mean", "miserly", "mistrusting", "moody", "nasty", "[tag:nsfw]naughty", "non-committal", "nonsensical", "numb", "obnoxious", "obscene", "obstinate", "oppressive", "overconfident", "oversensitive", "pessimistic", "petty", "petulant", "pompous", "pretentious", "proud", "quaint", "quarrelsome", "quirky", "random", "rash", "rebellious", "reluctant", "resentful", "restless", "ridiculous", "rigid", "rude", "sad", "sadistic", "scattered", "scornful", "secretive", "self-centered", "selfish", "severe", "shifty", "silly", "sour", "spendthrift", "spiteful", "stingy", "stubborn", "suspicious", "tactless", "thoughtless", "tight", "timid", "touchy", "trivial", "unappreciative", "unbending", "uncaring", "uncommitted", "uncooperative", "uncouth", "undependable", "undisciplined", "unenthusiastic", "unfeeling", "unfocused", "unforgiving", "unfriendly", "ungrateful", "unhelpful", "unkind", "unmotivated", "unreliable", "unresponsive", "unrestrained", "unruly", "unsure", "unsympathetic", "unwilling", "vain", "villainous", "vulgar", "wasteful", "weak-willed", "whimsical", "wicked", "wishy-washy", "wrathful", "xenophobic", "yucky"
@@ -392,7 +396,7 @@
         "#bodyPart#", "collection of ^$#object#:#character# figurines$", "pet #animal#", "#adjective# #bodyPart#", "^$#trait_good#:#trait_bad#$ personality"
     ],
     "apocalypse": [
-        "AI revolution", "zombie", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteriod impact", "ecological disaster", "alien invasion"
+        "AI revolution", "zombie", "war", "plague", "economic meltdown", "super volcano", "end of days", "asteroid impact", "ecological disaster", "alien invasion"
     ],
     "apocalypse_survival_time": [
         "1 day", "1 week", "1 month", "1 year", "1 decade", "indefinitely"

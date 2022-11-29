@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
+import { environment } from 'src/environments/environment';
 import { Question } from '../../model/question.model';
 
 const rarityValues = [1 * (10 ** 3), 1 * (10 ** 6), 1 * (10 ** 9), 1 * (10 ** 12), 1 * (10 ** 15), 1 * (10 ** 18)];
@@ -58,6 +59,8 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     rarityText = '';
     rarityColor = '';
+
+    githubIssues = environment.githubIssues;
 
     constructor(
         private dialogService: DialogService,
@@ -132,10 +135,6 @@ export class FormQuestionComponent implements OnInit, OnChanges {
         return HelperService.answerKeyToString(key);
     }
 
-    questionFeedback(type: string): void {
-        this.dialogService.feedbackQuestion(this.question, type);
-    }
-
     buttonsHelp(): void {
         this.dialogService.helpButtons();
     }
@@ -158,7 +157,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     clickRarity(): void {
         this.dialogService.alert(
-            `This specific question had a 1 in ${this.question.qChance.toLocaleString('en-US')} chance of occuring!<br><br><p>Rarities Are:</p><ol>${rarities.map(x => `<li>${x}</li>`).join('')}</ol>`,
+            `This specific question had a 1 in ${this.question.qChance.toLocaleString('en-US')} chance of occurring!<br><br><p>Rarities Are:</p><ol>${rarities.map(x => `<li>${x}</li>`).join('')}</ol>`,
             this.rarityText + ' Question'
         );
     }

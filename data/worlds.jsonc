@@ -6,7 +6,7 @@
         "#genre_movie#", "#genre_movie#/#genre_movie#"
     ],
     "genre_movie": [
-        "action", "adventure", "animation", "biography", "comedy", "crime", "documentary", "drama", "family", "fantasy", "film noir", "history", "horror", "music", "musical", "mystery", "romance", "sci-Fi", "short film", "sport", "superhero", "thriller", "war", "western"
+        "action", "adventure", "animation", "biography", "comedy", "crime", "documentary", "drama", "family", "fantasy", "film noir", "history", "horror", "musical", "mystery", "romance", "sci-Fi", "short film", "sport", "superhero", "thriller", "war", "western"
     ],
 
     /* Movies ************************************************************************************************************************** */

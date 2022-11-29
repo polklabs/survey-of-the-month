@@ -5,7 +5,7 @@
 
     /* Locations ********************************************************************************************************************** */
     "store": [
-        "the grocery store", "Home Depot", "Office Depot", "Petsmart", "Target", "Walmart", "Bestbuy", "a gift shop", "Barnes & Noble", "Bed Bath & Beyond", "Costco"
+        "the grocery store", "Home Depot", "Office Depot", "Petsmart", "Target", "Walmart", "BestBuy", "a gift shop", "Barnes & Noble", "Bed Bath & Beyond", "Costco"
     ],
     "fastFood": [
         "Sbarro", "Checkers & Rally's", "Jamba Juice", "Shake Shack", "Culver's", "Wingstop", "Whataburger", "Carl's Jr", "Church's Chicken", "Einstein Bros, Bagels", "Jimmy John's", "Firehouse Subs", "Nathan's Famous", "Jack in the Box", "Panda Express", "White Castle", "Jersey Mike's", "Hardee's", "Quizno's", "Orange Julius", "Auntie Anne's", "In-N-Out Burger", "Long John Silver's", "Starbucks", "Chipotle", "Five Guys", "Papa John's", "Boston Market", "Mrs", "A&W Restaurants", "Little Caesars", "McDonald's", "Cold Stone Creamery", "Popeyes", "Sonic", "Arby's", "Domino's", "Taco Bell", "Burger King", "Pizza Hut", "KFC", "Chick-fil-A", "Panera", "Dunkin'", "Krispy Kreme", "Cinnabon", "Subway", "Wendy's", "Dairy Queen", "Baskin-Robbins"

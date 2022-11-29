@@ -61,9 +61,9 @@ mat-tooltip-component > .mat-tooltip {
 }
 
 a:not(.mat-button, .mat-icon-button) {
-    color: darkturquoise !important;
+    color: white !important;
     &:visited {
-        color: fuchsia !important;
+        color: white !important;
     }
 }
 
@@ -82,4 +82,8 @@ input {
 
 .mat-dialog-container {
     background-color: #052d4d;
+}
+
+app-survey-results {
+	min-height: calc(100vh - 48px);
 }

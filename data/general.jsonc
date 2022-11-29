@@ -54,6 +54,20 @@
     "time": [
         "#1_12.range#:#0_59_1_2.range# ^$AM:PM$"
     ],
+    "holiday": [
+        "Valentine's Day",
+        "St. Patrick's Day",
+        "Easter",
+        "Mother's Day",
+        "Father's Day",
+        "The Fourth Of July",
+        "Halloween",
+        "Thanksgiving",
+        "Christmas",
+        "New Year's",
+        "Your Birthday",
+        "#person.capitalize.possessive# Birthday"
+    ],
     /* ******************************************************************************************************************************** */
 
     /* Geography ********************************************************************************************************************** */

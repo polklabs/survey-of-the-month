@@ -20,6 +20,7 @@
   "homepage": "https://github.com/polklabs/survey-of-the-month",
   "dependencies": {
     "cors": "^2.8.5",
+    "date-holidays": "^3.16.11",
     "express": "^4.17.1",
     "express-rate-limit": "^5.5.0",
     "express-slow-down": "^1.4.0",

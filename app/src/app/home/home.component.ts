@@ -76,10 +76,6 @@ export class HomeComponent implements OnInit {
         this.progress = (this.timeout / 10000) * 100;
     }
 
-    openFeedback(): void {
-        this.dialogService.feedback();
-    }
-
     openGithub(): void {
         window.open(environment.github, '_blank');
     }

@@ -10,6 +10,7 @@ import { APIData } from '../shared/model/api-data.model';
 import { SEOService } from '../core/services/seo.service';
 import { CanComponentDeactivate } from '../shared/guard/can-deactivate-guard.service';
 import { Question } from '../shared/model/question.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-survey-taker',
@@ -33,6 +34,8 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     submitted = false;
 
     totalQuestions = 0;
+
+    githubIssues = environment.githubIssues;
 
     constructor(
         private dialogService: DialogService,
@@ -147,7 +150,7 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     selectUser(userId: string, name: string): void {
-        this.dialogService.yesNo(`Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nAre you "${name}"?`).subscribe(
+        this.dialogService.yesNo(`Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nPlease do not share any confidential information such as home address, phone number, bank info, etc...\n\nAre you "${name}"?`).subscribe(
             ok => {
                 if (ok) {
                     this.answer.userId = userId;
@@ -239,10 +242,6 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
                 }
             }
         );
-    }
-
-    openFeedback(): void {
-        this.dialogService.feedback();
     }
 
     beginPresentation(): void {

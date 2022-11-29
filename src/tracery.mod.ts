@@ -112,6 +112,9 @@ export function ModString(value: string, mod: string, rng: any): string {
             case 'html_u':
                 value = `<u>${value}</u>`;
                 break;
+            case 'html_h':
+                value = `<h2>${value}</h2>`;
+                break;
             default:
                 console.log(`Unknown Mod: ${m}`);
                 value = value;

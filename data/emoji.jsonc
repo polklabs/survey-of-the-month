@@ -1,4 +1,7 @@
 {
+    "emoji_combo_large": [
+        "#emoji_combo.html_h#"
+    ],
     "emoji_combo": [
         "#emoji##emoji#", "#emoji##emoji##emoji#", "#emoji##emoji##emoji##emoji#", "#emoji_combo_set#"
     ],

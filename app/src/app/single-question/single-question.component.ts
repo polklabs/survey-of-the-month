@@ -145,6 +145,11 @@ export class SingleQuestionComponent implements OnInit {
         this.localStorageService.setUsers(this.users);
     }
 
+    randomizeUsers(): void {
+        this.localStorageService.setUsers([]);
+        this.users = this.localStorageService.getUsers();
+    }
+
     createSurvey(): void {
         this.questionHolderService.saveQuestion(this.question);
         this.router.navigateByUrl('/manage/make/0/0');

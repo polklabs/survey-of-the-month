@@ -2,7 +2,8 @@ import { setSeed, randomNext } from './tracery.math';
 import { ModString } from './tracery.mod';
 import { AnswerType, Question } from '../app/src/app/shared/model/question.model';
 import { grammar, grammarKeys } from './tracery.load';
-import { months, regexInlineChoiceGroup, regexInlineChoices, regexString, regexVariable } from './tracery.const';
+import { regexInlineChoiceGroup, regexInlineChoices, regexString, regexVariable } from './tracery.const';
+import { monthNow, nextHoliday, yearNow } from './tracery.custom';
 
 export class Tracery {
 
@@ -18,8 +19,9 @@ export class Tracery {
     question: Question = new Question();
 
     constructor(people: string[] = [], customSeed = '', questionOrigin = -1, typeFilter?: AnswerType, filterTags?: string[]) {
-        this.customDict['monthNow'] = [months[(new Date()).getMonth()]];
-        this.customDict['yearNow'] = [(new Date()).getFullYear().toString()];
+        this.customDict['monthNow'] = monthNow();
+        this.customDict['yearNow'] = yearNow();
+        this.customDict['nextHoliday'] = nextHoliday();
 
         this.seen = {};
         this.question.questionOrigin = questionOrigin;
@@ -271,7 +273,7 @@ export class Tracery {
             this.seen[key] = new Set();
         }
 
-        // Only try again if we havent seen all the keys in the list
+        // Only try again if we haven't seen all the keys in the list
         if (this.seen[key].size < dict[key].length) {
             let tries = 0 // Prevent infinite loops
             while (this.seen[key].has(value) && tries < dict[key].length * 2) {

@@ -60,7 +60,7 @@
             <button mat-icon-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon></button>
             <button mat-icon-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon></button>
             <button mat-icon-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon></button>
-            <button mat-icon-button *ngIf="!question.custom && basicEdit" [mat-menu-trigger-for]="reportMenu" matTooltip="Report Question"><mat-icon>report</mat-icon></button>
+            <a mat-icon-button *ngIf="!question.custom && basicEdit" [href]="githubIssues" target="_blank" matTooltip="Please Report: Missing Tags, Broken Links, Incorrect Text, Grammar, Other Issues"><mat-icon>report</mat-icon>Report</a>
             <div fxFlex></div>
             <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()"><mat-icon>help</mat-icon></button>
         </mat-card-actions>
@@ -70,7 +70,7 @@
             <button mat-raised-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon> Question Variation</button>
             <button mat-raised-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon> New Answers</button>
             <button mat-raised-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon> Seed</button>
-            <button mat-raised-button *ngIf="!question.custom && basicEdit" [mat-menu-trigger-for]="reportMenu" matTooltip="Report Question"><mat-icon>report</mat-icon> Report</button>
+            <a mat-raised-button *ngIf="!question.custom && basicEdit" [href]="githubIssues" target="_blank" matTooltip="Please Report: Missing Tags, Broken Links, Incorrect Text, Grammar, Other Issues"><mat-icon>report</mat-icon>Report</a>
             <div fxFlex></div>
             <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()" aria-label="Question Help"><mat-icon>help</mat-icon></button>
         </mat-card-actions>
@@ -80,14 +80,6 @@
         <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     </mat-card-footer>
 </mat-card>
-
-<mat-menu #reportMenu="matMenu">
-    <button mat-menu-item (click)="questionFeedback('Missing Tag')">Missing Tag</button>
-    <button mat-menu-item (click)="questionFeedback('Broken Link')">Broken Link</button>
-    <button mat-menu-item (click)="questionFeedback('Incorrect Text')">Incorrect Text</button>
-    <button mat-menu-item (click)="questionFeedback('Grammar')">Grammar</button>
-    <button mat-menu-item (click)="questionFeedback('Other')">Other</button>
-</mat-menu>
 
 <!-- Answer Templates -->
 <ng-template #formDefault>

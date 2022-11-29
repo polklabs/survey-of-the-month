@@ -17,6 +17,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { AnalyticsService } from 'src/app/core/services/analytics.service';
 import { SEOService } from 'src/app/core/services/seo.service';
 import { QuestionCacheService } from 'src/app/core/services/question-cache.service';
+import { environment } from 'src/environments/environment';
 
 const animationTime = 400;
 
@@ -57,6 +58,8 @@ export class SurveyMakerComponent implements OnInit {
     scrollDelay?: HTMLElement;
 
     dirty = false;
+
+    githubIssues = environment.githubIssues;
 
     // For animations
     questionPos: string[] = [];
@@ -479,10 +482,6 @@ export class SurveyMakerComponent implements OnInit {
         }, animationTime);
     }
 
-    openFeedback(): void {
-        this.dialogService.feedback();
-    }
-
     calculateQuestionPos(): void {
         this.questionPos = this.survey.questions.map(x => x.questionId);
     }
@@ -512,10 +511,6 @@ export class SurveyMakerComponent implements OnInit {
         } else {
             this.filterTags = this.localStorageService.getTags();
         }
-    }
-
-    questionFeedback(index: number, type: string): void {
-        this.dialogService.feedbackQuestion(this.survey.questions[index], type);
     }
 
     undo(key: number): void {

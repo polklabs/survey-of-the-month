@@ -17,7 +17,8 @@ const randomPeople = [
     ['Shawn', 'Gus', 'Carlton', 'Juliet'],
     ['Jake', 'Amy', 'Terry', 'Charles', 'Rosa', 'Raymond', 'Gina'],
     ['Jeff', 'Britta', 'Abed', 'Annie', 'Shirley', 'Dean', 'Troy', 'Pierce'],
-    ['Ted', 'Barney', 'Marshall', 'Lily', 'Robin']
+    ['Ted', 'Barney', 'Marshall', 'Lily', 'Robin'],
+    ['Frodo', 'Sam', 'Gandalf', 'Legolas', 'Gollum', 'Aragorn', 'Gimli']
 ];
 
 @Injectable({
