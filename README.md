@@ -11,7 +11,7 @@ This is a fun side project, any feature updates or bug fixes are not guaranteed.
 
 ## Tracery
 
-This app is build around a scratch build version of [Tracery](http://www.tracery.io/), with some custom modifications.
+This app is built around a ground up version of [Tracery](http://www.tracery.io/), with some custom modifications.
 
 The basic idea is you load a dictionary with each entry having an array of strings. You start with some origin key then take a random string from that list and look for any more keys denoted by `This is a #key#`.
 
