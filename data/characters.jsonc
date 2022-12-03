@@ -3,11 +3,11 @@
     "living_thing": [
         "#character#", "#animal#", "#mythical_creature#", "#quest_entity#"
     ],
-    "charated_simpleTrait": [
+    "character_simpleTrait": [
         "#living_thing#", "#trait_good# #living_thing#", "#trait_bad# #living_thing#", "#adjective# #living_thing#"
     ],
     "character_full": [
-        "#living_thing#", "#charated_simpleTrait#", "#charated_simpleTrait# with #object.a#", "#charated_simpleTrait# with #enchantedObject.a#", "#charated_simpleTrait# weilding #enchantedWeapon.a#", "#charated_simpleTrait# wearing #enchantedGear.a#"
+        "#living_thing#", "#character_simpleTrait#", "#character_simpleTrait# with #object.a#", "#character_simpleTrait# with #enchantedObject.a#", "#character_simpleTrait# wielding #enchantedWeapon.a#", "#character_simpleTrait# wearing #enchantedGear.a#"
     ],
     "characterClothes": [
         "[tag:nsfw]#character# wearing #clothing.a#", "[tag:nsfw]#character# wearing #color.a# #clothing#", "[tag:nsfw]#character# wearing #color.a# #clothing# and #color.a# #clothing#", "[tag:nsfw]#character# wearing only #clothing.a#", "[tag:nsfw]#character# wearing only #clothing.a# and #clothing.a#"

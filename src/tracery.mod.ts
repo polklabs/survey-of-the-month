@@ -10,6 +10,9 @@ export function ModString(value: string, mod: string, rng: any): string {
             case 'capitalize':
                 value = value.substring(0, 1).toUpperCase() + value.substring(1);
                 break;
+            case 'caps':
+                value = value.toUpperCase();
+                break;
             case 'a':
                 value = vowels.indexOf(value[0]) >= 0 ? `an ${value}` : `a ${value}`;
                 break;

@@ -10,6 +10,8 @@ export class Question {
     seed = '';
     custom = true;
     vars: any = {};
+    aTags: string[] = []; // Answer Tags
+    qTags: string[] = []; // Question Tags
     qChance = 1; // Chance of a question being displayed
 
     // Choice/Answer

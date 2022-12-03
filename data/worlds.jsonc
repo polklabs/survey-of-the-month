@@ -35,11 +35,30 @@
     "movie_addition": [
         "dinosaurs", "robots", "aliens", "cowboys", "musical numbers", "cell phones", "magic", "guns", "ghosts", "time travel"
     ],
+    
+    // Harry Potter
+    "harry_potter_question": [
+        "[type:text]What animal would your Patronus be?", 
+        "[type:multi][key:harry_potter_house][count:4]Which Hogwarts would you join?",
+        "[type:multi][key:harry_potter_hallow][count:3]Which Deathly Hallow would you choose?",
+        "[type:text]What is your ^$opinion of:hot take on:controversial opinion of$ #character_harryPotter#?",
+        "[type:text]What wizarding career would ^$you:#person.capitalize#$ pursue?"
+    ],
+    "harry_potter_house": [
+        "Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"
+    ],
+    "harry_potter_hallow": [
+        "Elder Wand", "Resurrection Stone", "Invisibility Cloak"
+    ],
+
     /* ******************************************************************************************************************************** */
 
     /* TV ***************************************************************************************************************************** */
     "tv": [
-        "The Office", "Friends", "Parks and Recreation", "New Girl", "It's Always Sunny In Philadelphia", "Community", "30 Rock", "Scrubs", "Brooklyn Nine-Nine", "Schitt's Creek", "How I Met Your Mother", "Superstore", "Seinfeld", "Gravity Falls", "Avatar The Last Airbender", "Demon Slayer", "Star Trek", "Stargate", "Black Mirror", "Buffy", "Firefly", "Game of Thrones", "The Good Place", "Killing Eve", "Limitless", "The Magicians", "Psych", "Sherlock", "Ted Lasso", "Twilight Zone", "Westworld", "The Great British Bake Off", "A Series of Unfortunate Events"
+        "The Office", "Friends", "Parks and Recreation", "New Girl", "It's Always Sunny In Philadelphia", "Community", "30 Rock", "Scrubs", "Brooklyn Nine-Nine", "Schitt's Creek", "How I Met Your Mother", "Superstore", "Seinfeld", "Gravity Falls", "Avatar The Last Airbender", "Demon Slayer", "Star Trek", "Stargate", "Black Mirror", "Buffy", "Firefly", "Game of Thrones", "The Good Place", "Killing Eve", "Limitless", "The Magicians", "Psych", "Sherlock", "Ted Lasso", "Twilight Zone", "Westworld", "The Great British Bake Off", "A Series of Unfortunate Events", "Andor", "Wanda Vision", "Loki", "Obi Wan"
+    ],
+    "tv_quote": [
+        "[tag:tv_psych]I've heard it both ways.", "[tag:tv_psych]Have you heard about Pluto? That's messed up.", "[tag:tv_seinfeld]No soup for you!", "[tag:tv_theOffice]\"You miss 100% of the shots you don't take\" - Wayne Gretzky - Michael Scott", "[tag:tv_theOffice]If I can't scuba, then what's this all been about? What am I working toward?", "[tag:tv_theOffice]Sometimes I'll start a sentence, and I don't even know where it's going. I just hope I find it along the way.", "[tag:tv_friends]Joey doesn't share food!", "[tag:tv_newGirl]I hate your mustache because I miss your upper lip.", "[tag:tv_newGirl]Sometimes I think I'm just a riddle that I can't even solve.", "[tag:tv_newGirl]You gave me cookie I got you cookie, man.", "[tag:tv_newGirl]It's perfectly fine to watch TV all day.", "[tag:tv_newGirl]I just wanted to listen to Taylor Swift alone!", "[tag:tv_newGirl]The economy stinks, bees are dying, and movies are pretty much all sequels now.", "[tag:tv_community]I was never one to hold a grudge. My father held grudges, I'll always hate him for that.", "[tag:tv_community]I know what a metaphor is! It's like a thought with another thought's hat on.", "[tag:tv_psych]Note to self: be rich one day.", "[tag:tv_psych]Just because you put syrup on something don't make it pancakes.", "[tag:tv_psych]I don't lose things. I place things in locations which later elude me."
     ]
     /* ******************************************************************************************************************************** */
 }

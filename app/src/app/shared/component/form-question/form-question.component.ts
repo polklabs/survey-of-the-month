@@ -169,4 +169,12 @@ export class FormQuestionComponent implements OnInit, OnChanges {
         return {};
     }
 
+    getTags(): string {
+        return [...this.question.aTags.map(x => HelperService.tagToString(x)), ...this.question.qTags.map(x => HelperService.tagToString(x))].join(', ');
+    }
+
+    hasTags(): boolean {
+        return this.question.aTags.length > 0 || this.question.qTags.length > 0;
+    }
+
 }

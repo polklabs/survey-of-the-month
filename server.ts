@@ -10,7 +10,6 @@ import cors from 'cors';
 import { Answer } from './app/src/app/shared/model/answer.model';
 import { grammarHTML } from './src/data.html';
 import { getTags } from './src/tracery.load';
-import { nextHoliday } from './src/tracery.custom';
 
 export type response = { json: (res: APIData) => any };
 
@@ -130,6 +129,7 @@ app.get('/api/home', speedLimiter, (_, res: any) => {
 
 app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: response) => {
     let tracery = new Tracery();
+    tracery.filterTags = ['nsfw']
     const text = tracery.simpleStart(req.query.id);
     res.json({ ok: true, data: text });
 });

@@ -24,8 +24,9 @@
 
         <div id="scrollTo"></div>
 
+        <button fxHide.gt-xs mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
         <div fxLayout="row">
-            <button mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
+            <button fxHide.lt-sm mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
             <button mat-raised-button (click)="hideTags = !hideTags; scroll('tags')" [color]="hideTags ? '' : 'accent'">Tags <mat-icon>label</mat-icon></button>
             <div fxFlex></div>
             <button mat-raised-button (click)="undo()" [disabled]="canUndo() === false" matTooltip="Undo"><mat-icon>undo</mat-icon></button>

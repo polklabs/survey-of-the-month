@@ -200,7 +200,7 @@
         "[type:text]What's your favorite ^$pick-up line:joke$?",
         "[type:text]What company would you start if you had $50,000?",
         "[type:text]You have to eat the closest #color# thing. What are you eating?",
-        "[type:text]Add #context_change# to a ^$quote:quote from #world#$ to change the ^$context:meaning$.",
+        "[type:text]Add \"#context_change#\" to a ^$quote:quote from #world#$ to change the ^$context:meaning$.",
         "[type:multi][key:nickname_full]What is a good ^$nickname:insult:compliment$ for ^$yourself:#person.capitalize#$",
         "[type:multi][key:nickname_full]What is ^$a good:an insulting:a bad:an accurate$ nickname for ^$yourself:#person.capitalize#$",
         "[type:text]#person.capitalize# just broke your favorite #object#. What do you say to them?",
@@ -211,7 +211,11 @@
         "[type:text]Pick one item you own to show to ^$an alien:#character_famous#$",
         "[type:text]What are your plans for #holiday#?",
         "[type:text]What traditional thing do you do on #holiday#?",
-        "[type:multi][key:holiday]Which is your favorite holiday?"
+        "[type:multi][key:holiday]Which is your favorite holiday?",
+        "[type:text]Which ^$music album:movie:tv show:book$ would you most like to have on a desert island?",
+        "[type:text]What time period would you most like to live in?",
+        "[type:text][tag:movies_harryPotter]#harry_potter_question#",
+        "[type:multi][key:tv_quote]Which quote speaks to you the most?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -416,7 +420,7 @@
         "my #relation#", "the ghost of #characterReal#", "#character#", "my ex", "a high school marching band", "#trait.a# #career#", "the ^$kid:guy:girl$ from #world#", "a professional #olympicSport# team", "my ^$tinder:bumble:hinge:farmers only$ date"
     ],
     "excuse_delay": [
-        "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me ^$syphilis:a cold:herpes:mono:a concussion$", "poured #drink# in my gas tank", "^$stabbed:mugged:shot:killed:kidnapped$ me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on ^$Instagram:Facebook:LinkedIn:YouTube:Pornhub:the internet$"
+        "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me ^$syphilis:a cold:herpes:mono:a concussion$", "poured #drink# in my gas tank", "^$stabbed:mugged:shot:killed:kidnapped$ me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on ^$Instagram:Facebook:LinkedIn:YouTube:PornHub:the internet$"
     ],
         
     "context_change": [

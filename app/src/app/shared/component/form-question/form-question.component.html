@@ -31,7 +31,7 @@
                 <p *ngIf="showFormatted" [innerHTML]="formatAnswer()"></p>
                 <p *ngIf="!showFormatted">******************</p>
                 <div>
-                    <button mat-icon-button (click)="showFormatted = !showFormatted"><mat-icon>{{showFormatted ? 'visibility_off' : 'visibility'}}</mat-icon></button>
+                    <button mat-icon-button (click)="showFormatted = !showFormatted" matTooltip="Reveal Answer"><mat-icon>{{showFormatted ? 'visibility_off' : 'visibility'}}</mat-icon></button>
                     <button mat-icon-button *ngIf="editable" (click)="aFormatEdit.emit()"><mat-icon>edit</mat-icon></button>
                 </div>
             </div>
@@ -52,6 +52,10 @@
         </mat-card-actions>
     </ng-container>
 
+    <ng-container *ngIf="basicEdit && hasTags()">
+        <p class="tag-list">Tags: {{getTags()}}</p>
+    </ng-container>
+
     <ng-container *ngIf="editable || basicEdit">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
 
@@ -59,8 +63,8 @@
             <button mat-raised-button color="primary" [disabled]="loading" (click)="qRandomize.emit()" matTooltip="Randomize Question"><mat-icon>sync</mat-icon> Question</button>
             <button mat-icon-button color="accent" (click)="qShuffle.emit()" [disabled]="loading || question.custom" matTooltip="Question Variation"><mat-icon>sync_lock</mat-icon></button>
             <button mat-icon-button color="accent" [disabled]="loading || question.custom || disableAnswerRandom()" (click)="qRandomizeAnswers.emit()" matTooltip="Randomize Answers"><mat-icon>casino</mat-icon></button>
-            <button mat-icon-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon></button>
-            <a mat-icon-button *ngIf="!question.custom && basicEdit" [href]="githubIssues" target="_blank" matTooltip="Please Report: Missing Tags, Broken Links, Incorrect Text, Grammar, Other Issues"><mat-icon>report</mat-icon>Report</a>
+            <!-- <button mat-icon-button (click)="qSeed.emit()" matTooltip="Seed Question"><mat-icon>search</mat-icon></button> -->
+            <a mat-icon-button *ngIf="!question.custom && basicEdit" [href]="githubIssues" target="_blank" matTooltip="Please Report: Missing Tags, Broken Links, Incorrect Text, Grammar, Other Issues"><mat-icon>report</mat-icon></a>
             <div fxFlex></div>
             <button mat-icon-button matTooltip="Help" (click)="buttonsHelp()"><mat-icon>help</mat-icon></button>
         </mat-card-actions>

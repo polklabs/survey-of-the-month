@@ -39,16 +39,14 @@ export class HomeComponent implements OnInit {
             this.text = data.text;
         });
 
-        if (environment.production) {
-            let timer = setInterval(() => this.runTimer(), 150);
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    clearInterval(timer);
-                } else {
-                    timer = setInterval(() => this.runTimer(), 150);
-                }
-            });
-        }
+        let timer = setInterval(() => this.runTimer(), 150);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(timer);
+            } else {
+                timer = setInterval(() => this.runTimer(), 150);
+            }
+        });
 
         this.localStorageService.getSurveysWatch().subscribe(
             s => {
