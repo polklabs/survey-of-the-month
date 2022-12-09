@@ -110,11 +110,11 @@ export class SingleQuestionComponent implements OnInit {
                 this.loading = false;
                 if (this.questionComp) { this.questionComp.clearAnswer(); }
 
-                if (!this.firstCall) {
-                    setTimeout(() => {
-                        this.scroll('scrollTo');
-                    }, 50);
-                }
+                // if (!this.firstCall) {
+                //     setTimeout(() => {
+                //         this.scroll('scrollTo');
+                //     }, 50);
+                // }
                 this.firstCall = false;
             });
         }, 500);

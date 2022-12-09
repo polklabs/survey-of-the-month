@@ -3,7 +3,6 @@
     height: 100%;
     align-items: flex-start;
     place-content: space-between center;
-    background-image: url("/assets/imgs/chalkboard.jpg");
     min-height: calc(100vh - 48px - 280px); 
     overflow: auto;
 }
@@ -29,10 +28,11 @@ mat-toolbar {
 
 .footer {
     text-align: start;
-    background-color: #373737;
+    background-color: rgba(55, 55, 55, 0.5);
     color: whitesmoke !important;
     width: 100%;
     padding: 16px 0;
+    border-top: white solid;
     a {
         text-align: start;
         text-decoration: underline;

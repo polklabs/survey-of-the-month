@@ -22,23 +22,23 @@
 
     "character": [
         // TV
-        "[tag:tv_theOffice]#character_theOffice#",
-        "[tag:tv_parksAndRec]#character_parksRec#",
-        "[tag:tv_friends]#character_friends#",
-        "[tag:tv_seinfeld]#character_seinfeld#",
+        "[tag:tv_theOffice][tt:The Office]#character_theOffice#",
+        "[tag:tv_parksAndRec][tt:Parks and Rec]#character_parksRec#",
+        "[tag:tv_friends][tt:Friends]#character_friends#",
+        "[tag:tv_seinfeld][tt:Seinfeld]#character_seinfeld#",
 
         // Movies
-        "[tag:movies_lotr]#character_lotr#",
-        "[tag:movies_pixar]#character_pixar#",
-        "[tag:movies_harryPotter]#character_harryPotter#",
-        "[tag:movies_marvel]#character_marvel#^$: pre powers$",
-        "[tag:movies_dc]#character_dc#",
+        "[tag:movies_lotr][tt:Lord of the Rings]#character_lotr#",
+        "[tag:movies_pixar][tt:Pixar]#character_pixar#",
+        "[tag:movies_harryPotter][tt:Harry Potter]#character_harryPotter#",
+        "[tag:movies_marvel][tt:Marvel]#character_marvel#^$: pre powers$",
+        "[tag:movies_dc][tt:DC Comics]#character_dc#",
         "[tag:movies]#character_movie_other#",
 
         // Real
-        "[tag:music]#character_singer#",
-        "[tag:actor]#character_actor#",
-        "[tag:sports]#character_sports#",
+        "[tag:music][tt:Musician]#character_singer#",
+        "[tag:actor][tt:Actor]#character_actor#",
+        "[tag:sports][tt:Athlete]#character_sports#",
         "#character_famous#"
     ],
 

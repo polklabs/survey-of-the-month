@@ -108,8 +108,8 @@ export class Tracery {
 
     // Get the question type
     if (this.question.vars["type"] !== undefined) {
-      const answType = this.question.vars["type"];
-      this.question.answerType = answType === "madlib" ? "text" : answType;
+      const answerType = this.question.vars["type"];
+      this.question.answerType = answerType === "madlib" ? "text" : answerType;
       delete this.question.vars["type"];
       this;
     }
@@ -174,7 +174,7 @@ export class Tracery {
           this.customDict[this.question.answerKey] ??
           [];
         allAnswers.forEach((a) => {
-          let choice = ModString(this.ParseString(a), "capitalize", this.rng);
+          let choice = ModString(this.ParseString(a), "capitalize", this.question.vars, this.rng);
           this.question.choices.push(choice);
           this.saveTags(false);
         });
@@ -206,7 +206,6 @@ export class Tracery {
 
     // Filtering -------------------------------------------------------
     const filteredList = dict[key].filter((str) => {
-      let toReturn = true;
       let m;
       while ((m = regexVariable.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
@@ -220,26 +219,31 @@ export class Tracery {
         // Filter out tags
         if (filterKey === "tag") {
           const tags = filterValue.split(",");
-          tags.forEach((f) => {
+          for (let f of tags) {
             if (this.filterTags?.includes(f) ?? false) {
-              toReturn = false;
+              return false;
             }
-          });
+          }
         }
 
         // Filter out specific question types
         if (isOrigin && this.typeFilter) {
           if (filterKey === "type" && filterValue !== this.typeFilter) {
-            toReturn = false;
+            return false;
           }
         }
       }
-      return toReturn;
+      return true;
     });
 
     this.chance *= filteredList.length || 1;
-    value = randomNext(0, filteredList.length, this.rng);
-    value = dict[key].findIndex((x: string) => x === filteredList[value]);
+    // Apply a weight to each option
+    // Choose random from weighted list
+    const weights = this.CalculateWeights(filteredList);
+    const max = weights[weights.length - 1]; // Get largest weight
+    value = randomNext(0, max + 1, this.rng); // Choose random value
+    value = weights.findIndex((x) => x >= value); // Map random value back to list index
+    value = dict[key].findIndex((x: string) => x === filteredList[value]); // Get dict index
     // ----------------------------------------------------------------
 
     // Overwrite or use origin to regenerate the same question
@@ -295,8 +299,8 @@ export class Tracery {
       const mod = groups?.["mod"] ?? "";
 
       let toReturn = this.ParseKey(key);
-      if (mod) {
-        toReturn = ModString(toReturn, mod, this.rng);
+      if (mod || this.customDict['tt'] !== undefined) {
+        toReturn = ModString(toReturn, mod, this.question.vars, this.rng);
       }
 
       return toReturn;
@@ -340,5 +344,20 @@ export class Tracery {
     }
 
     return value;
+  }
+
+  // Some string are more common and have less variety
+  // Solution:
+  // Before selecting a random option get a list of all possible options 1 level deep. Then if an option has a #key# or ^$choiceA:choiceB$, give it a higher weighting in the random chance.
+  // The more keys/choices an option has, the higher it's weighted
+  CalculateWeights(inputs: string[]): number[] {
+    let y = 0;
+    return inputs
+      .map((s) => {
+        const r = s.match(regexString)?.length ?? 0;
+        const cg = s.match(regexInlineChoiceGroup)?.length ?? 0;
+        return 1 + 3 * r + 2 * cg;
+      })
+      .map((x) => (y += x));
   }
 }

@@ -215,7 +215,8 @@
         "[type:text]Which ^$music album:movie:tv show:book$ would you most like to have on a desert island?",
         "[type:text]What time period would you most like to live in?",
         "[type:text][tag:movies_harryPotter]#harry_potter_question#",
-        "[type:multi][key:tv_quote]Which quote speaks to you the most?"
+        "[type:multi][key:tv_quote]Which quote speaks to you the most?",
+        "[type:text]Pop quiz: Whose flag is this? #flag.html_h#"
     ],
 
     /* Words ************************************************************************************************************************** */
