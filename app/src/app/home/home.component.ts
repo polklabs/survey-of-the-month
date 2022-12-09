@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../core/services/data.service';
-import { DialogService } from '../core/services/dialog.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { SEOService } from '../core/services/seo.service';
 import { APIData } from '../shared/model/api-data.model';
@@ -25,7 +24,6 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private dataService: DataService,
-        private dialogService: DialogService,
         private localStorageService: LocalStorageService,
         private seoService: SEOService
     ) { }
