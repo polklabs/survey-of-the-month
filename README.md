@@ -39,8 +39,6 @@ The basic idea is you load a dictionary with each entry having an array of strin
  - Lastly all remaining keys are parsed
 ---
 
-## WIP
-
 ### Probabilities
  - Given the following grammar:
     - ```
