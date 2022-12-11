@@ -69,7 +69,7 @@
         "[type:text]What was your first impression of #person.capitalize#?",
         "[type:text]For some reason you're making your cashier at #store# very uncomfortable. What are you ^$buying:returning$?",
         "[type:multi][key:enchantedObject]You're off to fight #fighter.a# but can't find your #fighter_weapon#! Choose an alternative weapon you can find",
-        "[type:text][tag:movies]Choose a movie to be made into #movieGenre.a# genre.",
+        "[type:text][tag:movies][movie_genre:#movieGenre#]Choose a non-#movie_genre# movie to be made into #movie_genre.a# movie.",
         "[type:text]What do you think #person.capitalize# will be doing #1_12.range# #timeRange.s# from now?",
         "[type:text]What is the first thing #person.capitalize# should say to #person.capitalize# the next time they meet?",
         "[type:text][key:character][count:3][tag:nsfw]F**k, marry, kill",
