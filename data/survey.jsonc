@@ -99,7 +99,7 @@
         "[type:text]You find yourself in the country of #country# with only #objectSmall.a# and $#1_50.range#. How do you get home?",
         "[type:multi][key:object_descriptive]#state# is the nation's leader of?",
         "[type:multi][key:allAnswers][count:-1]Do #animal.s# #verb_transitive# #object.s#?",
-        "[type:text]You wake up to the #networth_group# knocking at your door #networth_action# ^$how:why$ you're net worth is ^$negative :$$#1_1000_20.range# #numberMagnitude#. What do you tell them?",
+        "[type:text]You wake up to the #net_worth_group# knocking at your door #net_worth_action# ^$how:why$ you're net worth is ^$negative :$$#1_1000_20.range# #numberMagnitude#. What do you tell them?",
         "[type:text]What is the fastest way to get fired from your job as #career.a#?",
         "[type:text][objectA:#objectSmall#]You have 5 minutes to hide #objectA.a# in your home. A detective has #1_24.range# hours to find it, If they don't, you get $10,000. Where are you going to hide the #objectA#?",
         "[type:text]\"Oh, you're a programmer? I have a problem with my printer...\". What's the equivalent of this for #career.s#?",
@@ -122,7 +122,7 @@
         "[type:text]At #time# you can telepathically say one thing to everyone taking this survey. What do you tell them?",
         "[type:text][objectA:#objectLarge#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for #2_7.range# days. Where do you hide the #objectA.a#?",
         "[type:text]What is the #_tm_prizeTask#^$?: that you own?$",
-        "[type:multi][key:generalReaction]Check out this meme:#memeBase#",
+        // "[type:multi][key:generalReaction]Check out this meme:#memeBase#",
         "[type:text]Choose One:#chooseOneBase#",
         "[type:text]Tag Yourself^$: and one other person taking this survey$:#tagYourselfBase#",
         "[type:text]Type the following into your phone and use predictive text to finish the sentence: \"#sentenceStarter#\"",
@@ -193,7 +193,7 @@
         "[type:text]What's your dog/cat doin?",
         "[type:text]Pick a song that everyone ^$on earth:taking this survey:in #country#:in #continent#:in #state#$ must listen to",
         "[type:text]What movie would be 10x better with the addition of #trait# #movie_addition#?",
-        "[type:multi][answ0001:Ghostbusters][key:answ0001][count:1]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, specter, or ghost? Who you gonna call?",
+        "[type:multi][answer0001:Ghostbusters][key:answer0001][count:1]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, specter, or ghost? Who you gonna call?",
         "[type:text]If you could build a monument, what and where would you build?",
         "[type:text]In #5_60_5.range# minutes, you^$: and everything you're holding$ will be teleported to the middle of nowhere in ^$#country#:#continent#:#state#$. How will you prepare?",
         "[type:text]What ^$video game:movie:book:tv show$ would you like to make?",
@@ -205,7 +205,7 @@
         "[type:multi][key:nickname_full]What is ^$a good:an insulting:a bad:an accurate$ nickname for ^$yourself:#person.capitalize#$",
         "[type:text]#person.capitalize# just broke your favorite #object#. What do you say to them?",
         "[type:text]Send someone the following message and write their response here. \"^$#greeting# #nickname_full#:I #verb_transitive# your #object_descriptive#$\"",
-        "[type:text]Your sugar daddy/momma gives you a ^$sailboat:dog:cat:plane$. What do you name it?",
+        "[type:text]Your sugar daddy/momma gives you a ^$sailboat:dog:cat:plane:yacht$. What do you name it?",
         "[type:text]How tall do you think #person.capitalize# is in terms of #unit_of_measurement#?",
         "[type:text]Write a short poem about ^$#person.capitalize#:#world#:#genre_movie.a# movie:#favoriteCategory.s#:being #trait#:#verb_transitive.ing#$",
         "[type:text]Pick one item you own to show to ^$an alien:#character_famous#$",
@@ -216,7 +216,13 @@
         "[type:text]What time period would you most like to live in?",
         "[type:text][tag:movies_harryPotter]#harry_potter_question#",
         "[type:multi][key:tv_quote]Which quote speaks to you the most?",
-        "[type:text]Pop quiz: Whose flag is this? #flag.html_h#"
+        "[type:multi][key:tv_quote]Which quote should become #person.capitalize.possessive# life motto?",
+        "[type:text]Pop quiz: Whose flag is this? #flag.html_h#",
+        "[type:multi][key:adjective]What word best describes ^$#person.capitalize#:#object.s#$?",
+        "[type:text]What is the last ^$movie:book:tv show:song$ that made you cry?",
+        "[type:multi][key:sport][tag:sports]What sport do you think you could beat #person.capitalize# at?",
+        "[type:multi][key:board_game,game_show]What game do you think you could beat #person.capitalize# at?",
+        "[type:multi][key:board_game,game_show]The prize is $#^$1:10:100:1000:10000:100000:1000000$.num#, what game are you playing?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -235,7 +241,7 @@
     /* ******************************************************************************************************************************** */
 
     "sentenceStarter": [
-        "The only", "I think", "What will", "I really", "Please don't", "You are", "We should", "#person.capitalize# is", "I think #person.capitalize#", "you are my", "#*#"
+        "The only", "I think", "What will", "I really", "Please don't", "You are", "We should", "#person.capitalize# is", "I think #person.capitalize#", "you are my"
     ],
 
     /* Traits ************************************************************************************************************************* */
@@ -290,7 +296,7 @@
         "[fighter_weapon:slingshot]Goliath", "[fighter_weapon:sword]dragon", "[fighter_weapon:lightsaber]sith lord", "[fighter_weapon:blaster]alien", "[fighter_weapon:proton pack]ghost", "[fighter_weapon:phaser]Romulan"
     ],
     "event": [
-        "fight", "dance battle"
+        "fight", "dance battle", "game of ^$#sport#:#olympicSport#$", "episode of #game_show#"
     ],
     "nickname": [
         "lineshooter", "wild boar", "window face", "fox", "pizza face", "thrombo", "dum dum", "baby-bugga-boo", "monkey buns", "noodlehead", "danger duck", "parrotnose", "friendo", "screwball", "mister ed", "noobling", "nooblet", "cutie pie", "panda", "sloppynuts", "chicken", "hollow head", "over-thinker", "smooshie", "meager", "goggs", "mattressback", "pothole", "duckie", "pissy missy", "sir mule", "dunce", "stalker", "mud puppy", "minion", "prude", "cheeky monkey", "android", "cauldron", "cupcake face", "smellfeast", "sippy cup", "gandalf", "jackwagon", "monkey brain", "diamondback", "captain america", "smiley", "voldemort", "ironman", "dexter fakester", "copycat", "all that jazz", "ted cruz", "ritzy", "bagel", "mediocrement", "blowhard", "grease", "ninnyhammer", "thiefy", "narrow", "pestilence", "flippers", "butters", "catch 22", "thor", "fanny fishcake", "merciless", "chauncy", "big stinky pete", "doofus", "harry potter", "bambi", "ziggy", "railbird", "dipstick", "feeble", "teeny", "fuzzkins", "chainlink", "camel", "vice wise", "conductor", "the public enemy", "lickspittle", "greedy", "snorty", "wheezy", "cinnamon", "catalyst", "shawty", "bill o' reily", "dementor", "jim loser", "viejo", "the guy", "the mask", "duracell", "green giant", "parrot-nose", "woman ears", "gerbil", "bon-bon", "punk", "pink panther", "thunderhead", "oompa loompa", "peacock", "screensaver", "whispy headed", "creeper", "class clown", "wangster", "freddy flintstone", "wanker", "peaches", "jelly belly", "beanpole", "moon calf", "messy tessy", "noise machine", "friday the 13th", "dork", "sordo", "witchy", "vulgar", "crackpot", "scruffy", "bug", "death eater", "shoeshine", "lord snooty", "muscles", "pipsie", "shorty", "granite", "fire guy", "cutsie wootsie", "scrutator", "ball cheese", "silly billy", "creep", "snookums", "maddy", "cheeky chimp", "dead skunk", "douchebag", "proud lady", "cox comb", "antenna", "giganotosaurus", "drum major", "oxygen thief", "slow death", "sears tower", "grasshopper", "straight-a", "peanut", "fosforo", "dragon", "dawg", "dillhole", "dumbledore", "lone ranger", "alan harper", "ray charles", "knucklehead", "shine stein", "tofu pofu", "pathetic parasite", "chubbly", "hilary clinton", "metal mouth", "bandera pirata", "pip-squeek", "ding dong", "big head", "rattlesnake", "smooshie.", "tranposo", "buttercup", "penny-pinching", "flop", "kokomo", "kittycat", "mcstink", "snollygoster", "trash bin", "egg head", "mooch", "bridge", "pettifogger", "nob jokie", "tarzan", "itsy bitsy", "snotface", "monkey but", "drizzlebrain", "shell down cooper", "nonsense!", "smellfungus", "mumpsimus", "maestro", "princess caraboo", "dummie", "boromir", "bully pulpit", "hobbledehoy", "dishwasher", "moron", "slob", "flower child", "digger", "saltimbanco"
@@ -366,10 +372,10 @@
     "podcast": [
         "Why #living_thing.s.capitalize# are so #adjective.capitalize#", "#store.capitalize# is the best place to #verb.capitalize#", "Everyone is so #traits.capitalize# these days", "Not another #generalThings.capitalize# podcast", "The #adjective.capitalize# Zone", "My #relation.capitalize#, My #relation.capitalize# and ^$Me:#person.capitalize#$", "My life is going #adverb.capitalize#!", "To #adverb.capitalize# go where no #living_thing.capitalize# has gone before.", "Do #animal.s.capitalize# #verb_transitive.capitalize# #object.s.capitalize#?", "The Time I #verb_transitive.ed.capitalize# #object.capitalize#"
     ],
-    "networth_group": [
+    "net_worth_group": [
         "press", "police", "paparazzi", "curch", "IRS", "country of #country#", "state of #state#"
     ],
-    "networth_action": [
+    "net_worth_action": [
         "asking", "investigating", "demanding to know", "wondering", "questioning", "inquiring", "reviewing"
     ],
     "1Percent": [
@@ -377,6 +383,9 @@
     ],
 
     /* Sports ************************************************************************************************************************* */
+    "sport": [
+        "Archery", "Badminton", "Baseball", "Basketball", "BMX", "Bocce", "Bowling", "Boxing", "Cheerleading", "Cricket", "Croquet", "Cross Country Running", "Curling", "Cycling", "Dance", "Darts", "Deck Shuffleboard", "Disc Golf", "Diving", "Dodgeball", "Equine Sports", "Fencing", "Field Hockey", "Figure Skating", "Fishing", "Floor Hockey", "Foosball", "Football", "Golf", "Gymnastics", "Handball", "Hang Gliding", "Horseshoes", "Ice Hockey", "Kayaking or Canoeing", "Kickball", "Lacrosse", "Martial Arts", "Netball", "Pickleball", "Polo", "Billiards", "Powerlifting", "Racquetball", "Rock Climbing", "Rounders", "Rowing", "Rugby", "Sailing", "Shooting", "Skateboarding", "Skiing", "Skydiving", "Snowboarding", "Soccer", "Softball", "Squash", "Surfing", "Swimming", "Table Tennis", "T-Ball", "Team Handball", "Tennis", "Tetherball", "Track and Field", "Ultimate Frisbee", "Volleyball", "Wake Boarding", "Water Polo", "Water Skiing", "White Water Rafting", "Wrestling", "[tag:movies_harryPotter]Quidditch"
+    ],
     "olympicSport": [
         "archery", "artistic swimming", "athletics", "badminton", "baseball", "basketball", "beach volleyball", "boxing", "breaking", "canoe slalom", "canoe sprint", "cycling BMX", "cycling mountain bike", "cycling road", "cycling track", "diving", "equestrian / dressage", "equestrian eventing", "equestrian jumping", "fencing", "field hockey", "golf", "gymnastics artistic", "gymnastics rhythmic", "handball", "judo", "karate", "marathon swimming", "modern pentathlon", "rowing", "rugby", "sailing", "shooting", "skateboarding", "soccer", "softball", "sport climbing", "surfing", "swimming", "table tennis", "taekwondo", "tennis", "trampoline", "triathlon", "volleyball", "water polo", "weightlifting", "wrestling freestyle", "wrestling greco-roman"
     ],
@@ -392,7 +401,7 @@
         "bounty hunter", "space", "cyberpunk", "steampunk", "ghost hunter", "gangster", "heist", "pirate", "high fantasy", "modern fantasy", "monster hunter", "noir", "post apocalyptic", "sci-fi", "space opera", "spy", "space western", "time travel", "zombie"
     ],
     "superpower": [
-        "super #trait#", "produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "waterbreathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shapeshifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight"
+        "super #trait#", "produce #color# #object.s#", "super maggots", "eat anything", "super learning", "explosive farting", "strength", "poison generation", "channel the devil", "evil projections", "persuasion", "communicate with cities", "control over the elements", "detachable limbs", "understand all languages", "super-powered tattoos", "insect control", "#animal# control", "pheromones", "organ rearranging", "superhuman invention skill", "empathy", "self-confidence", "mimic other powers", "control machines", "living island", "item-duplication", "darkness dimension", "converting sound to light", "water breathing", "light manipulation", "psionic blast", "speaking with the dead", "super mentality", "super hearing", "radiation", "density control", "earthquakes", "possession", "elasticity", "extreme luck", "energy conversion", "animal control", "concussive blast", "paralysis shock", "reactive evolution", "earth manipulation", "pain infliction", "summoning dead", "prehensile tendrils", "steel skin", "immovable", "plant control", "sharpshooting", "chi", "liquification", "substance mimicry", "heal others", "gravity control", "energy blasts", "resurrection", "animal powers", "size shifting", "air manipulation", "feed on life energy", "self-multiplication", "sonic scream", "time pause", "cibopath", "precognition", "phasing", "bone claws", "water control", "power stealing", "unstoppable momentum", "danger warning", "super intelligence", "heat vision", "weapon hands", "reality warping", "force field projection", "spider webs", "ice manipulation", "electric manipulation", "x-ray vision", "controlling weather", "atomic manipulation", "healing factor", "magnetic manipulation", "mind control", "time travel", "immortality", "the power cosmic", "teleportation", "shape shifting", "telekinesis", "invulnerability", "hard light constructs", "telepathy", "super speed", "fire manipulation", "super strength", "invisibility", "flight"
     ],
     "environmentType": [
         "clouds", "fog", "lightning", "rain", "snow", "hail", "hurricanes", "tornadoes", "rocks", "fire", "air", "blizzards", "earthquakes", "volcanoes", "metal"
@@ -409,6 +418,9 @@
     "game_show": [
         "Jeopardy!", "Wheel of Fortune", "Family Feud", "Who Wants to Be a Millionaire", "Press Your Luck", "The Price Is Right", "Cash Cab", "Deal Or No Deal", "Are You Smarter Than A 5th Grader", "Survivor", "The Amazing Race", "Wipeout", "Fear Factor", "The Voice", "American Idol", "Master Chef", "The Great British Bake Off", "Taskmaster", "Hell's Kitchen", "RuPaul's Drag Race"
     ],
+    "board_game": [
+        "Operation", "Gin Rummy", "Poker", "Blackjack", "Mouse Trap", "Mancala", "Battleship", "Yahtzee", "Uno", "Sorry!", "Yu-Gi-Oh!", "Pictionary", "Chinese Checkers", "Cribbage", "Snakes and Ladders", "Candyland", "Pokemon", "Dominoes", "The Game of Life", "Connect Four", "Trivial Pursuit", "Taboo", "Mahjong", "Clue", "Scrabble", "^$Apples to Apples:Cards Against Humanity$", "Catan", "Backgammon", "Magic: The Gathering", "Checkers", "Monopoly", "Chess", "Go", "Dungeons & Dragons"
+    ],
     
     // Excuse Generator
     "excuse": [
@@ -421,7 +433,7 @@
         "my #relation#", "the ghost of #characterReal#", "#character#", "my ex", "a high school marching band", "#trait.a# #career#", "the ^$kid:guy:girl$ from #world#", "a professional #olympicSport# team", "my ^$tinder:bumble:hinge:farmers only$ date"
     ],
     "excuse_delay": [
-        "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me ^$syphilis:a cold:herpes:mono:a concussion$", "poured #drink# in my gas tank", "^$stabbed:mugged:shot:killed:kidnapped$ me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on ^$Instagram:Facebook:LinkedIn:YouTube:PornHub:the internet$"
+        "just shit the bed", "died in front of me", "won't stop telling me knock knock jokes", "is having a nervous breakdown", "gave me ^$syphilis:a cold:herpes:mono:a concussion$", "poured #drink# in my gas tank", "^$stabbed:mugged:shot:killed:kidnapped$ me", "found my box of human teeth", "stole my #object#", "[tag:nsfw]posted my nudes on ^$Instagram:Facebook:LinkedIn:YouTube:PornHub:the internet:FarmersOnly.com$"
     ],
         
     "context_change": [

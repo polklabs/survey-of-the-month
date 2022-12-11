@@ -11,7 +11,9 @@
         "[key:group_job]Where do you work in our small town?",
         "[key:group_horror]AHHHH, we're stuck in a horror movie! Which character are you?",
         "[key:group_band]We're starting a band! What's your role?",
-        "[key:group_apocalypse] Uh-Oh, it's the #apocalypse# apocalypse. We've got to stick together, what's your role?"
+        "[key:group_apocalypse] Uh-Oh, it's the #apocalypse# apocalypse. We've got to stick together, what's your role?",
+        "[key:group_roadTrip]It's road trip time! What's your role?",
+        "[key:group_company]#person.capitalize# just started a company, what job are you applying for?"
     ],
     "group_circus": [
         "Juggler", "Acrobatics/Gymnastics", "Clown", "Fire Breather", "Fortune Teller", "Strongman", "Musician", "Magician", "You're a freak (affectionate) of some kind", "Sell Merchandise"
@@ -45,5 +47,11 @@
     ],
     "group_apocalypse": [
         "Leader", "Guard/Soldier", "Hunter", "Transportation", "Medic", "Scout/Scavenger", "Blacksmith", "Engineer/Mechanic", "Cook", "Agricultural Expert", "Priest", "Historian"
+    ],
+    "group_roadTrip": [
+        "Driver", "DJ", "Snacks", "Sleep the entire time", "Read in the backseat", "Conversationalist", "Has to stop every 30 minutes to pee"
+    ],
+    "group_company": [
+        "Manager", "Salesman", "Accountant", "HR", "Customer Support", "^$Quality Assurance:Quabity Ashuitz$", "Receptionist", "Warehouse Worker", "CEO", "Assistant to the Regional Manager", "IT", "Developer", "Social Media Manager"
     ]
 }
