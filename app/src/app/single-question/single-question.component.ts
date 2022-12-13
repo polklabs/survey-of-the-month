@@ -81,7 +81,7 @@ export class SingleQuestionComponent implements OnInit {
 
     seedQuestion(): void {
         this.dialogService.textInput(
-            'Enter the question # or a random value',
+            'Enter a value to use as the seed for the random number generator. This may not provide the same results between website updates',
             'Seed',
             '',
             false
