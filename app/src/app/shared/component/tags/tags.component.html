@@ -1,8 +1,6 @@
 <mat-card>
-    <!-- <mat-card-header>
-        <mat-card-subtitle>Tags</mat-card-subtitle>
-    </mat-card-header> -->
-    Tags - WIP: May not filter everything correctly. Please submit feedback if this happens
+    <p>Content Filter - Don't want certain topics to show up? Disable them in the list below</p>
+    <span style="font-size: smaller">WIP: May not filter everything correctly. Please submit feedback if this happens</span>
     <div *ngIf="dataLoaded">
         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
