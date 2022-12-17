@@ -88,7 +88,8 @@ export class LocalStorageService {
         if (data !== null) {
             return JSON.parse(data);
         }
-        return [];
+        // default - tags:"["All","nsfw"]"
+        return ["All", "nsfw"];
     }
 
     getVisited(): boolean {
