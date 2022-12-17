@@ -9,7 +9,9 @@
         "Cheerleading",
         "Dodgeball",
         "doin",
+        "Handaxe",
         "lightsaber",
+        "Longsword",
         "lotr",
         "Mancala",
         "Pickleball",
@@ -20,7 +22,8 @@
         "Romulan",
         "sith",
         "taekwondo",
-        "vibing"
+        "vibing",
+        "Warhammer"
     ],
     "ignoreWords": [],
     "import": []

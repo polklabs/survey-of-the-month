@@ -123,10 +123,10 @@
         "[type:text][objectA:#objectLarge#]You are offered $1,000,000 if you can hide #objectA.a# from the entirety of the FBI force for #2_7.range# days. Where do you hide the #objectA.a#?",
         "[type:text]What is the #_tm_prizeTask#^$?: that you own?$",
         // "[type:multi][key:generalReaction]Check out this meme:#memeBase#",
-        "[type:text]Choose One:#chooseOneBase#",
-        "[type:text]Tag Yourself^$: and one other person taking this survey$:#tagYourselfBase#",
+        //"[type:text]Choose One:#chooseOneBase#",
+        //"[type:text]Tag Yourself^$: and one other person taking this survey$:#tagYourselfBase#",
         "[type:text]Type the following into your phone and use predictive text to finish the sentence: \"#sentenceStarter#\"",
-        "[type:multi][key:vine]Of the following, which is your favorite vine?",
+        // "[type:multi][key:vine]Of the following, which is your favorite vine?",
         "[type:text]Create a new word for: \"#word_definition#\"",
         "[type:text]You're being forced to play #rpg_theme.a# based role playing game, what do you name your character?",
         "[type:multi][key:superpower]Pick one super power.",
@@ -222,7 +222,16 @@
         "[type:text]What is the last ^$movie:book:tv show:song$ that made you cry?",
         "[type:multi][key:sport][tag:sports]What sport do you think you could beat #person.capitalize# at?",
         "[type:multi][key:board_game,game_show]What game do you think you could beat #person.capitalize# at?",
-        "[type:multi][key:board_game,game_show]The prize is $#^$1:10:100:1000:10000:100000:1000000$.num#, what game are you playing?"
+        "[type:multi][key:board_game,game_show]The prize is $#^$1:10:100:1000:10000:100000:1000000$.num#, what game are you playing?",
+        "[type:multi][key:getaway_location]Pick the best getaway.",
+        "[type:multi][key:city]Where would you rather live?",
+        "[type:multi][key:houseFeature]A dream home must include:",
+        "[type:multi][key:time_travel_destination]Which event would ^$you:#person.capitalize#$ time travel to?",
+        "[type:multi][key:would_you_rather_answer][count:-1][other:false]Would you rather #would_you_rather#",
+        "[type:text]What is the largest item in your home that you could smuggle into ^$#city#:#state#:#country#:an airport$?",
+        "[type:multi][key:person][count:-1]Who is the #trait#?",
+        "[type:multi][key:person][count:-1]Who fits the nickname #nickname#?",
+        "[type:multi][key:person][count:-1]Who do you think is secretly #career_secret.a#?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -272,7 +281,7 @@
         "sea", "mountains", "city", "forest", "desert", "lake", "delta", "prairie"
     ],
     "houseFeature": [
-        "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub"
+        "library", "green house", "theater", "swimming pool", "lot of land", "bowling alley", "bar", "gym", "wine cellar", "garden", "jacuzzi bathtub", "dog", "cat", "horse", "barn", "view", "helicopter pad", "tennis court"
     ],
     "house": [
         "#houseType.a.capitalize# ^$by:in$ the #houseLocation#^$: in #country#$ with #houseFeature.a#"
@@ -314,6 +323,9 @@
     ],
     "career": [
         "#career_funny#", "#career_serious#"
+    ],
+    "career_secret": [
+        "superhero", "spy", "ninja", "president of the universe", "wizard", "#animal#", "millionaire", "imposter", "nerd", "hopeless romantic", "author", "#animal# in a trench coat", "bank robber", "#mythical_creature#", "decepticon", "pirate", "time traveler", "super villain", "genius", "ghost"
     ],
     /* ******************************************************************************************************************************** */
 
@@ -420,6 +432,30 @@
     ],
     "board_game": [
         "Operation", "Gin Rummy", "Poker", "Blackjack", "Mouse Trap", "Mancala", "Battleship", "Yahtzee", "Uno", "Sorry!", "Yu-Gi-Oh!", "Pictionary", "Chinese Checkers", "Cribbage", "Snakes and Ladders", "Candyland", "Pokemon", "Dominoes", "The Game of Life", "Connect Four", "Trivial Pursuit", "Taboo", "Mahjong", "Clue", "Scrabble", "^$Apples to Apples:Cards Against Humanity$", "Catan", "Backgammon", "Magic: The Gathering", "Checkers", "Monopoly", "Chess", "Go", "Dungeons & Dragons"
+    ],
+    "getaway_location": [
+        "#houseType.a.capitalize# ^$by:in$ the #houseLocation#", "#city#^$: during the #season#$", "#travel_destination#", "#country#^$: during the #season#$", "#continent#^$: during the #season#$", "#state#^$: during the #season#$", "^$Cruise:Camping:House Boat:Backpacking$"
+    ],
+    "time_travel_destination": [
+        "Pompeii", "Hanging Gardens of Babylon", "Building of Stone Henge", "1920s New York", "Height of the Roman Empire", "The Old West", "Ancient Egypt", "Victorian London", "", "^$Last:Next$ Thursday", "December 31st, 1999", "The Year 2100"
+    ],
+    "would_you_rather": [
+        "[wyr1:#superpower# ability][wyr2:#superpower# ability]have #wyr1# or #wyr2#",
+        "[wyr1:#5_60_5.range# minutes into the future][wyr2:#5_60_5.range# years into the future]the ability to see #wyr1# or #wyr2#",
+        "[wyr1:#character#][wyr2:#character#]team up with #wyr1# or #wyr2#",
+        "[wyr1:#^$character_marvel:character_dc$#][wyr2:#^$character_marvel:character_dc$#]team up with #wyr1# or #wyr2#",
+        "[wyr1:#animal#][wyr2:#animal#]be eaten by #wyr1# or #wyr2#",
+        "[wyr1:#animal#][wyr2:#animal#]have a pet #wyr1# or #wyr2#",
+        "[wyr1:#animal.a# in your kitchen][wyr2:#animal.a# in your bed]find #wyr1# or #wyr2#",
+        "[wyr1:a pause button][wyr2:a rewind button]in your life, have #wyr1# or #wyr2#",
+        "[wyr1:all the photos in your phone][wyr2:read all your text messages]someone see #wyr1# or #wyr2#",
+        "[wyr1:#character#][wyr2:#character#]marry #wyr1# or #wyr2#",
+        "[wyr1:#holiday#][wyr2:#holiday#]only celebrate #wyr1# or #wyr2#",
+        "[wyr1:always wear #clothing.a#][wyr2:never wear #clothing.a#]#wyr1# or #wyr2#",
+        "[wyr1:#bodyPart#][wyr2:#bodyPart#]lose your #wyr1# or #wyr2#"
+    ],
+    "would_you_rather_answer":[
+        "#wyr1#", "#wyr2#"
     ],
     
     // Excuse Generator
