@@ -231,7 +231,8 @@
         "[type:text]What is the largest item in your home that you could smuggle into ^$#city#:#state#:#country#:an airport$?",
         "[type:multi][key:person][count:-1]Who is the #trait#?",
         "[type:multi][key:person][count:-1]Who fits the nickname #nickname#?",
-        "[type:multi][key:person][count:-1]Who do you think is secretly #career_secret.a#?"
+        "[type:multi][key:person][count:-1]Who do you think is secretly #career_secret.a#?",
+        "[type:multi][key:character_singer]Who would you want to be able to sing like?"
     ],
 
     /* Words ************************************************************************************************************************** */
