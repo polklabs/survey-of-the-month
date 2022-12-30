@@ -1,5 +1,4 @@
 import NodeCouchDb from 'node-couchdb';
-import fs from 'fs';
 import crypto from 'crypto';
 import { Survey } from '../app/src/app/shared/model/survey.model';
 import { SurveyContainer } from '../app/src/app/shared/model/survey-container.model';
@@ -8,11 +7,18 @@ import { Answer, AnswerStatus } from '../app/src/app/shared/model/answer.model';
 import { response } from '../server';
 import { SendEmail, SendSurveyEmail } from './email';
 import { sendAnswerSubmitMsg, sendNewSurveyMsg, sendSurveyDeleteMsg } from './pushover';
+import { GetEnvInt, GetEnvString } from './env';
 
 // Initialize connection to counchDB ----------------------------------
-const couchDbSettings = JSON.parse(fs.readFileSync(`./couchDB.json`,
-    { encoding: 'utf8', flag: 'r' }));
-export const couch = new NodeCouchDb(couchDbSettings);
+export const couch = new NodeCouchDb({
+    host: GetEnvString('COUCH_HOST', 'localhost'),
+    protocol: GetEnvString('COUCH_PROTOCOL', 'http'),
+    port: GetEnvInt('COUCH_PORT', 5984),
+    auth: {
+        user: GetEnvString('COUCH_AUTH_USER', 'admin'),
+        pass: GetEnvString('COUCH_AUTH_PASS', 'admin')
+    }
+});
 console.log("Connected to couchdb");
 // setInterval(() => {
 //     console.log('Deleting Old Surveys');

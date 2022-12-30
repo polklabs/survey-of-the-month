@@ -15,9 +15,9 @@ const paths = {
     zipped_file_name: 'angular-nodejs.zip',
     tracery_src: 'data/*',
     tracery_dist: 'prod-build/data',
-    email_json: 'email.json',
-    couchDb_json: 'couchDB.json',
-    pushover_json: 'pushover.json'
+    dockerfile: 'Dockerfile',
+    package_json: 'package.json',
+    package_lock_json: 'package-lock.json'
 };
 
 function clean() {
@@ -64,22 +64,28 @@ function copyDataCodeTask() {
         .pipe(dest(`${paths.tracery_dist}`));
 }
 
-function copyEmailConfig() {
-    log('copying email config')
-    return src(`${paths.email_json}`)
-        .pipe(dest(`${paths.prod_build}`));
+function copyDockerfile() {
+    log('copying Dockerfile')
+    return src(`${paths.dockerfile}`).pipe(dest(`${paths.prod_build}`));
 }
 
-function copyCouchDbConfig() {
-    log('copying couchDb config')
-    return src(`${paths.couchDb_json}`)
-        .pipe(dest(`${paths.prod_build}`));
+function copyPackageJson() {
+    log('copying Package.json')
+    return src(`${paths.package_json}`).pipe(dest(`${paths.prod_build}`));
 }
 
-function copyPushoverConfig() {
-    log('copying pushover config')
-    return src(`${paths.pushover_json}`)
-        .pipe(dest(`${paths.prod_build}`));
+function copyPackageLockJson() {
+    log('copying Package-lock.json')
+    return src(`${paths.package_lock_json}`).pipe(dest(`${paths.prod_build}`));
+}
+
+function buildDockerImage() {
+    log('building docker image');
+    return exec('cd build-prod && docker build . -t polklabs/survey-of-the-month', function (err, stdout, stderr) {
+        log(stdout);
+        log(stderr);
+        cb(err);
+    })
 }
 
 function zippingTask() {
@@ -94,6 +100,7 @@ exports.default = series(
     clean,
     createProdBuildFolder,
     buildAngularCodeTask,
-    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask, copyEmailConfig, copyCouchDbConfig, copyPushoverConfig),
+    parallel(copyAngularCodeTask, copyNodeJSCodeTask, copyDataCodeTask, copyDockerfile, copyPackageJson, copyPackageLockJson),
+    buildDockerImage
     // zippingTask
 );

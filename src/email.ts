@@ -1,15 +1,21 @@
 import nodemailer from 'nodemailer';
-import fs from 'fs';
 import { Survey } from '../app/src/app/shared/model/survey.model';
+import { GetEnvBool, GetEnvInt, GetEnvString } from './env';
 
 LoadSettings();
 
 var transporter: any;
 
 function LoadSettings(): void {
-    const emailSettings = JSON.parse(fs.readFileSync(`./email.json`,
-        { encoding: 'utf8', flag: 'r' }));
-    transporter = nodemailer.createTransport(emailSettings);
+    transporter = nodemailer.createTransport({
+        host: GetEnvString('EMAIL_HOST', ''),
+        port: GetEnvInt('EMAIL_PORT', 465),
+        secure: GetEnvBool('EMAIL_SECURE', false),
+        auth: {
+            user: GetEnvString('EMAIL_AUTH_USER', ''),
+            pass: GetEnvString('EMAIL_AUTH_PASS', '')
+        }
+    });
 }
 
 export function SendEmail(subject: string, text: string, from: string, to: string, replyTo: string, callback: (error, info) => void): string {

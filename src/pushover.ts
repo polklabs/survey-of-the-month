@@ -1,5 +1,5 @@
-import fs from 'fs';
 import request from 'request';
+import { GetEnvBool, GetEnvString } from './env';
 
 LoadSettings();
 
@@ -11,13 +11,11 @@ var onAnswerSubmit: boolean;
 var onSurveyDelete: boolean;
 
 function LoadSettings(): void {
-    const pushoverSettings = JSON.parse(fs.readFileSync(`./pushover.json`,
-        { encoding: 'utf8', flag: 'r' }));
-    token = pushoverSettings['token'];
-    user = pushoverSettings['user'];
-    onNewSurvey = pushoverSettings['onNewSurvey'];
-    onAnswerSubmit = pushoverSettings['onAnswerSubmit'];
-    onSurveyDelete = pushoverSettings['onSurveyDelete'];
+    token = GetEnvString('PUSHOVER_TOKEN', '');
+    user = GetEnvString('PUSHOVER_USER', '');
+    onNewSurvey = GetEnvBool('PUSHOVER_ON_NEW_SURVEY', false);
+    onAnswerSubmit = GetEnvBool('PUSHOVER_ON_ANSWER_SUBMIT', false);
+    onSurveyDelete = GetEnvBool('PUSHOVER_ON_SURVEY_DELETE', false);
 }
 
 export function sendNewSurveyMsg(surveyTitle: string) {
