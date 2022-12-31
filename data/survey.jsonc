@@ -232,7 +232,8 @@
         "[type:multi][key:person][count:-1]Who is the #trait#?",
         "[type:multi][key:person][count:-1]Who fits the nickname #nickname#?",
         "[type:multi][key:person][count:-1]Who do you think is secretly #career_secret.a#?",
-        "[type:multi][key:character_singer]Who would you want to be able to sing like?"
+        "[type:multi][key:character_singer]Who would you want to be able to sing like?",
+        "[type:text]What should be the title of #person.capitalize.possessive# ^$autobiography:one man show:spoken word album$?"
     ],
 
     /* Words ************************************************************************************************************************** */
