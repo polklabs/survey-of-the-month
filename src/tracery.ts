@@ -37,7 +37,7 @@ export class Tracery {
 
     this.seen = {};
     this.question.questionOrigin = questionOrigin;
-    this.customDict["person"] = people;
+    this.customDict["person"] = people.map(x => `[tag:person]${x}`);
 
     if (questionOrigin !== -1) {
       this.shuffleQuestion = true;

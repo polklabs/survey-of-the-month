@@ -177,4 +177,8 @@ export class FormQuestionComponent implements OnInit, OnChanges {
         return this.question.aTags.length > 0 || this.question.qTags.length > 0;
     }
 
+    hasTag(tag: string): boolean {
+        return this.question.aTags.includes(tag) || this.question.qTags.includes(tag);
+    }
+
 }
