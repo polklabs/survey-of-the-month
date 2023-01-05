@@ -23,4 +23,5 @@ export class Question {
     answerCount = 1;
     otherOptionAllow = true;
     otherOptionText = 'Other';
+    includesPerson = false;
 }

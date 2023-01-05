@@ -37,7 +37,7 @@ export class Tracery {
 
     this.seen = {};
     this.question.questionOrigin = questionOrigin;
-    this.customDict["person"] = people.map(x => `[tag:person]${x}`);
+    this.customDict["person"] = people.map(x => `[isPerson:true]${x}`);
 
     if (questionOrigin !== -1) {
       this.shuffleQuestion = true;
@@ -154,6 +154,11 @@ export class Tracery {
         ];
     }
 
+    if (this.question.vars["isPerson"] !== undefined) {
+      this.question.includesPerson = true;
+      delete this.question.vars["isPerson"];
+    }
+
     // Get final calculated question probability
     this.question.qChance = this.chance;
   }
@@ -192,6 +197,11 @@ export class Tracery {
         `#${this.question.answerKey}.capitalize#`
       );
       this.saveTags(false);
+    }
+
+    if (this.question.vars["isPerson"] !== undefined) {
+      this.question.includesPerson = true;
+      delete this.question.vars["isPerson"];
     }
 
     // We don't need to save this

@@ -12,7 +12,7 @@ export const months = [
   "November",
   "December",
 ];
-export const reservedKeys = ["type", "key", "count", "other", "tag", "format", "tt"]; // Used for question formatting, do not use as keys in grammar - #key#, tt = tooltip
+export const reservedKeys = ["type", "key", "count", "other", "tag", "format", "tt", "isPerson"]; // Used for question formatting, do not use as keys in grammar - #key#, tt = tooltip
 
 export const holidays = {
   "Valentine's Day": "",
