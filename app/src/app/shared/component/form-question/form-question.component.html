@@ -41,7 +41,7 @@
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
 
         <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
-        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && hasTag('person')">The names in this question are pulled from the People list above</div>
+        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && includesPerson()">The names in this question are pulled from the People list above</div>
     </mat-card-content>
 
     <ng-container *ngIf="(!editable && !basicEdit && (question.answerCount > 0)) || dirty">
