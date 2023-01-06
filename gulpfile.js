@@ -81,7 +81,7 @@ function copyPackageLockJson() {
 
 function buildDockerImage() {
     log('building docker image');
-    return exec('cd build-prod && docker build . -t polklabs/survey-of-the-month', function (err, stdout, stderr) {
+    return exec('cd prod-build && docker build . -t polklabs/survey-of-the-month', function (err, stdout, stderr) {
         log(stdout);
         log(stderr);
         cb(err);
