@@ -79,7 +79,7 @@ function copyPackageLockJson() {
     return src(`${paths.package_lock_json}`).pipe(dest(`${paths.prod_build}`));
 }
 
-function buildDockerImage() {
+function buildDockerImage(cb) {
     log('building docker image');
     return exec('cd prod-build && docker build . -t polklabs/survey-of-the-month', function (err, stdout, stderr) {
         log(stdout);
