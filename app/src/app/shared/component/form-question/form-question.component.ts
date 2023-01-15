@@ -1,22 +1,32 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { environment } from 'src/environments/environment';
 import { Question } from '../../model/question.model';
 
-const rarityValues = [1 * (10 ** 3), 1 * (10 ** 6), 1 * (10 ** 9), 1 * (10 ** 12), 1 * (10 ** 15), 1 * (10 ** 18)];
+const rarityValues = [1 * 10 ** 3, 1 * 10 ** 6, 1 * 10 ** 9, 1 * 10 ** 12, 1 * 10 ** 15, 1 * 10 ** 18];
 const rarities = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Galactic'];
 const rarityColors = ['white', 'forestgreen', 'dodgerblue', 'blueviolet', 'orange', 'aqua'];
 
 @Component({
     selector: 'app-form-question',
     templateUrl: './form-question.component.html',
-    styleUrls: ['./form-question.component.scss']
+    styleUrls: ['./form-question.component.scss'],
 })
 export class FormQuestionComponent implements OnInit, OnChanges {
-
     @ViewChild('formDefault', { static: true }) formDefault!: TemplateRef<any>;
-    @ViewChild('formEmpty', {static: true}) formEmpty!: TemplateRef<any>;
+    @ViewChild('formEmpty', { static: true }) formEmpty!: TemplateRef<any>;
 
     @ViewChild('formText', { static: true }) formText!: TemplateRef<any>;
     @ViewChild('formMulti', { static: true }) formMulti!: TemplateRef<any>;
@@ -25,7 +35,6 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     @ViewChild('formDate', { static: true }) formDate!: TemplateRef<any>;
     @ViewChild('formTime', { static: true }) formTime!: TemplateRef<any>;
     @ViewChild('formScale', { static: true }) formScale!: TemplateRef<any>;
-
 
     @Input() question: Question = new Question();
     @Input() loading = false;
@@ -44,10 +53,11 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     @Output() aEditText = new EventEmitter<number>();
     @Output() aOtherOptionAllow = new EventEmitter<void>();
     @Output() aEditScale = new EventEmitter<void>();
-    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
+    @Output() aOrder = new EventEmitter<{ previousIndex: number; currentIndex: number }>();
     @Output() aFormatEdit = new EventEmitter<void>();
 
     @Output() aUpdate = new EventEmitter<(string | number | null)[] | null>();
+    @Output() aSubmit = new EventEmitter<void>();
 
     // Only stored for editable questions
     tempAnswers: (string | number | null)[] = [];
@@ -62,10 +72,7 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     githubIssues = environment.githubIssues;
 
-    constructor(
-        private dialogService: DialogService,
-        private cd: ChangeDetectorRef
-    ) { }
+    constructor(private dialogService: DialogService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.currentAnswerType = this.question.answerType;
@@ -157,20 +164,27 @@ export class FormQuestionComponent implements OnInit, OnChanges {
 
     clickRarity(): void {
         this.dialogService.alert(
-            `This specific question had a 1 in ${this.question.qChance.toLocaleString('en-US')} chance of occurring!<br><br><p>Rarities Are:</p><ol>${rarities.map(x => `<li>${x}</li>`).join('')}</ol>`,
+            `This specific question had a 1 in ${this.question.qChance.toLocaleString(
+                'en-US'
+            )} chance of occurring!<br><br><p>Rarities Are:</p><ol>${rarities
+                .map((x) => `<li>${x}</li>`)
+                .join('')}</ol>`,
             this.rarityText + ' Question'
         );
     }
 
     getBorderStyle(): any {
         if (this.question.qChance > 1 && this.basicEdit) {
-            return {border: 'solid 2px ' + this.rarityColor};
+            return { border: 'solid 2px ' + this.rarityColor };
         }
         return {};
     }
 
     getTags(): string {
-        return [...this.question.aTags.map(x => HelperService.tagToString(x)), ...this.question.qTags.map(x => HelperService.tagToString(x))].join(', ');
+        return [
+            ...this.question.aTags.map((x) => HelperService.tagToString(x)),
+            ...this.question.qTags.map((x) => HelperService.tagToString(x)),
+        ].join(', ');
     }
 
     hasTags(): boolean {
@@ -180,5 +194,4 @@ export class FormQuestionComponent implements OnInit, OnChanges {
     includesPerson(): boolean {
         return this.question.includesPerson;
     }
-
 }

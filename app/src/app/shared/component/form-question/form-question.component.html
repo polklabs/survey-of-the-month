@@ -40,13 +40,13 @@
 
         <ng-template [ngTemplateOutlet]="getAnswerTemplate()"></ng-template>
 
-        <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && dirty">Answers can be entered for preview purposes, but will not be saved.</div>
         <div style="font-size: smaller; color:gold" *ngIf="(editable || basicEdit) && includesPerson()">The names in this question are pulled from the People list above</div>
     </mat-card-content>
 
     <ng-container *ngIf="(!editable && !basicEdit && (question.answerCount > 0)) || dirty">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
         <mat-card-actions fxLayoutGap="8px" fxLayout="row">
+            <button mat-raised-button *ngIf="basicEdit && dirty" color="primary" (click)="aSubmit.emit()" matTooltip="Submit Answer to Public Survey">Submit Answer</button>
             <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty" tabindex="-1">
                 Clear
             </button>

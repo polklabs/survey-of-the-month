@@ -1,18 +1,27 @@
 <div fxLayoutAlign="center center" class="root">
-    <div style="margin: auto; width: 800px; min-width: 250px;">
+    <div style="margin: auto; width: 800px; min-width: 250px">
         <div>
-            <p style="margin-top: 8px;">Who are these questions for? Names entered here will be inserted into randomly generated question and answers. Enter the names of your friends, family, or fictional characters</p>
+            <p style="margin-top: 8px">
+                Who are these questions for? Names entered here will be inserted into randomly generated question and
+                answers. Enter the names of your friends, family, or fictional characters
+            </p>
             <mat-form-field class="user-chip-list" appearance="fill">
                 <mat-label>People</mat-label>
                 <mat-chip-list #chipList aria-label="People selection">
-                    <mat-chip *ngFor="let user of users" [selectable]="usersSelectable" [removable]="usersRemovable"
+                    <mat-chip
+                        *ngFor="let user of users"
+                        [selectable]="usersSelectable"
+                        [removable]="usersRemovable"
                         (removed)="removeUser(user)">
-                        {{user}}
+                        {{ user }}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
-                    <input placeholder="New Person..." [matChipInputFor]="chipList"
+                    <input
+                        placeholder="New Person..."
+                        [matChipInputFor]="chipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        [matChipInputAddOnBlur]="usersAddOnBlur" (matChipInputTokenEnd)="addUser($event)">
+                        [matChipInputAddOnBlur]="usersAddOnBlur"
+                        (matChipInputTokenEnd)="addUser($event)" />
                 </mat-chip-list>
                 <button mat-icon-button matSuffix (click)="randomizeUsers()" matTooltip="Randomize People">
                     <mat-icon>shuffle</mat-icon>
@@ -24,20 +33,43 @@
 
         <div id="scrollTo"></div>
 
-        <button fxHide.gt-xs mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
+        <button fxHide.gt-xs mat-raised-button color="primary" (click)="createSurvey()">
+            Create survey from this question
+            <mat-icon>add</mat-icon>
+        </button>
         <div fxLayout="row">
-            <button fxHide.lt-sm mat-raised-button color="primary" (click)="createSurvey()">Create survey from this question <mat-icon>add</mat-icon></button>
-            <button mat-raised-button (click)="hideTags = !hideTags; scroll('tags')" [color]="hideTags ? '' : 'accent'" matBadge="!" [matBadgeHidden]="(filterTags?.length ?? 0) === 0">Filter <mat-icon>label</mat-icon></button>
+            <button fxHide.lt-sm mat-raised-button color="primary" (click)="createSurvey()">
+                Create survey from this question
+                <mat-icon>add</mat-icon>
+            </button>
+            <button
+                mat-raised-button
+                (click)="hideTags = !hideTags; scroll('tags')"
+                [color]="hideTags ? '' : 'accent'"
+                matBadge="!"
+                [matBadgeHidden]="(filterTags?.length ?? 0) === 0">
+                Filter
+                <mat-icon>label</mat-icon>
+            </button>
             <div fxFlex></div>
-            <button mat-raised-button (click)="undo()" [disabled]="canUndo() === false" matTooltip="Undo"><mat-icon>undo</mat-icon></button>
-            <button mat-raised-button (click)="redo()" [disabled]="canRedo() === false" matTooltip="Redo"><mat-icon>redo</mat-icon></button>
+            <button mat-raised-button (click)="undo()" [disabled]="canUndo() === false" matTooltip="Undo">
+                <mat-icon>undo</mat-icon>
+            </button>
+            <button mat-raised-button (click)="redo()" [disabled]="canRedo() === false" matTooltip="Redo">
+                <mat-icon>redo</mat-icon>
+            </button>
         </div>
 
-        <app-form-question #singleQuestion [question]="question" [loading]="loading"
+        <app-form-question
+            #singleQuestion
+            [question]="question"
+            [loading]="loading"
             [basicEdit]="true"
-            (qRandomize)="getQuestion()" (qSeed)="seedQuestion()"
-            (qRandomizeAnswers)="updateChoices()" (qShuffle)="updateQuestion()">
-        </app-form-question>
-
+            (qRandomize)="getQuestion()"
+            (qSeed)="seedQuestion()"
+            (qRandomizeAnswers)="updateChoices()"
+            (qShuffle)="updateQuestion()"
+            (aUpdate)="updateAnswer($event)"
+            (aSubmit)="submitAnswer()"></app-form-question>
     </div>
 </div>

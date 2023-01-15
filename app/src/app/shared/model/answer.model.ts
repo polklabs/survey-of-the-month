@@ -1,11 +1,13 @@
 export class Answer {
     userId!: string;
     lastModifiedDate: string = new Date().toISOString();
-    answers: {
-        questionId: string,
-        lastModifiedDate: string;
-        value: null | any
-    }[] = [];
+    answers: SingleAnswer[] = [];
+}
+
+export class SingleAnswer {
+    questionId!: string;
+    lastModifiedDate!: string;
+    value!: null | any;
 }
 
 export class AnswerStatus {
@@ -14,7 +16,7 @@ export class AnswerStatus {
     count!: number;
     lastModifiedDate?: string;
     answered!: {
-        questionId: string,
+        questionId: string;
         lastModifiedDate: string;
     }[];
 }

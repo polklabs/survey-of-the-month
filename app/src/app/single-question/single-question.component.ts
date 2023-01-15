@@ -11,15 +11,17 @@ import { QuestionHolderService } from '../core/services/questionHolder.service';
 import { Router } from '@angular/router';
 import { AnalyticsService } from '../core/services/analytics.service';
 import { QuestionCacheService } from '../core/services/question-cache.service';
+import { SingleAnswer } from '../shared/model/answer.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-single-question',
     templateUrl: './single-question.component.html',
-    styleUrls: ['./single-question.component.scss']
+    styleUrls: ['./single-question.component.scss'],
 })
 export class SingleQuestionComponent implements OnInit {
-
-    @ViewChild('singleQuestion', {static: false}) questionComp?: FormQuestionComponent;
+    @ViewChild('singleQuestion', { static: false })
+    questionComp?: FormQuestionComponent;
 
     usersSelectable = true;
     usersRemovable = true;
@@ -27,6 +29,7 @@ export class SingleQuestionComponent implements OnInit {
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
     question: Question = new Question();
+    singleAnswer?: SingleAnswer;
     users: string[] = [];
     filterTags?: string[];
     hideTags = true;
@@ -41,9 +44,9 @@ export class SingleQuestionComponent implements OnInit {
         private localStorageService: LocalStorageService,
         private questionHolderService: QuestionHolderService,
         private router: Router,
-        private analytics: AnalyticsService,
+        private snackBar: MatSnackBar,
         private questionCache: QuestionCacheService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.users = this.localStorageService.getUsers();
@@ -52,7 +55,10 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     getQuestion(): void {
-        this.callApi('question', { users: this.users, filterTags: this.filterTags });
+        this.callApi('question', {
+            users: this.users,
+            filterTags: this.filterTags,
+        });
     }
 
     undo(): void {
@@ -72,30 +78,43 @@ export class SingleQuestionComponent implements OnInit {
     }
 
     updateChoices(): void {
-        this.callApi('choice', { question: this.question, users: this.users, choiceIndex: -1, filterTags: this.filterTags });
-    }
-
-    updateQuestion(): void {
-        this.callApi('question', { users: this.users, questionOrigin: this.question.questionOrigin, filterTags: this.filterTags });
-    }
-
-    seedQuestion(): void {
-        this.dialogService.textInput(
-            'Enter a value to use as the seed for the random number generator. This may not provide the same results between website updates',
-            'Seed',
-            '',
-            false
-        ).subscribe(result => {
-            if (result !== undefined) {
-                this.callApi('question', { users: this.users, seed: result });
-            }
+        this.callApi('choice', {
+            question: this.question,
+            users: this.users,
+            choiceIndex: -1,
+            filterTags: this.filterTags,
         });
     }
 
+    updateQuestion(): void {
+        this.callApi('question', {
+            users: this.users,
+            questionOrigin: this.question.questionOrigin,
+            filterTags: this.filterTags,
+        });
+    }
+
+    seedQuestion(): void {
+        this.dialogService
+            .textInput(
+                'Enter a value to use as the seed for the random number generator. This may not provide the same results between website updates',
+                'Seed',
+                '',
+                false
+            )
+            .subscribe((result) => {
+                if (result !== undefined) {
+                    this.callApi('question', { users: this.users, seed: result });
+                }
+            });
+    }
+
     callApi(endpoint: string, data: any): void {
-        if (this.debounceButton) { return; }
+        if (this.debounceButton) {
+            return;
+        }
         this.debounceButton = true;
-        setTimeout(() => this.debounceButton = false, 750);
+        setTimeout(() => (this.debounceButton = false), 750);
 
         this.loading = true;
         const [result, _] = this.dataService.postData(endpoint, data);
@@ -108,7 +127,9 @@ export class SingleQuestionComponent implements OnInit {
                     this.dialogService.error(data.error);
                 }
                 this.loading = false;
-                if (this.questionComp) { this.questionComp.clearAnswer(); }
+                if (this.questionComp) {
+                    this.questionComp.clearAnswer();
+                }
 
                 // if (!this.firstCall) {
                 //     setTimeout(() => {
@@ -174,4 +195,42 @@ export class SingleQuestionComponent implements OnInit {
         }
     }
 
+    updateAnswer($event: (string | number | null)[] | null): void {
+        if ($event === null) {
+            this.singleAnswer = undefined;
+        } else {
+            this.singleAnswer = new SingleAnswer();
+            this.singleAnswer.lastModifiedDate = new Date().toISOString();
+            this.singleAnswer.questionId = this.question.questionId;
+            this.singleAnswer.value = $event;
+        }
+    }
+
+    submitAnswer(): void {
+        if (this.singleAnswer !== undefined) {
+            this.dialogService
+                .yesNo(
+                    'You are about to post a survey answer publicly for everyone to see. Only the most recent 100 questions and answers will be shown.\n\nDo you want to submit?'
+                )
+                .subscribe((result) => {
+                    if (result) {
+                        this.loading = true;
+
+                        const [dataResult, _] = this.dataService.putData('public_answer', {
+                            question: this.question,
+                            singleAnswers: this.singleAnswer,
+                        });
+                        dataResult.subscribe((data: APIData) => {
+                            this.loading = false;
+                            if (data.ok) {
+                                this.snackBar.open('Submitted!', 'OK', { duration: 3000 });
+                                this.questionComp?.clearAnswer();
+                            } else if (!data.ok) {
+                                this.dialogService.error(data.error);
+                            }
+                        });
+                    }
+                });
+        }
+    }
 }

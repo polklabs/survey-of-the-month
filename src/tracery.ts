@@ -111,7 +111,6 @@ export class Tracery {
       const answerType = this.question.vars["type"];
       this.question.answerType = answerType === "madlib" ? "text" : answerType;
       delete this.question.vars["type"];
-      this;
     }
 
     // Get answer format for madlib style questions
@@ -217,7 +216,8 @@ export class Tracery {
     // Filtering -------------------------------------------------------
     const filteredList = dict[key].filter((str) => {
       let m;
-      while ((m = regexVariable.exec(str)) !== null) {
+      const regex = new RegExp(regexVariable);
+      while ((m = regex.exec(str)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
         if (m.index === regexVariable.lastIndex) {
           regexVariable.lastIndex++;

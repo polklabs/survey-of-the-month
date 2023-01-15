@@ -9,16 +9,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { APIData } from '../shared/model/api-data.model';
 import { SEOService } from '../core/services/seo.service';
 import { CanComponentDeactivate } from '../shared/guard/can-deactivate-guard.service';
-import { Question } from '../shared/model/question.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-survey-taker',
     templateUrl: './survey-taker.component.html',
-    styleUrls: ['./survey-taker.component.scss']
+    styleUrls: ['./survey-taker.component.scss'],
 })
 export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
-
     id = '';
     name = '';
     survey?: Survey;
@@ -43,13 +41,15 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
         private dataService: DataService,
         private snackBar: MatSnackBar,
         private router: Router,
-        private seoService: SEOService,
-    ) { }
+        private seoService: SEOService
+    ) {}
 
     @HostListener('window:beforeunload')
     canDeactivate(internalNavigation: true | undefined): Observable<boolean> | boolean {
         if (this.dirty) {
-            if (internalNavigation === undefined) { return false; }
+            if (internalNavigation === undefined) {
+                return false;
+            }
             return this.dialogService.confirm('Discard changes for Survey?');
         }
         return true;
@@ -57,7 +57,7 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
 
     ngOnInit(): void {
         this.seoService.updateTitle('Survey - Survey OTM');
-        this.activatedRoute.paramMap.subscribe(params => {
+        this.activatedRoute.paramMap.subscribe((params) => {
             const id = params.get('id');
             if (id && id !== '0') {
                 this.id = id;
@@ -73,12 +73,14 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
         const [result, _] = this.dataService.getData(`survey?id=${this.id}`);
         result.subscribe((data: APIData) => {
             if (data.ok) {
-                if (!data.data) { throw Error('Data is null'); }
+                if (!data.data) {
+                    throw Error('Data is null');
+                }
                 this.survey = data.data;
                 this.seoService.updateTitle(`${this.survey?.name ?? 'Survey'} - Survey OTM`);
                 this.getAnswerStatus();
                 this.getReleaseStatus();
-                this.totalQuestions = this.survey?.questions.filter(q => q.answerCount > 0).length ?? 0;
+                this.totalQuestions = this.survey?.questions.filter((q) => q.answerCount > 0).length ?? 0;
             } else {
                 this.dialogService.error(data.error);
             }
@@ -150,14 +152,16 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     selectUser(userId: string, name: string): void {
-        this.dialogService.yesNo(`Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nPlease do not share any confidential information such as home address, phone number, bank info, etc...\n\nAre you "${name}"?`).subscribe(
-            ok => {
+        this.dialogService
+            .yesNo(
+                `Once answers are submitted they will only be accessible by the survey manager. You can update your answers at a later date by returning to this page and submitting your answers again. Answers left blank will not overwrite previously submitted answers.\n\nPlease do not share any confidential information such as home address, phone number, bank info, etc...\n\nAre you "${name}"?`
+            )
+            .subscribe((ok) => {
                 if (ok) {
                     this.answer.userId = userId;
                     this.name = name;
                 }
-            }
-        );
+            });
     }
 
     unSelectUser(): void {
@@ -166,15 +170,21 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     updateAnswer(questionNumber: number, $event: (string | number | null)[] | null): void {
-        if (!this.survey) { return; }
+        if (!this.survey) {
+            return;
+        }
 
         const qId = this.survey.questions[questionNumber].questionId;
-        const aIndex = this.answer.answers.findIndex(x => x.questionId === qId);
+        const aIndex = this.answer.answers.findIndex((x) => x.questionId === qId);
         if (aIndex === -1) {
             if ($event === null) {
                 return;
             } else {
-                this.answer.answers.push({ questionId: qId, value: $event, lastModifiedDate: new Date().toISOString() });
+                this.answer.answers.push({
+                    questionId: qId,
+                    value: $event,
+                    lastModifiedDate: new Date().toISOString(),
+                });
             }
         } else {
             if ($event === null) {
@@ -188,16 +198,19 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     getAnswerLastModified(qId: string): string {
-
-        if (this.answer.answers.find(x => x.questionId === qId)) {
+        if (this.answer.answers.find((x) => x.questionId === qId)) {
             return 'Pending Submit';
         }
 
-        const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
-        if (!a) { return 'Not Yet Answered'; }
+        const a = this.answerStatus?.find((x) => x.userId === this.answer.userId);
+        if (!a) {
+            return 'Not Yet Answered';
+        }
 
-        const aStatus = a.answered.find(x => x.questionId === qId);
-        if (!aStatus) { return 'Not Yet Answered'; }
+        const aStatus = a.answered.find((x) => x.questionId === qId);
+        if (!aStatus) {
+            return 'Not Yet Answered';
+        }
 
         const date = new Date(aStatus.lastModifiedDate);
 
@@ -209,7 +222,9 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     startSubmit(): void {
-        if (!this.survey) { return; }
+        if (!this.survey) {
+            return;
+        }
 
         if (this.answer.answers.length < this.survey.questions.length) {
             this.submit('You have not answered all questions.\n\n');
@@ -219,10 +234,13 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     submit(extraText = ''): void {
-        this.dialogService.yesNo(extraText + 'Once you submit you will not be able to view your answers. You can overwrite answers by submitting again later.\n\nSubmit?').subscribe(
-            result => {
+        this.dialogService
+            .yesNo(
+                extraText +
+                    'Once you submit you will not be able to view your answers. You can overwrite answers by submitting again later.\n\nSubmit?'
+            )
+            .subscribe((result) => {
                 if (result) {
-
                     this.loading = true;
 
                     const [dataResult, _] = this.dataService.putData('answer', { id: this.id, answers: this.answer });
@@ -238,10 +256,8 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
                         }
                         this.submitted = true;
                     });
-
                 }
-            }
-        );
+            });
     }
 
     beginPresentation(): void {
@@ -249,20 +265,23 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
     }
 
     getQColor(qId: string): string {
-
-        if (this.answer.answers.find(x => x.questionId === qId)) {
+        if (this.answer.answers.find((x) => x.questionId === qId)) {
             return 'aqua';
         }
 
-        const a = this.answerStatus?.find(x => x.userId === this.answer.userId);
+        const a = this.answerStatus?.find((x) => x.userId === this.answer.userId);
         if (a && a.count === 0) {
             return 'grey';
         }
 
-        if (!a) { return 'orange'; }
+        if (!a) {
+            return 'orange';
+        }
 
-        const aStatus = a.answered.find(x => x.questionId === qId);
-        if (!aStatus) { return 'orange'; }
+        const aStatus = a.answered.find((x) => x.questionId === qId);
+        if (!aStatus) {
+            return 'orange';
+        }
 
         return 'forestgreen';
     }

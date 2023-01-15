@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Question } from 'src/app/shared/model/question.model';
 
+// This class is used for the button - 'Create survey from this question'
 @Injectable({
     providedIn: 'root'
 })
