@@ -166,9 +166,7 @@ export class SurveyMakerComponent implements OnInit {
                     }
                     this.dirty = true;
                 } else {
-                    this.dialogService.error(data.error).subscribe(
-                        () => this.router.navigateByUrl('/home')
-                    );
+                    this.dialogService.error(data.error);
                 }
             }
         });
