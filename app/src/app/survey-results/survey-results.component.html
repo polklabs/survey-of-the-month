@@ -1,23 +1,22 @@
 <div fxLayoutAlign="center center" class="root">
-    <div style="margin: auto; width: 600px; min-width: 250px;">
-
-        <div *ngIf="surveyContainer else loading">
-            <div style="width: 100%; text-align: center;">
-                Slide: {{slideNum+2}}/{{slideCount}}<br>
+    <div style="margin: auto; width: 600px; min-width: 250px">
+        <div *ngIf="surveyContainer; else loading">
+            <div style="width: 100%; text-align: center">
+                Slide: {{ slideNum + 2 }}/{{ slideCount }}
+                <br />
                 Prev: [←]&nbsp;&nbsp;&nbsp;&nbsp;Next: [Space]/[→]
             </div>
 
-            <h1 class="large">{{surveyContainer.survey.name}}</h1>
+            <h1 class="large">{{ surveyContainer.survey.name }}</h1>
 
             <div fxLayout="column" fxLayoutGap="16px">
                 <ng-container *ngFor="let item of slide; let i = index">
-                    <ng-template [ngTemplateOutlet]="getTemplate(item.itemType)" [ngTemplateOutletContext]="{index:i}">
-                    </ng-template>    
+                    <ng-template
+                        [ngTemplateOutlet]="getTemplate(item.itemType)"
+                        [ngTemplateOutletContext]="{ index: i }"></ng-template>
                 </ng-container>
             </div>
-
         </div>
-
     </div>
 </div>
 
@@ -27,25 +26,26 @@
 </ng-template>
 
 <ng-template #nameTag let-index="index">
-    <div fxLayout="row" fxLayoutAlign="start center">
-        <button mat-stroked-button (click)="toggleVisible(index)"><mat-icon>visibility</mat-icon></button>
-        <span *ngIf="slide[index].nameVisible" [@fadeInOut] class="name-tag">{{slide[index].name}}</span> 
-        <span *ngIf="!slide[index].nameVisible" [@slideLeftInOut] class="name-tag">[Reveal]</span> 
+    <div fxLayout="column" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let name of slide[index].name; let i = index">
+            <button mat-stroked-button (click)="toggleVisible(index, i)"><mat-icon>{{slide[index].nameVisible[i] ? 'visibility' : 'visibility_off'}}</mat-icon></button>
+            <span *ngIf="slide[index].nameVisible[i]" [@fadeInOut] class="name-tag">{{ name }}</span>
+            <span *ngIf="!slide[index].nameVisible[i]" [@slideLeftInOut] class="name-tag">[Reveal]</span>
+        </div>
     </div>
 </ng-template>
 
 <ng-template #textForm let-index="index">
     <div *ngIf="slide[index].visible" [@listAnimation]="slide[index].text.length">
-        <div style="white-space: pre-wrap;" *ngFor="let text of slide[index].text" [innerHTML]="text">
-        </div>
+        <div style="white-space: pre-wrap" *ngFor="let text of slide[index].text" [innerHTML]="text"></div>
     </div>
 </ng-template>
 
 <ng-template #questionForm let-index="index">
     <div *ngIf="slide[index].visible" [@slideDownInOut]>
         <mat-card>
-            <mat-card-subtitle>{{getAnswerTypeText(slideNum)}}</mat-card-subtitle>
-            <div style="white-space: pre-wrap;" [innerHTML]="slide[index].text"></div>
+            <mat-card-subtitle>{{ getAnswerTypeText(slideNum) }}</mat-card-subtitle>
+            <div style="white-space: pre-wrap" [innerHTML]="slide[index].text"></div>
         </mat-card>
     </div>
 </ng-template>
@@ -53,18 +53,18 @@
 <!-- Answer Forms --------------------------------------------------------------------------------- -->
 <ng-template #answerForm let-index="index">
     <div *ngIf="slide[index].visible" [@slideLeftInOut]>
-        <mat-card>
-            <div style="margin: auto; width: max-content; max-width: 100%;">
-                <div style="font-size: x-large;">
+        <mat-card [ngStyle]="getBorderStyle(index)">
+            <div style="margin: auto; width: max-content; max-width: 100%">
+                <div style="font-size: x-large">
                     <table>
-                        <tr *ngFor="let text of slide[index].text; let i = index;">
-                            <td>{{getChoiceText(slide[index].labels, i)}}</td>
-                            <td style="white-space: pre-wrap;"><span [innerHTML]="text"></span></td>
+                        <tr *ngFor="let text of slide[index].text; let i = index">
+                            <td>{{ getChoiceText(slide[index].labels, i) }}</td>
+                            <td style="white-space: pre-wrap"><span [innerHTML]="text"></span></td>
                         </tr>
                     </table>
                 </div>
             </div>
-            <ng-container *ngTemplateOutlet="nameTag; context: {index: index}"></ng-container>
+            <ng-container *ngTemplateOutlet="nameTag; context: { index: index }"></ng-container>
         </mat-card>
     </div>
 </ng-template>
