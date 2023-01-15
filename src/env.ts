@@ -1,6 +1,8 @@
 import { env } from "node:process";
 import fs from "fs";
 
+let cachedSettings: any = null;
+
 export function GetEnvString(name: string, defaultValue?: string): string {
   return GetEnvironmentVar(name, defaultValue);
 }
@@ -35,12 +37,20 @@ function GetEnvironmentVar(name: string, defaultValue?: string): string {
 }
 
 function GetFromConfig(name: string): string | undefined {
-  if (fs.existsSync(`./localConfig.json`)) {
-    const settings = JSON.parse(
-      fs.readFileSync(`./localConfig.json`, { encoding: "utf8", flag: "r" })
-    );
-    return settings[name];
+  if (cachedSettings === null) {
+    if (fs.existsSync(`./localConfig.json`)) {
+      const settings = JSON.parse(
+        fs.readFileSync(`./localConfig.json`, {
+          encoding: "utf8",
+          flag: "r",
+        })
+      );
+      cachedSettings = settings;
+      return settings[name];
+    } else {
+      return undefined;
+    }
   } else {
-    return undefined;
+    return cachedSettings[name];
   }
 }

@@ -3,10 +3,9 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 @Component({
     selector: 'app-form-text',
     templateUrl: './form-text.component.html',
-    styleUrls: ['./form-text.component.scss']
+    styleUrls: ['./form-text.component.scss'],
 })
 export class FormTextComponent implements OnChanges {
-
     @Input() choices: string[] = [];
 
     @Input() editable = false;
@@ -17,12 +16,12 @@ export class FormTextComponent implements OnChanges {
     @Output() aRandomize = new EventEmitter<number>();
     @Output() aDelete = new EventEmitter<number>();
     @Output() aAdd = new EventEmitter<void>();
-    @Output() aOrder = new EventEmitter<{previousIndex: number, currentIndex: number}>();
+    @Output() aOrder = new EventEmitter<{ previousIndex: number; currentIndex: number }>();
 
     @Output() aUpdate = new EventEmitter<string[]>();
     answers: string[] = [];
 
-    constructor() { }
+    constructor() {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.clear) {
@@ -48,7 +47,6 @@ export class FormTextComponent implements OnChanges {
     }
 
     move(index: number, direction: 1 | -1): void {
-        this.aOrder.emit({previousIndex: index, currentIndex: index + direction});
+        this.aOrder.emit({ previousIndex: index, currentIndex: index + direction });
     }
-
 }

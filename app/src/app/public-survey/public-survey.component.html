@@ -1,0 +1,18 @@
+<ng-template #loading>
+    <h1>Loading...</h1>
+    <mat-progress-bar></mat-progress-bar>
+</ng-template>
+<div *ngIf="surveyContainer; else loading" fxLayout="column" fxLayoutGap="16px">
+    <div *ngFor="let question of surveyContainer.survey.questions; let i = index">
+        <mat-card>
+            <mat-card-subtitle>{{ getAnswerTypeText(i) }} - {{ getAnswerDate(question) | date }}</mat-card-subtitle>
+            <div
+                style="white-space: pre-wrap; text-align: center; margin-bottom: 16px"
+                [innerHTML]="question.text"></div>
+            <div fxLayout="row">
+                <div>Answer:&nbsp; &nbsp;</div>
+                <div style="white-space: pre-wrap" [innerHTML]="getAnswer(question)"></div>
+            </div>
+        </mat-card>
+    </div>
+</div>

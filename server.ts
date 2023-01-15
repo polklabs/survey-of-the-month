@@ -10,6 +10,7 @@ import cors from 'cors';
 import { Answer, SingleAnswer } from './app/src/app/shared/model/answer.model';
 import { grammarHTML } from './src/data.html';
 import { getTags } from './src/tracery.load';
+import { GetEnvString } from './src/env';
 
 export type response = { json: (res: APIData) => any };
 
@@ -92,6 +93,10 @@ app.put('/api/release', speedLimiter, (req: { body: { requireKey: boolean, id: s
 // Will return true if results are viewable without secret key
 app.get('/api/is-released', speedLimiter, (req: { query: { id: string } }, res: response) => {
     getReleaseStatus(req.query.id, res);
+});
+
+app.get('/api/public-survey', speedLimiter, (req: { }, res: response) => {
+    getResultsSurvey(GetEnvString("PUBLIC_SURVEY", ""), '', res);
 });
 
 // Answers --------------------------------------------------------------------------------------------

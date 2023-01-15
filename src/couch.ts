@@ -177,6 +177,7 @@ export function getResultsSurvey(id: string, key: string, res: response): void {
     ({ data }: { data: SurveyContainer }) => {
       if (data.resultsRequireKey ?? true) {
         if (key === data.key) {
+          data.key = "{redacted}";
           res.json({ ok: true, data });
         } else {
           res.json({
@@ -188,6 +189,7 @@ export function getResultsSurvey(id: string, key: string, res: response): void {
           });
         }
       } else {
+        data.key = "{redacted}";
         res.json({ ok: true, data });
       }
     },

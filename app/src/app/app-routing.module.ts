@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GrammarComponent } from './grammar/grammar.component';
 import { HomeComponent } from './home/home.component';
+import { PublicSurveyComponent } from './public-survey/public-survey.component';
 import { CanDeactivateGuard } from './shared/guard/can-deactivate-guard.service';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 
@@ -13,6 +14,10 @@ const routes: Routes = [
     {
         path: 'manage',
         loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
+    },
+    {
+        path: 'public',
+        component: PublicSurveyComponent
     },
     {
         path: 'survey/:id',

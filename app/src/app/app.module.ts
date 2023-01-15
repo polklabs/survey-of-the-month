@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { SurveyTakerComponent } from './survey-taker/survey-taker.component';
 import { GrammarComponent } from './grammar/grammar.component';
+import { PublicSurveyComponent } from './public-survey/public-survey.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { GrammarComponent } from './grammar/grammar.component';
     HomeComponent,
     SurveyTakerComponent,
     GrammarComponent,
+    PublicSurveyComponent,
   ],
   imports: [
     BrowserModule,
