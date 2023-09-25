@@ -18,6 +18,9 @@
     "characterReal": [
         "[tag:actor]#character_actor#", "[tag:music]#character_singer#", "[tag:sports]#character_sports#", "#character_famous#"
     ],
+    "person_group": [
+        "dudes", "guys", "ladies", "girls", "men", "women", "bros", "sisters"
+    ],
     /* ******************************************************************************************************************************** */
 
     "character": [

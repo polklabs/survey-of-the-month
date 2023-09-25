@@ -335,6 +335,9 @@
     "career_secret": [
         "superhero", "spy", "ninja", "president of the universe", "wizard", "#animal#", "millionaire", "imposter", "nerd", "hopeless romantic", "author", "#animal# in a trench coat", "bank robber", "#mythical_creature#", "decepticon", "pirate", "time traveler", "super villain", "genius", "ghost"
     ],
+    "career_location": [
+        "office", "warehouse", "ship", "factory", "work fro home", "studio", "restaurant", "store"
+    ],
     /* ******************************************************************************************************************************** */
 
     /* Quest ****************************************************************************************************************************** */
@@ -390,7 +393,7 @@
     /* ******************************************************************************************************************************** */
 
     "podcast": [
-        "Why #living_thing.s.capitalize# are so #adjective.capitalize#", "#store.capitalize# is the best place to #verb.capitalize#", "Everyone is so #traits.capitalize# these days", "Not another #generalThings.capitalize# podcast", "The #adjective.capitalize# Zone", "My #relation.capitalize#, My #relation.capitalize# and ^$Me:#person.capitalize#$", "My life is going #adverb.capitalize#!", "To #adverb.capitalize# go where no #living_thing.capitalize# has gone before.", "Do #animal.s.capitalize# #verb_transitive.capitalize# #object.s.capitalize#?", "The Time I #verb_transitive.ed.capitalize# #object.capitalize#"
+        "Why #living_thing.s.capitalize# are so #adjective.capitalize#", "#store.capitalize# is the best place to #verb.capitalize#", "Everyone is so #traits.capitalize# these days", "Not another #generalThings.capitalize# podcast", "The #adjective.capitalize# Zone", "My #relation.capitalize#, My #relation.capitalize# and ^$Me:#person.capitalize#$", "My life is going #adverb.capitalize#!", "To #adverb.capitalize# go where no #living_thing.capitalize# has gone before.", "Do #animal.s.capitalize# #verb_transitive.capitalize# #object.s.capitalize#?", "The Time I #verb_transitive.ed.capitalize# #object.capitalize#", "^$#career_location.capitalize#:#tv#$ #person_group.capitalize#"
     ],
     "net_worth_group": [
         "press", "police", "paparazzi", "curch", "IRS", "country of #country#", "state of #state#"
