@@ -239,7 +239,11 @@
         "[type:text]What was your first ^$memory:job:pet$?",
         "[type:text]When was the last time you #last_time_you#?",
         "[type:text][format:#ology_format#]What do you think #ology_1# is the study of?",
-        "[type:text][format:#phobia_format#]What do you think #phobia_1# is the fear of?"
+        "[type:text][format:#phobia_format#]What do you think #phobia_1# is the fear of?",
+        "[type:text]Write a song you would include in #playlist_types.a# playlist.",
+        "[type:text]What are you hyper-fixated on right now?",
+        "[type:text]#jonathan_frakes_question#",
+        "[type:text]Please respond to this question from Yahoo Answers.\n\n#yahoo_question#"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -486,5 +490,41 @@
 
     "last_time_you": [
         "ate", "slept", "showered", "made your bed", "did laundry", "were in a ^$car:boat:train:plane:bus$", "took a photo", "played a board game", "played an instrument", "pet a ^$dog:cat$"
+    ], 
+
+    "jonathan_frakes_question": [
+        "Have you ever walked out of a mall into a huge parking area and realized you'd forgotten where you parked your car?",
+        "Have you ever gone mountain biking?",
+        "What do you want to be when you grow up?",
+        "What's the right tip?",
+        "Have you called a plumber to your home lately?",
+        "How superstitious are you?",
+        "How much money would it take to make you spend a night in a cemetary?",
+        "Would you display antlers as a trophy?",
+        "Do you have a pet?",
+        "Do you have a sweet tooth?",
+        "Do you believe in the power of a curse?",
+        "Have you had your hearing tested lately?",
+        "Planning a trip soon?",
+        "Can you remember the tallest man you've ever seen?",
+        "Do you love to go a wandering, beneath a clear blue sky?",
+        "Have you noticed what big stars real estate agents have become?",
+        "Are you careful with your personal records?",
+        "Does your computer ever seem to have a mind of its own?",
+        "Have you ever visited a china town section of a major city?",
+        "Have you ever visited a flea market?",
+        "Have you ever visited a truck stop?",
+        "Have you ever had a job as a waiter?",
+        "Have you noticed how many successful restaurants are theme based these days?",
+        "Have you ever had the desire to write your initials in wet cement?"
+    ],
+
+    "yahoo_question": [
+        "<b>15 year old pooping on the floor</b>\nOk nasty as this maybe it's true so a friend of mine has a sister who likes to poop on her bedroom floor because she saids her bathroom is nasty and does not want to sit on the toilet seat because shes afraid of getting germs or something. I told her she could also get germs from pooping on the floor but she told me she always cleans after shes done. It this really bad at whats shes doing? Could she get diseases from doing that? Please and thank you.",
+        "<b>Is it illegal to kill and ant????????!?</b>\ntoday I was walking down the street and there was an ant on a puppy so I stepped on the ant and killed it. A police officer gave me a very dirty look and so did a lot of people so I was wondering if it is illegal to kill an ant? I am super serious!!! This isn't a joke!",
+        "<b>how do i unbake a cake?</b>",
+        "<b>HOW DO I TURN OFF CAPS LOCK?</b>\nI ACCIDENTALLY TURNED IT ON YESTERDAY AND I DON'T KNOW HOW TO TURN IT BACK OFF. ALL OF MY FRIENDS ARE MAD BECAUSE THEY THINK I AM SHOUTING AT THEM OVER THE INTERNET. THIS PROBLEM IS LITERALLY RUINING MY LIFE AND TEARING MY FAMILY APART. I JUST WANT TO BE WHOLE AGAIN. PLEASE HELP!!",
+        "<b>How is babby formed?</b>\nHow is babby formed?\nHow girl get pregant?",
+        "<b>Is there a spell to become a mermaid that actually works?</b>\nI would like to know if there is a spell available to become a mermaid, one that works. I am asking people that believe in mermaids. Don't say things like \"mermaids don't exist\" because I take it very seriously and i find it offensive. PLEASE HELP ME FIND A SPELL!!!\n\nBTW. I am also a witch"
     ]
 }

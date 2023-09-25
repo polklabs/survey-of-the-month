@@ -4,5 +4,8 @@
     ],
     "genre_music": [
         "pop", "disco", "trance", "house", "techno", "funk", "new wave", "blues", "rock-and-roll", "rock", "hard rock", "pop rock", "folk rock", "punk rock", "psychedelic rock", "heavy metal", "trash", "rap"
+    ],
+    "playlist_types": [
+        "[tag:nsfw]sex", "road trip", "party", "#holiday#", "For #person.capitalize#"
     ]
 }
