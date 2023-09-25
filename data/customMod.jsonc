@@ -1,0 +1,6 @@
+{
+    // [i, b, em, s, sub, sup, u, h2]
+    "html": "<#0|div#>#str#</#0|div#>",
+
+    "test": "Testing this #0|message# (#str.caps#)"
+}

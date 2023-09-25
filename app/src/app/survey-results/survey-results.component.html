@@ -36,13 +36,13 @@
 </ng-template>
 
 <ng-template #textForm let-index="index">
-    <div *ngIf="slide[index].visible" [@listAnimation]="slide[index].text.length">
+    <div [id]="slide[index].id" *ngIf="slide[index].visible" [@listAnimation]="slide[index].text.length">
         <div style="white-space: pre-wrap" *ngFor="let text of slide[index].text" [innerHTML]="text"></div>
     </div>
 </ng-template>
 
 <ng-template #questionForm let-index="index">
-    <div *ngIf="slide[index].visible" [@slideDownInOut]>
+    <div [id]="slide[index].id" *ngIf="slide[index].visible" [@slideDownInOut]>
         <mat-card>
             <mat-card-subtitle>{{ getAnswerTypeText(slideNum) }}</mat-card-subtitle>
             <div style="white-space: pre-wrap" [innerHTML]="slide[index].text"></div>
@@ -52,7 +52,7 @@
 
 <!-- Answer Forms --------------------------------------------------------------------------------- -->
 <ng-template #answerForm let-index="index">
-    <div *ngIf="slide[index].visible" [@slideLeftInOut]>
+    <div [id]="slide[index].id" *ngIf="slide[index].visible" [@slideLeftInOut]>
         <mat-card [ngStyle]="getBorderStyle(index)">
             <div style="margin: auto; width: max-content; max-width: 100%">
                 <div style="font-size: x-large">

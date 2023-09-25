@@ -11,6 +11,7 @@ import { Answer, SingleAnswer } from './app/src/app/shared/model/answer.model';
 import { grammarHTML } from './src/data.html';
 import { getTags } from './src/tracery.load';
 import { GetEnvString } from './src/env';
+import { dataCheck, init } from './src/data.load';
 
 export type response = { json: (res: APIData) => any };
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.static(process.cwd() + "/app/dist/app/"));
+init();
 
 // Setup rate limiters ------------------------------------------------
 app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
@@ -45,20 +47,22 @@ const feedbackLimiter = rateLimit({
 // Question --------------------------------------------------------------------------------------
 
 // Generate a completely new question
-app.post('/api/question', speedLimiter, (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
+app.post('/api/question', speedLimiter, async (req: { body: { users?: string[], seed?: string, questionOrigin?: number, typeFilter?: AnswerType, filterTags?: string[], origin?: string } }, res: response) => {
     updateStat(null, {questions_generated: 1});
+    await dataCheck();
     let tracery = new Tracery(req.body.users, req.body.seed, req.body.questionOrigin, req.body.typeFilter, req.body.filterTags);
-    tracery.start(req.body.origin);
+    await tracery.start(req.body.origin);
     res.json({ ok: true, data: tracery.getQuestion() });
 });
 
 // Regenerate answers for a specific choice or all
 // choiceIndex = -1 for all
-app.post('/api/choice', speedLimiter, (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number, filterTags?: string[] } }, res: response) => {
+app.post('/api/choice', speedLimiter, async (req: { body: { users?: string[], seed?: string, question: Question, choiceIndex?: number, filterTags?: string[] } }, res: response) => {
     updateStat(null, {questions_generated: 1});
+    await dataCheck();
     let tracery = new Tracery(req.body.users, req.body.seed, -1, undefined, req.body.filterTags);
     tracery.setQuestion(req.body.question);
-    tracery.generateAnswer(req.body.choiceIndex);
+    await tracery.generateAnswer(req.body.choiceIndex);
     res.json({ ok: true, data: tracery.getQuestion() });
 });
 
@@ -130,21 +134,24 @@ app.get('/api/info', speedLimiter, (_, res: any) => {
     });
 });
 
-app.get('/api/home', speedLimiter, (_, res: any) => {
+app.get('/api/home', speedLimiter, async (_, res: any) => {
+    await dataCheck();
     let tracery = new Tracery();
-    const subtitle = tracery.simpleStart('home_page_subtitle');
-    const text = tracery.simpleStart('home_page_text');
+    const subtitle = await tracery.simpleStart('#home_page_subtitle#');
+    const text = await tracery.simpleStart('#home_page_text#');
     res.json({ subtitle, text });
 });
 
-app.get('/api/single', speedLimiter, (req: { query: { id: string } }, res: response) => {
+app.get('/api/single', speedLimiter, async (req: { query: { id: string } }, res: response) => {
+    await dataCheck();
     let tracery = new Tracery();
     tracery.filterTags = ['nsfw']
-    const text = tracery.simpleStart(req.query.id);
+    const text = await tracery.simpleStart(`#${req.query.id}#`);
     res.json({ ok: true, data: text });
 });
 
-app.get('/api/grammar', speedLimiter, (_, res: any) => {
+app.get('/api/grammar', speedLimiter, async (_, res: any) => {
+    await dataCheck();
     res.json({
         ok: true, data: grammarHTML
     });

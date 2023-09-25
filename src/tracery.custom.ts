@@ -3,54 +3,49 @@ var Holidays = require("date-holidays");
 
 const cache: { [key: string]: { value: string; lastUpdated: Date } } = {};
 
-function loadFromCache(key: string): string | undefined {
+function loadFromCache(key: string, asOf: Date): string | undefined {
   const c = cache[key];
   if (c === undefined) {
     return undefined;
   }
-  const today = new Date().toDateString();
   const cacheDate = c.lastUpdated.toDateString();
-  if (today === cacheDate) {
+  if (asOf.toDateString() === cacheDate) {
     return c.value;
   }
   return undefined;
 }
 
-function addToCache(key: string, value: string): void {
-  cache[key] = { value, lastUpdated: new Date() };
+function addToCache(key: string, value: string, asOf: Date): void {
+  cache[key] = { value, lastUpdated: asOf };
 }
 
-export function monthNow(): string[] {
-  let c = loadFromCache("monthNow");
+export function monthNow(asOf = new Date()): string[] {
+  let c = loadFromCache("monthNow", asOf);
   if (c !== undefined) {
     return [c];
   }
-  c = months[new Date().getMonth()];
-  addToCache("monthNow", c);
+  c = months[asOf.getMonth()];
+  addToCache("monthNow", c, asOf);
   return [c];
 }
 
-export function yearNow(): string[] {
-  let c = loadFromCache("yearNow");
+export function yearNow(asOf = new Date()): string[] {
+  let c = loadFromCache("yearNow", asOf);
   if (c !== undefined) {
     return [c];
   }
-  c = new Date().getFullYear().toString();
-  addToCache("yearNow", c);
+  c = asOf.getFullYear().toString();
+  addToCache("yearNow", c, asOf);
   return [c];
 }
 
-export function nextHoliday(): string[] {
-  let c = loadFromCache("nextHoliday");
+export function nextHoliday(asOf = new Date()): string[] {
+  let c = loadFromCache("nextHoliday", asOf);
   if (c !== undefined) {
     return [c];
   }
-  const asOf = new Date();
-  c = getNextHoliday(asOf.getFullYear(), asOf.getTime());
-  if (c === "") {
-    c = getNextHoliday(asOf.getFullYear() + 1, asOf.getTime());
-  } 
-  addToCache("nextHoliday", c);
+  c = getNextHoliday(asOf.getFullYear(), asOf.getTime()); 
+  addToCache("nextHoliday", c, asOf);
   return [c];
 }
 

@@ -8,8 +8,10 @@ import { SEOService } from '../core/services/seo.service';
 import { APIData } from '../shared/model/api-data.model';
 import { AnswerType, Question } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
+import { v4 as guid } from 'uuid';
 
 class Slide {
+    id: string = guid();
     itemType: 'basicText' | AnswerType | 'question' = 'basicText';
     labels: string[] = [];
     text: string[] = [];
@@ -133,6 +135,12 @@ export class SurveyResultsComponent implements OnInit {
         for (const item of this.slide.filter((x) => !x.alwaysVisible)) {
             if (!item.visible) {
                 item.visible = true;
+                setTimeout(() => {
+                    const element = document.getElementById(item.id);
+                    if(element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "end" });
+                    }
+                }, 250);
                 return;
             }
         }
@@ -238,6 +246,25 @@ export class SurveyResultsComponent implements OnInit {
                 }
             }
         });
+
+        // For multiple choice questions, show unused choices
+        if(question.answerType === 'multi') {
+            question.choices.forEach(c => {
+                const matchingSlide = this.slide.find(x => x.text.toString() === c.toString());
+                if(matchingSlide === undefined) {
+                    this.slide.push(
+                        new Slide({
+                            itemType: question.answerType,
+                            labels: question.useAnswerFormat ? [''] : this.choicesToString(question),
+                            text: this.answerToString(question, [c], '__'),
+                            name: [],
+                            nameVisible: [false]
+                        })
+                    )
+                }
+            });
+        }
+        
         if (!hasAnswers) {
             if (question.answerCount > 0) {
                 this.slide.push(new Slide({ text: [`<h2 class="center">No One Answered This Question</h2>`] }));
@@ -257,6 +284,12 @@ export class SurveyResultsComponent implements OnInit {
         setTimeout(() => {
             if (this.slide.length > 0) {
                 this.slide[0].visible = true;
+                setTimeout(() => {
+                    const element = document.getElementById(this.slide[0].id);
+                    if(element) {
+                        element.scrollIntoView({ behavior: "smooth", block: "end" });
+                    }
+                }, 250);
             }
         }, 250);
     }

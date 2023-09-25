@@ -17,7 +17,8 @@
         "music.jsonc",
         "prompts.jsonc",
         "ology.jsonc",
-        "phobia.jsonc"
+        "phobia.jsonc",
+        "yahoo.jsonc"
     ],
 
     // Simple question for beginning for survey
@@ -243,7 +244,9 @@
         "[type:text]Write a song you would include in #playlist_types.a# playlist.",
         "[type:text]What are you hyper-fixated on right now?",
         "[type:text]#jonathan_frakes_question#",
-        "[type:text]Please respond to this question from Yahoo Answers.\n\n#yahoo_question#"
+        "[type:text]Please respond to this question from Yahoo Answers.\n\n#yahoo_question#",
+        "[type:text][mbmbam_q:#mbmbam_final_yahoo#]The podcast \"My Brother, My Brother & Me\" ends their show with a final yahoo answers question.\nAnswer the question from Episode #mbmbam_ep#: #mbmbam_title#\n\n#mbmbam_q#",
+        "[type:text]Yahoo User ^$#person.capitalize.tmpl_html_b#:#character.tmpl_html_b#:#yahoo_username.tmpl_html_b#$ Asks: #mbmbam_final_yahoo#"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -520,14 +523,5 @@
         "Have you ever had a job as a waiter?",
         "Have you noticed how many successful restaurants are theme based these days?",
         "Have you ever had the desire to write your initials in wet cement?"
-    ],
-
-    "yahoo_question": [
-        "<b>15 year old pooping on the floor</b>\nOk nasty as this maybe it's true so a friend of mine has a sister who likes to poop on her bedroom floor because she saids her bathroom is nasty and does not want to sit on the toilet seat because shes afraid of getting germs or something. I told her she could also get germs from pooping on the floor but she told me she always cleans after shes done. It this really bad at whats shes doing? Could she get diseases from doing that? Please and thank you.",
-        "<b>Is it illegal to kill and ant????????!?</b>\ntoday I was walking down the street and there was an ant on a puppy so I stepped on the ant and killed it. A police officer gave me a very dirty look and so did a lot of people so I was wondering if it is illegal to kill an ant? I am super serious!!! This isn't a joke!",
-        "<b>how do i unbake a cake?</b>",
-        "<b>HOW DO I TURN OFF CAPS LOCK?</b>\nI ACCIDENTALLY TURNED IT ON YESTERDAY AND I DON'T KNOW HOW TO TURN IT BACK OFF. ALL OF MY FRIENDS ARE MAD BECAUSE THEY THINK I AM SHOUTING AT THEM OVER THE INTERNET. THIS PROBLEM IS LITERALLY RUINING MY LIFE AND TEARING MY FAMILY APART. I JUST WANT TO BE WHOLE AGAIN. PLEASE HELP!!",
-        "<b>How is babby formed?</b>\nHow is babby formed?\nHow girl get pregant?",
-        "<b>Is there a spell to become a mermaid that actually works?</b>\nI would like to know if there is a spell available to become a mermaid, one that works. I am asking people that believe in mermaids. Don't say things like \"mermaids don't exist\" because I take it very seriously and i find it offensive. PLEASE HELP ME FIND A SPELL!!!\n\nBTW. I am also a witch"
     ]
 }
