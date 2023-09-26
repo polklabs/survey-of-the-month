@@ -108,7 +108,7 @@
         "older sibling", "younger sibling", "twin", "aunt", "cousin", "mother", "grandmother", "father", "grandfather", "uncle", "son", "daughter", "brother", "sister", "wife", "husband"
     ],
     "greeting": [
-        "How do you do?", "Nice to meet you", "Pleased to meet you", "How have you been?", "Good Morning", "Good Afternoon", "Good Evening", "Hello", "Hi", "Hey", "How are you doing?", "How’s it going?", "Nice to see you", "It’s great to see you", "Good to see you", "Long", "Yo!", "What’s up?", "Sup", "Heyyy", "Lovely to meet you", "Are you OK?", "Alright", "Hiya!", "What’s the craic?", "Ahoy!", "Hello stranger!", "Goodmorrow!", "What’s crackin’?", "What’s up buttercup?", "Howdy!"
+        "How do you do?", "Nice to meet you", "Pleased to meet you", "How have you been?", "Good Morning", "Good Afternoon", "Good Evening", "Hello", "Hi", "Hey", "How are you doing?", "How's it going?", "Nice to see you", "It's great to see you", "Good to see you", "Long", "Yo!", "What's up?", "Sup", "Heyyy", "Lovely to meet you", "Are you OK?", "Alright", "Hiya!", "What's the craic?", "Ahoy!", "Hello stranger!", "Goodmorrow!", "What's crackin'?", "What's up buttercup?", "Howdy!"
     ],
     "unit_of_measurement": [
         "#object.s#", "#animal.s#", "#food.s#", "football fields", "^$AA:AAA:9V$ batteries", "#person.capitalize#"

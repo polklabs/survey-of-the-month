@@ -21,6 +21,9 @@ export async function ModString(
                 value =
                     value.substring(0, 1).toUpperCase() + value.substring(1);
                 break;
+            case "title":
+                value = value.replace(/\b\w/g, (match) => match.toUpperCase());
+                break;
             case "caps":
                 value = value.toUpperCase();
                 break;
@@ -159,7 +162,13 @@ export async function ModString(
 
             // String filters ----------------------------------------------------------------
             case "replace":
-                const [_, replace, replacement] = modItems;
+                let [_, replace, replacement] = modItems;
+                if(replace === '%underscore%') {
+                    replace = '_';
+                }
+                if(replacement === '%underscore%') {
+                    replacement = '_';
+                }
                 while(value.includes(replace)) {
                     value = value.replace(replace, replacement);
                 }

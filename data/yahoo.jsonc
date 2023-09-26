@@ -1,6 +1,9 @@
 {
     "yahoo_username": [
-        "^$#adjective.capitalize#:#trait.capitalize#:#traits.capitalize.replace_ #$In^$#city#:#state#:#country#$", "#fake_name.replace_ #", "#fake_name.replace_ #^$#50_99.range#:#0_14_1_2.range#$"
+        "#yahoo_username_base.replace_ _^$:.replace_e_3.replace_o_0$#^$::#1980_1999.range#:#2000_2014.range#$"
+    ],
+    "yahoo_username_base": [
+        "^$#adjective.title#:#trait.title#:#traits.title#$In^$#city.title#:#state.title#:#country.title#$", "#fake_name.title#", "TheReal#character.title#", "Not#animal.a.title#", "#movie_other.title#Fan"
     ],
 
     "yahoo_question": [
