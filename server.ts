@@ -100,7 +100,7 @@ app.get('/api/is-released', speedLimiter, (req: { query: { id: string } }, res: 
 });
 
 app.get('/api/public-survey', speedLimiter, (req: { }, res: response) => {
-    getResultsSurvey(GetEnvString("PUBLIC_SURVEY", ""), '', res);
+    getResultsSurvey(GetEnvString("PUBLIC_SURVEY", ""), '', res, 250);
 });
 
 // Answers --------------------------------------------------------------------------------------------

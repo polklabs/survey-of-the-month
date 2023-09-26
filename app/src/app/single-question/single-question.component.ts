@@ -210,7 +210,7 @@ export class SingleQuestionComponent implements OnInit {
         if (this.singleAnswer !== undefined) {
             this.dialogService
                 .yesNo(
-                    'You are about to post a survey answer publicly for everyone to see. Only the most recent 100 questions and answers will be shown.\n\nDo you want to submit?'
+                    'You are about to post a survey answer publicly for everyone to see. Only the 250 most recent questions and answers will be shown.\n\nDo you want to submit?'
                 )
                 .subscribe((result) => {
                     if (result) {

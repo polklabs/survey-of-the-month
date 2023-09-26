@@ -9,6 +9,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
     <button mat-raised-button style="height: 45px; margin: 8px" color="primary" routerLink="/manage/make">Create A Survey <mat-icon>add</mat-icon></button>
     <button *ngIf="availableSurveys.length > 0" mat-raised-button style="height: 45px; margin: 8px" [mat-menu-trigger-for]="manageMenu">Edit A Survey <mat-icon>arrow_drop_down</mat-icon></button>
+    <button mat-raised-button style="height: 45px; margin: 8px" color="accent" routerLink="/public">View Public Survey</button>
     <mat-menu #manageMenu="matMenu">
         <button mat-menu-item *ngFor="let survey of availableSurveys" [routerLink]="'/manage/'+survey.id+'/'+survey.key">{{survey.name}}</button>
     </mat-menu>

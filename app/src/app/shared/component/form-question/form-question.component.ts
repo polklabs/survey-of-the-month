@@ -14,10 +14,7 @@ import { DialogService } from 'src/app/core/services/dialog.service';
 import { HelperService } from 'src/app/core/services/helperService.service';
 import { environment } from 'src/environments/environment';
 import { Question } from '../../model/question.model';
-
-const rarityValues = [1 * 10 ** 3, 1 * 10 ** 6, 1 * 10 ** 9, 1 * 10 ** 12, 1 * 10 ** 15, 1 * 10 ** 18];
-const rarities = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Galactic'];
-const rarityColors = ['white', 'forestgreen', 'dodgerblue', 'blueviolet', 'orange', 'aqua'];
+import { rarities, rarityColors, rarityValues } from '../../consts';
 
 @Component({
     selector: 'app-form-question',

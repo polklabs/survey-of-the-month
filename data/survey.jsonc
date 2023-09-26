@@ -1,6 +1,10 @@
 {
     // For Testing: Will use "test!" instead of "question"
-    "test!x": [],
+    "test!": ["[type:rank][key:generalThings]Rank your ^$liking:hating$ to the following.",
+    "[type:scale][key:bodyPart,animal,object,food,dessert,month,dayOfWeek,season,state,movie,tv,world]Rate the following:",
+    "[type:time]During what time of day are you most ^$#trait_good#:#trait_bad#:#adjective#$?",
+    "[type:check][key:food,fastFood]How many of the following have you tried?",
+    "[type:date]Predict the date that #person.capitalize# will get a BF/GF."],
 
     // File names for other json grammar files
     "require!": [

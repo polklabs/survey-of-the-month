@@ -1,18 +1,120 @@
+<h1 class="large" fxHide.lt-sm>{{ title }}</h1>
+<h1 fxHide.gt-xs>{{ title }}</h1>
+
 <ng-template #loading>
     <h1>Loading...</h1>
     <mat-progress-bar></mat-progress-bar>
 </ng-template>
-<div *ngIf="surveyContainer; else loading" fxLayout="column" fxLayoutGap="16px">
+<div *ngIf="surveyContainer">
+    <p style="margin-top: 48px; margin-bottom: 8px">
+        Welcome to the Public Survey. When trying out questions on the home page, if you find a particularly funny
+        question/answer, you can submit it to show up here. These questions and answers are public to everyone world
+        wide. The following answers have been submitted by anonymous users and have not been reviewed for lewd content.
+        Please report any answers that are too inappropriate for the internet.
+    </p>
+</div>
+<div *ngIf="surveyContainer; else loading" fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
     <div *ngFor="let question of surveyContainer.survey.questions; let i = index">
-        <mat-card>
+        <mat-card style="width: 800px; min-width: 250px"  [ngStyle]="getBorderStyle(question)">
             <mat-card-subtitle>{{ getAnswerTypeText(i) }} - {{ getAnswerDate(question) | date }}</mat-card-subtitle>
-            <div
-                style="white-space: pre-wrap; text-align: center; margin-bottom: 16px"
-                [innerHTML]="question.text"></div>
-            <div fxLayout="row">
-                <div>Answer:&nbsp; &nbsp;</div>
-                <div style="white-space: pre-wrap" [innerHTML]="getAnswer(question)"></div>
-            </div>
+
+            <mat-card>
+                <mat-card-content>
+                    <p [innerHTML]="question.text"></p>
+                    <ng-template
+                        [ngTemplateOutlet]="getAnswerTemplate(question)"
+                        [ngTemplateOutletContext]="{ q: question, a: getAnswer(question) }"></ng-template>
+                    <div *ngIf="question.useAnswerFormat">
+                        <mat-divider inset style="margin-bottom: 8px"></mat-divider>
+                        <p [innerHTML]="getAnswerFormatted(question)"></p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </mat-card>
     </div>
 </div>
+
+<ng-template #formDefault let-data="data">
+    <p>Unknown Template: {{ data.q.answerType }}</p>
+</ng-template>
+
+<ng-template #formEmpty></ng-template>
+
+<ng-template #formText let-q="q" let-a="a">
+    <div *ngFor="let choice of q.choices; let i = index" fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field fxFlex appearance="outline">
+            <mat-label><span [innerHTML]="choice"></span></mat-label>
+            <textarea
+                matInput
+                cdkTextareaAutosize
+                placeholder="Type Something..."
+                [value]="a[i]"
+                maxlength="1000"></textarea>
+        </mat-form-field>
+    </div>
+</ng-template>
+
+<ng-template #formMulti let-q="q" let-a="a">
+    <mat-radio-group class="radio-group" [(ngModel)]="isString(a[0]) ? -1 : a[0]">
+        <div *ngFor="let choice of q.choices; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
+            <!-- Choices -->
+            <mat-radio-button class="radio-button" [value]="i">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div [innerHTML]="choice"></div>
+                </div>
+            </mat-radio-button>
+        </div>
+        <ng-container *ngIf="q.otherOptionAllow">
+            <mat-radio-button class="radio-button" [value]="-1">
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>{{ q.otherOptionText }}</mat-label>
+                    <input
+                        matInput
+                        placeholder="Ex. something something"
+                        [value]="isString(a[0]) ? a[0] : ''"
+                        maxlength="500" />
+                </mat-form-field>
+            </mat-radio-button>
+        </ng-container>
+    </mat-radio-group>
+</ng-template>
+
+<ng-template #formCheck let-q="q" let-a="a">
+    <div *ngFor="let choice of q.choices; let i = index;" fxLayoutAlign="space-between">
+        <mat-checkbox class="margin" [checked]="a[i]==='true'"><span [innerHTML]="choice"></span></mat-checkbox>
+    </div>
+</ng-template>
+
+<ng-template #formRank let-q="q" let-a="a">
+    <div cdkDropList class="rank-list">
+        <div class="rank-box" *ngFor="let choice of a; let i = index;" cdkDrag>({{i+1}})&nbsp;
+            <div fxFlex [innerHTML]="q.choices[choice]"></div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #formScale let-q="q" let-a="a">
+    <table>
+        <thead class="scaleHead">
+            <tr>
+                <th></th>
+                <th *ngFor="let header of q.scaleValues">
+                    <span [innerHTML]="header"></span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let choice of q.choices; let choiceI = index;">
+                <td class="answerLabel">
+                    <span [innerHTML]="choice"></span>
+                </td>
+                <td *ngFor="let header of q.scaleValues; let i = index">
+                    <mat-radio-group class="radio-group" [value]="a[choiceI]">
+                        <mat-radio-button class="radio-button" [value]="i">
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>

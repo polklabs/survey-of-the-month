@@ -13,5 +13,5 @@
     "hp_clever": ["clever", "adept", "brilliant", "competent", "cunning", "expert", "quick-witted", "savvy", "slick", "talented", "wise", "witty", "brainy", "capable"],
     "hp_magic": ["magic", "science", "black magic", "electricity", "entropy", "math", "machine learning", "a monkey on a typewriter"],
     "hp_scandalous": ["scandalous", "outrageous", "shameful", "shocking", "juicy", "interesting", "secret"],
-    "hp_algorithm": ["algorithm", "formula", "theorem", "machine", "mysterious way"]
+    "hp_algorithm": ["algorithm", "formula", "theorem", "machine", "mysterious way", "monkeys with typewriter"]
 }

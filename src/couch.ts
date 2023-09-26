@@ -172,9 +172,15 @@ export function getEditSurvey(id: string, key: string, res: response): void {
   );
 }
 
-export function getResultsSurvey(id: string, key: string, res: response): void {
+export function getResultsSurvey(id: string, key: string, res: response, limit = 0): void {
   couch.get("survey", id).then(
     ({ data }: { data: SurveyContainer }) => {
+
+      if (limit > 0) {
+        data.answers[0].answers.sort((a,b) => b.lastModifiedDate.localeCompare(a.lastModifiedDate));
+        data.answers = data.answers.filter((x, i) => i < 250);
+      }
+
       if (data.resultsRequireKey ?? true) {
         if (key === data.key) {
           data.key = "{redacted}";
@@ -411,7 +417,7 @@ export function submitPublicAnswer(
       data.survey.questions.push(question);
 
       // Make sure there are only 100 answers
-      while (data.answers[0].answers.length > 100) {
+      while (data.answers[0].answers.length > 500) {
         data.answers[0].answers.splice(0, 1);
         data.survey.questions.splice(0, 1);
       }
