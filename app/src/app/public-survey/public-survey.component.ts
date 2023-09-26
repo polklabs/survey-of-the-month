@@ -142,10 +142,21 @@ export class PublicSurveyComponent implements OnInit {
         return {};
     }
 
+    getTags(question: Question): string {
+        return [
+            ...question.aTags.map((x) => HelperService.tagToString(x)),
+            ...question.qTags.map((x) => HelperService.tagToString(x)),
+        ].join(', ');
+    }
+
+    hasTags(question: Question): boolean {
+        return question.aTags.length > 0 || question.qTags.length > 0;
+    }
+
     report(question: Question): void {
         this.dialogService
             .yesNo(
-                `Are you sure you want to report this question/answer?\n\n${question.text}\n${
+                `Are you sure you want to report this question/answer for being too inappropriate?\n\n${question.text}\n${
                     this.getAnswerFormatted(question)[0]
                 }`,
                 'Report Answer'

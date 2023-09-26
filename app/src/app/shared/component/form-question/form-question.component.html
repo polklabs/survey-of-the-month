@@ -46,7 +46,12 @@
     <ng-container *ngIf="(!editable && !basicEdit && (question.answerCount > 0)) || dirty">
         <mat-divider inset style="margin-bottom: 8px;"></mat-divider>
         <mat-card-actions fxLayoutGap="8px" fxLayout="row">
-            <button mat-raised-button *ngIf="basicEdit && dirty" color="primary" (click)="aSubmit.emit()" matTooltip="Submit Answer to Public Survey">Submit Answer</button>
+            <button mat-raised-button 
+                *ngIf="basicEdit && dirty" 
+                color="primary" 
+                (click)="aSubmit.emit()"
+                matTooltip="Submit Answer to Public Survey" 
+                >Submit Answer</button>
             <button mat-flat-button color="warn" (click)="clearAnswer()" [disabled]="!dirty" tabindex="-1">
                 Clear
             </button>

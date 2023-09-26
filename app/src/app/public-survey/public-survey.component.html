@@ -15,10 +15,16 @@
 </div>
 <div *ngIf="surveyContainer; else loading" fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
     <div *ngFor="let question of surveyContainer.survey.questions; let i = index">
-        <mat-card style="width: 800px; min-width: 250px"  [ngStyle]="getBorderStyle(question)">
+        <mat-card style="width: 800px; min-width: 250px" [ngStyle]="getBorderStyle(question)">
             <mat-card-subtitle>
                 <span>{{ getAnswerTypeText(i) }} - {{ getAnswerDate(question) | date }}</span>
-                <button class="report-button" mat-raised-button (click)="report(question)" [disabled]="reporting.includes(question.questionId)">Report</button>
+                <button
+                    class="report-button"
+                    mat-raised-button
+                    (click)="report(question)"
+                    [disabled]="reporting.includes(question.questionId)">
+                    Report
+                </button>
             </mat-card-subtitle>
 
             <mat-card>
@@ -31,6 +37,9 @@
                         <mat-divider inset style="margin-bottom: 8px"></mat-divider>
                         <p [innerHTML]="getAnswerFormatted(question)"></p>
                     </div>
+                    <ng-container *ngIf="hasTags(question)">
+                        <p class="tag-list">Tags: {{ getTags(question) }}</p>
+                    </ng-container>
                 </mat-card-content>
             </mat-card>
         </mat-card>
@@ -83,14 +92,15 @@
 </ng-template>
 
 <ng-template #formCheck let-q="q" let-a="a">
-    <div *ngFor="let choice of q.choices; let i = index;" fxLayoutAlign="space-between">
-        <mat-checkbox class="margin" [checked]="a[i]==='true'"><span [innerHTML]="choice"></span></mat-checkbox>
+    <div *ngFor="let choice of q.choices; let i = index" fxLayoutAlign="space-between">
+        <mat-checkbox class="margin" [checked]="a[i] === 'true'"><span [innerHTML]="choice"></span></mat-checkbox>
     </div>
 </ng-template>
 
 <ng-template #formRank let-q="q" let-a="a">
     <div cdkDropList class="rank-list">
-        <div class="rank-box" *ngFor="let choice of a; let i = index;" cdkDrag>({{i+1}})&nbsp;
+        <div class="rank-box" *ngFor="let choice of a; let i = index" cdkDrag>
+            ({{ i + 1 }})&nbsp;
             <div fxFlex [innerHTML]="q.choices[choice]"></div>
         </div>
     </div>
@@ -107,14 +117,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let choice of q.choices; let choiceI = index;">
+            <tr *ngFor="let choice of q.choices; let choiceI = index">
                 <td class="answerLabel">
                     <span [innerHTML]="choice"></span>
                 </td>
                 <td *ngFor="let header of q.scaleValues; let i = index">
                     <mat-radio-group class="radio-group" [value]="a[choiceI]">
-                        <mat-radio-button class="radio-button" [value]="i">
-                        </mat-radio-button>
+                        <mat-radio-button class="radio-button" [value]="i"></mat-radio-button>
                     </mat-radio-group>
                 </td>
             </tr>

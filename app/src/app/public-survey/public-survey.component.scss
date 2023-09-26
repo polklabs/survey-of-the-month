@@ -21,6 +21,11 @@ h1.large {
     top: 4px;
 }
 
+.tag-list {
+    font-size: smaller;
+    color: darkgray;
+}
+
 mat-card {
     width: calc(100% - 32px);
     height: auto;
