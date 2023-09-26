@@ -8,6 +8,7 @@ import { APIData } from '../shared/model/api-data.model';
 import { Question } from '../shared/model/question.model';
 import { SurveyContainer } from '../shared/model/survey-container.model';
 import { rarityColors, rarityValues } from '../shared/consts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-public-survey',
@@ -27,10 +28,13 @@ export class PublicSurveyComponent implements OnInit {
     surveyContainer!: SurveyContainer;
     title = 'Public Survey';
 
+    reporting: string[] = [];
+
     constructor(
         private dataService: DataService,
         private seoService: SEOService,
         private dialogService: DialogService,
+        private snackBar: MatSnackBar,
         private router: Router
     ) {}
 
@@ -74,12 +78,16 @@ export class PublicSurveyComponent implements OnInit {
                     }
 
                     console.log(this.surveyContainer);
-                    this.surveyContainer.survey.questions.sort((a,b) => {
-                        const answerA = this.surveyContainer.answers[0].answers.find(x => x.questionId === a.questionId);
-                        const answerB = this.surveyContainer.answers[0].answers.find(x => x.questionId === b.questionId);
+                    this.surveyContainer.survey.questions.sort((a, b) => {
+                        const answerA = this.surveyContainer.answers[0].answers.find(
+                            (x) => x.questionId === a.questionId
+                        );
+                        const answerB = this.surveyContainer.answers[0].answers.find(
+                            (x) => x.questionId === b.questionId
+                        );
 
                         return answerB?.lastModifiedDate.localeCompare(answerA?.lastModifiedDate ?? '') ?? 0;
-                    })
+                    });
                 }
             } else {
                 this.dialogService.error(data.error).subscribe(() => this.router.navigateByUrl('/home'));
@@ -87,18 +95,21 @@ export class PublicSurveyComponent implements OnInit {
         });
     }
 
-    getAnswer(question: Question): (string|number|null)[] | undefined {
-        const answer = this.surveyContainer.answers[0].answers.find(x => x.questionId === question.questionId);
+    getAnswer(question: Question): (string | number | null)[] | undefined {
+        const answer = this.surveyContainer.answers[0].answers.find((x) => x.questionId === question.questionId);
         return answer?.value;
     }
 
     getAnswerFormatted(question: Question): string[] {
-        const answer = this.surveyContainer.answers[0].answers.find(x => x.questionId === question.questionId);
+        const answer = this.surveyContainer.answers[0].answers.find((x) => x.questionId === question.questionId);
         return this.answerToString(question, answer?.value ?? [], 'Anon');
     }
 
     getAnswerDate(question: Question): string {
-        return this.surveyContainer.answers[0].answers.find(x => x.questionId === question.questionId)?.lastModifiedDate ?? (new Date()).toISOString();
+        return (
+            this.surveyContainer.answers[0].answers.find((x) => x.questionId === question.questionId)
+                ?.lastModifiedDate ?? new Date().toISOString()
+        );
     }
 
     getAnswerTypeText(index: number): string {
@@ -113,7 +124,7 @@ export class PublicSurveyComponent implements OnInit {
     }
 
     isString(value: any): boolean {
-        return typeof(value) === 'string';
+        return typeof value === 'string';
     }
 
     getBorderStyle(question: Question): any {
@@ -129,5 +140,59 @@ export class PublicSurveyComponent implements OnInit {
             return { border: 'solid 2px ' + color };
         }
         return {};
+    }
+
+    report(question: Question): void {
+        this.dialogService
+            .yesNo(
+                `Are you sure you want to report this question/answer?\n\n${question.text}\n${
+                    this.getAnswerFormatted(question)[0]
+                }`,
+                'Report Answer'
+            )
+            .subscribe((r) => {
+                if (r) {
+                    this.reporting.push(question.questionId);
+                    const [result, _] = this.dataService.postData(`report`, { qid: question.questionId });
+                    result.subscribe((data: APIData) => {
+                        if (data.ok) {
+                            if (data.data) {
+                                this.surveyContainer = data.data;
+                                if (!this.surveyContainer) {
+                                    this.dialogService
+                                        .alert('Survey is undefined', 'Error')
+                                        .subscribe(() => this.router.navigateByUrl('/home'));
+                                    return;
+                                }
+                                this.snackBar.open('Reported', 'OK', { duration: 3000 });
+                                this.surveyContainer.survey.questions.sort((a, b) => {
+                                    const answerA = this.surveyContainer.answers[0].answers.find(
+                                        (x) => x.questionId === a.questionId
+                                    );
+                                    const answerB = this.surveyContainer.answers[0].answers.find(
+                                        (x) => x.questionId === b.questionId
+                                    );
+
+                                    return (
+                                        answerB?.lastModifiedDate.localeCompare(answerA?.lastModifiedDate ?? '') ?? 0
+                                    );
+                                });
+
+                                const ids = this.surveyContainer.survey.questions.map((x) => x.questionId);
+                                const newReport: string[] = [];
+                                this.reporting.forEach((x) => {
+                                    if (ids.includes(x)) {
+                                        newReport.push(x);
+                                    }
+                                });
+                                this.reporting = newReport;
+                            }
+                        } else {
+                            this.dialogService.error(data.error).subscribe(() => this.router.navigateByUrl('/home'));
+                        }
+                    });
+                } else {
+                }
+            });
     }
 }

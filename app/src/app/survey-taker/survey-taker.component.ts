@@ -183,6 +183,7 @@ export class SurveyTakerComponent implements OnInit, CanComponentDeactivate {
                 this.answer.answers.push({
                     questionId: qId,
                     value: $event,
+                    reported: false,
                     lastModifiedDate: new Date().toISOString(),
                 });
             }

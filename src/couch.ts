@@ -13,6 +13,7 @@ import { SendEmail, SendSurveyEmail } from "./email";
 import {
   sendAnswerSubmitMsg,
   sendNewSurveyMsg,
+  sendReportedMsg,
   sendSurveyDeleteMsg,
 } from "./pushover";
 import { GetEnvInt, GetEnvString } from "./env";
@@ -177,8 +178,11 @@ export function getResultsSurvey(id: string, key: string, res: response, limit =
     ({ data }: { data: SurveyContainer }) => {
 
       if (limit > 0) {
+        data.answers[0].answers = data.answers[0].answers.filter((x, i) => !x.reported);
         data.answers[0].answers.sort((a,b) => b.lastModifiedDate.localeCompare(a.lastModifiedDate));
-        data.answers = data.answers.filter((x, i) => i < 250);
+        data.answers[0].answers = data.answers[0].answers.filter((x, i) => i < 250);
+        const ids = new Set(data.answers[0].answers.map(x => x.questionId));
+        data.survey.questions = data.survey.questions.filter(x => ids.has(x.questionId));
       }
 
       if (data.resultsRequireKey ?? true) {
@@ -198,6 +202,48 @@ export function getResultsSurvey(id: string, key: string, res: response, limit =
         data.key = "{redacted}";
         res.json({ ok: true, data });
       }
+    },
+    (err: any) => {
+      res.json({ ok: false, error: err });
+    }
+  );
+}
+
+export function reportAnswer(id: string, key: string, res: response, limit = 0, questionId: string): void {
+  couch.get("survey", id).then(
+    ({ data }: { data: SurveyContainer }) => {
+
+      const answer = data.answers[0].answers.find(x => x.questionId === questionId);
+      if(answer) {
+        answer.reported = true;
+        sendReportedMsg(id, questionId, JSON.stringify(answer));
+      } else {
+        if (limit > 0) {
+          data.answers[0].answers = data.answers[0].answers.filter((x, i) => !x.reported);
+          data.answers[0].answers.sort((a,b) => b.lastModifiedDate.localeCompare(a.lastModifiedDate));
+          data.answers[0].answers = data.answers[0].answers.filter((x, i) => i < 250);
+          const ids = new Set(data.answers[0].answers.map(x => x.questionId));
+          data.survey.questions = data.survey.questions.filter(x => ids.has(x.questionId));
+        }
+        res.json({ ok: true, data });
+        return;
+      }
+
+      couch.update("survey", data).then(
+        ({ dataNew }) => {
+          if (limit > 0) {
+            data.answers[0].answers = data.answers[0].answers.filter((x, i) => !x.reported);
+            data.answers[0].answers.sort((a,b) => b.lastModifiedDate.localeCompare(a.lastModifiedDate));
+            data.answers[0].answers = data.answers[0].answers.filter((x, i) => i < 250);
+            const ids = new Set(data.answers[0].answers.map(x => x.questionId));
+            data.survey.questions = data.survey.questions.filter(x => ids.has(x.questionId));
+          }
+          res.json({ ok: true, data });
+        },
+        (error: any) => {
+          res.json({ ok: false, error });
+        }
+      );
     },
     (err: any) => {
       res.json({ ok: false, error: err });

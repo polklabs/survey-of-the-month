@@ -7,6 +7,7 @@ export class Answer {
 export class SingleAnswer {
     questionId!: string;
     lastModifiedDate!: string;
+    reported = false;
     value!: null | any;
 }
 

@@ -15,6 +15,12 @@ h1.large {
     font-size: xxx-large;
 }
 
+.report-button {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
 mat-card {
     width: calc(100% - 32px);
     height: auto;

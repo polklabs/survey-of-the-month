@@ -6,7 +6,7 @@
     <mat-progress-bar></mat-progress-bar>
 </ng-template>
 <div *ngIf="surveyContainer">
-    <p style="margin-top: 48px; margin-bottom: 8px">
+    <p style="max-width: 850px; margin-top: 48px; margin-bottom: 8px">
         Welcome to the Public Survey. When trying out questions on the home page, if you find a particularly funny
         question/answer, you can submit it to show up here. These questions and answers are public to everyone world
         wide. The following answers have been submitted by anonymous users and have not been reviewed for lewd content.
@@ -16,7 +16,10 @@
 <div *ngIf="surveyContainer; else loading" fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
     <div *ngFor="let question of surveyContainer.survey.questions; let i = index">
         <mat-card style="width: 800px; min-width: 250px"  [ngStyle]="getBorderStyle(question)">
-            <mat-card-subtitle>{{ getAnswerTypeText(i) }} - {{ getAnswerDate(question) | date }}</mat-card-subtitle>
+            <mat-card-subtitle>
+                <span>{{ getAnswerTypeText(i) }} - {{ getAnswerDate(question) | date }}</span>
+                <button class="report-button" mat-raised-button (click)="report(question)" [disabled]="reporting.includes(question.questionId)">Report</button>
+            </mat-card-subtitle>
 
             <mat-card>
                 <mat-card-content>

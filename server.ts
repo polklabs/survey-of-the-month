@@ -2,7 +2,7 @@ import { Tracery } from './src/tracery';
 import { AnswerType, Question } from './app/src/app/shared/model/question.model';
 import { Survey } from './app/src/app/shared/model/survey.model';
 import { APIData } from './app/src/app/shared/model/api-data.model';
-import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys, getResultsSurvey, putReleaseStatus, getReleaseStatus, getStats, updateStat, updateVisitorStat, submitPublicAnswer } from './src/couch';
+import { upsertSurvey, getSurvey, getEditSurvey, deleteSurvey, answerStatus, submitAnswers, findSurveys, getResultsSurvey, putReleaseStatus, getReleaseStatus, getStats, updateStat, updateVisitorStat, submitPublicAnswer, reportAnswer } from './src/couch';
 import slowDown from 'express-slow-down';
 import rateLimit from 'express-rate-limit';
 import express from 'express';
@@ -118,6 +118,10 @@ app.put('/api/answer', speedLimiter, (req: { body: { id: string, answers: Answer
 app.put('/api/public_answer', speedLimiter, (req: { body: { question: Question, singleAnswers: SingleAnswer } }, res: response) => {
     updateStat(null, {questions_answered: 1});
     submitPublicAnswer(req.body.question, req.body.singleAnswers, res);
+});
+
+app.post('/api/report', speedLimiter, (req: { body: {qid: string} }, res: response) => {
+    reportAnswer(GetEnvString("PUBLIC_SURVEY", ""), '', res, 250, req.body.qid);
 });
 
 // Other -------------------------------------------------------------------------------------------------

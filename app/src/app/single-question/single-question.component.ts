@@ -224,7 +224,7 @@ export class SingleQuestionComponent implements OnInit {
                             this.loading = false;
                             if (data.ok) {
                                 this.snackBar.open('Submitted!', 'OK', { duration: 3000 });
-                                this.questionComp?.clearAnswer();
+                                // this.questionComp?.clearAnswer();
                             } else if (!data.ok) {
                                 this.dialogService.error(data.error);
                             }
