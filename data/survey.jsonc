@@ -1,6 +1,6 @@
 {
     // For Testing: Will use "test!" instead of "question"
-    "test!": ["[type:multi][key:clickbait][other:false]Which clickbait would you be most likely to click on?"],
+    "test!x": [],
 
     // File names for other json grammar files
     "require!": [
@@ -27,7 +27,7 @@
         "[type:multi][key:allAnswers][count:-1]Are you excited to take this survey?",
         "[type:text]How is #yearNow# treating you so far?",
         "[type:text]What the most exciting thing that happened to you this #timeRange#?",
-        "[type:text]Are you excited for #nextHoliday#?"
+        "[type:text]#holiday_q#"
     ],
 
     // Simple question for end of survey
@@ -136,6 +136,7 @@
         "[type:text]You become a wizard that can control #environmentType#. What is your wizard name?",
         "[type:text]You have the power of #superpower# but only for #1_60.range# minutes each day. What do you use it for?",
         "[type:time]During what time of day are you most ^$#trait_good#:#trait_bad#:#adjective#$?",
+        "[type:time]What would be your ideal time to wake up every day?",
         "[type:check][key:food,fastFood]How many of the following have you tried?",
         "[type:scale][key:bodyPart,animal,object,food,dessert,month,dayOfWeek,season,state,movie,tv,world]Rate the following:",
         "[type:text]Create a new law related to or involving: #generalThings#",
@@ -187,7 +188,7 @@
         "[type:multi][key:character]Who would you not be surprised to find out was a serial killer?",
         "[type:text]If you could combine any two animals into a hybrid, what's the ^$scariest:funniest:weirdest:most alien:coolest$ combo you can think of?",
         "[type:text]What probably won't exist in #1_100.range# #timeRange.s#?",
-        "[type:text]Poof a magic genie has appeared, what do you wish for?",
+        "[type:text]Poof a magic genie has appeared, what do you wish for? (Don't be boring and say more wishes)",
         "[type:text]What screams \"I am ^$#1_100.range# years old:#trait#$\"?",
         "[type:text]You unexpectedly time travel back to the year #1_2000_10.range#. The only way back is the long way back but you're immortal during that time. How do you spend the years?",
         "[type:text]What would you name your ^$boat:country:fortune 500 company:planet:religion:secret society:cult:son:daughter:reality tv show$ if you had one?",
@@ -196,7 +197,7 @@
         "[type:text]What's your dog/cat doin?",
         "[type:text]Pick a song that everyone ^$on earth:taking this survey:in #country#:in #continent#:in #state#$ must listen to",
         "[type:text]What movie would be 10x better with the addition of #trait# #movie_addition#?",
-        "[type:multi][answer0001:Ghostbusters][key:answer0001][count:1]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, specter, or ghost? Who you gonna call?",
+        "[type:multi][answer0001:Ghostbusters][key:answer0001][count:1][other:false]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, specter, or ghost? Who you gonna call?",
         "[type:text]If you could build a monument, what and where would you build?",
         "[type:text]In #5_60_5.range# minutes, you^$: and everything you're holding$ will be teleported to the middle of nowhere in ^$#country#:#continent#:#state#$. How will you prepare?",
         "[type:text]What ^$video game:movie:book:tv show$ would you like to make?",
@@ -220,7 +221,7 @@
         "[type:text][tag:movies_harryPotter]#harry_potter_question#",
         "[type:multi][key:tv_quote]Which quote speaks to you the most?",
         "[type:multi][key:tv_quote]Which quote should become #person.capitalize.possessive# life motto?",
-        "[type:text]Pop quiz: Whose flag is this? #flag.html_h#",
+        "[type:text]Pop quiz: Whose flag is this? #flag.tmpl_html_h#",
         "[type:multi][key:adjective]What word best describes ^$#person.capitalize#:#object.s#$?",
         "[type:text]What is the last ^$movie:book:tv show:song$ that made you cry?",
         "[type:multi][key:sport][tag:sports]What sport do you think you could beat #person.capitalize# at?",
@@ -247,7 +248,19 @@
         "[type:text]Please respond to this question from Yahoo Answers.\n\n#yahoo_question#",
         "[type:text][mbmbam_q:#mbmbam_final_yahoo#]The podcast \"My Brother, My Brother & Me\" ends their show with a final yahoo answers question.\nAnswer the question from Episode #mbmbam_ep#: #mbmbam_title#\n\n#mbmbam_q#",
         "[type:text]Yahoo User ^$#person.capitalize.tmpl_html_b#:#character.tmpl_html_b#:#yahoo_username.tmpl_html_b#$ Asks: #mbmbam_final_yahoo#",
-        "[type:multi][key:clickbait]Which clickbait would you be most likely to click on?"
+        "[type:multi][key:clickbait]Which clickbait would you be most likely to click on?",
+        "[type:text]What book do you own but have never read?",
+        "[type:text]What's something on your bucket list?",
+        "[type:text]Pick a new name for yourself. It can't be a nickname or variation of your current name.",
+        "[type:text]If you had to spend a day as #animal.a# or #animal.a#, which would you choose?",
+        "[type:text]If you had to swap your legs with the legs of any other animal, which animal would you choose?",
+        "[type:multi][key:animal]If you had to swap your legs with the legs of an animal, which animal would you choose?",
+        "[type:text]#holiday_q#",
+        "[type:multi][key:color]If you had to eat a crayon, what color would you choose?",
+        "[type:text]What's the best animal sound you can make?",
+        "[type:text]Do you secretly think you're your parents' favorite child?",
+        "[type:text]What's the most embarrassing thing you've ever ^$emailed:texted$ someone?",
+        "[type:text]How did you spend your first paycheck?"
     ],
 
     /* Words ************************************************************************************************************************** */
@@ -456,7 +469,7 @@
         "#houseType.a.capitalize# ^$by:in$ the #houseLocation#", "#city#^$: during the #season#$", "#travel_destination#", "#country#^$: during the #season#$", "#continent#^$: during the #season#$", "#state#^$: during the #season#$", "^$Cruise:Camping:House Boat:Backpacking$"
     ],
     "time_travel_destination": [
-        "Pompeii", "Hanging Gardens of Babylon", "Building of Stone Henge", "1920s New York", "Height of the Roman Empire", "The Old West", "Ancient Egypt", "Victorian London", "", "^$Last:Next$ Thursday", "December 31st, 1999", "The Year 2100"
+        "Pompeii", "Hanging Gardens of Babylon", "Building of Stone Henge", "1920s New York", "Height of the Roman Empire", "The Old West", "Ancient Egypt", "Victorian London", "", "^$Last:Next$ Thursday", "December 31st, 1999", "The Year 2100", "The Future"
     ],
     "would_you_rather": [
         "[wyr1:#superpower# ability][wyr2:#superpower# ability]have #wyr1# or #wyr2#",
@@ -548,5 +561,75 @@
         "Is Lying",
         "Is Gaslighting",
         "#verb_transitive.s.title#"
+    ],
+
+    /* Holiday ************************************************************************************************************************ */
+    "holiday_q": [
+        "Are you excited for #nextHoliday#?",
+        "What's the best #nextHoliday# movie to watch?",
+        "How do you celebrate #nextHoliday#?",
+        "[#nextHoliday#=Halloween|#holiday_q#]#holiday_halloween#",
+        "[#nextHoliday#=Valentine's Day|#holiday_q#]#holiday_valentines#",
+        "[#nextHoliday#=St. Patrick's Day|#holiday_q#]#holiday_stPatrick#",
+        "[#nextHoliday#=Easter|#holiday_q#]#holiday_easter#",
+        "[#nextHoliday#=Mother's Day|#holiday_q#]#holiday_mothers#",
+        "[#nextHoliday#=Father's Day|#holiday_q#]#holiday_fathers#",
+        "[#nextHoliday#=The Fourth Of July|#holiday_q#]#holiday_fourthOfJuly#",
+        "[#nextHoliday#=Thanksgiving|#holiday_q#]#holiday_thanksgiving#",
+        "[#nextHoliday#=Christmas|#holiday_q#]#holiday_christmas#",
+        "[#nextHoliday#=New Year's|#holiday_q#]#holiday_newYears#"
+    ],
+    "holiday_halloween": [
+        "What are you dressing up as for Halloween?",
+        "What is the ^$scariest:funniest$ Halloween costume you can think of?",
+        "What was your favorite Halloween costume as a child?",
+        "What's your favorite thing to do on Halloween?",
+        "What is the best Halloween candy?",
+        "Beetlejuice, Beetlejuice, ...?",
+        "[type:multi][answer0001:Ghostbusters][key:answer0001][count:1][other:false]Are you troubled by strange noises in the middle of the night? Do you experience feelings of dread in your basement or attic? Have you or any of your family ever seen a spook, specter, or ghost? Who you gonna call?"
+    ],
+    "holiday_valentines": [
+        "Have you ever given a crush a Valentine's card?",
+        "Do you have a Valentine this year?",
+        "Will you be #person.possessive.capitalize# Valentine?",
+        "What would you say if ^$#person.possessive.capitalize#:#character#$ wanted to be your Valentine?"
+    ],
+    "holiday_stPatrick": [
+        "Ready to get drunk on St. Patrick's Day?",
+        "Are you Irish?"
+    ],
+    "holiday_easter": [
+        "Have you dyed easter eggs before?",
+        "What is the best hiding spot for an easter egg?"
+    ],
+    "holiday_mothers": [
+        "Mother's Day is coming up. Have you spoken to your mom recently?",
+        "What are you getting your mom for Mother's Day?"
+    ],
+    "holiday_fathers": [
+        "Father's Day is coming up. Have you spoken to your dad recently?",
+        "What are your getting your dad for Father's day?"
+    ],
+    "holiday_fourthOfJuly": [
+        "Ready to light some fireworks for 4th of July?",
+        "What is required for a 4th of July BBQ?"
+    ],
+    "holiday_thanksgiving": [
+        "What is your favorite Thanksgiving dish?",
+        "Thanksgiving is coming up, what are you thankful for?",
+        "What's going to be the Thanksgiving drama this year?"
+    ],
+    "holiday_christmas": [
+        "What is the ^$best:worst$ Christmas present you've gotten?",
+        "What is your favorite Christmas tree ornament?",
+        "What is your favorite Christmas song?",
+        "Do you prefer a white Christmas?",
+        "It's not Christmas till somebody cries. Who's going to be crying this year?"
+    ],
+    "holiday_newYears": [
+        "[type:multi][key:generalAnswers][count:-1]Have you ever kissed someone on New Years?",
+        "What's a New Year's Resolution you made but never kept?",
+        "What's going to be your New Year's resolution this year?"
     ]
+    /* ******************************************************************************************************************************** */
 }

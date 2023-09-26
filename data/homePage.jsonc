@@ -6,7 +6,7 @@
     "home_page_intoSentence": ["[adj1:#adjective#]Have you ever wanted to make your #hp_relation# take a \"#adj1#\" survey but struggled to think of \"#adj1#\" questions?"],
     "home_page_2ndSentence": ["Well want no longer, this is #hp_solution#.", "Not sure this ^$app:website:tool$ will help but it'll do its best."],
     "home_page_3rdSentence": ["Questions are generated through the use of #hp_clever# #hp_algorithm.s# and some form of #hp_magic# (maybe it's just more #hp_algorithm.s#)."],
-    "home_page_endSentence": ["Get started by creating a new survey, checking out the source code or trying out some ^$#trait_good#:#trait_good.html_s# #trait_bad#$ questions below!"],
+    "home_page_endSentence": ["Get started by creating a new survey, checking out the source code or trying out some ^$#trait_good#:#trait_good.tmpl_html_s# #trait_bad#$ questions below!"],
 
     "hp_relation": ["friends", "enemies", "coworkers", "frenemies", "family", "squad", "fam", "random strangers"],
     "hp_solution": ["the solution", "the problem", "a thing that exists", "^$an:the$ answer", "definitely something"],

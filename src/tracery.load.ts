@@ -106,6 +106,7 @@ function checkGrammar() {
         grammar[key].forEach((value: string, index: number) => {
             let foundType = false;
             let m;
+            regexVariable.lastIndex = 0;
             while ((m = regexVariable.exec(value)) !== null) {
                 // This is necessary to avoid infinite loops with zero-width matches
                 if (m.index === regexVariable.lastIndex) {
@@ -118,7 +119,7 @@ function checkGrammar() {
                 }
             }
             if (!foundType) {
-                console.error(`${key}:${index} does not specify type.`);
+                console.error(`${key}:${index} does not specify type. ${value}`);
             }
         });
     });
