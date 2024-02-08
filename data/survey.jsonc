@@ -260,7 +260,8 @@
         "[type:text]What's the best animal sound you can make?",
         "[type:text]Do you secretly think you're your parents' favorite child?",
         "[type:text]What's the most embarrassing thing you've ever ^$emailed:texted$ someone?",
-        "[type:text]How did you spend your first paycheck?"
+        "[type:text]How did you spend your first paycheck?",
+        "[type:text]What would #person.capitalize# write in #person.capitalize.possessive# #6_12.range#th grade yearbook"
     ],
 
     /* Words ************************************************************************************************************************** */
